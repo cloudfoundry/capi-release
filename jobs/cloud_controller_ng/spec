@@ -658,3 +658,7 @@ properties:
 
   dea_next.client_key:
     description: "PEM-encoded server key"
+
+  cc.core_file_pattern:
+    description: "Filename template for core dump files"
+    default: "/var/vcap/sys/cores/core-%e-%s-%p-%t"
