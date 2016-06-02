@@ -1,5 +1,5 @@
-function pid_is_running() {
-  declare pid="$1"
+pid_is_running() {
+  pid="$1"
   ps -p "${pid}" >/dev/null 2>&1
 }
 
@@ -12,8 +12,9 @@ function pid_is_running() {
 # If an old process is running on the pid found in the :pidfile:, exit 1. Otherwise,
 # remove the stale :pidfile: if it exists.
 #
-function pid_guard() {
-  declare pidfile="$1" name="$2"
+pid_guard() {
+  pidfile="$1"
+  name="$2"
 
   echo "------------ STARTING $(basename "$0") at $(date) --------------" | tee /dev/stderr
 
@@ -21,7 +22,6 @@ function pid_guard() {
     return 0
   fi
 
-  local pid
   pid=$(head -1 "${pidfile}")
 
   if pid_is_running "${pid}"; then
@@ -44,10 +44,10 @@ function pid_guard() {
 # Note that this should be run in a subshell, so that the current
 # shell does not exit.
 #
-function wait_pid_death() {
-  declare pid="$1" timeout="$2"
+wait_pid_death() {
+  pid="$1"
+  timeout="$2"
 
-  local countdown
   countdown=$(( timeout * 10 ))
 
   while true; do
@@ -78,15 +78,16 @@ function wait_pid_death() {
 # Monit default timeout for start/stop is 30s
 # Append 'with timeout {n} seconds' to monit start/stop program configs
 #
-function kill_and_wait() {
-  declare pidfile="$1" timeout="${2:-25}" sigkill_on_timeout="${3:-1}"
+kill_and_wait() {
+  pidfile="$1"
+  timeout="${2:-25}"
+  sigkill_on_timeout="${3:-1}"
 
   if [ ! -f "${pidfile}" ]; then
     echo "Pidfile ${pidfile} doesn't exist"
     exit 0
   fi
 
-  local pid
   pid=$(head -1 "${pidfile}")
 
   if [ -z "${pid}" ]; then
