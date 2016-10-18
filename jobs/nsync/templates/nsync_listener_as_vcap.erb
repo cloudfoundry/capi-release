@@ -32,6 +32,7 @@ exec /var/vcap/packages/nsync/bin/nsync-listener ${bbs_sec_flags} \
   -debugAddr=<%= p("capi.nsync.listener_debug_addr") %> \
   <%= p("capi.nsync.lifecycle_bundles").map { |bundle| "-lifecycle #{bundle}" }.join(" ") %> \
   -fileServerURL=<%= p("capi.nsync.file_server_url") %> \
+  -consulTTL=<%= p("consul.ttl_in_seconds") %> \
   -logLevel=<%= p("capi.nsync.log_level") %> \
   2> >(tee -a $LOG_DIR/nsync_listener.stderr.log | logger -p user.error -t vcap.nsync-listener) \
   1> >(tee -a $LOG_DIR/nsync_listener.stdout.log | logger -p user.info -t vcap.nsync-listener)

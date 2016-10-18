@@ -38,6 +38,7 @@ exec /var/vcap/packages/stager/bin/stager ${bbs_sec_flags} \
   -ccUploaderURL=<%= p("capi.stager.cc_uploader_url") %> \
   -consulCluster=http://127.0.0.1:<%= p("capi.stager.consul_agent_port") %> \
   -dockerRegistryAddress=<%= p("capi.stager.docker_registry_address") %> \
+  -consulTTL=<%= p("consul.ttl_in_seconds") %> \
   <% p("capi.stager.insecure_docker_registry_list").each do |url| %> \
     -insecureDockerRegistry=<%= url %> \
   <% end %> \

@@ -11,6 +11,7 @@ exec /var/vcap/packages/cc_uploader/bin/cc-uploader \
   <% end %>\
   -dropsondePort=<%= p("capi.cc_uploader.dropsonde_port") %> \
   -skipCertVerify=<%= p("diego.ssl.skip_cert_verify") %> \
+  -consulTTL=<%= p("consul.ttl_in_seconds") %> \
   -logLevel=<%= p("capi.cc_uploader.log_level") %> \
   2> >(tee -a $LOG_DIR/cc_uploader.stderr.log | logger -p user.error -t vcap.cc-uploader) \
   1> >(tee -a $LOG_DIR/cc_uploader.stdout.log | logger -p user.info -t vcap.cc-uploader)
