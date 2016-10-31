@@ -13,7 +13,7 @@ function setup_blobstore_directories {
   mkdir -p $log_dir
   mkdir -p $data
   mkdir -p $tmp_dir
-  chown -R vcap:vcap $run_dir $log_dir $data $tmp_dir $packages_dir
+  chown -R -L vcap:vcap $run_dir $log_dir $data $tmp_dir $packages_dir
 }
 
 setup_blobstore_directories
