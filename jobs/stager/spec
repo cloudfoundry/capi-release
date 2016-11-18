@@ -82,9 +82,6 @@ properties:
   capi.stager.insecure_docker_registry_list:
     description: "An array of insecure Docker registries in the form of <HOSTNAME|IP>:PORT"
     default: []
-  capi.stager.docker_registry_address:
-    description: "Address of the Docker Registry used for image caching"
-    default: docker-registry.service.cf.internal:8080
   capi.stager.diego_privileged_containers:
     description: "Whether or not to use privileged containers for staging tasks."
     default: false
