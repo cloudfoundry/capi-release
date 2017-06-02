@@ -11,6 +11,7 @@ http {
   server_names_hash_bucket_size 128;
   include      /var/vcap/jobs/blobstore/config/mime.types;
   default_type text/html;
+  server_names_hash_bucket_size 128;
 
   log_format timed_combined '$remote_addr - $remote_user [$time_local] '
                             '"$request" $status $body_bytes_sent '
