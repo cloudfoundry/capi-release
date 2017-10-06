@@ -2,7 +2,6 @@
 
 RUN_DIR=/var/vcap/sys/run/tps
 LOG_DIR=/var/vcap/sys/log/tps
-DATA_DIR=/var/vcap/data/tps
 
 PIDFILE=$RUN_DIR/tps_listener.pid
 
@@ -18,13 +17,6 @@ case $1 in
 
     mkdir -p $LOG_DIR
     chown -R vcap:vcap $LOG_DIR
-
-    mkdir -p $DATA_DIR
-    chown -R vcap:vcap $DATA_DIR
-
-    depot=$DATA_DIR/depot
-
-    mkdir -p $DATA_DIR/depot
 
     echo $$ > $PIDFILE
 

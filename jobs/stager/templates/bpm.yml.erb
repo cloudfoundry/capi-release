@@ -1,8 +1,8 @@
 ---
 processes:
-  stager:
-    executable: /var/vcap/packages/stager/bin/stager
-    args:
-      - --configPath=/var/vcap/jobs/stager/config/stager_config.json
-    limits:
-      open_files: 100000
+- name: stager
+  executable: /var/vcap/packages/stager/bin/stager
+  args:
+    - --configPath=/var/vcap/jobs/stager/config/stager_config.json
+  limits:
+    open_files: 100000

@@ -1,12 +1,16 @@
 ---
 processes:
-  nginx:
-    executable: /var/vcap/jobs/blobstore/bin/blobstore_nginx
-    volumes:
-      - /var/vcap/store/shared
-  url_signer:
-    executable: /var/vcap/packages/blobstore_url_signer/blobstore_url_signer
-    args:
-      - --secret=<%= p("blobstore.secure_link.secret") %>
-      - --network=unix
-      - --laddr=/var/vcap/data/blobstore/signer.sock
+- name: nginx
+  executable: /var/vcap/jobs/blobstore/bin/blobstore_nginx
+  additional_volumes:
+    - path: /var/vcap/store/shared
+      writable: true
+  ephemeral_disk: true
+  persistent_disk: true
+- name: url_signer
+  executable: /var/vcap/packages/blobstore_url_signer/blobstore_url_signer
+  ephemeral_disk: true
+  args:
+    - --secret=<%= p("blobstore.secure_link.secret") %>
+    - --network=unix
+    - --laddr=/var/vcap/data/blobstore/signer.sock

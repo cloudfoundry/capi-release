@@ -1,8 +1,8 @@
 ---
 processes:
-  cc_uploader:
-    executable: /var/vcap/packages/cc_uploader/bin/cc-uploader
-    args:
-      - --configPath=/var/vcap/jobs/cc_uploader/config/cc_uploader_config.json
-    limits:
-      open_files: 100000
+- name: cc_uploader
+  executable: /var/vcap/packages/cc_uploader/bin/cc-uploader
+  args:
+    - --configPath=/var/vcap/jobs/cc_uploader/config/cc_uploader_config.json
+  limits:
+    open_files: 100000

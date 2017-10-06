@@ -1,12 +1,12 @@
 ---
 processes:
-  bulker:
-    executable: /var/vcap/packages/nsync/bin/nsync-bulker
-    args:
-      - --configPath=/var/vcap/jobs/nsync/config/nsync_bulker_config.json
-  listener:
-    executable: /var/vcap/packages/nsync/bin/nsync-listener
-    args:
-      - --configPath=/var/vcap/jobs/nsync/config/nsync_listener_config.json
-    limits:
-      open_files: 100000
+- name: bulker
+  executable: /var/vcap/packages/nsync/bin/nsync-bulker
+  args:
+    - --configPath=/var/vcap/jobs/nsync/config/nsync_bulker_config.json
+- name: listener
+  executable: /var/vcap/packages/nsync/bin/nsync-listener
+  args:
+    - --configPath=/var/vcap/jobs/nsync/config/nsync_listener_config.json
+  limits:
+    open_files: 100000
