@@ -7,7 +7,12 @@ require 'cloud_controller/drain'
 
 @drain = VCAP::CloudController::Drain.new('/var/vcap/sys/log/cloud_controller_ng')
 @drain.log_invocation(ARGV)
+<% if p("bpm.enabled") %>
+@drain.shutdown_nginx('/var/vcap/sys/run/bpm/cloud_controller_ng/nginx.pid')
+@drain.shutdown_cc('/var/vcap/sys/run/bpm/cloud_controller_ng/cloud_controller_ng.pid')
+<% else %>
 @drain.shutdown_nginx('/var/vcap/sys/run/nginx_cc/nginx.pid')
 @drain.shutdown_cc('/var/vcap/sys/run/cloud_controller_ng/cloud_controller_ng.pid')
+<% end %>
 
 puts 0 # tell bosh the drain script succeeded
