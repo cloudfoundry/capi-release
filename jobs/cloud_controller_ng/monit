@@ -22,7 +22,7 @@
 
 check process cloud_controller_ng
   with pidfile /var/vcap/sys/run/bpm/cloud_controller_ng/cloud_controller_ng.pid
-  start program "/var/vcap/jobs/bpm/bin/bpm start cloud_controller_ng"
+  start program "/var/vcap/jobs/bpm/bin/bpm start cloud_controller_ng" with timeout 60 seconds
   stop program "/var/vcap/jobs/bpm/bin/bpm stop cloud_controller_ng"
   group vcap
   if totalmem > <%= p("cc.thresholds.api.alert_if_above_mb") %> Mb for 3 cycles then alert
