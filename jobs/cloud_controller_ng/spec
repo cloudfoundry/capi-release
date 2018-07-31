@@ -82,6 +82,13 @@ provides:
   - ccdb.pool_timeout
   - ccdb.read_timeout
   - ccdb.ssl_verify_hostname
+- name: cloud_controller_internal_api
+  type: cloud_controller_internal_api
+  properties:
+  - cc.tls_port
+  - cc.mutual_tls.ca_cert
+  - cc.mutual_tls.public_cert
+  - cc.mutual_tls.private_key
 - name: directories_to_backup
   type: directories_to_backup
   properties:
