@@ -36,7 +36,6 @@ templates:
   mutual_tls_ca.crt.erb: config/certs/mutual_tls_ca.crt
   public_tls.crt.erb: config/certs/public_tls.crt
   public_tls.key.erb: config/certs/public_tls.key
-  public_tls_ca.crt.erb: config/certs/public_tls_ca.crt
   newrelic.yml.erb: config/newrelic.yml
   newrelic_plugin.yml.erb: config/newrelic_plugin.yml
   nginx.conf.erb: config/nginx.conf
