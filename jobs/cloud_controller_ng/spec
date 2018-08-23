@@ -76,6 +76,7 @@ provides:
   properties:
   - system_domain
   - app_domains
+  - cc.tls_port
 - name: cloud_controller_db
   type: cloud_controller_db
   properties:
