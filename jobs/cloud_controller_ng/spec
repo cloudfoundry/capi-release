@@ -103,6 +103,10 @@ provides:
   - cc.internal_service_hostname
   - cc.tls_port
   - cc.mutual_tls.ca_cert
+- name: cloud_controller_networking_info
+  type: cloud_controller_networking_info
+  properties:
+  - cc.internal_route_vip_range
 - name: cloud_controller_internal
   type: cloud_controller_internal
   properties:
