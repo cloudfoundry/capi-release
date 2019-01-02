@@ -22,7 +22,7 @@ config[:cc_ca_cert] = "#{conf_dir}/certs/cc/ca.crt"
 config[:consul_cluster] =  "http://127.0.0.1:" + p("capi.tps.consul_agent_port").to_s
 config[:debug_server_config] = { debug_address: p("capi.tps.watcher.debug_addr") }
 config[:dropsonde_port] =  p("capi.tps.dropsonde_port")
-config[:lager_config] = { log_level: p("capi.tps.log_level") }
+config[:lager_config] = { log_level: p("capi.tps.log_level"), time_format: "rfc3339" }
 
 if p("capi.tps.bbs.require_ssl")
   config[:locket_client_cert_file] = "#{conf_dir}/certs/bbs/client.crt"
