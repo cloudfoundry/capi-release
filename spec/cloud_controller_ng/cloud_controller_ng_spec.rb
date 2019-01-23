@@ -164,6 +164,29 @@ module Bosh::Template::Test
             end.to raise_error(StandardError, 'Error for app_domains: Router groups cannot be specified for internal domains.')
           end
         end
+
+        context 'when an entry is an array of domains' do
+          before do
+            merged_manifest_properties['app_domains'] = [
+              'brook-sentry.capi.land',
+              { 'internal' => true, 'name' => 'foo.brook-sentry.capi.land' },
+              [
+                { 'internal' => true, 'name' => 'bar.some.internal' },
+                'baz.capi.land'
+              ]
+            ]
+          end
+
+          it 'flattens the array of domains' do
+            template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+            expect(template_hash['app_domains']).to eq([
+              'brook-sentry.capi.land',
+              { 'internal' => true, 'name' => 'foo.brook-sentry.capi.land' },
+              { 'internal' => true, 'name' => 'bar.some.internal' },
+              'baz.capi.land'
+            ])
+          end
+        end
       end
 
       describe 'internal route vip range' do

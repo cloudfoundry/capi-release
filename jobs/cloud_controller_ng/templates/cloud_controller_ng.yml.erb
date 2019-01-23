@@ -61,7 +61,7 @@ temporary_use_logcache: <%= p("cc.temporary_use_logcache") %>
 system_domain_organization: <%= p("system_domain_organization") %>
 system_domain: <%= p("system_domain") %>
 app_domains: <%=
-  app_domains = p("app_domains")
+  app_domains = p("app_domains").flatten
   validate_app_domains(app_domains)
   app_domains.to_json
 %>
