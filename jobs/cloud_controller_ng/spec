@@ -45,6 +45,9 @@ templates:
   nginx_maintenance.conf.erb: config/nginx_maintenance.conf
   nginx_ctl.erb: bin/nginx_ctl
   nginx_newrelic_plugin_ctl.erb: bin/nginx_newrelic_plugin_ctl
+  opi_tls.crt.erb: config/certs/opi_tls.crt
+  opi_tls.key.erb: config/certs/opi_tls.key
+  opi_tls_ca.crt.erb: config/certs/opi_tls_ca.crt
   packages_ca_cert.pem.erb: config/certs/packages_ca_cert.pem
   perform_blobstore_benchmarks.erb: bin/perform_blobstore_benchmarks
   post-start.sh.erb: bin/post-start
@@ -634,6 +637,12 @@ properties:
   cc.opi.url:
     description: "URL of the Eirini server"
     default: ""
+  cc.opi.client_cert:
+    description: "Client certificate for connecting to the OPI server"
+  cc.opi.client_key:
+    description: "Client key for connecting to the OPI server"
+  cc.opi.ca_cert:
+    description: "The ca cert of the OPI server"
 
   ccdb.databases:
     description: "Contains the name of the database on the database server"
