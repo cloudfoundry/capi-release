@@ -1136,6 +1136,6 @@ properties:
     description: "Array of domains (strings) to be used for routes propagated to the Envoy/Istio routing tier. These routes will not be propagated to Gorouter."
     default: []
 
-  cc.experimental.thread_count:
-    description: "How many threads a single cloud controller instance will attempt to use. Alter at your own peril."
-    default: 20
+  cc.experimental.thin_server.thread_pool_size:
+    description: "How many threads a single cloud controller instance's thin server will attempt to use. Alter at your own peril."
+    default: 20 # inherited from default in Thin/EventMachine
