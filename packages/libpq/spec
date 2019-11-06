@@ -1,4 +1,4 @@
 ---
 name: libpq
 files:
-- postgres/postgresql-9.6.8.tar.gz
+- postgres/postgresql-11.5.tar.gz
