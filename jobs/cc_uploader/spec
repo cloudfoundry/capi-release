@@ -29,6 +29,10 @@ provides:
     - https_port
 
 properties:
+  set_ulimit_fds:
+    description: "Set an ulimit on the number of open file descriptors. NOTE: set this property to 'false' when deploying to a containerized cloud"
+    default: true
+
   internal_hostname:
     description: "Hostname by which clients will communicate with the cc uploader"
     default: cc-uploader.service.cf.internal

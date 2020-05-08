@@ -40,8 +40,10 @@ case $1 in
         echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse
     fi
 
+<% if p("set_ulimit_fds") %>
     # Allowed number of open file descriptors
     ulimit -n 100000
+<% end %>
 
     # Work around for GOLANG 1.5.3 DNS bug
     export GODEBUG=netdns=cgo

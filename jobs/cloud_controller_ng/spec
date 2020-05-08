@@ -253,6 +253,10 @@ consumes:
   optional: true
 
 properties:
+  set_ulimit_fds:
+    description: "Set an ulimit on the number of open file descriptors. NOTE: set this property to 'false' when deploying to a containerized cloud"
+    default: true
+
   ssl.skip_cert_verify:
     description: "specifies that the job is allowed to skip ssl cert verification"
     default: false
