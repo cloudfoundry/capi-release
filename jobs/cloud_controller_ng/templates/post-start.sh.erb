@@ -61,6 +61,7 @@ function install_buildpacks {
 }
 
 function main {
+  chown vcap:vcap "/var/vcap/sys/log/cloud_controller_ng/cloud_controller_ng.log"
   install_buildpacks
   fix_bundler_home_permissions
 }
