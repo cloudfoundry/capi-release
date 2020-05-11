@@ -253,6 +253,18 @@ consumes:
   optional: true
 
 properties:
+  export_dyno:
+    description: "Flag. When true export job name and index to DYNO environment variable"
+    default: true
+
+  use_newrelic:
+    description: "Flag. When true use the Nginx newrelic plugin"
+    default: true
+
+  use_nginx_maintenance:
+    description: "Flag. When true run Nginx maintenance jobs"
+    default: true
+
   ssl.skip_cert_verify:
     description: "specifies that the job is allowed to skip ssl cert verification"
     default: false
