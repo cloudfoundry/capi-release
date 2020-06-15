@@ -53,7 +53,7 @@ case $1 in
   start)
     setup_environment
 
-<% if p("set_ulimit_fds") %>
+<% if p("cc.set_ulimit_fds") %>
     ulimit -c unlimited
 <% end %>
 
