@@ -33,6 +33,10 @@ config = { "processes" => [] }
    worker_config["env"]["NEWRELIC_ENABLE"] = true
   end
 
+  if p("cc.logging_level") == "debug"
+    worker_config["env"]["DEBUG"] = true
+  end
+
   config["processes"] << worker_config
 end
 
