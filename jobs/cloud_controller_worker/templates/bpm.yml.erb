@@ -33,6 +33,12 @@ config = { "processes" => [] }
    worker_config["env"]["NEWRELIC_ENABLE"] = true
   end
 
+  if p("cc.logging_fog_requests")
+    worker_config["env"]["DEBUG"] = true
+    worker_config["env"]["EXCON_DEBUG"] = true
+    worker_config["env"]["ALIYUN_OSS_SDK_LOG_LEVEL"] = "debug"
+  end
+
   config["processes"] << worker_config
 end
 

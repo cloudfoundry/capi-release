@@ -113,6 +113,9 @@ properties:
   cc.logging_level:
     default: "info"
     description: "Log level for cc. Valid levels are listed here: https://github.com/cloudfoundry/steno#log-levels."
+  cc.logging_fog_requests:
+    default: false
+    description: "Log fog requests and responses."
   cc.logging_max_retries:
     default: 1
     description: "Passthru value for Steno logger"
