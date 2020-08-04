@@ -34,6 +34,10 @@ if !!properties.cc.newrelic.license_key || p("cc.development_mode")
     cloud_controller_ng_config["env"]["NEWRELIC_ENABLE"] = true
 end
 
+if p("cc.logging_level") == "debug"
+    cloud_controller_ng_config["env"]["DEBUG"] = true
+end
+
 if properties.env
     if properties.env.http_proxy
         cloud_controller_ng_config["env"]["HTTP_PROXY"] = "#{properties.env.http_proxy}"
@@ -106,6 +110,10 @@ config = {
 
   if !!properties.cc.newrelic.license_key
    local_worker_config["env"]["NEWRELIC_ENABLE"] = true
+  end
+
+  if p("cc.logging_level") == "debug"
+   local_worker_config["env"]["DEBUG"] = true
   end
 
   config["processes"] << local_worker_config
