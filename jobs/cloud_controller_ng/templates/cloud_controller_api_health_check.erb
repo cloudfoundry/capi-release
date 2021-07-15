@@ -7,6 +7,7 @@ URL="https://localhost:${PORT}/healthz"
 
 echo $(date --rfc-3339=ns) "cloud_controller_ng_health_check: route-registrar about to curl $URL"
 curl \
+  --fail \
   --max-time <%= p('cc.api_health_check_timeout_per_retry') %> \
   --retry-max-time <%= p('cc.api_health_check_total_timeout') %> \
   --retry 100000 \
