@@ -85,6 +85,10 @@ properties:
   ccdb.connection_validation_timeout:
     default: 3600
     description: "The period in seconds after which idle connections are validated, passed directly to the Sequel gem - see http://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_validator_rb.html for details.  Note that setting this to -1 results in an additional query whenever connections are checked out from the pool, which can have performance implications"
+  ccdb.connection_expiration_timeout:
+    description: "The period in seconds after which connections are expired (omit to never expire connections), passed directly to the Sequel gem - see https://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_expiration_rb.html for details"
+  ccdb.connection_expiration_random_delay:
+    description: "The random delay in seconds to the expiration timeout (to prevent all connections being recreated simultaneously), passed directly to the Sequel gem - see https://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_expiration_rb.html for details"
 
   cc.readiness_port.deployment_updater:
     default: -1

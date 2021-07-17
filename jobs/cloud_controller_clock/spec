@@ -372,6 +372,10 @@ properties:
   cc.default_app_ssh_access:
     default: true
     description: "When ssh is allowed and not explicitly set in the application, new applications will start with ssh service enabled"
+  ccdb.connection_expiration_timeout:
+    description: "The period in seconds after which connections are expired (omit to never expire connections), passed directly to the Sequel gem - see https://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_expiration_rb.html for details"
+  ccdb.connection_expiration_random_delay:
+    description: "The random delay in seconds to the expiration timeout (to prevent all connections being recreated simultaneously), passed directly to the Sequel gem - see https://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_expiration_rb.html for details"
 
   uaa.ca_cert:
     description: "The certificate authority being used by UAA"

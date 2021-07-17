@@ -390,6 +390,19 @@ module Bosh::Template::Test
 
       end
 
+      context 'when db connection expiration configuration is present' do
+        before do
+          merged_manifest_properties['ccdb']['connection_expiration_timeout'] = 3600
+          merged_manifest_properties['ccdb']['connection_expiration_random_delay'] = 60
+        end
+
+        it 'sets the db expiration properties' do
+          template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+          expect(template_hash['db']['connection_expiration_timeout']).to eq(3600)
+          expect(template_hash['db']['connection_expiration_random_delay']).to eq(60)
+        end
+      end
+
       context 'when the file_server link is present' do
         let(:links) { [db_link,file_server_link] }
 

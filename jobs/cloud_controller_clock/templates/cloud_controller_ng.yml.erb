@@ -146,6 +146,12 @@ db: &db
 <% if_p('ccdb.ca_cert') do %>
   ca_cert_path: '/var/vcap/jobs/cloud_controller_clock/config/certs/db_ca.crt'
 <% end %>
+<% if_p("ccdb.connection_expiration_timeout") do |expiration_timeout| %>
+  connection_expiration_timeout: <%= expiration_timeout %>
+<% end %>
+<% if_p("ccdb.connection_expiration_random_delay") do |expiration_delay| %>
+  connection_expiration_random_delay: <%= expiration_delay %>
+<% end %>
 
 <% system_domain = p("system_domain") %>
 

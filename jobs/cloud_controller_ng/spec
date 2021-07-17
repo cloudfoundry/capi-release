@@ -701,6 +701,10 @@ properties:
   ccdb.max_migration_duration_in_minutes:
     description: "the maximum time migrations should be allowed to run before job startup should error"
     default: 20160
+  ccdb.connection_expiration_timeout:
+    description: "The period in seconds after which connections are expired (omit to never expire connections), passed directly to the Sequel gem - see https://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_expiration_rb.html for details"
+  ccdb.connection_expiration_random_delay:
+    description: "The random delay in seconds to the expiration timeout (to prevent all connections being recreated simultaneously), passed directly to the Sequel gem - see https://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_expiration_rb.html for details"
 
   uaa.cc.token_secret:
     description: "Symmetric secret used to decode uaa tokens."
