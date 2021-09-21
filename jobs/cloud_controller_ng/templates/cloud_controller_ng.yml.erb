@@ -438,6 +438,11 @@ rate_limiter:
   unauthenticated_limit: <%= p("cc.rate_limiter.unauthenticated_limit") %>
   reset_interval_in_minutes: <%= p("cc.rate_limiter.reset_interval_in_minutes") %>
 
+service_instance_rate_limiter:
+  enabled: <%= p("cc.service_instance_rate_limiter.enabled") %>
+  service_instance_limit: <%= p("cc.service_instance_rate_limiter.service_instance_limit") %>
+  service_instance_reset_interval_in_minutes: <%= p("cc.service_instance_rate_limiter.service_instance_reset_interval_in_minutes") %>
+
 <%
 cc_uploader_url = nil
 if_link("cc_uploader") do |cc_uploader|

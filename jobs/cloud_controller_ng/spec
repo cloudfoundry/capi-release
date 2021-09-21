@@ -1048,6 +1048,16 @@ properties:
     description: "The interval in minutes after which a user's available API requests will be reset"
     default: 60
 
+  cc.service_instance_rate_limiter.enabled:
+    description: "Enable rate limiting /v2/servce_instances & /v3/servce_instances endpoints for PUSH, POST, PATCH requests for UAA-authenticated endpoints per user or client"
+    default: false
+  cc.service_instance_rate_limiter.service_instance_limit:
+    description: "The number of POST/PUSH/PATCH requests a user or client is allowed to make to the /v2/servce_instances & /v3/servce_instances endpoints before being rate limited"
+    default: 5
+  cc.service_instance_rate_limiter.service_instance_reset_interval_in_minutes:
+    description: "The interval in minutes after which a user's available API requests to the /v2/servce_instances & /v3/servce_instances endpoints will be reset"
+    default: 5
+
   cc.diego.bbs.url:
     description: "URL of the BBS Server"
     default: https://bbs.service.cf.internal:8889
