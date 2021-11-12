@@ -442,7 +442,8 @@ rate_limiter:
   global_unauthenticated_limit: <%= p("cc.rate_limiter.unauthenticated_limit") %>
   per_process_unauthenticated_limit: <%= (p("cc.rate_limiter.unauthenticated_limit").to_f/instances).ceil %>
   reset_interval_in_minutes: <%= p("cc.rate_limiter.reset_interval_in_minutes") %>
-  max_concurrent_service_broker_requests: <%= p("cc.max_concurrent_service_broker_requests") %>
+
+max_concurrent_service_broker_requests: <%= p("cc.max_concurrent_service_broker_requests") %>
 
 <%
 cc_uploader_url = nil
