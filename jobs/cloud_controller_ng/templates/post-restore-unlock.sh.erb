@@ -14,7 +14,7 @@ source /var/vcap/packages/capi_utils/syslog_utils.sh
   fi
 
   monit_start_job cloud_controller_ng
-  wait_for_server_to_become_healthy <%= "localhost:#{p("cc.external_port")}/healthz" %> <%= p("cc.api_post_start_healthcheck_timeout_in_seconds") %>
+  wait_for_server_to_become_healthy <%= "localhost:#{p("cc.external_port")}/healthz" %> <%= p("cc.post_bbr_healthcheck_timeout_in_seconds") %>
   sleep 30
 
   <% (1..(p("cc.jobs.local.number_of_workers"))).each do |index| %>

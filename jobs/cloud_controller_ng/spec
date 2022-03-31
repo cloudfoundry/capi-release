@@ -350,6 +350,10 @@ properties:
     default: 60
     description: "Maximum time (in seconds) for cloud_controller_ng to report healthy"
 
+  cc.post_bbr_healthcheck_timeout_in_seconds:
+    default: 60
+    description: "Maximum time (in seconds) for cloud_controller_ng to report healthy in backup and restore unlock"
+
   cc.api_health_check_timeout_per_retry:
     default: 2
     description: "Maximum health check timeout (in seconds) for each retry attempt in the Cloud Controller's route registration health check"
