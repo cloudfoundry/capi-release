@@ -14,7 +14,7 @@ module Bosh::Template::Test
       let(:template) { job.template('bin/shutdown_drain') }
 
       it 'renders the default value' do
-        rendered_file = template.render(consumes: { } )
+        rendered_file = template.render({}, consumes: { } )
         expect(rendered_file).to include("@drain.shutdown_nginx('/var/vcap/sys/run/bpm/cloud_controller_ng/nginx.pid', 30)")
       end
 

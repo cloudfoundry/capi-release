@@ -13,7 +13,7 @@ module Bosh::Template::Test
       let(:template) { job.template('bin/ccng_monit_http_healthcheck') }
 
       it 'renders the default value' do
-        rendered_file = template.render(consumes: {})
+        rendered_file = template.render({}, consumes: {})
         expect(rendered_file).to include('--max-time 2')
         expect(rendered_file).to include('--retry 5')
       end
