@@ -1,0 +1,6 @@
+port: <%= p("cc.prom_metrics_server_tls_port") %>
+source_id: "cloud_controller_ng"
+instance_id: <%= spec.id || spec.index.to_s %>
+scheme: https
+server_name: <%= p("cc.internal_service_hostname") %>
+path: /internal/v4/metrics

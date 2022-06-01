@@ -32,10 +32,14 @@ templates:
   migrate_db.sh.erb: bin/migrate_db
   mime.types: config/mime.types
   nginx_server_mtls.conf: config/nginx_server_mtls.conf
+  prom_scraper_mtls.conf: config/prom_scraper_mtls.conf
   nginx_server_public_tls.conf: config/nginx_server_public_tls.conf
   mutual_tls.crt.erb: config/certs/mutual_tls.crt
   mutual_tls.key.erb: config/certs/mutual_tls.key
   mutual_tls_ca.crt.erb: config/certs/mutual_tls_ca.crt
+  scrape.crt.erb: config/certs/scrape.crt
+  scrape.key.erb: config/certs/scrape.key
+  scrape_ca.crt.erb: config/certs/scrape_ca.crt
   public_tls.crt.erb: config/certs/public_tls.crt
   public_tls.key.erb: config/certs/public_tls.key
   newrelic.yml.erb: config/newrelic.yml
@@ -65,6 +69,7 @@ templates:
   copilot_ca.crt.erb: config/certs/copilot_ca.crt
   copilot.crt.erb: config/certs/copilot.crt
   copilot.key.erb: config/certs/copilot.key
+  prom_scraper_config.yml.erb: config/prom_scraper_config.yml
 
 packages:
   - capi_utils
@@ -109,6 +114,8 @@ provides:
   - cc.internal_service_hostname
   - cc.tls_port
   - cc.mutual_tls.ca_cert
+  - cc.prom_metrics_server_tls_port
+  - cc.prom_scraper_tls.ca_cert
 - name: cloud_controller_container_networking_info
   type: cloud_controller_container_networking_info
   properties:
@@ -332,6 +339,9 @@ properties:
   cc.public_tls.port:
     description: "Port for TLS with gorouter"
     default: 9024
+  cc.prom_metrics_server_tls_port:
+    description: "Port for internal TLS communication with prom_scraper"
+    default: 9025
   cc.internal_service_hostname:
     description: "Internal hostname used to resolve the address of the Cloud Controller"
     default: "cloud-controller-ng.service.cf.internal"
@@ -1094,6 +1104,13 @@ properties:
     description: "PEM-encoded certificate for secure TLS communication over external endpoints"
   cc.public_tls.private_key:
     description: "PEM-encoded key for secure TLS communication over external endpoints"
+
+  cc.prom_scraper_tls.ca_cert:
+    description: "PEM-encoded CA certificate for secure, mutually authenticated TLS communication with prom_scraper"
+  cc.prom_scraper_tls.public_cert:
+    description: "PEM-encoded certificate for secure, mutually authenticated TLS communication with prom_scraper"
+  cc.prom_scraper_tls.private_key:
+    description: "PEM-encoded key for secure, mutually authenticated TLS communication with prom_scraper"
 
   cc.diego.file_server_url:
     description: "URL of file server"

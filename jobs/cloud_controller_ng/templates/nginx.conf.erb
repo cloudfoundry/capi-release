@@ -114,6 +114,88 @@ http {
     }
   }
 
+  server {
+    listen <%= p("cc.prom_metrics_server_tls_port") %> ssl;
+    include prom_scraper_mtls.conf;
+
+    server_name  "--"; # This is yet another invalid catch-all name. See the docs at: http://nginx.org/en/docs/http/server_names.html . search for "In catch-all server examples the strange name “_” can be seen:"
+    server_name_in_redirect off;
+    <% if p("request_timeout_in_seconds").to_i > 0 %>
+      proxy_send_timeout          <%= p("request_timeout_in_seconds") %>;
+      proxy_read_timeout          <%= p("request_timeout_in_seconds") %>;
+    <% end %>
+    proxy_buffering             off;
+    proxy_set_header            Host $host;
+    proxy_set_header            X-Real_IP $remote_addr;
+    proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_redirect              off;
+    proxy_connect_timeout       10;
+
+
+    location /internal/v4/ {
+      proxy_pass http://cloud_controller;
+    }
+
+    location ~ /internal/v3/staging/.*/(droplet_completed|build_completed) {
+      proxy_pass http://cloud_controller;
+    }
+
+    location ~ /internal/v4/(droplets|buildpack_cache)/.*/upload {
+      # Allow download the droplets and buildpacks
+      if ($request_method = GET){
+        proxy_pass http://cloud_controller;
+      }
+
+      # Allow large uploads
+      client_max_body_size <%= p("cc.app_bits_max_body_size") %>; #already enforced upstream/but doesn't hurt.
+
+      # Pass altered request body to this location
+      upload_pass   @cc_uploads;
+
+      # Store files to this directory
+      upload_store /var/vcap/data/cloud_controller_ng/tmp/staged_droplet_uploads;
+
+      # Allow uploaded files to be read only by user
+      upload_store_access user:r;
+
+      # Set specified fields in request body
+      upload_set_form_field "droplet_path" $upload_tmp_path;
+
+      #on any error, delete uploaded files.
+      upload_cleanup 400-505;
+    }
+
+    include local_blobstore_downloads.conf;
+
+    # Pass altered request body to a backend
+    location @cc_uploads {
+      proxy_pass http://cloud_controller;
+    }
+  }
+  <%# server { %>
+  <%#   listen 9024 ssl; %>
+  <%#   include prom_scraper_mtls.conf; %>
+
+  <%#   server_name  _; %>
+  <%#   server_name_in_redirect off; %>
+  <%#   <% if p("request_timeout_in_seconds").to_i > 0 %1> %>
+  <%#     proxy_send_timeout          <%= p("request_timeout_in_seconds") %1>; %>
+  <%#     proxy_read_timeout          <%= p("request_timeout_in_seconds") %1>; %>
+  <%#   <% end %1> %>
+  <%#   proxy_buffering             off; %>
+  <%#   proxy_set_header            Host $host; %>
+  <%#   proxy_set_header            X-Real_IP $remote_addr; %>
+  <%#   proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for; %>
+  <%#   proxy_redirect              off; %>
+  <%#   proxy_connect_timeout       10; %>
+
+
+  <%#   location /internal/v4/metrics { %>
+  <%#     proxy_pass http://cloud_controller; %>
+  <%#   } %>
+  <%# } %>
+
+
   # This block handles public endpoints over TLS
   server {
   listen <%= p("cc.public_tls.port") %> ssl;
