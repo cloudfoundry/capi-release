@@ -15,13 +15,13 @@ echo "Extracting pcre..."
 tar xzvf nginx/pcre-8.45.tar.gz
 
 echo "Extracting nginx..."
-tar xzvf nginx/nginx-1.20.1.tar.gz
+tar xzvf nginx/nginx-1.21.6.tar.gz
 
 echo "Extracting webdav extensions"
 tar xzvf nginx/nginx-dav-ext-module-3.0.0.tar.gz
 
 echo "Building nginx..."
-pushd nginx-1.20.1
+pushd nginx-1.21.6
   ./configure \
     --prefix=${BOSH_INSTALL_TARGET} \
     --with-ld-opt="-L /usr/local/lib" \

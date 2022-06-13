@@ -50,7 +50,7 @@ nginx/newrelic_nginx_agent-1.2.1.tar.gz:
   size: 5222
   object_id: c63358f6-574a-4e20-9d2b-7e1450368b6d
   sha: sha256:a5a7f9b3a7e20302943b1dd448d9b725cf3cb28d774d79f618aab7c4ddeea52b
-nginx/nginx-1.20.1.tar.gz:
+nginx/nginx-1.21.6.tar.gz:
   size: 1061461
   object_id: 514c0a64-b27d-4eb9-783f-3ea15b2003e1
   sha: sha256:e462e11533d5c30baa05df7652160ff5979591d291736cfa5edb9fd2edb48c49
