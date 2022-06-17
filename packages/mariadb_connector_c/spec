@@ -1,4 +1,4 @@
 ---
 name: mariadb_connector_c
 files:
-- mariadb_connector_c/mariadb-connector-c-2.3.5-src.tar.gz
+- mariadb_connector_c/mariadb-connector-c-3.3.1-src.tar.gz
