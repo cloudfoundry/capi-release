@@ -1,1 +1,3 @@
-<%= p('cc.prom_scraper_tls.ca_cert') %>
+<% if_p("cc.prom_scraper_tls.ca_cert") do %>
+<%= p("cc.prom_scraper_tls.ca_cert") %>
+<% end %>
