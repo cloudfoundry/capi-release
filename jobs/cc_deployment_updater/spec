@@ -36,7 +36,7 @@ packages:
   - cloud_controller_ng
   - libpq
   - mariadb_connector_c
-  - ruby-3.0.3-r0.79.0
+  - ruby-3.0
 
 consumes:
 - name: database
