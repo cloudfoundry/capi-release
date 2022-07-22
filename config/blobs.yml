@@ -14,6 +14,10 @@ nfs-debs/keyutils_1.5.9-9.2ubuntu2_amd64.deb:
   size: 47896
   object_id: 7ec8f95e-80a7-47f5-61aa-39170aefa1f7
   sha: sha256:223a7160b6e2680d2b1f43abb067e0ccc08906bb2c5448ad4b3065f38309bbb5
+nfs-debs/keyutils_1.6.1-2ubuntu3_amd64.deb:
+  size: 50410
+  object_id: c2faa090-48b6-435e-65f8-aa58199fc60b
+  sha: sha256:39da334791f57894fa13f680470e048383074b6c02aeb58e206033c5a3d0e925
 nfs-debs/libevent-2.0-5_2.0.21-stable-2ubuntu0.16.04.1_amd64.deb:
   size: 114014
   object_id: 14622888-be2d-413e-4133-874bfe135968
@@ -22,6 +26,14 @@ nfs-debs/libevent-2.1-6_2.1.8-stable-4build1_amd64.deb:
   size: 133328
   object_id: 79b7896d-e0e9-44df-485a-82dd91b57321
   sha: sha256:76bc94b3bb4356673c61dd2a4a7b06f40de21dab051aa4b31282aa9d7798b383
+nfs-debs/libevent-2.1-7_2.1.12-stable-1build3_amd64.deb:
+  size: 148238
+  object_id: f0d0ee58-b6ec-4086-4889-2f526fc50d1e
+  sha: sha256:e13aac87e4143293cf1d3cb82a2458fbeacc234d0db0667fd5567bdcd6da15fe
+nfs-debs/libnfsidmap1_2.6.1-1ubuntu1_amd64.deb:
+  size: 43534
+  object_id: ee3548ea-d65b-44a3-5d9e-89aedd8fbc63
+  sha: sha256:3d2e81faa64aafc72d78932dc563445129c0319dc462f9af84d4724bc5836b44
 nfs-debs/libnfsidmap2_0.25-5.1_amd64.deb:
   size: 27180
   object_id: b72f3c09-f9ea-48bb-45ef-fd3c3de32348
@@ -38,6 +50,10 @@ nfs-debs/nfs-common_1.3.4-2.1ubuntu5.3_amd64.deb:
   size: 205520
   object_id: 4383380e-5ab5-4b88-7262-a02025370122
   sha: sha256:ecf4d9601d210d86d423457dd18a7d3af406ed34a273fb22ade431764fc66d67
+nfs-debs/nfs-common_2.6.1-1ubuntu1_amd64.deb:
+  size: 240754
+  object_id: afa71390-1fab-4898-453f-01e6b71eaade
+  sha: sha256:cb77f5befccc10d7dbd72cc609df378eacae2c75fd89ff4a1efaa8e5b8ca4a7e
 nfs-debs/rpcbind_0.2.3-0.2_amd64.deb:
   size: 40252
   object_id: 7f2f0cb1-6ca8-4524-44f7-30cf31a6d72e
@@ -46,6 +62,10 @@ nfs-debs/rpcbind_0.2.3-0.6ubuntu0.18.04.4_amd64.deb:
   size: 42124
   object_id: 3d7b5940-a1b8-4780-7c73-14c74163f202
   sha: sha256:ad1e5849523af0dba54a1f7e7f54d11f1a7a0131ce5de858a5ff37e61c27b35d
+nfs-debs/rpcbind_1.2.6-2build1_amd64.deb:
+  size: 46608
+  object_id: 35c8ca5f-5593-4e77-709f-4a19657a4adc
+  sha: sha256:40f5113c7d8711c2ac8ad50ffee7fa0890731e22da0a99bee3fbc6cdd1f451ac
 nginx/newrelic_nginx_agent-1.2.1.tar.gz:
   size: 5222
   object_id: c63358f6-574a-4e20-9d2b-7e1450368b6d

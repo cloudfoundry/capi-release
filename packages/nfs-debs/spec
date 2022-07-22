@@ -4,11 +4,16 @@ name: nfs-debs
 files:
   - nfs-debs/keyutils_1.5.9-8ubuntu1_amd64.deb
   - nfs-debs/keyutils_1.5.9-9.2ubuntu2_amd64.deb
+  - nfs-debs/keyutils_1.6.1-2ubuntu3_amd64.deb
   - nfs-debs/libevent-2.0-5_2.0.21-stable-2ubuntu0.16.04.1_amd64.deb
   - nfs-debs/libevent-2.1-6_2.1.8-stable-4build1_amd64.deb
+  - nfs-debs/libevent-2.1-7_2.1.12-stable-1build3_amd64.deb
   - nfs-debs/libnfsidmap2_0.25-5_amd64.deb
   - nfs-debs/libnfsidmap2_0.25-5.1_amd64.deb
+  - nfs-deps/libnfsidmap1_2.6.1-1ubuntu1_amd64.deb
   - nfs-debs/nfs-common_1%3a1.2.8-9ubuntu12.1_amd64.deb
   - nfs-debs/nfs-common_1.3.4-2.1ubuntu5.3_amd64.deb
+  - nfs-debs/nfs-common_2.6.1-1ubuntu1_amd64.deb
   - nfs-debs/rpcbind_0.2.3-0.2_amd64.deb
   - nfs-debs/rpcbind_0.2.3-0.6ubuntu0.18.04.4_amd64.deb
+  - nfs-debs/rpcbind_1.2.6-2build1_amd64.deb
