@@ -43,7 +43,7 @@ elif [ "$codename" == "jammy" ]; then
     flock -x 200
     install_if_missing rpcbind /var/vcap/packages/nfs-debs/rpcbind_1.2.6-2build1_amd64.deb
     install_if_missing keyutils /var/vcap/packages/nfs-debs/keyutils_1.6.1-2ubuntu3_amd64.deb
-    install_if_missing libevent-2.1-6 /var/vcap/packages/nfs-debs/libevent-2.1-7_2.1.12-stable-1build3_amd64.deb
+    install_if_missing libevent-core-2.1-7 /var/vcap/packages/nfs-debs/libevent-core-2.1-7_2.1.12-stable-1build3_amd64.deb
     install_if_missing libnfsidmap2 /var/vcap/packages/nfs-debs/libnfsidmap1_2.6.1-1ubuntu1_amd64.deb
     install_if_missing nfs-common /var/vcap/packages/nfs-debs/nfs-common_2.6.1-1ubuntu1_amd64.deb
     ) 200>/var/vcap/data/dpkg.lock
