@@ -11,7 +11,7 @@ They can be downloaded from the following locations:
 | keyutils_1.6.1-2ubuntu3_amd64.deb | Jammy | http://mirrors.kernel.org/ubuntu/pool/main/k/keyutils/keyutils_1.6.1-2ubuntu3_amd64.deb |
 | libevent-2.0-5_2.0.21-stable-2ubuntu0.16.04.1_amd64.deb | http://mirrors.kernel.org/ubuntu/pool/main/libe/libevent/libevent-2.0-5_2.0.21-stable-2ubuntu0.16.04.1_amd64.deb|
 | libevent-2.1-6_2.1.8-stable-4build1_amd64.deb | http://mirrors.kernel.org/ubuntu/pool/main/libe/libevent/libevent-2.1-6_2.1.8-stable-4build1_amd64.deb |
-| libevent-2.1-7_2.1.12-stable-1build3_amd64.deb | Jammy | http://mirrors.kernel.org/ubuntu/pool/main/libe/libevent/libevent-2.1-7_2.1.12-stable-1build3_amd64.deb |
+| libevent-core-2.1-7_2.1.12-stable-1build3_amd64.deb | Jammy | http://mirrors.kernel.org/ubuntu/pool/main/libe/libevent/libevent-core-2.1-7_2.1.12-stable-1build3_amd64.deb |
 | libnfsidmap2_0.25-5_amd64.deb | http://ftp.ussg.iu.edu/linux/ubuntu/pool/main/libn/libnfsidmap/libnfsidmap2_0.25-5_amd64.deb |
 | libnfsidmap2_0.25-5.1_amd64.deb | http://mirrors.kernel.org/ubuntu/pool/main/libn/libnfsidmap/libnfsidmap2_0.25-5.1_amd64.deb |
 | libnfsidmap1_2.6.1-1ubuntu1_amd64.deb | Jammy | http://mirrors.kernel.org/ubuntu/pool/main/n/nfs-utils/libnfsidmap1_2.6.1-1ubuntu1_amd64.deb |
