@@ -1200,7 +1200,7 @@ properties:
                   will need to be recreated."
 
   cc.log_audit_events:
-    default: false
+    default: true
     description: "Log audit events"
 
   copilot.enabled:
