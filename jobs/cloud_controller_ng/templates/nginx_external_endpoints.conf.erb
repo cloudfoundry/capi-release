@@ -3,6 +3,10 @@ location /internal/v4/ {
   return 403 'Forbidden';
 }
 
+location /internal/v5/ {
+  return 403 'Forbidden';
+}
+
 # proxy and log all CC traffic
 location / {
   access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-access.log main;
