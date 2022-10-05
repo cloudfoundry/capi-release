@@ -77,7 +77,7 @@ properties:
 
   blobstore.max_upload_size:
     description: "Max allowed file size for upload"
-    default: "5000m"
+    default: "0"
 
   blobstore.nginx_workers_per_core:
     description: "Number of NGINX worker processes per CPU core"
