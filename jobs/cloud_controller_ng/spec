@@ -1223,3 +1223,6 @@ properties:
   cc.kubernetes.kpack.registry_tag_base:
     description: "The first part of the registry tag where built images will be uploaded"
 
+  cc.update_metric_tags_on_rename:
+    description: "Enable sending a Desired LRP update when an app is renamed"
+    default: true
