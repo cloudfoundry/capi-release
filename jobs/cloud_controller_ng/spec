@@ -359,7 +359,7 @@ properties:
 
   cc.ccng_monit_http_healthcheck_timeout_per_retry:
     default: 2
-    description: "Timeout (in seconds) for each HTTP request sent by the ccng_monit_http_healthcheck process"
+    description: "The amount of time to wait before an HTTP request from the Cloud Controller monit health check is closed. Enter value in seconds."
 
   cc.jobs.global.timeout_in_seconds:
     description: "The longest any job can take before it is cancelled unless overridden per job"
@@ -454,7 +454,7 @@ properties:
       Note: removing items in this list will not remove the records in the Cloud Controller's database.
   cc.default_stack:
     default: "cflinuxfs3"
-    description: "The default stack name to use if no custom stack is specified by an app."
+    description: "The default stack to use if no custom stack is specified for an app."
 
   cc.staging_upload_user:
     description: "User name used to access internal endpoints of Cloud Controller to upload files when staging"
@@ -687,10 +687,10 @@ properties:
     description: "Verify that the database SSL certificate matches the host to which the connection is attempted"
   ccdb.read_timeout:
     default: 3600
-    description: "The read timeout in seconds for query responses, passed directly to the Sequel gem - see https://github.com/jeremyevans/sequel/blob/master/doc/opening_databases.rdoc for details"
+    description: "The read timeout in seconds for query responses, passed directly to the Sequel gem - see https://github.com/jeremyevans/sequel/blob/master/doc/opening_databases.rdoc for details. The default timeout is 3600 seconds."
   ccdb.connection_validation_timeout:
     default: 3600
-    description: "The period in seconds after which idle connections are validated, passed directly to the Sequel gem - see http://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_validator_rb.html for details.  Note that setting this to -1 results in an additional query whenever connections are checked out from the pool, which can have performance implications"
+    description: "The period in seconds after which idle connections are validated, passed directly to the Sequel gem - see http://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_validator_rb.html for details.  Note that setting this to -1 results in an additional query whenever connections are checked out from the pool, which can have performance implications. The default timeout is 3600 seconds."
   ccdb.max_migration_duration_in_minutes:
     description: "the maximum time migrations should be allowed to run before job startup should error"
     default: 20160
@@ -1019,13 +1019,13 @@ properties:
     default: [api,proxy,uaa,login,blobstore,log-cache,doppler,log-stream,credhub,ssh]
 
   cc.rate_limiter.enabled:
-    description: "Enable rate limiting for UAA-authenticated endpoints per user or client"
+    description: "Use rate limiting for UAA-authenticated endpoints per user or client"
     default: false
   cc.rate_limiter.general_limit:
-    description: "The number of requests a user or client is allowed to make for all endpoints that do not have a custom limit over the configured interval"
+    description: "The number of requests that a user or client is allowed to make over an hour-long interval for all endpoints that do not have a custom limit. The default number is 2000."
     default: 2000
   cc.rate_limiter.unauthenticated_limit:
-    description: "The number of requests an unauthenticated client is allowed to make over the configured interval"
+    description: "The number of requests that an unauthenticated client is allowed to make over an hour-long interval. The default number is 100."
     default: 100
   cc.rate_limiter.reset_interval_in_minutes:
     description: "The interval in minutes after which a user's available API requests will be reset"
