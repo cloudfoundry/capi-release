@@ -359,7 +359,7 @@ properties:
 
   cc.ccng_monit_http_healthcheck_timeout_per_retry:
     default: 2
-    description: "The amount of time to wait before an HTTP request from the Cloud Controller monit health check is closed. Enter value in seconds."
+    description: "The amount of time in seconds to wait before an HTTP request from the Cloud Controller monit health check is closed"
 
   cc.jobs.global.timeout_in_seconds:
     description: "The longest any job can take before it is cancelled unless overridden per job"
@@ -687,10 +687,10 @@ properties:
     description: "Verify that the database SSL certificate matches the host to which the connection is attempted"
   ccdb.read_timeout:
     default: 3600
-    description: "The read timeout in seconds for query responses, passed directly to the Sequel gem - see https://github.com/jeremyevans/sequel/blob/master/doc/opening_databases.rdoc for details. The default timeout is 3600 seconds."
+    description: "The read timeout in seconds for query responses, passed directly to the Sequel gem - see https://github.com/jeremyevans/sequel/blob/master/doc/opening_databases.rdoc for details"
   ccdb.connection_validation_timeout:
     default: 3600
-    description: "The period in seconds after which idle connections are validated, passed directly to the Sequel gem - see http://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_validator_rb.html for details.  Note that setting this to -1 results in an additional query whenever connections are checked out from the pool, which can have performance implications. The default timeout is 3600 seconds."
+    description: "The period in seconds after which idle connections are validated, passed directly to the Sequel gem - see http://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_validator_rb.html for details.  Note that setting this to -1 results in an additional query whenever connections are checked out from the pool, which can have performance implications"
   ccdb.max_migration_duration_in_minutes:
     description: "the maximum time migrations should be allowed to run before job startup should error"
     default: 20160
@@ -1022,10 +1022,10 @@ properties:
     description: "Use rate limiting for UAA-authenticated endpoints per user or client"
     default: false
   cc.rate_limiter.general_limit:
-    description: "The number of requests that a user or client is allowed to make over an hour-long interval for all endpoints that do not have a custom limit. The default number is 2000."
+    description: "The number of requests that a user or client is allowed to make over an hour-long interval for all endpoints that do not have a custom limit"
     default: 2000
   cc.rate_limiter.unauthenticated_limit:
-    description: "The number of requests that an unauthenticated client is allowed to make over an hour-long interval. The default number is 100."
+    description: "The number of requests that an unauthenticated client is allowed to make over an hour-long interval"
     default: 100
   cc.rate_limiter.reset_interval_in_minutes:
     description: "The interval in minutes after which a user's available API requests will be reset"

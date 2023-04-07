@@ -105,13 +105,13 @@ properties:
     description: "How old a service usage event should stay in cloud controller database before being cleaned up"
     default: 31
   cc.audit_events.cutoff_age_in_days:
-    description: "The age at which audit events are pruned from the Cloud Controller database. The default value is 31 days."
+    description: "The age at which audit events are pruned from the Cloud Controller database"
     default: 31
   cc.failed_jobs.cutoff_age_in_days:
     description: "How old a failed job should stay in cloud controller database before being cleaned up"
     default: 31
   cc.completed_tasks.cutoff_age_in_days:
-    description: "The age at which completed tasks are pruned from the Cloud Controller database. The default value is 31 days."
+    description: "The age at which completed tasks are pruned from the Cloud Controller database"
     default: 31
 
   cc.pending_droplets.frequency_in_seconds:
