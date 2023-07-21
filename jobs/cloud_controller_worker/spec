@@ -30,9 +30,6 @@ templates:
   mutual_tls.key.erb: config/certs/mutual_tls.key
   uaa_ca.crt.erb: config/certs/uaa_ca.crt
   db_ca.crt.erb: config/certs/db_ca.crt
-  copilot_ca.crt.erb: config/certs/copilot_ca.crt
-  copilot.crt.erb: config/certs/copilot.crt
-  copilot.key.erb: config/certs/copilot.key
 
 packages:
   - capi_utils
@@ -49,9 +46,6 @@ consumes:
   optional: true
 - name: credhub
   type: credhub
-  optional: true
-- name: cloud_controller_to_copilot_conn
-  type: cloud_controller_to_copilot_conn
   optional: true
 - name: cloud_controller_internal
   type: cloud_controller_internal

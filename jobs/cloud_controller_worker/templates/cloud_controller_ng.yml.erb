@@ -327,17 +327,6 @@ credential_references:
 
 perform_blob_cleanup: <%= p("cc.perform_blob_cleanup") %>
 
-<% if_link("cloud_controller_to_copilot_conn") do |copilot_conn| %>
-copilot:
-  enabled: <%= link("cloud_controller_internal").p("copilot.enabled") %>
-  host: <%= link("cloud_controller_internal").p("copilot.host") %>
-  port: <%= copilot_conn.p("listen_port_for_cloud_controller") %>
-  temporary_istio_domains: <%= link("cloud_controller_internal").p("copilot.temporary_istio_domains") %>
-  client_ca_file: /var/vcap/jobs/cloud_controller_worker/config/certs/copilot_ca.crt
-  client_key_file: /var/vcap/jobs/cloud_controller_worker/config/certs/copilot.key
-  client_chain_file: /var/vcap/jobs/cloud_controller_worker/config/certs/copilot.crt
-<% end %>
-
 system_domain: <%= p("system_domain") %>
 system_hostnames: <%= link("cloud_controller_internal").p("cc.system_hostnames") %>
 

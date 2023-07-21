@@ -61,9 +61,6 @@ templates:
   validate_encryption_keys.sh.erb: bin/validate_encryption_keys
   db_ca.crt.erb: config/certs/db_ca.crt
   credhub_ca.crt.erb: config/certs/credhub_ca.crt
-  copilot_ca.crt.erb: config/certs/copilot_ca.crt
-  copilot.crt.erb: config/certs/copilot.crt
-  copilot.key.erb: config/certs/copilot.key
   prom_scraper_config.yml.erb: config/prom_scraper_config.yml
 
 packages:
@@ -211,12 +208,6 @@ provides:
   - cc.uaa.client_timeout
   - cc.internal_route_vip_range
   - cc.volume_services_enabled
-  - copilot.client_ca_file
-  - copilot.client_chain_file
-  - copilot.client_key_file
-  - copilot.enabled
-  - copilot.host
-  - copilot.temporary_istio_domains
   - credhub_api.ca_cert
   - credhub_api.hostname
   - release_level_backup
@@ -237,9 +228,6 @@ consumes:
   optional: true
 - name: credhub
   type: credhub
-  optional: true
-- name: cloud_controller_to_copilot_conn
-  type: cloud_controller_to_copilot_conn
   optional: true
 - name: log-cache
   type: log-cache
@@ -1186,22 +1174,6 @@ properties:
   cc.log_audit_events:
     default: true
     description: "Log audit events"
-
-  copilot.enabled:
-    description: "Enable communication with CF Copilot. Must be enabled when using Envoy for ingress routing."
-    default: false
-  copilot.host:
-    description: "The FQDN to reach CF Copilot"
-    default: copilot.service.cf.internal
-  copilot.client_ca_file:
-    description: "PEM-encoded CA cert used to sign CF Copilot's server cert"
-  copilot.client_key_file:
-    description: "PEM-encoded Client key for communication with CF Copilot"
-  copilot.client_chain_file:
-    description: "PEM-encoded Client cert chain for communication with CF Copilot"
-  copilot.temporary_istio_domains:
-    description: "Array of domains (strings) to be used for routes propagated to the Envoy/Istio routing tier. These routes will not be propagated to Gorouter."
-    default: []
 
   cc.experimental.thin_server.thread_pool_size:
     description: "How many threads a single cloud controller instance's thin server will attempt to use. Alter at your own peril."

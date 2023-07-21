@@ -135,16 +135,7 @@ module Bosh
           Link.new(name: 'database', instances: [LinkInstance.new(address: 'some-other-database-address')])
         end
 
-        let(:copilot_link) do
-          Link.new(
-            name: 'cloud_controller_to_copilot_conn',
-            properties: {
-              'listen_port_for_cloud_controller' => 12_345
-            }
-          )
-        end
-
-        let(:links) { [db_link, copilot_link] }
+        let(:links) { [db_link] }
 
         describe 'config/cloud_controller_ng.yml' do
           let(:template) { job.template('config/cloud_controller_ng.yml') }
@@ -197,30 +188,6 @@ module Bosh
                   { 'internal' => true, 'name' => 'foo.brook-sentry.capi.land' },
                   { 'internal' => true, 'name' => 'bar.some.internal' },
                   'baz.capi.land'
-                ])
-              end
-            end
-          end
-
-          describe 'temporary_istio_domains' do
-            context 'when an entry is an array of domains' do
-              before do
-                merged_manifest_properties['copilot'] ||= {}
-                merged_manifest_properties['copilot']['temporary_istio_domains'] = [
-                  'brook-sentry.capi.land',
-                  [
-                    'mesh.apps.internal',
-                    'mesh.apps.other.internal'
-                  ]
-                ]
-              end
-
-              it 'flattens the array of domains' do
-                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['copilot']['temporary_istio_domains']).to eq([
-                  'brook-sentry.capi.land',
-                  'mesh.apps.internal',
-                  'mesh.apps.other.internal'
                 ])
               end
             end

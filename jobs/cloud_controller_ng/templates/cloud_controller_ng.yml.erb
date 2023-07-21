@@ -504,17 +504,6 @@ diego:
 perm:
   enabled: false
 
-<% if_link("cloud_controller_to_copilot_conn") do |copilot_conn| %>
-copilot:
-  enabled: <%= p("copilot.enabled") %>
-  host: <%= p("copilot.host") %>
-  port: <%= copilot_conn.p("listen_port_for_cloud_controller") %>
-  temporary_istio_domains: <%= p("copilot.temporary_istio_domains").flatten %>
-  client_ca_file: /var/vcap/jobs/cloud_controller_ng/config/certs/copilot_ca.crt
-  client_key_file: /var/vcap/jobs/cloud_controller_ng/config/certs/copilot.key
-  client_chain_file: /var/vcap/jobs/cloud_controller_ng/config/certs/copilot.crt
-<% end %>
-
 max_labels_per_resource: <%= p("cc.max_labels_per_resource") %>
 max_annotations_per_resource: <%= p("cc.max_annotations_per_resource") %>
 

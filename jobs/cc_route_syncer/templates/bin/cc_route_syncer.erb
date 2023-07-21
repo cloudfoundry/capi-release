@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-source /var/vcap/jobs/cc_route_syncer/bin/ruby_version.sh
-cd /var/vcap/packages/cloud_controller_ng/cloud_controller_ng
-exec bundle exec rake route_syncer:start

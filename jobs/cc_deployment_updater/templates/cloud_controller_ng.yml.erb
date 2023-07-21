@@ -101,17 +101,6 @@ database_encryption:
   pbkdf2_hmac_iterations: <%= link("cloud_controller_internal").p("cc.database_encryption.experimental_pbkdf2_hmac_iterations") %>
 <% end %>
 
-<% if_link("cloud_controller_to_copilot_conn") do |copilot_conn| %>
-copilot:
-  enabled: <%= link("cloud_controller_internal").p("copilot.enabled") %>
-  host: <%= link("cloud_controller_internal").p("copilot.host") %>
-  port: <%= copilot_conn.p("listen_port_for_cloud_controller") %>
-  temporary_istio_domains: <%= link("cloud_controller_internal").p("copilot.temporary_istio_domains") %>
-  client_ca_file: /var/vcap/jobs/cc_deployment_updater/config/certs/copilot_ca.crt
-  client_key_file: /var/vcap/jobs/cc_deployment_updater/config/certs/copilot.key
-  client_chain_file: /var/vcap/jobs/cc_deployment_updater/config/certs/copilot.crt
-<% end %>
-
 <%
 file_server_url = p("cc.diego.file_server_url")
 if_link("file_server") do |file_server|
