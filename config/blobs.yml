@@ -1,7 +1,7 @@
-expat/expat-2.3.0.tar.bz2:
-  size: 533513
-  object_id: 20689f9c-8d1a-464f-54eb-5386806cfd47
-  sha: sha256:f122a20eada303f904d5e0513326c5b821248f2d4d2afbf5c6f1339e511c0586
+expat/expat-2.5.0.tar.bz2:
+  size: 569205
+  object_id: 970ccd16-75ac-4c55-5280-c00c4aa8f6cc
+  sha: sha256:6f0e6e01f7b30025fa05c85fdad1e5d0ec7fd35d9f61b22f34998de11969ff67
 mariadb_connector_c/mariadb-connector-c-3.3.5-src.tar.gz:
   size: 1392609
   object_id: ca059f02-93a8-491b-74cb-44dcc0a59bbc
@@ -70,10 +70,10 @@ nginx/newrelic_nginx_agent-1.2.1.tar.gz:
   size: 5222
   object_id: c63358f6-574a-4e20-9d2b-7e1450368b6d
   sha: sha256:a5a7f9b3a7e20302943b1dd448d9b725cf3cb28d774d79f618aab7c4ddeea52b
-nginx/nginx-1.21.6.tar.gz:
-  size: 1073364
-  object_id: 70f0dcea-e96a-4522-4a6c-588d551b7397
-  sha: sha256:66dc7081488811e9f925719e34d1b4504c2801c81dee2920e5452a86b11405ae
+nginx/nginx-1.25.2.tar.gz:
+  size: 1214903
+  object_id: 09cbde3f-4123-4091-778e-555347700100
+  sha: sha256:05dd6d9356d66a74e61035f2a42162f8c754c97cf1ba64e7a801ba158d6c0711
 nginx/nginx-dav-ext-module-3.0.0.tar.gz:
   size: 14558
   object_id: 44648d53-c24b-45e4-4434-007713aa5fe7
