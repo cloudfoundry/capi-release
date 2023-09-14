@@ -1,7 +1,7 @@
-expat/expat-2.5.0.tar.bz2:
-  size: 569205
-  object_id: 970ccd16-75ac-4c55-5280-c00c4aa8f6cc
-  sha: sha256:6f0e6e01f7b30025fa05c85fdad1e5d0ec7fd35d9f61b22f34998de11969ff67
+expat/expat-2.3.0.tar.bz2:
+  size: 533513
+  object_id: 20689f9c-8d1a-464f-54eb-5386806cfd47
+  sha: sha256:f122a20eada303f904d5e0513326c5b821248f2d4d2afbf5c6f1339e511c0586
 mariadb_connector_c/mariadb-connector-c-3.3.5-src.tar.gz:
   size: 1392609
   object_id: ca059f02-93a8-491b-74cb-44dcc0a59bbc
@@ -70,10 +70,10 @@ nginx/newrelic_nginx_agent-1.2.1.tar.gz:
   size: 5222
   object_id: c63358f6-574a-4e20-9d2b-7e1450368b6d
   sha: sha256:a5a7f9b3a7e20302943b1dd448d9b725cf3cb28d774d79f618aab7c4ddeea52b
-nginx/nginx-1.24.0.tar.gz:
-  size: 1112471
-  object_id: 9f4b0776-b3cc-4f0b-4fbc-e92e9123ab90
-  sha: sha256:77a2541637b92a621e3ee76776c8b7b40cf6d707e69ba53a940283e30ff2f55d
+nginx/nginx-1.21.6.tar.gz:
+  size: 1073364
+  object_id: 70f0dcea-e96a-4522-4a6c-588d551b7397
+  sha: sha256:66dc7081488811e9f925719e34d1b4504c2801c81dee2920e5452a86b11405ae
 nginx/nginx-dav-ext-module-3.0.0.tar.gz:
   size: 14558
   object_id: 44648d53-c24b-45e4-4434-007713aa5fe7
@@ -82,10 +82,10 @@ nginx/nginx-upload-module-2.3.0.tar.gz:
   size: 40139
   object_id: 2f8f59a7-8e90-4bf5-67d8-1637924ab331
   sha: sha256:c86e318addb9c88d70fdbd58ff1f6ef6f404a93070f6db8017a1f880c97946c4
-nginx/pcre2-10.42.tar.gz:
-  size: 2397194
-  object_id: 674bb628-9cde-4f9f-5584-d6bffba72844
-  sha: sha256:c33b418e3b936ee3153de2c61cc638e7e4fe3156022a5c77d0711bcbb9d64f1f
+nginx/pcre-8.45.tar.gz:
+  size: 2096552
+  object_id: a90f9f20-e23b-4755-59c7-101197325dab
+  sha: sha256:4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09
 postgres/postgresql-11.21.tar.gz:
   size: 26792160
   object_id: f09b27ec-4351-499d-6414-8d5656e7f45c

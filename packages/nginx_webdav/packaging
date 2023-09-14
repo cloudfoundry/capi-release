@@ -1,9 +1,9 @@
 set -e -x
 
 echo "Extracting expat..."
-tar xvf expat/expat-2.5.0.tar.bz2
+tar xvf expat/expat-2.3.0.tar.bz2
 
-pushd expat-2.5.0
+pushd expat-2.3.0
     ./configure
 
     make
@@ -12,21 +12,21 @@ pushd expat-2.5.0
 popd
 
 echo "Extracting pcre..."
-tar xzvf nginx/pcre2-10.42.tar.gz
+tar xzvf nginx/pcre-8.45.tar.gz
 
 echo "Extracting nginx..."
-tar xzvf nginx/nginx-1.24.0.tar.gz
+tar xzvf nginx/nginx-1.21.6.tar.gz
 
 echo "Extracting webdav extensions"
 tar xzvf nginx/nginx-dav-ext-module-3.0.0.tar.gz
 
 echo "Building nginx..."
-pushd nginx-1.24.0
+pushd nginx-1.21.6
   ./configure \
     --prefix=${BOSH_INSTALL_TARGET} \
     --with-ld-opt="-L /usr/local/lib" \
     --with-cc-opt="-I /usr/local/include" \
-    --with-pcre=../pcre2-10.42 \
+    --with-pcre=../pcre-8.45 \
     --with-http_dav_module \
     --with-http_secure_link_module \
     --with-http_ssl_module \
