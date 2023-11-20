@@ -768,7 +768,7 @@ properties:
     default: "15M"
     description: "Maximum body size for nginx"
   cc.app_bits_max_body_size:
-    default: "1536M"
+    default: "2048M"
     description: "Maximum body size for nginx bits uploads"
 
   cc.default_app_log_rate_limit_in_bytes_per_second:
