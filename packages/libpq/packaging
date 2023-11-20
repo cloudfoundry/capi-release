@@ -2,7 +2,7 @@
 
 function main() {
   local pgversion
-  pgversion="postgresql-11.21"
+  pgversion="postgresql-11.22"
 
   tar xzf "postgres/${pgversion}.tar.gz"
 
