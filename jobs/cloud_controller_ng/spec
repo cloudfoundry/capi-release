@@ -69,6 +69,7 @@ packages:
   - nginx
   - nginx_newrelic_plugin
   - libpq
+  - jemalloc
   - mariadb_connector_c
   - ruby-3.2
 
@@ -158,6 +159,7 @@ provides:
   - cc.external_port
   - cc.external_protocol
   - cc.experimental.use_yjit_compiler
+  - cc.experimental.use_jemalloc_memory_allocator
   - cc.internal_service_hostname
   - cc.log_db_queries
   - cc.logging.format.timestamp
@@ -1185,6 +1187,10 @@ properties:
 
   cc.experimental.use_yjit_compiler:
     description: "Use Ruby's YJIT compiler when running Cloud Controller API servers and workers. This feature is experimental and not recommended. Please review the drawbacks and benefits of YJIT before enabling."
+    default: false
+
+  cc.experimental.use_jemalloc_memory_allocator:
+    description: "Enables jemalloc rather than malloc for Cloud Controller API servers and workers; however, it's experimental and not typically recommended, so review its pros and cons before use."
     default: false
 
   cc.experimental.use_puma_webserver:

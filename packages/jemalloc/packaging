@@ -1,0 +1,18 @@
+#!/bin/bash -eu
+
+function main() {
+  local jemalloc_version
+  jemalloc_version="5.3.0"
+
+  mkdir -p "jemalloc-${jemalloc_version}" && tar xf "jemalloc/jemalloc-${jemalloc_version}.tar.bz2" -C "jemalloc-${jemalloc_version}" --strip-components=1
+
+  pushd "jemalloc-${jemalloc_version}" > /dev/null
+    autoconf
+    ./configure --prefix="${BOSH_INSTALL_TARGET}"
+    make dist
+    make install
+
+  popd > /dev/null
+}
+
+main

@@ -9,6 +9,9 @@ wait_for_blobstore
 export RUBYOPT='--yjit'
 <% end %>
 
+<% if link("cloud_controller_internal").p('cc.experimental.use_jemalloc_memory_allocator') %>
+export LD_PRELOAD=/var/vcap/packages/jemalloc/lib/libjemalloc.so
+<% end %>
 
 cd /var/vcap/packages/cloud_controller_ng/cloud_controller_ng
 exec bundle exec rake jobs:generic[cc_global_worker.<%= spec.job.name %>.<%= spec.index %>.${INDEX}]
