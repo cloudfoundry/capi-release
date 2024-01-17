@@ -12,6 +12,8 @@ templates:
   write_users.erb:      config/write_users
   blobstore.crt.erb:    ssl/blobstore.crt
   blobstore.key.erb:    ssl/blobstore.key
+  blobstore_public.crt.erb:    ssl/blobstore_public.crt
+  blobstore_public.key.erb:    ssl/blobstore_public.key
   pre-start.sh.erb:     bin/pre-start
   backup.erb:           bin/bbr/backup
   restore.erb:          bin/bbr/restore
@@ -52,6 +54,9 @@ properties:
   blobstore.port:
     description: TCP port on which the blobstore server (nginx) listens
     default: 8080
+  blobstore.public_tls_port:
+    description: TCP port on which the blobstore server (nginx) listens
+    default: 8081
   blobstore.tls.port:
     description: The TCP port on which the internal blobstore server listens
     default: 4443
@@ -61,6 +66,13 @@ properties:
 
   blobstore.tls.private_key:
     description: The PEM-encoded private key for signing TLS/SSL traffic
+
+  blobstore.public_tls.cert:
+    description: The PEM-encoded certificate (optionally as a certificate chain) for serving blobs over TLS/SSL
+
+  blobstore.public_tls.private_key:
+    description: The PEM-encoded private key for signing TLS/SSL traffic
+
 
   blobstore.admin_users:
     description: |
