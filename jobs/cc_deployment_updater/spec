@@ -32,6 +32,7 @@ packages:
   - capi_utils
   - cloud_controller_ng
   - libpq
+  - jemalloc
   - mariadb_connector_c
   - ruby-3.2
 

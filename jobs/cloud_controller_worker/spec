@@ -37,6 +37,7 @@ packages:
   - nginx
   - nginx_newrelic_plugin
   - libpq
+  - jemalloc
   - mariadb_connector_c
   - ruby-3.2
 
