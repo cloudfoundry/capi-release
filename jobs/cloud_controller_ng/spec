@@ -386,6 +386,9 @@ properties:
     default: "/var/vcap/data/cloud_controller_ng/diagnostics"
     description: "The directory where operator requested diagnostic files should be placed"
 
+  cc.warn_if_below_min_cli_version:
+    description: "Show warning message if CF CLI version is below minimum."
+    default: false
   cc.min_cli_version:
     description: "Minimum version of the CF CLI to work with the API."
     default: ~

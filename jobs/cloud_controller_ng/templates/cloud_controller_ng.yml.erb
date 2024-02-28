@@ -115,6 +115,8 @@ name: <%= name %>
 route_services_enabled: <%= !p("router.route_services_secret").empty? %>
 volume_services_enabled: <%= p("cc.volume_services_enabled") %>
 
+warn_if_below_min_cli_version: <%= p("cc.warn_if_below_min_cli_version") %>
+
 info:
   name: "<%= p("name") %>"
   build: "<%= p("build") %>"

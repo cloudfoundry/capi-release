@@ -652,6 +652,24 @@ module Bosh
               end
             end
           end
+
+          describe 'warn_if_below_min_cli_version' do
+            context "when 'cc.warn_if_below_min_cli_version' is set" do
+              before { merged_manifest_properties['cc']['warn_if_below_min_cli_version'] = true }
+
+              it 'renders `true` into the ccng config' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['warn_if_below_min_cli_version']).to be(true)
+              end
+            end
+
+            context 'when warn_if_below_min_cli_version is not set' do
+              it 'renders `false` into the ccng config' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['warn_if_below_min_cli_version']).to be(false)
+              end
+            end
+          end
         end
       end
     end
