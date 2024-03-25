@@ -17,6 +17,7 @@ http {
   include       mime.types;
   default_type  text/html;
   server_tokens off;
+  more_clear_headers Server;
 
   client_body_temp_path /var/vcap/data/cloud_controller_ng/tmp/client_body_temp;
   proxy_temp_path       /var/vcap/data/cloud_controller_ng/tmp/proxy_temp;

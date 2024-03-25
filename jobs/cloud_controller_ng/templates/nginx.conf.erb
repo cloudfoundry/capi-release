@@ -15,6 +15,7 @@ http {
   include       mime.types;
   default_type  text/html;
   server_tokens off;
+  more_clear_headers Server;
 
   log_format main escape=<%= p("cc.nginx_access_log_escaping") %> '<%= p("cc.nginx_access_log_format").chomp %>';
 

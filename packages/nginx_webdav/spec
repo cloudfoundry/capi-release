@@ -5,3 +5,4 @@ files:
   - nginx/nginx-1.25.2.tar.gz
   - nginx/pcre-8.45.tar.gz
   - nginx/nginx-dav-ext-module-3.0.0.tar.gz
+  - nginx/headers-more-nginx-module-0.37.tar.gz

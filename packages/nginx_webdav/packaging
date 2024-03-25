@@ -20,8 +20,12 @@ tar xzvf nginx/nginx-1.25.2.tar.gz
 echo "Extracting webdav extensions"
 tar xzvf nginx/nginx-dav-ext-module-3.0.0.tar.gz
 
+echo "Extracting headers-more-nginx-module "
+tar xzvf nginx/headers-more-nginx-module-0.37.tar.gz
+
 echo "Building nginx..."
 pushd nginx-1.25.2
+  sed -i 's@<hr><center>nginx</center>@@g' src/http/ngx_http_special_response.c
   ./configure \
     --prefix=${BOSH_INSTALL_TARGET} \
     --with-ld-opt="-L /usr/local/lib" \
@@ -30,7 +34,8 @@ pushd nginx-1.25.2
     --with-http_dav_module \
     --with-http_secure_link_module \
     --with-http_ssl_module \
-    --add-module=../nginx-dav-ext-module-3.0.0
+    --add-module=../nginx-dav-ext-module-3.0.0 \
+    --add-module=../headers-more-nginx-module-0.37
 
   make
   make install

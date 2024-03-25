@@ -6,3 +6,4 @@ files:
 - nginx/nginx-upload-module-2.3.0.tar.gz
 - nginx/upload_module_put_support.patch
 - nginx/upload_module_new_nginx_support.patch
+- nginx/headers-more-nginx-module-0.37.tar.gz

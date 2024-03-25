@@ -19,6 +19,7 @@ http {
 
   access_log	  /var/vcap/sys/log/blobstore/access.log timed_combined;
   server_tokens off;
+  more_clear_headers Server;
 
   client_body_temp_path /var/vcap/data/blobstore/tmp/client_body_temp;
   proxy_temp_path /var/vcap/data/blobstore/tmp/proxy_temp;
