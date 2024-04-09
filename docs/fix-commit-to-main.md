@@ -40,7 +40,7 @@ Date:   Thu Sep 11 12:08:41 2014 -0700
 
 #### 2. Merge `main` to `develop` so that `develop` stays ahead of `main`
 
-This is normally done automatically by the [`merge-capi-release-main`](https://capi.ci.cf-app.com/teams/main/pipelines/capi/jobs/merge-capi-release-main/) CI job, but you'll want to do it manually so that you don't need to involve the ship-it pipes.
+This is normally done automatically by the [`merge-capi-release-main`](https://concourse.app-runtime-interfaces.ci.cloudfoundry.org/teams/capi-team/pipelines/capi/jobs/merge-capi-release-main) CI job, but you'll want to do it manually so that you don't need to involve the ship-it pipes.
 
 ```
 $ git checkout develop
