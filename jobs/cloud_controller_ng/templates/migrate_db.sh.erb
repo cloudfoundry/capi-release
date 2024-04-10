@@ -14,7 +14,7 @@ function migrate {
     echo "Running migrations"
     local result=1
     local counter=1
-    local num_retries=3
+    local num_retries=<%= p("cc.migration_max_retries") %>
     while [[ $counter -le $num_retries ]]; do
       echo "Running migration try number ${counter} of ${num_retries}"
       bundle exec rake db:migrate
