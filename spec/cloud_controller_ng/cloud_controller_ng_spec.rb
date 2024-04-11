@@ -670,6 +670,26 @@ module Bosh
               end
             end
           end
+
+          describe 'migration_psql_worker_memory_kb' do
+            context "when 'ccdb.migration_psql_worker_memory_kb' is present" do
+              before do
+                merged_manifest_properties['ccdb']['migration_psql_worker_memory_kb'] = 1234
+              end
+
+              it 'renders the correct value into the ccng config' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['db']['migration_psql_worker_memory_kb']).to eq(1234)
+              end
+            end
+
+            context "when 'ccdb.migration_psql_worker_memory_kb' is not present" do
+              it 'does not render migration_psql_worker_memory_kb into the ccng config' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['db']).not_to have_key(:migration_psql_worker_memory_kb)
+              end
+            end
+          end
         end
       end
     end

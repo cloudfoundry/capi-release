@@ -211,6 +211,9 @@ db: &db
 <% if_p("ccdb.connection_expiration_random_delay") do |expiration_delay| %>
   connection_expiration_random_delay: <%= expiration_delay %>
 <% end %>
+<% if_p("ccdb.migration_psql_worker_memory_kb") do |psql_worker_memory_kb| %>
+  migration_psql_worker_memory_kb: <%= psql_worker_memory_kb %>
+<% end %>
 
 <% scheme = p("login.protocol")
    system_domain = p("system_domain") %>

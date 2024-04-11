@@ -699,6 +699,8 @@ properties:
   ccdb.max_migration_statement_runtime_in_seconds:
     description: "effective for postgres only. The maximum time a statement is executed before it being canceled server side(by the DB). This prevents expensive and long running migrations that block normal operation of the Cloud Controller by canceling misbehaving migrations. An operator can decide to increase or decrease this time."
     default: 30
+  ccdb.migration_psql_worker_memory_kb:
+    description: "Allows operators to set the worker memory for PostgreSQL database migrations"
   ccdb.connection_expiration_timeout:
     description: "The period in seconds after which connections are expired (omit to never expire connections), passed directly to the Sequel gem - see https://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_expiration_rb.html for details"
   ccdb.connection_expiration_random_delay:
