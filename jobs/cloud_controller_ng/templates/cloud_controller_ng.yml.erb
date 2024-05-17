@@ -215,6 +215,7 @@ db: &db
 <% if_p("ccdb.migration_psql_worker_memory_kb") do |psql_worker_memory_kb| %>
   migration_psql_worker_memory_kb: <%= psql_worker_memory_kb %>
 <% end %>
+  enable_paginate_window: <%= p("ccdb.enable_paginate_window") %>
 
 <% scheme = p("login.protocol")
    system_domain = p("system_domain") %>

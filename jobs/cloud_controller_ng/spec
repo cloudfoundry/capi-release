@@ -715,6 +715,9 @@ properties:
     description: "The random delay in seconds to the expiration timeout (to prevent all connections being recreated simultaneously), passed directly to the Sequel gem - see https://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_expiration_rb.html for details"
   ccdb.max_connections_per_local_worker:
     description: "Maximum database connections per cc local worker, if not set the ccng value is used (default)"
+  ccdb.enable_paginate_window:
+    description: "Enable the usage of window pagination when querying the database, by default this behavior is enabled"
+    default: true
 
   uaa.cc.token_secret:
     description: "Symmetric secret used to decode uaa tokens."
