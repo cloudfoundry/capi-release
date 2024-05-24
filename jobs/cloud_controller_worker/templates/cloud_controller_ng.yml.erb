@@ -342,16 +342,6 @@ perform_blob_cleanup: <%= p("cc.perform_blob_cleanup") %>
 system_domain: <%= p("system_domain") %>
 system_hostnames: <%= link("cloud_controller_internal").p("cc.system_hostnames") %>
 
-<%
-  internal_vip_range =  p("cc.internal_route_vip_range")
-  raise StandardError.new("invalid cc.internal_route_vip_range: #{internal_vip_range}") unless internal_vip_range =~ /\A (?:\d{1,3}\.){3} \d{1,3} \/ \d{1,3} \z/x
-
-  parts = internal_vip_range.split(/[\.\/]/).map(&:to_i)
-  raise StandardError.new("invalid cc.internal_route_vip_range: #{internal_vip_range}") if parts[0..3].any? {|x| x > 255} || parts[4] > 32
-%>
-
-internal_route_vip_range: <%= internal_vip_range %>
-
 disable_private_domain_cross_space_context_path_route_sharing: <%= link("cloud_controller_internal").p("cc.disable_private_domain_cross_space_context_path_route_sharing") %>
 
 max_labels_per_resource: <%= link("cloud_controller_internal").p("cc.max_labels_per_resource") %>
