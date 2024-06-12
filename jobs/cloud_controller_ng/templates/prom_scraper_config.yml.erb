@@ -5,4 +5,6 @@ instance_id: <%= spec.id || spec.index.to_s %>
 scheme: https
 server_name: <%= p("cc.internal_service_hostname") %>
 path: /internal/v4/metrics
+labels:
+  origin: cc
 <% end -%>
