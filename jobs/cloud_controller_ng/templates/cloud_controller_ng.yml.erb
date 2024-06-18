@@ -479,7 +479,7 @@ rate_limiter_v2_api:
 
 <% if p("cc.experimental.use_puma_webserver") || p("cc.experimental.use_redis") %>
 redis:
-  socket: "/var/vcap/data/redis/redis.sock"
+  socket: "/var/vcap/data/valkey/valkey.sock"
 <% end %>
 
 <%

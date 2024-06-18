@@ -6,10 +6,10 @@ require 'bosh/template/test'
 module Bosh
   module Template
     module Test
-      describe 'redis job template rendering' do
+      describe 'valkey job template rendering' do
         let(:release_path) { File.join(File.dirname(__FILE__), '../..') }
         let(:release) { ReleaseDir.new(release_path) }
-        let(:job) { release.job('redis') }
+        let(:job) { release.job('valkey') }
         let(:spec) { job.instance_variable_get(:@spec) }
         let(:job_path) { job.instance_variable_get(:@job_path) }
         let(:cc_internal_properties) { { 'cc' => { 'experimental' => { 'use_puma_webserver' => false, 'use_redis' => false } } } }
@@ -22,7 +22,7 @@ module Bosh
             it 'renders the monit directives' do
               cc_internal_properties['cc']['experimental']['use_puma_webserver'] = true
               result = template.render({}, consumes: [link])
-              expect(result).to include('check process redis')
+              expect(result).to include('check process valkey')
             end
           end
 
@@ -30,7 +30,7 @@ module Bosh
             it 'renders the monit directives' do
               cc_internal_properties['cc']['experimental']['use_redis'] = true
               result = template.render({}, consumes: [link])
-              expect(result).to include('check process redis')
+              expect(result).to include('check process valkey')
             end
           end
 

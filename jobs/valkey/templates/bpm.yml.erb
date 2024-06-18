@@ -1,0 +1,16 @@
+---
+processes:
+- name: valkey
+  executable: /var/vcap/packages/valkey/valkey-server
+  args:
+    - --port
+    - 0
+    - --unixsocket
+    - /var/vcap/data/valkey/valkey.sock
+    - --save
+    - ""
+  ephemeral_disk: true
+  limits:
+    open_files: 10032
+  hooks:
+    pre_start: /var/vcap/jobs/valkey/bin/pre-start.sh

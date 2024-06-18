@@ -1,15 +1,15 @@
 ---
-name: redis
+name: valkey
 
-description: "Co-deployed Redis used for rate limiting and metrics"
+description: "Co-deployed Valkey used for rate limiting and metrics"
 
 templates:
   bpm.yml.erb: config/bpm.yml
   pre-start.sh.erb: bin/pre-start.sh
-  redis-cli.sh.erb: bin/redis-cli.sh
+  valkey-cli.sh.erb: bin/valkey-cli.sh
 
 packages:
-  - redis
+  - valkey
 
 consumes:
   - name: cloud_controller_internal

@@ -12,11 +12,11 @@ def mount_nfs_volume!(config)
   end
 end
 
-def mount_redis_volume!(config)
+def mount_valkey_volume!(config)
   if p("cc.experimental.use_puma_webserver") || p("cc.experimental.use_redis")
     config['additional_volumes'] = [] unless config.key?('additional_volumes')
     config['additional_volumes'] << {
-      "path" => "/var/vcap/data/redis",
+      "path" => "/var/vcap/data/valkey",
       "mount_only" => true,
     }
   end
@@ -77,7 +77,7 @@ if properties.env
     end
 end
 mount_nfs_volume!(cloud_controller_ng_config)
-mount_redis_volume!(cloud_controller_ng_config)
+mount_valkey_volume!(cloud_controller_ng_config)
 
 nginx_config = {
   "name" => "nginx",

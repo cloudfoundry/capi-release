@@ -1,4 +1,0 @@
----
-name: redis
-files:
-- redis/7.2.5.tar.gz

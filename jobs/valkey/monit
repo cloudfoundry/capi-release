@@ -3,10 +3,10 @@
   if cloud_controller_internal.p("cc.experimental.use_puma_webserver") || cloud_controller_internal.p("cc.experimental.use_redis")
 %>
 
-check process redis
-  with pidfile /var/vcap/sys/run/bpm/redis/redis.pid
-  start program "/var/vcap/jobs/bpm/bin/bpm start redis"
-  stop program "/var/vcap/jobs/bpm/bin/bpm stop redis"
+check process valkey
+  with pidfile /var/vcap/sys/run/bpm/valkey/valkey.pid
+  start program "/var/vcap/jobs/bpm/bin/bpm start valkey"
+  stop program "/var/vcap/jobs/bpm/bin/bpm stop valkey"
   group vcap
 
 <%

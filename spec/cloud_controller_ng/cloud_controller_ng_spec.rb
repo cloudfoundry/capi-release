@@ -572,7 +572,7 @@ module Bosh
               it 'renders the redis socket into the ccng config' do
                 merged_manifest_properties['cc']['experimental'] = { 'use_puma_webserver' => true }
                 template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['redis']['socket']).to eq('/var/vcap/data/redis/redis.sock')
+                expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
               end
             end
 
@@ -580,7 +580,7 @@ module Bosh
               it 'renders the redis socket into the ccng config' do
                 merged_manifest_properties['cc']['experimental'] = { 'use_redis' => true }
                 template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['redis']['socket']).to eq('/var/vcap/data/redis/redis.sock')
+                expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
               end
             end
 
