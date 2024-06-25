@@ -395,7 +395,7 @@ properties:
     description: "Show warning message if CF CLI version is below minimum."
     default: false
   cc.min_cli_version:
-    description: "Minimum version of the CF CLI to work with the API."
+    description: "Minimum version of the CF CLI to work with the API. Version number format: 3 groups of digits separated by '.' e.g. 8.0.0"
     default: ~
   cc.min_recommended_cli_version:
     description: "Minimum recommended version of the CF CLI."
