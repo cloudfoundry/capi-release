@@ -1239,7 +1239,7 @@ properties:
     default: false
 
   cc.experimental.use_redis:
-    description: "Use co-deployed Redis for rate limiting and metrics. If the Puma webserver is enabled, Redis will automatically be used."
+    description: "Use co-deployed Valkey (Redis fork) for rate limiting and metrics. If the Puma webserver is enabled, Valkey will automatically be used."
     default: false
 
   cc.puma.workers:

@@ -567,9 +567,9 @@ module Bosh
             end
           end
 
-          describe 'redis config' do
+          describe 'valkey config' do
             context 'when the puma webserver is used' do
-              it 'renders the redis socket into the ccng config' do
+              it 'renders the valkey socket into the ccng config' do
                 merged_manifest_properties['cc']['experimental'] = { 'use_puma_webserver' => true }
                 template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
                 expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
