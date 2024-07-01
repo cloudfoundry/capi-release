@@ -1,6 +1,4 @@
 ---
 name: redis
 
-templates: []
-
 properties: {}
