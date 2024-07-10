@@ -1,0 +1,37 @@
+# Workflow to trigger building docs in CCNG
+# since capi-release is the repo with GitHub Releases and corresponding tags
+# inspired by: https://medium.com/hostspaceng/triggering-workflows-in-another-repository-with-github-actions-4f581f8e0ceb
+# docs: https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
+
+name: Trigger CCNG docs workflow
+
+on:
+  # TODO add correct trigger on tags / releases
+  push:
+    branches:
+    - develop
+    - trigger-docs
+  # allow manual run
+  workflow_dispatch:
+
+jobs:
+  trigger-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger v2 docs build
+        run: |
+          # Set the required variables
+          target_repo="pivotalgeorge/cloud_controller_ng"
+          target_ref="gh-pages"
+          #version="${{ github.event.inputs.target_version }}"
+          version=7
+          target_workflow="gh_pages_docs_v2.yml"
+  
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.CCNG_USER_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/${target_repo}/actions/workflows/${target_workflow}/dispatches \
+            -d "{\"ref\": \"${target_ref}\", \"inputs\": {\"version\": \"${version}\"}}"
