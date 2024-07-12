@@ -40,7 +40,10 @@ jobs:
       uses: actions/configure-pages@v5
     - name: Render index template
       working-directory: cloud_controller_ng/docs/v2
-      run: ./render.sh
+      run: |
+        pwd
+        ls
+        ./render.sh
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
