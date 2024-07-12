@@ -34,8 +34,7 @@ jobs:
     - name: Checkout CCNG
       uses: actions/checkout@v4
       with:
-        repository: pivotalgeorge/cloud_controller_ng
-        ref: gh-pages
+        repository: cloudfoundry/cloud_controller_ng
         path: cloud_controller_ng
     - name: Setup Pages
       uses: actions/configure-pages@v5
