@@ -4,7 +4,6 @@ on:
   push:
     branches:
     - main
-    - gh-pages-v2-docs
   # Allow manual workflow run
   workflow_dispatch:
 
@@ -23,9 +22,6 @@ concurrency:
 jobs:
   push-v2:
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: cloud_controller_ng/docs/v2
     steps:
     - name: Checkout this repo
       uses: actions/checkout@v4
