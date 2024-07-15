@@ -79,7 +79,8 @@ module Bosh
               'custom_metric_tag_prefix_list' => ['heck.yes.example.com'],
               'jobs' => {
                 'enable_dynamic_job_priorities' => false
-              }
+              },
+              'app_log_revision' => true
             }
           }
         end

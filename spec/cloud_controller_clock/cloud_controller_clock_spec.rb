@@ -78,7 +78,8 @@ module Bosh
               'disable_private_domain_cross_space_context_path_route_sharing' => false,
               'cpu_weight_min_memory' => 128,
               'cpu_weight_max_memory' => 8192,
-              'custom_metric_tag_prefix_list' => ['heck.yes.example.com']
+              'custom_metric_tag_prefix_list' => ['heck.yes.example.com'],
+              'app_log_revision' => true
             }
           }
         end
