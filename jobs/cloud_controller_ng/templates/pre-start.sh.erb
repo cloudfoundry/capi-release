@@ -121,6 +121,12 @@ function start_bosh_dns_or_consul {
   fi
 }
 
+function stack_check() {
+  pushd "${CC_PACKAGE_DIR}/cloud_controller_ng" > /dev/null
+    chpst -u vcap:vcap "${SCRIPT_DIR}/stack_check"
+  popd > /dev/null
+}
+
 function start_consul_agent {
   # Start the consul agent so we can connect to a database url provided by consul dns
   if [ -f /var/vcap/jobs/consul_agent/bin/agent_ctl ]; then
@@ -138,6 +144,7 @@ function main {
   <% if spec.bootstrap && p('cc.run_prestart_migrations') %>
   perform_migration
   seed_db
+  stack_check
     <% if p('cc.database_encryption.skip_validation') %>
     echo "Skipping DB encryption validation"
     <% else %>
