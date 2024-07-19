@@ -142,9 +142,9 @@ function main {
   start_bosh_dns_or_consul
   setup_directories
   <% if spec.bootstrap && p('cc.run_prestart_migrations') %>
+  stack_check
   perform_migration
   seed_db
-  stack_check
     <% if p('cc.database_encryption.skip_validation') %>
     echo "Skipping DB encryption validation"
     <% else %>
