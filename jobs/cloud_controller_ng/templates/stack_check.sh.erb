@@ -9,10 +9,8 @@ export STACKS_YML="/var/vcap/jobs/cloud_controller_ng/config/stacks.yml"
 export NRCONFIG=/var/vcap/jobs/cloud_controller_ng/config/newrelic.yml
 
 function stack_check {
-      local result=1
       bundle exec rake stacks:stack_check
-      $result=$?
-      exit $result
+      exit $?
 }
 
 function main {

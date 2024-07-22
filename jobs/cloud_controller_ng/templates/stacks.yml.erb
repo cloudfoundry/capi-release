@@ -1,2 +1,3 @@
 default: <%= p("cc.default_stack") %>
 stacks: <%= p("cc.stacks", []).to_yaml.gsub("---", "") %>
+deprecated_stacks: <%= p("cc.deprecated_stacks", []).to_yaml.gsub("---", "") %>

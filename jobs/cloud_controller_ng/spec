@@ -55,6 +55,7 @@ templates:
   shutdown_drain.rb.erb: bin/shutdown_drain
   ruby_version.sh.erb: bin/ruby_version.sh
   seed_db.sh.erb: bin/seed_db
+  stack_check.sh.erb: bin/stack_check
   setup_local_blobstore.sh.erb: bin/setup_local_blobstore.sh
   stacks.yml.erb: config/stacks.yml
   uaa_ca.crt.erb: config/certs/uaa_ca.crt
@@ -226,6 +227,7 @@ provides:
   - cc.experimental.use_puma_webserver
   - cc.experimental.use_redis
   - cc.app_log_revision
+  - cc.deprecated_stacks
 
 consumes:
 - name: database
@@ -467,6 +469,10 @@ properties:
   cc.default_stack:
     default: "cflinuxfs4"
     description: "The default stack to use if no custom stack is specified for an app."
+  cc.deprecated_stacks:
+    description: |
+      List of deprecated/unsupported stack names. If a stack name is in this list, Cloud Controller bootstrap VM
+      will fail to start up if the stack is found in the database but is not explicitly listed in the stacks property.
 
   cc.staging_upload_user:
     description: "User name used to access internal endpoints of Cloud Controller to upload files when staging"
