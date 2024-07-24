@@ -684,3 +684,6 @@ RSpec/MultipleExpectations:
 
 RSpec/ExampleLength:
   Enabled: false
+
+Gemspec/AddRuntimeDependency: # new in 1.65
+  Enabled: true
