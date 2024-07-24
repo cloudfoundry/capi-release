@@ -4,7 +4,10 @@ source 'https://rubygems.org'
 
 group :develop do
   gem 'rubocop'
+  gem 'rubocop-capybara'
+  gem 'rubocop-factory_bot'
   gem 'rubocop-rspec'
+  gem 'rubocop-rspec_rails'
 end
 
 group :test do
