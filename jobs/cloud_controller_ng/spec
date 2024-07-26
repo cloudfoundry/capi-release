@@ -472,8 +472,8 @@ properties:
   cc.deprecated_stacks:
     description: |
       List of deprecated/unsupported stack names. 
-      If a stack in this list exists in the database, the Cloud Controller bootstrap VM
-      will fail to start. The only exception to this behavior occurs when the deprecated stack is explicitly listed in cc.stacks
+      If a stack in this list exists in the database, the Cloud Controller bootstrap VM will fail to start. 
+      The only exception to this behavior occurs when the deprecated stack is explicitly listed in cc.stacks.
 
   cc.staging_upload_user:
     description: "User name used to access internal endpoints of Cloud Controller to upload files when staging"
