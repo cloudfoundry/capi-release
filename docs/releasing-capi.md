@@ -27,4 +27,5 @@ Currently, we have to manually create the release notes.
   - Tell folks you shipped it.
       - Announce in #capi
       - Any specific teams/people who were waiting on the release
+  - If there were any changes to the V3 docs, [run the github action](https://github.com/cloudfoundry/cloud_controller_ng/actions/workflows/deploy_v3_docs.yml)
   - If there were any changes to the V2 docs, push the V2 docs app via [CI](https://concourse.app-runtime-interfaces.ci.cloudfoundry.org/teams/capi-team/pipelines/capi/jobs/update-and-push-docs-v2)
