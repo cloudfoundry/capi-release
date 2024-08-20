@@ -3,5 +3,5 @@ name: nginx_webdav
 files:
   - expat/expat-2.5.0.tar.bz2
   - nginx/nginx-1.25.2.tar.gz
-  - nginx/pcre2-10.44.tar.gz
+  - nginx/pcre-8.45.tar.gz
   - nginx/nginx-dav-ext-module-3.0.0.tar.gz

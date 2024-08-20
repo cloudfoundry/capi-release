@@ -12,7 +12,7 @@ pushd expat-2.5.0
 popd
 
 echo "Extracting pcre..."
-tar xzvf nginx/pcre2-10.44.tar.gz
+tar xzvf nginx/pcre-8.45.tar.gz
 
 echo "Extracting nginx..."
 tar xzvf nginx/nginx-1.25.2.tar.gz
@@ -31,7 +31,7 @@ pushd nginx-1.25.2
     --prefix=${BOSH_INSTALL_TARGET} \
     --with-ld-opt="-L /usr/local/lib" \
     --with-cc-opt="-I /usr/local/include" \
-    --with-pcre=../pcre2-10.44 \
+    --with-pcre=../pcre-8.45 \
     --with-http_dav_module \
     --with-http_secure_link_module \
     --with-http_ssl_module \
