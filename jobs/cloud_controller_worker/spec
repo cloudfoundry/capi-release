@@ -109,7 +109,7 @@ properties:
     default: false
     description: "Log fog requests and responses."
   cc.log_audit_events:
-    default: false
+    default: true
     description: "Log audit events"
 
   cc.staging_timeout_in_seconds:
