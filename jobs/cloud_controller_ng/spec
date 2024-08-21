@@ -378,6 +378,8 @@ properties:
     description: "When enabled, the priority of asynchronous jobs will be increased by 1 for each active asynchronous job for that user. 
                   This prevents that a single user, who creates many asynchronous jobs, slows down job execution for other users."
     default: false
+  cc.jobs.number_of_worker_threads:
+    description: "If set multiple delayed job workers will be started as threads in the same process. If not set there will be one delayed job worker per process."
 
   cc.temporary_disable_deployments:
     description: "Do not allow the API client to create app deployments (temporary)"

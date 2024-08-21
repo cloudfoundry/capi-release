@@ -249,6 +249,17 @@ module Bosh
             end
           end
         end
+
+        describe 'cc_jobs_number_of_worker_threads' do
+          context "when 'cc.jobs.number_of_worker_threads' is set" do
+            before { manifest_properties['cc']['jobs'] = { 'number_of_worker_threads' => 7 } }
+
+            it 'renders the correct value into the ccng config' do
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['jobs']['number_of_worker_threads']).to eq(7)
+            end
+          end
+        end
       end
     end
   end
