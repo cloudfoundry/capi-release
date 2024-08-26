@@ -4,7 +4,16 @@ check process cc_deployment_updater
   start program "/var/vcap/jobs/bpm/bin/bpm start cc_deployment_updater"
   stop program "/var/vcap/jobs/bpm/bin/bpm stop cc_deployment_updater"
   group vcap
+  <% if_p("cc.thresholds.api.alert_if_above_memory_percent") do %>
+  if totalmem > <%= p("cc.thresholds.api.alert_if_above_memory_percent") %> % for 3 cycles then alert
+  <% end.else do %>
   if totalmem > <%= p("cc.thresholds.api.alert_if_above_mb") %> Mb for 3 cycles then alert
+  <% end %>
+
+  <% if_p("cc.thresholds.api.restart_if_consistently_above_memory_percent") do %>
+  if totalmem > <%= p("cc.thresholds.api.restart_if_consistently_above_memory_percent") %> % for 15 cycles then restart
+  <% end.else do %>
   if totalmem > <%= p("cc.thresholds.api.restart_if_consistently_above_mb") %> Mb for 15 cycles then restart
   if totalmem > <%= p("cc.thresholds.api.restart_if_above_mb") %> Mb for 3 cycles then restart
+  <% end %>
 <% end %>

@@ -446,6 +446,10 @@ properties:
   cc.thresholds.worker.restart_if_above_mb:
     description: "The CC will restart if memory remains above this threshold for 3 monit cycles"
     default: 512
+  cc.thresholds.worker.alert_if_above_memory_percent:
+    description: "The CC will alert if memory remains above this percent threshold for 3 monit cycles. If specified, this threshold is used over `cc.thresholds.worker.alert_if_above_mb`. Value must be percent integer, e.g. '80'."
+  cc.thresholds.worker.restart_if_consistently_above_memory_percent:
+    description: "The CC will restart if memory remains above this percent threshold for 15 monit cycles. If specified, this threshold is used over `cc.thresholds.worker.restart_if_consistently_above_mb` and `restart_if_above_mb`. Value must be percent integer, e.g. '80'."
 
   cc.disable_custom_buildpacks:
     default: false

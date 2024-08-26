@@ -4,7 +4,16 @@ check process cloud_controller_worker_<%= index %>
   start program "/var/vcap/jobs/bpm/bin/bpm start cloud_controller_worker -p worker_<%= index %>"
   stop program "/var/vcap/jobs/bpm/bin/bpm stop cloud_controller_worker -p worker_<%= index %>"
   group vcap
+  <% if_p("cc.thresholds.worker.alert_if_above_memory_percent") do %>
+  if totalmem > <%= p("cc.thresholds.worker.alert_if_above_memory_percent") %> % for 3 cycles then alert
+  <% end.else do %>
   if totalmem > <%= p("cc.thresholds.worker.alert_if_above_mb") %> Mb for 3 cycles then alert
+  <% end %>
+
+  <% if_p("cc.thresholds.worker.restart_if_consistently_above_memory_percent") do %>
+  if totalmem > <%= p("cc.thresholds.worker.restart_if_consistently_above_memory_percent") %> % for 15 cycles then restart
+  <% end.else do %>
   if totalmem > <%= p("cc.thresholds.worker.restart_if_consistently_above_mb") %> Mb for 15 cycles then restart
   if totalmem > <%= p("cc.thresholds.worker.restart_if_above_mb") %> Mb for 3 cycles then restart
+  <% end %>
 <% end %>

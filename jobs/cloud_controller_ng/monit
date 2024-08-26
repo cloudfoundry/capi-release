@@ -3,9 +3,19 @@ check process cloud_controller_ng
   start program "/var/vcap/jobs/bpm/bin/bpm start cloud_controller_ng"
   stop program "/var/vcap/jobs/bpm/bin/bpm stop cloud_controller_ng"
   group vcap
+
+  <% if_p("cc.thresholds.api.alert_if_above_memory_percent") do %>
+  if totalmem > <%= p("cc.thresholds.api.alert_if_above_memory_percent") %> % for 3 cycles then alert
+  <% end.else do %>
   if totalmem > <%= p("cc.thresholds.api.alert_if_above_mb") %> Mb for 3 cycles then alert
+  <% end %>
+
+  <% if_p("cc.thresholds.api.restart_if_consistently_above_memory_percent") do %>
+  if totalmem > <%= p("cc.thresholds.api.restart_if_consistently_above_memory_percent") %> % for <%= p("cc.thresholds.api.restart_if_consistently_above_mb_cycles") %> cycles then exec "/var/vcap/jobs/cloud_controller_ng/bin/restart_drain"
+  <% end.else do %>
   if totalmem > <%= p("cc.thresholds.api.restart_if_consistently_above_mb") %> Mb for <%= p("cc.thresholds.api.restart_if_consistently_above_mb_cycles") %> cycles then exec "/var/vcap/jobs/cloud_controller_ng/bin/restart_drain"
   if totalmem > <%= p("cc.thresholds.api.restart_if_above_mb") %> Mb for 3 cycles then exec "/var/vcap/jobs/cloud_controller_ng/bin/restart_drain"
+  <% end %>
 
 check process ccng_monit_http_healthcheck
   with pidfile /var/vcap/sys/run/bpm/cloud_controller_ng/ccng_monit_http_healthcheck.pid
@@ -21,9 +31,19 @@ check process cloud_controller_worker_local_<%= index %>
   start program "/var/vcap/jobs/bpm/bin/bpm start cloud_controller_ng -p local_worker_<%= index %>"
   stop program "/var/vcap/jobs/bpm/bin/bpm stop cloud_controller_ng -p local_worker_<%= index %>"
   group vcap
+  <% if_p("cc.thresholds.api.alert_if_above_memory_percent") do %>
+  if totalmem > <%= p("cc.thresholds.api.alert_if_above_memory_percent") %> % for 3 cycles then alert
+  <% end.else do %>
   if totalmem > <%= p("cc.thresholds.api.alert_if_above_mb") %> Mb for 3 cycles then alert
+  <% end %>
+
+  <% if_p("cc.thresholds.api.restart_if_consistently_above_memory_percent") do %>
+  if totalmem > <%= p("cc.thresholds.api.restart_if_consistently_above_memory_percent") %> % 15 cycles then restart
+  <% end.else do %>
   if totalmem > <%= p("cc.thresholds.api.restart_if_consistently_above_mb") %> Mb for 15 cycles then restart
   if totalmem > <%= p("cc.thresholds.api.restart_if_above_mb") %> Mb for 3 cycles then restart
+  <% end %>
+
 <% end %>
 
 check process nginx_cc

@@ -129,6 +129,10 @@ properties:
   cc.thresholds.api.restart_if_above_mb:
     description: "The CC will restart if memory remains above this threshold for 3 monit cycles"
     default: 3750
+  cc.thresholds.api.alert_if_above_memory_percent:
+    description: "The cc will alert if memory remains above this percent threshold for 3 monit cycles. If specified, this threshold is used over `cc.thresholds.api.alert_if_above_mb`. Value must be percent integer, e.g. '80'."
+  cc.thresholds.api.restart_if_consistently_above_memory_percent:
+    description: "The cc will restart if memory remains above this percent threshold for 15 monit cycles. If specified, this threshold is used over `cc.thresholds.api.restart_if_consistently_above_mb` and `restart_if_above_mb`. Value must be percent integer, e.g. '80'."
 
   cc.diego.bbs.url:
     description: "URL of the BBS Server"

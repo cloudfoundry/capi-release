@@ -946,7 +946,7 @@ properties:
     description: "The cc will restart if memory remains above this threshold for n monit cycles"
     default: 3500
   cc.thresholds.api.restart_if_consistently_above_mb_cycles:
-    description: "Monit cycles for 'restart_if_consistently_above_mb'. Default is 15 cycles"
+    description: "Monit cycles for 'restart_if_consistently_above_mb' and `restart_if_consistently_above_memory_percent`. Default is 15 cycles"
     default: 15
   cc.thresholds.api.restart_if_above_mb:
     description: "The cc will restart if memory remains above this threshold for 3 monit cycles"
@@ -954,6 +954,10 @@ properties:
   cc.thresholds.api.restart_if_monit_connection_test_consistently_fails_cycles:
     description: "Number of monit cycles until a failing unixsocket test triggers a restart. Default is 60 cycles (i.e. 10 minutes)"
     default: 60
+  cc.thresholds.api.alert_if_above_memory_percent:
+    description: "The cc will alert if memory remains above this percent threshold for 3 monit cycles. If specified, this threshold is used over `cc.thresholds.api.alert_if_above_mb`. Value must be percent integer, e.g. '80'."
+  cc.thresholds.api.restart_if_consistently_above_memory_percent:
+    description: "The cc will restart if memory remains above this percent threshold for n monit cycles. If specified, this threshold is used over `cc.thresholds.api.restart_if_consistently_above_mb` and `restart_if_above_mb`. Value must be percent integer, e.g. '80'."
 
   dea_next.staging_memory_limit_mb:
     description: "Memory limit in MB for staging tasks"
