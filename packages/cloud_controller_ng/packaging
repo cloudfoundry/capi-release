@@ -12,3 +12,6 @@ export PATH=$libpq_dir/bin:$PATH
 bundle config build.pg --with-pg-lib=$libpq_dir/lib --with-pg-include=$libpq_dir/include
 bundle config build.mysql2 --with-mysql-config=$mariadb_dir/bin/mariadb_config-wrapper.sh
 bosh_bundle_local --deployment
+
+# remove world-writable permissions on files if a gem has them
+chmod -R o-w ../gem_home
