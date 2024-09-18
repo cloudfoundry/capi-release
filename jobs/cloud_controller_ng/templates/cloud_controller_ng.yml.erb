@@ -84,9 +84,11 @@ jobs:
   global:
     timeout_in_seconds: <%= p("cc.jobs.global.timeout_in_seconds") %>
   queues:
-    <% if_p("cc.jobs.queues.cc_generic.timeout_in_seconds") do |timeout| %>
+    <% if (timeout = p("cc.jobs.queues.cc_generic.timeout_in_seconds", nil)) %>
     cc_generic:
       timeout_in_seconds: <%= timeout %>
+    <% else %>
+    {}
     <% end %>
   <% if_p("cc.jobs.blobstore_delete.timeout_in_seconds") do |timeout| %>
   blobstore_delete:

@@ -726,7 +726,7 @@ module Bosh
             context 'when cc.jobs.queues is not set' do
               it 'does not render ccng config' do
                 template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['jobs']['queues']).to be_nil
+                expect(template_hash['jobs']['queues']).to eq({})
               end
             end
 
