@@ -25,6 +25,7 @@ templates:
   droplets_ca_cert.pem.erb: config/certs/droplets_ca_cert.pem
   packages_ca_cert.pem.erb: config/certs/packages_ca_cert.pem
   resource_pool_ca_cert.pem.erb: config/certs/resource_pool_ca_cert.pem
+  shutdown_drain.rb.erb: bin/shutdown_drain
   mutual_tls_ca.crt.erb: config/certs/mutual_tls_ca.crt
   mutual_tls.crt.erb: config/certs/mutual_tls.crt
   mutual_tls.key.erb: config/certs/mutual_tls.key
@@ -123,9 +124,6 @@ properties:
     description: "Maximum health check timeout (in seconds) that can be set for the app"
   cc.jobs.priorities:
     description: "List of hashes containing delayed jobs 'display_name' and its desired priority. This will overwrite the default priority of ccng"
-  cc.jobs.number_of_worker_threads:
-    description: "If set multiple delayed job workers will be started as threads in the same process. If not set there will be one delayed job worker per process."
-
   cc.staging_upload_user:
     description: "User name used to access internal endpoints of Cloud Controller to upload files when staging"
   cc.staging_upload_password:
@@ -418,6 +416,12 @@ properties:
   cc.jobs.generic.number_of_workers:
     default: 1
     description: "Number of generic cloud_controller_worker workers"
+  cc.jobs.generic.number_of_worker_threads:
+    description: "Optional. Number of worker threads to start for each generic cloud_controller_worker worker process"
+  cc.jobs.generic.worker_grace_period_seconds:
+    description: "The number of seconds to wait for each generic cloud_controller_worker worker process to finish processing jobs before forcefully shutting it down"
+    default: 15
+
 
   uaa.clients.cc-service-dashboards.secret:
     description: "Used for generating SSO clients for service brokers."

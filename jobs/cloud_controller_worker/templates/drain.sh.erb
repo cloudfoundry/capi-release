@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 
-for i in {1..<%=p("cc.jobs.generic.number_of_workers")%>}; do
-  /var/vcap/jobs/bpm/bin/bpm stop cloud_controller_worker -p "worker_${i}" 1>&2
-done
+source /var/vcap/jobs/cloud_controller_worker/bin/ruby_version.sh
+export CLOUD_CONTROLLER_NG_CONFIG=/var/vcap/jobs/cloud_controller_worker/config/cloud_controller_ng.yml
+
+/var/vcap/jobs/cloud_controller_worker/bin/shutdown_drain 1>&2
+
+pushd /var/vcap/packages/cloud_controller_ng/cloud_controller_ng > /dev/null || exit 1
+  for i in {1..<%=p("cc.jobs.generic.number_of_workers")%>}; do
+    # shellcheck disable=SC2093
+    bundle exec rake jobs:clear_pending_locks[cc_global_worker.<%= spec.job.name %>.<%= spec.index %>."${i}"] 1>&2
+  done
+popd > /dev/null || exit 1
 
 echo 0 # tell bosh not wait for anything
 exit 0

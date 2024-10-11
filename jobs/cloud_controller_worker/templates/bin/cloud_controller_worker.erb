@@ -14,4 +14,8 @@ export LD_PRELOAD=/var/vcap/packages/jemalloc/lib/libjemalloc.so
 <% end %>
 
 cd /var/vcap/packages/cloud_controller_ng/cloud_controller_ng
-exec bundle exec rake jobs:generic[cc_global_worker.<%= spec.job.name %>.<%= spec.index %>.${INDEX}]
+
+<% num_threads = p("cc.jobs.generic.number_of_worker_threads", nil) %>
+<% grace_period = p("cc.jobs.generic.worker_grace_period_seconds") %>
+
+exec bundle exec rake jobs:generic[cc_global_worker.<%= spec.job.name %>.<%= spec.index %>.${INDEX}<%= ",#{num_threads},#{grace_period.to_i - 1}" if num_threads %>]
