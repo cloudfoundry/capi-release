@@ -1,7 +1,6 @@
 # How to cut a CAPI release
 1. Make sure we're ready to release:
   - Are there any outstanding bugs or issues that need to be pulled in before we can release?
-  - Are all the blobstore fanout tests green?
   - Ensure that API versions have been bumped after releasing the previous version ([v3 API version](https://github.com/cloudfoundry/cloud_controller_ng/blob/main/config/version), [v2 API version](https://github.com/cloudfoundry/cloud_controller_ng/blob/main/config/version_v2), [v2 API version in docs](https://github.com/cloudfoundry/cloud_controller_ng/blob/main/docs/v2/info/get_info.html)).
 2. Ship it in CI:
   - Log in to [CAPI CI](https://concourse.app-runtime-interfaces.ci.cloudfoundry.org/teams/capi-team/pipelines/capi)
