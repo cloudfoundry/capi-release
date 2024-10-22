@@ -53,6 +53,7 @@ module Bosh
                         'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
                         'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
                         'username' => 'blobstore-user' } },
+                'experimental' => {},
                 'install_buildpacks' =>
                   [{ 'name' => 'staticfile_buildpack', 'package' => 'staticfile-buildpack' },
                    { 'name' => 'java_buildpack', 'package' => 'java-buildpack' },
