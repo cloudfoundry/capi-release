@@ -53,6 +53,7 @@ module Bosh
                         'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
                         'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
                         'username' => 'blobstore-user' } },
+                'experimental' => {},
                 'install_buildpacks' =>
                   [{ 'name' => 'staticfile_buildpack', 'package' => 'staticfile-buildpack' },
                    { 'name' => 'java_buildpack', 'package' => 'java-buildpack' },
@@ -104,8 +105,7 @@ module Bosh
                   [{ 'description' => 'Cloud Foundry Linux-based filesystem',
                      'name' => 'cflinuxfs4' }],
                 'staging_upload_password' => '((cc_staging_upload_password))',
-                'staging_upload_user' => 'staging_user',
-                'experimental' => {} },
+                'staging_upload_user' => 'staging_user' },
             'ccdb' =>
               { 'databases' => [{ 'name' => 'cloud_controller', 'tag' => 'cc' }],
                 'db_scheme' => 'mysql',
