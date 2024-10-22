@@ -488,6 +488,8 @@ rate_limiter_v2_api:
   per_process_admin_limit: <%= (p("cc.rate_limiter_v2_api.admin_limit").to_f/instances).ceil %>
   reset_interval_in_minutes: <%= p("cc.rate_limiter_v2_api.reset_interval_in_minutes") %>
 
+temporary_enable_v2: <%= p("cc.temporary_enable_v2") %>
+
 <% if p("cc.experimental.use_puma_webserver") || p("cc.experimental.use_redis") %>
 redis:
   socket: "/var/vcap/data/valkey/valkey.sock"
