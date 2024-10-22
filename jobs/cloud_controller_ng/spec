@@ -224,11 +224,11 @@ provides:
   - ssl.skip_cert_verify
   - system_domain
   - uaa.clients.cc_routing.secret
-  - cc.experimental.use_puma_webserver
   - cc.experimental.use_redis
   - cc.app_log_revision
   - cc.app_instance_stopping_state
   - cc.deprecated_stacks
+  - cc.temporary_enable_deprecated_thin_webserver
   
 consumes:
 - name: database
@@ -1257,10 +1257,6 @@ properties:
     description: "Enables jemalloc rather than malloc for Cloud Controller API servers and workers; however, it's experimental and not typically recommended, so review its pros and cons before use."
     default: false
 
-  cc.experimental.use_puma_webserver:
-    description: "Use Puma in place of Thin as the webserver. This may increase performance as Puma forks Cloud Controller processes to avoid relying on threads"
-    default: false
-
   cc.experimental.use_redis:
     description: "Use co-deployed Valkey (Redis fork) for rate limiting and metrics. If the Puma webserver is enabled, Valkey will automatically be used."
     default: false
@@ -1282,4 +1278,8 @@ properties:
 
   cc.legacy_md5_buildpack_paths_enabled:
     description: "Enable legacy MD5 buildpack paths. If disabled, xxhash64 is used for calculating paths in buildpack image layers."
+    default: false
+
+  cc.temporary_enable_deprecated_thin_webserver:
+    description: "Use deprecated Thin webserver. Please note that when using Thin instead of Puma you miss out on the following benefits: Better resource utilization, well maintained, more performant.."
     default: false
