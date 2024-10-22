@@ -1263,14 +1263,15 @@ properties:
 
   cc.puma.workers:
     description: "Number of workers for Puma webserver."
-    default: 3
+    default: 2
 
   cc.puma.max_threads:
     description: "Maximum number of threads per Puma webserver worker."
-    default: 2
+    default: 10
 
   cc.puma.max_db_connections_per_process:
-    description: "Maximum database connections for Puma per process (main + Puma workers), if not set the ccng value is used (default)"
+    description: "Maximum database connections for Puma per process (main + Puma workers)."
+    default: 10
 
   cc.update_metric_tags_on_rename:
     description: "Enable sending a Desired LRP update when an app is renamed"
