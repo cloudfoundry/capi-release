@@ -104,7 +104,8 @@ module Bosh
                   [{ 'description' => 'Cloud Foundry Linux-based filesystem',
                      'name' => 'cflinuxfs4' }],
                 'staging_upload_password' => '((cc_staging_upload_password))',
-                'staging_upload_user' => 'staging_user' },
+                'staging_upload_user' => 'staging_user',
+                'temporary_enable_v2' => true },
             'ccdb' =>
               { 'databases' => [{ 'name' => 'cloud_controller', 'tag' => 'cc' }],
                 'db_scheme' => 'mysql',
@@ -497,6 +498,24 @@ module Bosh
               template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links + [self_link]))
               expect(template_hash['rate_limiter_v2_api']['per_process_general_limit']).to eq(334)
               expect(template_hash['rate_limiter_v2_api']['per_process_admin_limit']).to eq(667)
+            end
+          end
+
+          describe 'enable v2 API' do
+            it 'is by default true' do
+              template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(template_hash['temporary_enable_v2']).to be(true)
+            end
+
+            context 'when explicitly disabled' do
+              before do
+                merged_manifest_properties['cc']['temporary_enable_v2'] = false
+              end
+
+              it 'is false' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['temporary_enable_v2']).to be(false)
+              end
             end
           end
 
