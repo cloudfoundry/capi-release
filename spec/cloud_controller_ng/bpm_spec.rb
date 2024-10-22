@@ -112,33 +112,40 @@ module Bosh
             end
           end
 
-          context 'when the puma webserver is used' do
-            it 'mounts the valkey volume into the ccng job container' do
-              template_hash = YAML.safe_load(template.render({ 'cc' => { 'experimental' => { 'use_puma_webserver' => true } } }, consumes: {}))
+          describe 'valkey config' do
+            context 'when the puma webserver is used' do
+              it 'mounts the valkey volume into the ccng job container' do
+                template_hash = YAML.safe_load(template.render({}, consumes: {}))
 
-              results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
-              expect(results.length).to eq(1)
-              expect(valkey_volume_mounted?(results[0])).to be_truthy
+                results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
+                expect(results.length).to eq(1)
+                expect(valkey_volume_mounted?(results[0])).to be_truthy
+              end
             end
-          end
 
-          context "when 'cc.experimental.use_redis' is set to 'true'" do
-            it 'mounts the valkey volume into the ccng job container' do
-              template_hash = YAML.safe_load(template.render({ 'cc' => { 'experimental' => { 'use_redis' => true } } }, consumes: {}))
+            context 'when thin webserver is used' do
+              context "when 'cc.experimental.use_redis' is set to 'true'" do
+                it 'mounts the valkey volume into the ccng job container' do
+                  template_hash = YAML.safe_load(
+                    template.render({ 'cc' => { 'temporary_enable_deprecated_thin_webserver' => true,
+                                                'experimental' => { 'use_redis' => true } } }, consumes: {})
+                  )
 
-              results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
-              expect(results.length).to eq(1)
-              expect(valkey_volume_mounted?(results[0])).to be_truthy
-            end
-          end
+                  results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
+                  expect(results.length).to eq(1)
+                  expect(valkey_volume_mounted?(results[0])).to be_truthy
+                end
+              end
 
-          context "when neither the puma webserver is used nor 'cc.experimental.use_redis' is set to 'true'" do
-            it 'does not mount the valkey volume into the ccng job container' do
-              template_hash = YAML.safe_load(template.render({}, consumes: {}))
+              context "when 'cc.experimental.use_redis' is not set'" do
+                it 'mounts the valkey volume into the ccng job container' do
+                  template_hash = YAML.safe_load(template.render({ 'cc' => { 'temporary_enable_deprecated_thin_webserver' => true } }, consumes: {}))
 
-              results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
-              expect(results.length).to eq(1)
-              expect(valkey_volume_mounted?(results[0])).to be_falsey
+                  results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
+                  expect(results.length).to eq(1)
+                  expect(valkey_volume_mounted?(results[0])).to be_falsey
+                end
+              end
             end
           end
         end
