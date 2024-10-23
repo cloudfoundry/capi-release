@@ -163,7 +163,6 @@ provides:
   - cc.external_port
   - cc.external_protocol
   - cc.experimental.use_yjit_compiler
-  - cc.experimental.use_jemalloc_memory_allocator
   - cc.internal_service_hostname
   - cc.jobs.enable_dynamic_job_priorities
   - cc.log_db_queries
@@ -224,11 +223,11 @@ provides:
   - ssl.skip_cert_verify
   - system_domain
   - uaa.clients.cc_routing.secret
-  - cc.experimental.use_puma_webserver
   - cc.experimental.use_redis
   - cc.app_log_revision
   - cc.app_instance_stopping_state
   - cc.deprecated_stacks
+  - cc.temporary_enable_deprecated_thin_webserver
   
 consumes:
 - name: database
@@ -1253,28 +1252,21 @@ properties:
     description: "Use Ruby's YJIT compiler when running Cloud Controller API servers and workers. This feature is experimental and not recommended. Please review the drawbacks and benefits of YJIT before enabling."
     default: false
 
-  cc.experimental.use_jemalloc_memory_allocator:
-    description: "Enables jemalloc rather than malloc for Cloud Controller API servers and workers; however, it's experimental and not typically recommended, so review its pros and cons before use."
-    default: false
-
-  cc.experimental.use_puma_webserver:
-    description: "Use Puma in place of Thin as the webserver. This may increase performance as Puma forks Cloud Controller processes to avoid relying on threads"
-    default: false
-
   cc.experimental.use_redis:
     description: "Use co-deployed Valkey (Redis fork) for rate limiting and metrics. If the Puma webserver is enabled, Valkey will automatically be used."
     default: false
 
   cc.puma.workers:
     description: "Number of workers for Puma webserver."
-    default: 3
+    default: 2
 
   cc.puma.max_threads:
     description: "Maximum number of threads per Puma webserver worker."
-    default: 2
+    default: 10
 
   cc.puma.max_db_connections_per_process:
-    description: "Maximum database connections for Puma per process (main + Puma workers), if not set the ccng value is used (default)"
+    description: "Maximum database connections for Puma per process (main + Puma workers)."
+    default: 10
 
   cc.update_metric_tags_on_rename:
     description: "Enable sending a Desired LRP update when an app is renamed"
@@ -1282,4 +1274,8 @@ properties:
 
   cc.legacy_md5_buildpack_paths_enabled:
     description: "Enable legacy MD5 buildpack paths. If disabled, xxhash64 is used for calculating paths in buildpack image layers."
+    default: false
+
+  cc.temporary_enable_deprecated_thin_webserver:
+    description: "Use deprecated Thin webserver. Please note that when using Thin instead of Puma you miss out on the following benefits: Better resource utilization, well maintained and more performant. Thin will be removed in a future release."
     default: false

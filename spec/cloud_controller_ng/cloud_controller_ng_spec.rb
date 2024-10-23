@@ -53,6 +53,7 @@ module Bosh
                         'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
                         'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
                         'username' => 'blobstore-user' } },
+                'experimental' => {},
                 'install_buildpacks' =>
                   [{ 'name' => 'staticfile_buildpack', 'package' => 'staticfile-buildpack' },
                    { 'name' => 'java_buildpack', 'package' => 'java-buildpack' },
@@ -589,24 +590,27 @@ module Bosh
           describe 'valkey config' do
             context 'when the puma webserver is used' do
               it 'renders the valkey socket into the ccng config' do
-                merged_manifest_properties['cc']['experimental'] = { 'use_puma_webserver' => true }
                 template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
                 expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
               end
             end
 
-            context "when 'cc.experimental.use_redis' is set to 'true'" do
-              it 'renders the redis socket into the ccng config' do
-                merged_manifest_properties['cc']['experimental'] = { 'use_redis' => true }
-                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
+            context 'when thin webserver is used' do
+              context "when 'cc.experimental.use_redis' is set to 'true'" do
+                it 'renders the valkey socket into the ccng config' do
+                  merged_manifest_properties['cc']['temporary_enable_deprecated_thin_webserver'] = true
+                  merged_manifest_properties['cc']['experimental']['use_redis'] = true
+                  template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                  expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
+                end
               end
-            end
 
-            context "when neither the puma webserver is used nor 'cc.experimental.use_redis' is set to 'true'" do
-              it 'does not render the redis socket into the ccng config' do
-                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash).not_to have_key('redis')
+              context "when 'cc.experimental.use_redis' is not set'" do
+                it 'does not render the valkey socket into the ccng config' do
+                  merged_manifest_properties['cc']['temporary_enable_deprecated_thin_webserver'] = true
+                  template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                  expect(template_hash).not_to have_key('redis')
+                end
               end
             end
           end
