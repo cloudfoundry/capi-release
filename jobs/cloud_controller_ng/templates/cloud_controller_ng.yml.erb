@@ -53,7 +53,7 @@ local_route: <%= p('cc.nginx.ip') %>
 external_port: <%= p("cc.external_port") %>
 tls_port: <%= p("cc.tls_port") %>
 internal_service_hostname: <%= p("cc.internal_service_hostname") %>
-webserver: <%= p("cc.temporary_enable_deprecated_thin_webserver") ? 'thin' : 'puma' %>
+webserver: <%= p("cc.experimental.use_puma_webserver") ? 'puma' : 'thin' %>
 puma:
   workers: <%= p("cc.puma.workers") %>
   max_threads: <%= p("cc.puma.max_threads") %>
@@ -490,7 +490,7 @@ rate_limiter_v2_api:
 
 temporary_enable_v2: <%= p("cc.temporary_enable_v2") %>
 
-<% unless p("cc.temporary_enable_deprecated_thin_webserver") && !p("cc.experimental.use_redis") %>
+<% if p("cc.experimental.use_puma_webserver") || p("cc.experimental.use_redis") %>
 redis:
   socket: "/var/vcap/data/valkey/valkey.sock"
 <% end %>

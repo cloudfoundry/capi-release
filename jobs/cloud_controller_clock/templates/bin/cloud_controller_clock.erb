@@ -7,6 +7,8 @@ cd /var/vcap/packages/cloud_controller_ng/cloud_controller_ng
 export RUBYOPT='--yjit'
 <% end %>
 
+<% if link("cloud_controller_internal").p('cc.experimental.use_jemalloc_memory_allocator') %>
 export LD_PRELOAD=/var/vcap/packages/jemalloc/lib/libjemalloc.so
+<% end %>
 
 exec bundle exec rake clock:start

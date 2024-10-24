@@ -2,7 +2,9 @@
 
 set -eu
 
-export LD_PRELOAD=/var/vcap/packages/jemalloc/lib/libjemalloc.so
+<% if link("cloud_controller_internal").p('cc.experimental.use_jemalloc_memory_allocator') %>
+  export LD_PRELOAD=/var/vcap/packages/jemalloc/lib/libjemalloc.so
+<% end %>
 
 rotate() {
   export CLOUD_CONTROLLER_NG_CONFIG=/var/vcap/jobs/rotate_cc_database_key/config/cloud_controller_ng.yml
