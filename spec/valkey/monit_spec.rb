@@ -12,7 +12,7 @@ module Bosh
         let(:job) { release.job('valkey') }
         let(:spec) { job.instance_variable_get(:@spec) }
         let(:job_path) { job.instance_variable_get(:@job_path) }
-        let(:cc_internal_properties) { { 'cc' => { 'temporary_enable_deprecated_thin_webserver' => false, 'experimental' => { 'use_redis' => false } } } }
+        let(:cc_internal_properties) { { 'cc' => { 'experimental' => { 'use_puma_webserver' => false, 'use_redis' => false } } } }
         let(:link) { Link.new(name: 'cloud_controller_internal', properties: cc_internal_properties) }
 
         describe 'monit' do
@@ -20,27 +20,24 @@ module Bosh
 
           context 'when the puma webserver is used' do
             it 'renders the monit directives' do
+              cc_internal_properties['cc']['experimental']['use_puma_webserver'] = true
               result = template.render({}, consumes: [link])
               expect(result).to include('check process valkey')
             end
           end
 
-          context 'when thin webserver is used' do
-            context "when 'cc.experimental.use_redis' is set to 'true'" do
-              it 'renders the monit directives' do
-                cc_internal_properties['cc']['temporary_enable_deprecated_thin_webserver'] = true
-                cc_internal_properties['cc']['experimental']['use_redis'] = true
-                result = template.render({}, consumes: [link])
-                expect(result).to include('check process valkey')
-              end
+          context "when 'cc.experimental.use_redis' is set to 'true'" do
+            it 'renders the monit directives' do
+              cc_internal_properties['cc']['experimental']['use_redis'] = true
+              result = template.render({}, consumes: [link])
+              expect(result).to include('check process valkey')
             end
+          end
 
-            context "when 'cc.experimental.use_redis' is set to 'false'" do
-              it 'does not render the monit directives' do
-                cc_internal_properties['cc']['temporary_enable_deprecated_thin_webserver'] = true
-                result = template.render({}, consumes: [link])
-                expect(result.strip).to eq('')
-              end
+          context "when neither the puma webserver is used nor 'cc.experimental.use_redis' is set to 'true'" do
+            it 'does not render the monit directives' do
+              result = template.render({}, consumes: [link])
+              expect(result.strip).to eq('')
             end
           end
         end
