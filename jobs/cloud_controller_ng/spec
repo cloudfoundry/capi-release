@@ -223,6 +223,7 @@ provides:
   - ssl.skip_cert_verify
   - system_domain
   - uaa.clients.cc_routing.secret
+  - cc.experimental.use_puma_webserver
   - cc.experimental.use_redis
   - cc.app_log_revision
   - cc.app_instance_stopping_state
@@ -1277,5 +1278,11 @@ properties:
     default: false
 
   cc.temporary_enable_deprecated_thin_webserver:
-    description: "Use deprecated Thin webserver. Please note that when using Thin instead of Puma you miss out on the following benefits: Better resource utilization, well maintained and more performant. Thin will be removed in a future release."
+    description: "Use deprecated Thin webserver. Please note that when using Thin instead of Puma you miss out on the following benefits: Better resource utilization, well maintained and more performant. Thin will be removed in a future release. `cc.experimental.use_puma_webserver` takes precedence over this."
     default: false
+
+
+# deprecated configuration
+
+  cc.experimental.use_puma_webserver:
+    description: "Deprecated as Puma is now the default. This config flag will be removed in the future. Currently it takes precedence over `cc.temporary_enable_deprecated_thin_webserver` i.e. when set to false Thin will be used."

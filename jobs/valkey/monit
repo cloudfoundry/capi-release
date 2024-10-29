@@ -1,6 +1,14 @@
 <%
+  def thin_webserver_enabled?(link)
+    link.if_p('cc.experimental.use_puma_webserver') do |prop|
+     return !prop
+    end
+
+    link.p('cc.temporary_enable_deprecated_thin_webserver')
+  end
+
   cloud_controller_internal = link("cloud_controller_internal")
-  unless cloud_controller_internal.p("cc.temporary_enable_deprecated_thin_webserver") && !cloud_controller_internal.p("cc.experimental.use_redis")
+  unless thin_webserver_enabled?(cloud_controller_internal) && !cloud_controller_internal.p("cc.experimental.use_redis")
 %>
 
 check process valkey

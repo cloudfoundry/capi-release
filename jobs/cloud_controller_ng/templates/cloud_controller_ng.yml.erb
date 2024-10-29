@@ -42,6 +42,14 @@
     end
     raise "Error for database_encryption: #{active_keys.length} were marked active. Only one key may be active"
   end
+
+  def thin_webserver_enabled?
+  if_p('cc.experimental.use_puma_webserver') do |prop|
+   return !prop
+  end
+
+  p('cc.temporary_enable_deprecated_thin_webserver')
+end
 %>
 ---
 #Actually NGX host and port
@@ -53,7 +61,7 @@ local_route: <%= p('cc.nginx.ip') %>
 external_port: <%= p("cc.external_port") %>
 tls_port: <%= p("cc.tls_port") %>
 internal_service_hostname: <%= p("cc.internal_service_hostname") %>
-webserver: <%= p("cc.temporary_enable_deprecated_thin_webserver") ? 'thin' : 'puma' %>
+webserver: <%= thin_webserver_enabled? ? 'thin' : 'puma' %>
 puma:
   workers: <%= p("cc.puma.workers") %>
   max_threads: <%= p("cc.puma.max_threads") %>
@@ -490,7 +498,7 @@ rate_limiter_v2_api:
 
 temporary_enable_v2: <%= p("cc.temporary_enable_v2") %>
 
-<% unless p("cc.temporary_enable_deprecated_thin_webserver") && !p("cc.experimental.use_redis") %>
+<% unless thin_webserver_enabled? && !p("cc.experimental.use_redis") %>
 redis:
   socket: "/var/vcap/data/valkey/valkey.sock"
 <% end %>
