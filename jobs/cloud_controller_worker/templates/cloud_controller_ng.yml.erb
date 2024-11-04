@@ -128,6 +128,8 @@ db: &db
 
 <% system_domain = p("system_domain") %>
 
+temporary_enable_v2: <%= p("cc.temporary_enable_v2") %>
+
 uaa:
   internal_url: <%= "https://#{p("cc.uaa.internal_url")}:#{p("uaa.ssl.port")}" %>
   ca_file: /var/vcap/jobs/cloud_controller_worker/config/certs/uaa_ca.crt

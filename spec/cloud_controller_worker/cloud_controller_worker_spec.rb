@@ -258,6 +258,24 @@ module Bosh
             end
           end
         end
+
+        describe 'enable v2 API' do
+          it 'is by default true' do
+            template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+            expect(template_hash['temporary_enable_v2']).to be(true)
+          end
+
+          context 'when explicitly disabled' do
+            before do
+              manifest_properties['cc']['temporary_enable_v2'] = false
+            end
+
+            it 'is false' do
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['temporary_enable_v2']).to be(false)
+            end
+          end
+        end
       end
     end
   end
