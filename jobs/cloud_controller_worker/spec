@@ -388,10 +388,6 @@ properties:
     default: false
     description: "Enable development features for monitoring and insight"
 
-  cc.temporary_enable_v2:
-    description: "Enable V2 endpoints"
-    default: true
-
   cc.newrelic.license_key:
     default: ~
     description: "The api key for NewRelic"

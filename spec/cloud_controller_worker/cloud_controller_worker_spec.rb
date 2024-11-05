@@ -80,10 +80,12 @@ module Bosh
               'jobs' => {
                 'enable_dynamic_job_priorities' => false
               },
-              'app_log_revision' => true
+              'app_log_revision' => true,
+              'temporary_enable_v2' => true
             }
           }
         end
+
         let(:cloud_controller_internal_link) do
           Link.new(name: 'cloud_controller_internal', properties:, instances: [LinkInstance.new(address: 'default_app_ssh_access')])
         end
@@ -263,17 +265,6 @@ module Bosh
           it 'is by default true' do
             template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
             expect(template_hash['temporary_enable_v2']).to be(true)
-          end
-
-          context 'when explicitly disabled' do
-            before do
-              manifest_properties['cc']['temporary_enable_v2'] = false
-            end
-
-            it 'is false' do
-              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
-              expect(template_hash['temporary_enable_v2']).to be(false)
-            end
           end
         end
       end
