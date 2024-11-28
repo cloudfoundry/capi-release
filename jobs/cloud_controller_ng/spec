@@ -1002,6 +1002,9 @@ properties:
   uaa.clients.cloud_controller_username_lookup.secret:
     description: "Used for fetching usernames from UAA"
 
+  uaa.clients.cloud_controller_shadow_user_creation.secret:
+    description: "Used for creating UAA shadow users when `cc.allow_user_creation_by_org_manager` is enabled."
+
   uaa.clients.cc_service_key_client.secret:
     description: "Used for fetching service key values from CredHub"
 
@@ -1282,6 +1285,8 @@ properties:
     description: "Use deprecated Thin webserver. Please note that when using Thin instead of Puma you miss out on the following benefits: Better resource utilization, well maintained and more performant. Thin will be removed in a future release. `cc.experimental.use_puma_webserver` takes precedence over this."
     default: false
 
+  cc.allow_user_creation_by_org_manager:
+    description: "Allow org managers to explicitly create UAA shadow users through /v3/users and implicitly through /v3/roles. `uaa.clients.cloud_controller_shadow_user_creation.secret` must be set."
 
 # deprecated configuration
 
