@@ -186,6 +186,7 @@ packages:
     <% end %>
   app_package_directory_key: <%= p("cc.packages.app_package_directory_key") %>
   max_package_size: <%= p("cc.packages.max_package_size") %>
+  max_valid_packages_stored: <%= link("cloud_controller_internal").p("cc.packages.max_valid_packages_stored") %>
   <% if_p("cc.packages.cdn") do %>
   cdn:
     uri: <%= p("cc.packages.cdn.uri") %>

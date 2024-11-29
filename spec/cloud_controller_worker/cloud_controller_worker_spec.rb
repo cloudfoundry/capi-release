@@ -81,7 +81,10 @@ module Bosh
                 'enable_dynamic_job_priorities' => false
               },
               'app_log_revision' => true,
-              'temporary_enable_v2' => true
+              'temporary_enable_v2' => true,
+              'packages' => {
+                'max_valid_packages_stored' => 5
+              }
             }
           }
         end
@@ -265,6 +268,13 @@ module Bosh
           it 'is by default true' do
             template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
             expect(template_hash['temporary_enable_v2']).to be(true)
+          end
+        end
+
+        describe 'max valid packages stored' do
+          it 'is set from cloud_controller_internal_link' do
+            template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+            expect(template_hash['packages']['max_valid_packages_stored']).to be(5)
           end
         end
       end

@@ -181,6 +181,7 @@ provides:
   - cc.packages.fog_gcp_storage_options
   - cc.packages.fog_connection
   - cc.packages.max_package_size
+  - cc.packages.max_valid_packages_stored
   - cc.packages.webdav_config.blobstore_timeout
   - cc.packages.webdav_config.ca_cert
   - cc.packages.webdav_config.password
