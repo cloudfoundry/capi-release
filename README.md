@@ -1,4 +1,4 @@
-[![slack.cloudfoundry.org](https://slack.cloudfoundry.org/badge.svg)](https://cloudfoundry.slack.com/messages/capi/)
+[slack.cloudfoundry.org](https://cloudfoundry.slack.com/messages/capi/)
 
 # Cloud Foundry CAPI Bosh Release
 
