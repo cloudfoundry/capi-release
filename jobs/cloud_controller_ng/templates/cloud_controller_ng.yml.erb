@@ -255,6 +255,12 @@ uaa:
   <% if_p("uaa.cc.token_secret2") do |token_secret2| %>
   symmetric_secret2: "<%= token_secret2 %>"
   <% end %>
+  clients:
+  <% if_p("uaa.clients.cloud_controller_shadow_user_creation.secret") do |secret| %>
+  - name: "cloud_controller_shadow_user_creation"
+    id: "cloud_controller_shadow_user_creation"
+    secret: <%= secret %>
+  <% end %>
 
 <% if p("routing_api.enabled") %>
 routing_api:
@@ -561,3 +567,7 @@ threadpool_size: <%= p("cc.experimental.thin_server.thread_pool_size") %>
 default_app_lifecycle: buildpack
 custom_metric_tag_prefix_list: <%= p("cc.custom_metric_tag_prefix_list") %>
 update_metric_tags_on_rename: <%= p("cc.update_metric_tags_on_rename") %>
+
+<% if_p("cc.allow_user_creation_by_org_manager") do |allow_user_creation| %>
+allow_user_creation_by_org_manager: <%= allow_user_creation %>
+<% end %>
