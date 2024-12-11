@@ -8,3 +8,10 @@ require 'cloud_controller/drain'
 @drain = VCAP::CloudController::Drain.new('/var/vcap/sys/log/cloud_controller_ng')
 @drain.shutdown_nginx('/var/vcap/sys/run/bpm/cloud_controller_ng/nginx.pid', <%= p("cc.nginx_drain_timeout") %>)
 @drain.shutdown_cc('/var/vcap/sys/run/bpm/cloud_controller_ng/cloud_controller_ng.pid')
+@threads = []
+@grace_period_in_seconds = <%= p("cc.jobs.local.local_worker_grace_period_seconds") %>
+(1..<%= p("cc.jobs.local.number_of_workers") %>).each do |i|
+  @threads << Thread.new { @drain.shutdown_delayed_worker("/var/vcap/sys/run/bpm/cloud_controller_ng/local_worker_#{i}.pid", @grace_period_in_seconds.to_i) }
+end
+
+@threads.each(&:join)
