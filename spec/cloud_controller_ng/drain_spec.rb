@@ -26,6 +26,13 @@ module Bosh
             end
           end
 
+          context "when 'local.number_of_workers' is provided" do
+            it 'renders the provided number of workers' do
+              rendered_file = template.render({ 'cc' => { 'jobs' => { 'local' => { 'number_of_workers' => 5 } } } }, consumes: {})
+              expect(rendered_file).to include('(1..5).each do |i|')
+            end
+          end
+
           context 'when nginx timeout is provided' do
             it 'renders the provided value' do
               rendered_file = template.render({ 'cc' => { 'nginx_drain_timeout' => 60 } }, consumes: {})
