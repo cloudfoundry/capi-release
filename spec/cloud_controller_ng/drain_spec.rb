@@ -19,6 +19,13 @@ module Bosh
             expect(rendered_file).to include("@drain.shutdown_nginx('/var/vcap/sys/run/bpm/cloud_controller_ng/nginx.pid', 30)")
           end
 
+          context "when 'local_worker_grace_period_seconds' is provided" do
+            it 'renders the provided value' do
+              rendered_file = template.render({ 'cc' => { 'jobs' => { 'local' => { 'worker_grace_period_seconds' => 300 } } } }, consumes: {})
+              expect(rendered_file).to include('@local_worker_grace_period_seconds = 300')
+            end
+          end
+
           context 'when nginx timeout is provided' do
             it 'renders the provided value' do
               rendered_file = template.render({ 'cc' => { 'nginx_drain_timeout' => 60 } }, consumes: {})
