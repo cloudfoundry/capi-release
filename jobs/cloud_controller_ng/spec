@@ -948,6 +948,9 @@ properties:
   cc.jobs.local.number_of_workers:
     default: 2
     description: "Number of local cloud_controller_worker workers"
+  cc.jobs.local.local_worker_grace_period_seconds:
+    default: 300
+    description:  "The number of seconds to wait for each local cloud_controller_worker worker process to finish processing jobs before forcefully shutting it down"
 
   cc.thresholds.api.alert_if_above_mb:
     description: "The cc will alert if memory remains above this threshold for 3 monit cycles"

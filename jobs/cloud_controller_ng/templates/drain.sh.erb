@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-for i in {1..<%=p("cc.jobs.local.number_of_workers")%>}; do
-  /var/vcap/jobs/bpm/bin/bpm stop cloud_controller_ng -p "local_worker_${i}" 1>&2
-done
-
 /var/vcap/jobs/cloud_controller_ng/bin/shutdown_drain 1>&2
 
 echo 0 # tell bosh not wait for anything
