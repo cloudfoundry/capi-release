@@ -850,6 +850,59 @@ module Bosh
               end
             end
           end
+
+          describe 'allow_user_creation_by_org_manager' do
+            context 'when it is not set' do
+              it 'does not render into the config' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['allow_user_creation_by_org_manager']).to be_nil
+              end
+            end
+
+            context 'when it is set to false' do
+              before do
+                merged_manifest_properties['cc']['allow_user_creation_by_org_manager'] = false
+              end
+
+              it 'renders it as false' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['allow_user_creation_by_org_manager']).to be(false)
+              end
+            end
+
+            context 'when it is set to true' do
+              before do
+                merged_manifest_properties['cc']['allow_user_creation_by_org_manager'] = true
+              end
+
+              it 'renders it as true' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['allow_user_creation_by_org_manager']).to be(true)
+              end
+            end
+          end
+
+          describe 'uaa.clients.cloud_controller_shadow_user_creation.secret' do
+            context 'when it is not set' do
+              it 'does not render the client into the config' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['uaa']['clients']).to be_nil
+              end
+            end
+
+            context 'when it is set' do
+              before do
+                merged_manifest_properties['uaa']['clients'].merge!({ 'cloud_controller_shadow_user_creation' => { 'secret' => 'super-secret' } })
+              end
+
+              it 'renders the client and secret into the config' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                client = template_hash['uaa']['clients'].find { |client_config| client_config['name'] == 'cloud_controller_shadow_user_creation' }
+                expect(client['id']).to eq('cloud_controller_shadow_user_creation')
+                expect(client['secret']).to eq('super-secret')
+              end
+            end
+          end
         end
       end
     end
