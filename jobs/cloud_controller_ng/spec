@@ -371,6 +371,9 @@ properties:
   cc.jobs.global.timeout_in_seconds:
     description: "The longest any job can take before it is cancelled unless overridden per job"
     default: 14400 # 4 hours
+  cc.jobs.global.worker_sleep_delay_in_seconds:
+    description: "The amount of time in seconds delayed workers sleep when no jobs are found"
+    default: 5
   cc.jobs.queues.cc_generic.timeout_in_seconds:
     description: "The longest jobs in the cc-generic queue can take before they are cancelled"
   cc.jobs.blobstore_delete.timeout_in_seconds:

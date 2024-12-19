@@ -91,6 +91,7 @@ jobs:
   enable_dynamic_job_priorities: <%= p("cc.jobs.enable_dynamic_job_priorities") %>
   global:
     timeout_in_seconds: <%= p("cc.jobs.global.timeout_in_seconds") %>
+    worker_sleep_delay_in_seconds: <%= p("cc.jobs.global.worker_sleep_delay_in_seconds") %>
   queues:
     <% if (timeout = p("cc.jobs.queues.cc_generic.timeout_in_seconds", nil)) %>
     cc_generic:
