@@ -63,6 +63,7 @@ tls_port: <%= p("cc.tls_port") %>
 internal_service_hostname: <%= p("cc.internal_service_hostname") %>
 webserver: <%= thin_webserver_enabled? ? 'thin' : 'puma' %>
 puma:
+  automatic_worker_count: <%= p("cc.puma.automatic_worker_count") %>
   workers: <%= p("cc.puma.workers") %>
   max_threads: <%= p("cc.puma.max_threads") %>
 <% if_p("cc.puma.max_db_connections_per_process") do |max_db_conn_per_process| %>

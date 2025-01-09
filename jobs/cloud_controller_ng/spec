@@ -1262,6 +1262,10 @@ properties:
     description: "Use co-deployed Valkey (Redis fork) for rate limiting and metrics. If the Puma webserver is enabled, Valkey will automatically be used."
     default: false
 
+  cc.puma.automatic_worker_count:
+    description: "Sets the number of Puma workers to the number of detected cores.  See https://github.com/puma/puma?tab=readme-ov-file#clustered-mode for information on how cores are detected. If set to 'true', the value set for `cc.puma.workers` will be ignored."
+    default: false
+
   cc.puma.workers:
     description: "Number of workers for Puma webserver."
     default: 2
