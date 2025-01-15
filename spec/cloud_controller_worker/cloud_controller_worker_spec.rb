@@ -81,7 +81,7 @@ module Bosh
                 'enable_dynamic_job_priorities' => false
               },
               'app_log_revision' => true,
-              'temporary_enable_v2' => true,
+              'temporary_enable_v2' => false,
               'packages' => {
                 'max_valid_packages_stored' => 5
               }
@@ -267,7 +267,7 @@ module Bosh
         describe 'enable v2 API' do
           it 'is by default true' do
             template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
-            expect(template_hash['temporary_enable_v2']).to be(true)
+            expect(template_hash['temporary_enable_v2']).to be(false)
           end
         end
 

@@ -106,7 +106,7 @@ module Bosh
                      'name' => 'cflinuxfs4' }],
                 'staging_upload_password' => '((cc_staging_upload_password))',
                 'staging_upload_user' => 'staging_user',
-                'temporary_enable_v2' => true },
+                'temporary_enable_v2' => false },
             'ccdb' =>
               { 'databases' => [{ 'name' => 'cloud_controller', 'tag' => 'cc' }],
                 'db_scheme' => 'mysql',
@@ -503,19 +503,19 @@ module Bosh
           end
 
           describe 'enable v2 API' do
-            it 'is by default true' do
+            it 'is by default false' do
               template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-              expect(template_hash['temporary_enable_v2']).to be(true)
+              expect(template_hash['temporary_enable_v2']).to be(false)
             end
 
-            context 'when explicitly disabled' do
+            context 'when explicitly enabled' do
               before do
-                merged_manifest_properties['cc']['temporary_enable_v2'] = false
+                merged_manifest_properties['cc']['temporary_enable_v2'] = true
               end
 
-              it 'is false' do
+              it 'is true' do
                 template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['temporary_enable_v2']).to be(false)
+                expect(template_hash['temporary_enable_v2']).to be(true)
               end
             end
           end
