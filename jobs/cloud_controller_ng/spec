@@ -395,7 +395,7 @@ properties:
 
   cc.temporary_enable_v2:
     description: "Enable V2 endpoints"
-    default: true
+    default: false
 
   cc.directories.tmpdir:
     default: "/var/vcap/data/cloud_controller_ng/tmp"
