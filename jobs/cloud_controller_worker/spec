@@ -425,6 +425,18 @@ properties:
     description: "The number of seconds to wait for each generic cloud_controller_worker worker process to finish processing jobs before forcefully shutting it down"
     default: 15
 
+  cc.publish_metrics:
+    default: false
+    description: "When set to true a small webserver will be started in a seperate thread within the first worker's process.
+                  This webserver will publish prometheus metrics of the workers under '/metrics'. The webserver will listen on the port
+                  defined in 'cc.prometheus_port'."
+  cc.prometheus_port:
+    default: 9394
+    description: "When 'cc.publish_metrics' is set to true, the webserver, which publishes the metrics, will listen on this port."
+
+  cc.directories.tmpdir:
+    default: "/var/vcap/data/cloud_controller_worker/tmp"
+    description: "The directory to use for temporary files"
 
   uaa.clients.cc-service-dashboards.secret:
     description: "Used for generating SSO clients for service brokers."

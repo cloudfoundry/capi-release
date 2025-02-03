@@ -4,7 +4,7 @@ set -ex
 
 function fix_bundler_home_permissions {
   BUNDLER_DIR1=/tmp/bundler
-  BUNDLER_DIR2=/var/vcap/data/cloud_controller_worker/tmp/bundler
+  BUNDLER_DIR2="<%= p("cc.directories.tmpdir") %>/bundler"
   chpst -u vcap:vcap mkdir -p $BUNDLER_DIR1 $BUNDLER_DIR2
   chown vcap:vcap -R $BUNDLER_DIR1 $BUNDLER_DIR2
   chpst -u vcap:vcap chmod -R go-w $BUNDLER_DIR1 $BUNDLER_DIR2

@@ -27,7 +27,8 @@ module Bosh
                 'skip_validation' => false,
                 'current_key_label' => 'encryption_key_0',
                 :keys => { 'encryption_key_0' => '((cc_db_encryption_key))' }
-              }
+              },
+              'directories' => {}
             },
             'ccdb' => {
               'db_scheme' => 'mysql',
@@ -275,6 +276,62 @@ module Bosh
           it 'is set from cloud_controller_internal_link' do
             template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
             expect(template_hash['packages']['max_valid_packages_stored']).to be(5)
+          end
+        end
+
+        describe 'metrics' do
+          context 'when cc.publish_metrics not set' do
+            it 'is set to false' do
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['publish_metrics']).to be(false)
+            end
+          end
+
+          context 'when cc.publish_metrics set to true' do
+            before do
+              manifest_properties['cc']['publish_metrics'] = true
+            end
+
+            it 'is set to true' do
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['publish_metrics']).to be(true)
+            end
+          end
+
+          context 'when cc.prometheus_port not set' do
+            it 'uses default' do
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['prometheus_port']).to eq(9394)
+            end
+          end
+
+          context 'when cc.prometheus_port is set' do
+            before do
+              manifest_properties['cc']['prometheus_port'] = 9397
+            end
+
+            it 'uses the default' do
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['prometheus_port']).to eq(9397)
+            end
+          end
+        end
+
+        describe 'cc.directories.tmpdir' do
+          it 'uses the default' do
+            template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+            expect(template_hash['directories']['tmpdir']).to eq('/var/vcap/data/cloud_controller_worker/tmp')
+          end
+
+          context 'when set' do
+            before do
+              manifest_properties['cc']['directories']['tmpdir'] = '/some/tmp'
+            end
+
+            it 'renders accordingly' do
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['directories']['tmpdir']).to eq('/some/tmp')
+            end
           end
         end
       end

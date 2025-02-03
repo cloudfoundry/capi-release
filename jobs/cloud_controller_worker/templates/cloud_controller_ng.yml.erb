@@ -356,3 +356,9 @@ cpu_weight_max_memory: <%= link("cloud_controller_internal").p("cc.cpu_weight_ma
 max_manifest_service_binding_poll_duration_in_seconds: <%= p("cc.max_manifest_service_binding_poll_duration_in_seconds") %>
 
 app_log_revision: <%= link("cloud_controller_internal").p("cc.app_log_revision") %>
+
+publish_metrics: <%= p("cc.publish_metrics") %>
+prometheus_port: <%= p("cc.prometheus_port") %>
+
+directories:
+  tmpdir: <%= p("cc.directories.tmpdir") %>

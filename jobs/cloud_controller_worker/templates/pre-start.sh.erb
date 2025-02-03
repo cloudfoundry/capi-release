@@ -18,10 +18,10 @@ function setup_directories {
   mkdir -p "/var/vcap/sys/log/cloud_controller_worker"
   chown -R vcap:vcap "/var/vcap/sys/log/cloud_controller_worker"
 
-  mkdir -p "/var/vcap/data/cloud_controller_worker/tmp"
-  chown vcap:vcap "/var/vcap/data/cloud_controller_worker/tmp"
+  mkdir -p "<%= p("cc.directories.tmpdir") %>"
+  chown vcap:vcap "<%= p("cc.directories.tmpdir") %>"
 
-  BUNDLER_DIR=/var/vcap/data/cloud_controller_worker/tmp/bundler
+  BUNDLER_DIR="<%= p("cc.directories.tmpdir") %>/bundler"
   chpst -u vcap:vcap mkdir -p $BUNDLER_DIR
   chpst -u vcap:vcap chmod -R go-w $BUNDLER_DIR
 }
