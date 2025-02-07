@@ -1,0 +1,7 @@
+<% if p("cc.publish_metrics") && (p("cc.prom_scraper.disabled") != true) -%>
+port: <%= p("cc.prometheus_port") %>
+source_id: "cloud_controller_worker"
+instance_id: <%= spec.id || spec.index.to_s %>
+scheme: http
+path: /metrics
+<% end -%>
