@@ -32,6 +32,9 @@ templates:
   uaa_ca.crt.erb: config/certs/uaa_ca.crt
   db_ca.crt.erb: config/certs/db_ca.crt
   prom_scraper_config.yml.erb: config/prom_scraper_config.yml
+  scrape.crt.erb: config/certs/scrape.crt
+  scrape.key.erb: config/certs/scrape.key
+  scrape_ca.crt.erb: config/certs/scrape_ca.crt
 
 packages:
   - capi_utils
@@ -434,9 +437,16 @@ properties:
   cc.prometheus_port:
     default: 9394
     description: "When 'cc.publish_metrics' is set to true, the webserver, which publishes the metrics, will listen on this port."
+
   cc.prom_scraper.disabled:
     default: false
     description: "When 'cc.publish_metrics' is enabled, a prom_scraper_config will be automatically generated. If you want to use another component for scraping, you can disable scraping by prom_scraper for cc-worker metrics with this."
+  cc.prom_scraper_tls.ca_cert:
+    description: "PEM-encoded CA certificate for secure, mutually authenticated TLS communication with prom_scraper"
+  cc.prom_scraper_tls.public_cert:
+    description: "PEM-encoded certificate for secure, mutually authenticated TLS communication with prom_scraper"
+  cc.prom_scraper_tls.private_key:
+    description: "PEM-encoded key for secure, mutually authenticated TLS communication with prom_scraper"
 
   cc.directories.tmpdir:
     default: "/var/vcap/data/cloud_controller_worker/tmp"
