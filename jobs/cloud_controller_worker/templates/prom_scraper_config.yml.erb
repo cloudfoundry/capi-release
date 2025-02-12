@@ -2,6 +2,7 @@
 port: <%= p("cc.prometheus_port") %>
 source_id: "cloud_controller_worker"
 instance_id: <%= spec.id || spec.index.to_s %>
-scheme: http
+scheme: https
+server_name: "cc_worker_metrics"
 path: /metrics
 <% end -%>
