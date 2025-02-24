@@ -137,6 +137,16 @@ module Bosh
           end
         end
 
+        describe 'cc.jobs.read_ahead' do
+          context 'when cc.jobs.read_ahead is set to 5' do
+            it 'renders read_ahead into ccng config' do
+              manifest_properties['cc']['jobs'] = { 'read_ahead' => 5 }
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['jobs']['read_ahead']).to be(5)
+            end
+          end
+        end
+
         describe 'statsd' do
           it 'renders statsd_host and statsd_port from cloud_controller_internal link' do
             template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))

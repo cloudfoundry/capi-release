@@ -84,6 +84,8 @@ properties:
     default: 600
   cc.jobs.priorities:
     description: "List of hashes containing delayed jobs 'display_name' and its desired priority. This will overwrite the default priority of ccng"
+  cc.jobs.read_ahead:
+    description: "The number of jobs to read ahead from the delayed job queue. Defaults to 5 for MySql and 0 for PostgreSQL (= use SELECT FOR UPDATE instead of read-ahead)."
 
   cc.max_retained_deployments_per_app:
     description: "The number of inactive deployments to keep for each app"

@@ -851,6 +851,16 @@ module Bosh
             end
           end
 
+          describe 'cc.jobs.read_ahead' do
+            context 'when cc.jobs.read_ahead is set to 5' do
+              it 'renders read_ahead into ccng config' do
+                merged_manifest_properties['cc']['jobs'] = { 'read_ahead' => 5 }
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['jobs']['read_ahead']).to be(5)
+              end
+            end
+          end
+
           describe 'allow_user_creation_by_org_manager' do
             context 'when it is not set' do
               it 'does not render into the config' do

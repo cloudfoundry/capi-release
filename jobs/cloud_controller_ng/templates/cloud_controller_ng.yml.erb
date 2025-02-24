@@ -111,6 +111,9 @@ jobs:
   <% if_p("cc.jobs.priorities") do |priorities| %>
   priorities: <%= priorities.to_json %>
   <% end %>
+  <% if_p("cc.jobs.read_ahead") do |read_ahead| %>
+  read_ahead: <%= read_ahead %>
+  <% end %>
 
 
 cpu_weight_min_memory: <%= p("cc.cpu_weight_min_memory") %>
