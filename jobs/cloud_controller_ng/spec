@@ -296,19 +296,19 @@ properties:
     default: 900
 
   name:
-    description: "'name' attribute in the /v2/info endpoint"
+    description: "'name' attribute in the /v2/info and /v3/info endpoints"
     default: ""
   build:
-    description: "'build' attribute in the /v2/info endpoint"
+    description: "'build' attribute in the /v2/info and /v3/info endpoints"
     default: ""
   version:
-    description: "'version' attribute in the /v2/info endpoint"
+    description: "'version' attribute in the /v2/info and /v3/info endpoints"
     default: 0
   support_address:
-    description: "'support' attribute in the /v2/info endpoint"
+    description: "'support' attribute in the /v2/info and /v3/info endpoints"
     default: ""
   description:
-    description: "'description' attribute in the /v2/info endpoint"
+    description: "'description' attribute in the /v2/info and /v3/info endpoints"
     default: ""
 
   temporary_disable_non_tls_endpoints:
@@ -316,7 +316,7 @@ properties:
     default: false
 
   cc.info.custom:
-    description: "Custom attribute keys and values for /v2/info endpoint"
+    description: "Custom attribute keys and values for the /v2/info and /v3/info endpoints"
 
   cc.nginx.ip:
     description: "IP address for nginx"
