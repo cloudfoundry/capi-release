@@ -62,6 +62,9 @@ jobs:
   <% if_p("cc.jobs.priorities") do |priorities| %>
   priorities: <%= priorities.to_json %>
   <% end %>
+  <% if_p("cc.jobs.read_ahead") do |read_ahead| %>
+  read_ahead: <%= read_ahead %>
+  <% end %>
 
 default_app_memory: <%= p("cc.default_app_memory") %>
 default_app_disk_in_mb: <%= p("cc.default_app_disk_in_mb") %>

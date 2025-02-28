@@ -93,6 +93,8 @@ properties:
     default: 5
   cc.jobs.blobstore_delete.timeout_in_seconds:
     description: "The longest this job can take before it is cancelled"
+  cc.jobs.read_ahead:
+    description: "The number of jobs to read ahead from the delayed job queue. Defaults to 5 for MySql and 0 for PostgreSQL (= use SELECT FOR UPDATE instead of read-ahead)."
 
   cc.external_protocol:
     default: "https"

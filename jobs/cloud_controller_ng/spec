@@ -388,6 +388,8 @@ properties:
     default: false
   cc.jobs.number_of_worker_threads:
     description: "If set multiple delayed job workers will be started as threads in the same process. If not set there will be one delayed job worker per process."
+  cc.jobs.read_ahead:
+    description: "The number of jobs to read ahead from the delayed job queue. Defaults to 5 for MySql and 0 for PostgreSQL (= use SELECT FOR UPDATE instead of read-ahead)."
 
   cc.temporary_disable_deployments:
     description: "Do not allow the API client to create app deployments (temporary)"
