@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+/var/vcap/jobs/cc_uploader/bin/shutdown_drain 1>&2
+
+echo 0 # tell bosh not wait for anything
+exit 0

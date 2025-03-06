@@ -3,6 +3,8 @@ name: cc_uploader
 
 templates:
   bpm.yml.erb: config/bpm.yml
+  drain.sh.erb: bin/drain
+  shutdown_drain.rb.erb: bin/shutdown_drain
 
   cc_uploader_as_vcap.erb: bin/cc_uploader_as_vcap
   cc_uploader_config.json.erb: config/cc_uploader_config.json
@@ -75,3 +77,7 @@ properties:
     description: "PEM-encoded certificate for secure, mutually authenticated TLS communication"
   capi.cc_uploader.mutual_tls.server_key:
     description: "PEM-encoded key for secure, mutually authenticated TLS communication"
+
+  cc.jobs.cc_uploader.grace_period_seconds:
+    description: "Grace period in seconds for cc_uploader to finish ongoing jobs during shutdown"
+    default: 30
