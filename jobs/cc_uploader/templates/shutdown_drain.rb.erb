@@ -9,5 +9,4 @@ require 'cloud_controller/drain'
 @grace_period = <%= p("cc.jobs.cc_uploader.grace_period_seconds") %>
 @drain = VCAP::CloudController::Drain.new('/var/vcap/sys/log/cc_uploader')
 
-
-@drain.shutdown_delayed_worker("/var/vcap/sys/run/bpm/cc_uploader/cc_uploader_#{i}.pid", @grace_period.to_i)
+@drain.shutdown_delayed_worker("/var/vcap/sys/run/bpm/cc_uploader/cc_uploader.pid", @grace_period.to_i)

@@ -80,4 +80,4 @@ properties:
 
   cc.jobs.cc_uploader.grace_period_seconds:
     description: "Grace period in seconds for cc_uploader to finish ongoing jobs during shutdown"
-    default: 30
+    default: 300
