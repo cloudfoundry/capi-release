@@ -12,6 +12,7 @@
 1. **Fill out the release and publish it**
     - The `ship-it` pipeline should have created a draft GitHub release.
     - Paste in the release notes from the [generate-release-notes job](https://concourse.app-runtime-interfaces.ci.cloudfoundry.org/teams/capi-team/pipelines/capi/jobs/generate-release-notes) into the relevant sections in the release draft.
+    - Add a section about new [Cloud Controller Database Migrations](https://github.com/cloudfoundry/cloud_controller_ng/tree/main/db/migrations).
     - Add any highlights to the top of the release notes.
     - Publish the release.
 1. **Follow-ups**
