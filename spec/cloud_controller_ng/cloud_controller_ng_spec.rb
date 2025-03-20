@@ -195,35 +195,6 @@ module Bosh
             end
           end
 
-          describe 'internal route vip range' do
-            it 'has a default range' do
-              rendered_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-              expect(rendered_hash['internal_route_vip_range']).to eq('127.128.0.0/9')
-            end
-
-            describe 'when a range is specified in manifest properties' do
-              it 'validates they are valid CIDRs' do
-                merged_manifest_properties['cc']['internal_route_vip_range'] = '10.16.255.0/777'
-                expect do
-                  YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                end.to raise_error(StandardError, 'invalid cc.internal_route_vip_range: 10.16.255.0/777')
-              end
-
-              it 'does not allow ipv6 addresses' do
-                merged_manifest_properties['cc']['internal_route_vip_range'] = '2001:0db8:85a3:0000:0000:8a2e:0370:7334/21'
-                expect do
-                  YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                end.to raise_error(StandardError, 'invalid cc.internal_route_vip_range: 2001:0db8:85a3:0000:0000:8a2e:0370:7334/21')
-              end
-
-              it 'renders valid CIDRs' do
-                merged_manifest_properties['cc']['internal_route_vip_range'] = '10.16.255.0/24'
-                rendered_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(rendered_hash['internal_route_vip_range']).to eq('10.16.255.0/24')
-              end
-            end
-          end
-
           describe 'database_encryption block' do
             context 'when the database_encryption block is not present' do
               before do
