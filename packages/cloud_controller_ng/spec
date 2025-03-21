@@ -3,7 +3,7 @@ name: cloud_controller_ng
 dependencies:
 - libpq
 - mariadb_connector_c
-- ruby-3.2
+- ruby-3.4
 
 files:
 - cloud_controller_ng/{.ruby-version,Rakefile,Gemfile,Gemfile.lock}
