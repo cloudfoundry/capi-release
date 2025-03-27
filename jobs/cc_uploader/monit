@@ -2,4 +2,5 @@ check process cc_uploader
   with pidfile /var/vcap/sys/run/bpm/cc_uploader/cc_uploader.pid
   start program "/var/vcap/jobs/bpm/bin/bpm start cc_uploader"
   stop program "/var/vcap/jobs/bpm/bin/bpm stop cc_uploader"
+  depends on cloud_controller_ng
   group vcap

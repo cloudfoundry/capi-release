@@ -957,6 +957,10 @@ properties:
     default: 300
     description:  "The number of seconds to wait for each local cloud_controller_worker worker process to finish processing jobs before forcefully shutting it down"
 
+  cc.jobs.cc_uploader.grace_period_seconds:
+    default: 300
+    description:  "The number of seconds to give cc_uploader process the opportunity to finish processing jobs before forcefully shutting it down"
+
   cc.thresholds.api.alert_if_above_mb:
     description: "The cc will alert if memory remains above this threshold for 3 monit cycles"
     default: 3500

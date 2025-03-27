@@ -9,6 +9,7 @@ templates:
   cc_ca.crt.erb: config/certs/cc/ca.crt
   cc_uploader_client.crt.erb: config/certs/cc/client.crt
   cc_uploader_client.key.erb: config/certs/cc/client.key
+  drain.sh.erb: bin/drain
 
   cc_uploader_server_ca.crt.erb: config/certs/cc_uploader/ca.crt
   cc_uploader_server.crt.erb: config/certs/cc_uploader/server.crt
@@ -75,3 +76,6 @@ properties:
     description: "PEM-encoded certificate for secure, mutually authenticated TLS communication"
   capi.cc_uploader.mutual_tls.server_key:
     description: "PEM-encoded key for secure, mutually authenticated TLS communication"
+  cc.jobs.cc_uploader.grace_period_seconds:
+    default: 930
+    description:  "The number of seconds to give cc_uploader process the opportunity to finish processing jobs before forcefully shutting it down"

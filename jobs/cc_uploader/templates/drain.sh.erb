@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+kill -15 "$(cat /var/vcap/sys/run/bpm/cc_uploader/cc_uploader.pid)"
+
+echo 0 # tell bosh not wait for anything
+exit 0
