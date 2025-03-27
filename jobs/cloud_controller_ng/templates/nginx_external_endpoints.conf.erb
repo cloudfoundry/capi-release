@@ -34,7 +34,7 @@ location / {
 }
 
 <% if !p("cc.temporary_enable_v2") %>
-location ~ /v2/ {
+location ~ /v2(?!/info) {
   return 404 "V2 endpoints disabled";
 }
 <% end %>
