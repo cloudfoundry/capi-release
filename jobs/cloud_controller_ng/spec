@@ -729,6 +729,9 @@ properties:
     default: 1800
   ccdb.migration_psql_worker_memory_kb:
     description: "Allows operators to set the worker memory for PostgreSQL database migrations"
+  ccdb.skip_bigint_id_migration:
+    description: "Optionally opt-out of the id (primary key) migration from int to bigint. This must be set before any migration steps have started, otherwise it has no effect."
+    default: false
   ccdb.connection_expiration_timeout:
     description: "The period in seconds after which connections are expired (omit to never expire connections), passed directly to the Sequel gem - see https://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/connection_expiration_rb.html for details"
   ccdb.connection_expiration_random_delay:

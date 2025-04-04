@@ -246,6 +246,7 @@ db: &db
 max_migration_duration_in_minutes: <%= p("ccdb.max_migration_duration_in_minutes") %>
 max_migration_statement_runtime_in_seconds: <%= p("ccdb.max_migration_statement_runtime_in_seconds") %>
 migration_psql_concurrent_statement_timeout_in_seconds: <%= p("ccdb.migration_psql_concurrent_statement_timeout_in_seconds") %>
+skip_bigint_id_migration: <%= p("ccdb.skip_bigint_id_migration") %>
 login:
   url: <%= p("login.enabled") ? login_url : uaa_url %>
 uaa:
