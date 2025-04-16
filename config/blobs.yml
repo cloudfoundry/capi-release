@@ -74,10 +74,10 @@ nginx/newrelic_nginx_agent-1.2.1.tar.gz:
   size: 5222
   object_id: c63358f6-574a-4e20-9d2b-7e1450368b6d
   sha: sha256:a5a7f9b3a7e20302943b1dd448d9b725cf3cb28d774d79f618aab7c4ddeea52b
-nginx/nginx-1.27.4.tar.gz:
-  size: 1277177
-  object_id: 124be59a-1830-4f46-7c4d-f4728ba653de
-  sha: sha256:294816f879b300e621fa4edd5353dd1ec00badb056399eceb30de7db64b753b2
+nginx/nginx-1.27.5.tar.gz:
+  size: 1279891
+  object_id: 96d35d7d-13e8-43a7-6387-2b3d9ae13ac1
+  sha: sha256:e96acebb9c2a6db8a000c3dd1b32ecba1b810f0cd586232d4d921e376674dd0e
 nginx/nginx-dav-ext-module-3.0.0.tar.gz:
   size: 14558
   object_id: 44648d53-c24b-45e4-4434-007713aa5fe7
