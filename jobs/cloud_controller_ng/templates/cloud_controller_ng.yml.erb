@@ -85,6 +85,13 @@ app_domains: <%=
   app_domains.to_json
 %>
 
+<% if_p("cc.custom_root_links") do |custom_root_links| %>
+custom_root_links: <%=
+custom_root_links = p("cc.custom_root_links").flatten
+custom_root_links.to_json
+%>
+<% end %>
+
 reserved_private_domains: <%= p("cc.reserved_private_domains", nil) %>
 disable_private_domain_cross_space_context_path_route_sharing: <%= p("cc.disable_private_domain_cross_space_context_path_route_sharing", false) %>
 

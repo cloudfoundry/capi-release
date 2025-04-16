@@ -231,6 +231,7 @@ provides:
   - cc.app_instance_stopping_state
   - cc.deprecated_stacks
   - cc.temporary_enable_deprecated_thin_webserver
+  - cc.custom_root_links
   
 consumes:
 - name: database
@@ -317,6 +318,12 @@ properties:
 
   cc.info.custom:
     description: "Custom attribute keys and values for the /v2/info and /v3/info endpoints"
+
+  cc.custom_root_links:
+    description: "Array of custom links to be added to the root '/' endpoint. These will override the default links if the same name is used."
+    example: |
+      - name: my-service
+        href: https://my-service.example.com
 
   cc.nginx.ip:
     description: "IP address for nginx"
