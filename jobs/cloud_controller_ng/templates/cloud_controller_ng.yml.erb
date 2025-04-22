@@ -583,3 +583,7 @@ update_metric_tags_on_rename: <%= p("cc.update_metric_tags_on_rename") %>
 <% if_p("cc.allow_user_creation_by_org_manager") do |allow_user_creation| %>
 allow_user_creation_by_org_manager: <%= allow_user_creation %>
 <% end %>
+
+<% if_p("cc.enable_ipv6") do |enable_ipv6| %>
+enable_ipv6: <%= enable_ipv6 %>
+<% end %>

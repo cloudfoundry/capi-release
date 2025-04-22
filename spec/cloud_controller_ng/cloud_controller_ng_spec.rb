@@ -913,6 +913,37 @@ module Bosh
               end
             end
           end
+
+          describe 'enable_ipv6' do
+            context 'when it is not set' do
+              it 'does not render into the config' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['enable_ipv6']).to be_nil
+              end
+            end
+
+            context 'when it is set to false' do
+              before do
+                merged_manifest_properties['cc']['enable_ipv6'] = false
+              end
+
+              it 'renders it as false' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['enable_ipv6']).to be(false)
+              end
+            end
+
+            context 'when it is set to true' do
+              before do
+                merged_manifest_properties['cc']['enable_ipv6'] = true
+              end
+
+              it 'renders it as true' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['enable_ipv6']).to be(true)
+              end
+            end
+          end
         end
       end
     end
