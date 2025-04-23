@@ -1,4 +1,4 @@
 ---
 name: valkey
 files:
-- valkey/7.2.8.tar.gz
+- valkey/7.2.9.tar.gz
