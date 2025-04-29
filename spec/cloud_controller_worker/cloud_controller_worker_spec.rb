@@ -85,7 +85,8 @@ module Bosh
               'temporary_enable_v2' => false,
               'packages' => {
                 'max_valid_packages_stored' => 5
-              }
+              },
+              'default_app_lifecycle' => 'cnb'
             }
           }
         end
@@ -342,6 +343,13 @@ module Bosh
               template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
               expect(template_hash['directories']['tmpdir']).to eq('/some/tmp')
             end
+          end
+        end
+
+        describe 'default_app_lifecycle' do
+          it 'is set from cloud_controller_internal_link' do
+            template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+            expect(template_hash['default_app_lifecycle']).to eq('cnb')
           end
         end
       end

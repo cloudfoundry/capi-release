@@ -576,7 +576,7 @@ internal_route_vip_range: <%= internal_vip_range %>
 
 threadpool_size: <%= p("cc.experimental.thin_server.thread_pool_size") %>
 
-default_app_lifecycle: buildpack
+default_app_lifecycle: <%= p("cc.default_app_lifecycle") %>
 custom_metric_tag_prefix_list: <%= p("cc.custom_metric_tag_prefix_list") %>
 update_metric_tags_on_rename: <%= p("cc.update_metric_tags_on_rename") %>
 
