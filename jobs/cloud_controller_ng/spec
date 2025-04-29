@@ -1308,6 +1308,9 @@ properties:
   cc.allow_user_creation_by_org_manager:
     description: "Allow org managers to explicitly create UAA shadow users through /v3/users and implicitly through /v3/roles. `uaa.clients.cloud_controller_shadow_user_creation.secret` must be set."
 
+  cc.enable_ipv6:
+    description: "Enable IPv6 support in Cloud Controller."
+
 # deprecated configuration
 
   cc.experimental.use_puma_webserver:
