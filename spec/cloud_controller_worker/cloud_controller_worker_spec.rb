@@ -211,6 +211,24 @@ module Bosh
           end
         end
 
+        describe 'broker_client_max_async_poll_interval_seconds config' do
+          it 'defaults to 86400 seconds' do
+            template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+            expect(template_hash['broker_client_max_async_poll_interval_seconds']).to eq(86_400)
+          end
+
+          context 'when set in the manifest' do
+            before do
+              manifest_properties['cc']['broker_client_max_async_poll_interval_seconds'] = 3600
+            end
+
+            it 'renders the value from the manifest' do
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['broker_client_max_async_poll_interval_seconds']).to eq(3600)
+            end
+          end
+        end
+
         describe 'broker_client_response_parser config' do
           context 'when nothing is configured' do
             it 'renders default values' do
