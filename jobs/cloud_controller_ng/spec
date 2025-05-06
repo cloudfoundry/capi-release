@@ -867,6 +867,10 @@ properties:
     default: 1.0
     description: "Exponential backoff for service related polling jobs. Default is 1.0, which means there is no exponential backoff."
 
+  cc.broker_client_max_async_poll_interval_seconds:
+    default: 86400
+    description: "Maximum polling interval for service related polling jobs. If the retry-after header or the calculated next polling interval exceeds this value, CC will use this value instead. Default is 24 hours."
+
   cc.broker_client_response_parser.log_errors:
     default: false
     description: "Log errors happening when parsing service broker responses."
