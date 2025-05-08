@@ -6,8 +6,6 @@ $LOAD_PATH.unshift('/var/vcap/packages/cloud_controller_ng/cloud_controller_ng/l
 require 'cloud_controller/drain'
 
 @drain = VCAP::CloudController::Drain.new('/var/vcap/sys/log/cloud_controller_ng')
-
-@drain.shutdown_cc_uploader('/var/vcap/sys/run/bpm/cc_uploader/cc_uploader.pid')
 @drain.shutdown_nginx('/var/vcap/sys/run/bpm/cloud_controller_ng/nginx.pid', <%= p("cc.nginx_drain_timeout") %>)
 @drain.shutdown_cc('/var/vcap/sys/run/bpm/cloud_controller_ng/cloud_controller_ng.pid')
 @threads = []
