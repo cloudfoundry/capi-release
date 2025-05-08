@@ -962,6 +962,37 @@ module Bosh
               end
             end
           end
+
+          describe 'default_app_lifecycle' do
+            context 'when it is not set' do
+              it 'defaults to buildpack' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['default_app_lifecycle']).to eq('buildpack')
+              end
+            end
+
+            context 'when it is set to buidpack' do
+              before do
+                merged_manifest_properties['cc']['default_app_lifecycle'] = 'buidpack'
+              end
+
+              it 'renders it as buidpack' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['default_app_lifecycle']).to eq('buidpack')
+              end
+            end
+
+            context 'when it is set to cnb' do
+              before do
+                merged_manifest_properties['cc']['default_app_lifecycle'] = 'cnb'
+              end
+
+              it 'renders it as cnb' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['default_app_lifecycle']).to eq('cnb')
+              end
+            end
+          end
         end
       end
     end

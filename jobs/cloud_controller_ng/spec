@@ -144,6 +144,7 @@ provides:
   - cc.default_app_ssh_access
   - cc.default_health_check_timeout
   - cc.default_stack
+  - cc.default_app_lifecycle
   - cc.disable_private_domain_cross_space_context_path_route_sharing
   - cc.droplets.blobstore_type
   - cc.droplets.cdn.key_pair_id
@@ -850,6 +851,10 @@ properties:
   cc.disable_custom_buildpacks:
     default: false
     description: "Disable external (i.e. git) buildpacks? (Admin buildpacks and system buildpacks only.)"
+
+  cc.default_app_lifecycle:
+    default: buildpack
+    decription: "The default buildpack lifecycle for apps. Valid values are 'buildpack' (Classic Buildpacks) and 'cnb' (Cloud Native Buildpacks)"
 
   cc.broker_client_timeout_seconds:
     default: 60
