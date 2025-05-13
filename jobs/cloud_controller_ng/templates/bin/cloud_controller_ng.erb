@@ -12,6 +12,9 @@ echo 'Running migrations and seeds'
 /var/vcap/jobs/cloud_controller_ng/bin/migrate_db
 /var/vcap/jobs/cloud_controller_ng/bin/seed_db
 echo 'Finished migrations and seeds'
+<% if !p('cc.database_encryption.skip_validation') %>
+/var/vcap/jobs/cloud_controller_ng/bin/validate_encryption_keys
+<% end %>
 <% end %>
 
 <% if p('cc.experimental.use_yjit_compiler') %>
