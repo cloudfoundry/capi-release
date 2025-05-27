@@ -7,20 +7,17 @@ wait_for_blobstore
 
 cd /var/vcap/packages/cloud_controller_ng/cloud_controller_ng
 
-<% def out(s); s.strip; end %>
-
-<% if spec.bootstrap && !p('cc.run_prestart_migrations') %>
+<% if !p('cc.run_prestart_migrations') %>
 echo 'Running migrations and seeds'
 /var/vcap/jobs/cloud_controller_ng/bin/migrate_db
 /var/vcap/jobs/cloud_controller_ng/bin/seed_db
 echo 'Finished migrations and seeds'
-  <% unless p('cc.database_encryption.skip_validation') %>
-<%= out "echo 'Validating encryption keys'" %>
-<%= out "/var/vcap/jobs/cloud_controller_ng/bin/validate_encryption_keys" %>
-<%= out "echo 'Finished validating encryption keys'" %>
-  <% end %>
+<% if !p('cc.database_encryption.skip_validation') %>
+echo 'Validating encryption keys'
+/var/vcap/jobs/cloud_controller_ng/bin/validate_encryption_keys
+echo 'Finished validating encryption keys'
 <% end %>
-
+<% end %>
 
 <% if p('cc.experimental.use_yjit_compiler') %>
 export RUBYOPT='--yjit'
