@@ -54,6 +54,22 @@ limit_req_zone $http_authorization zone=<%= zone['name'] %>:10m rate=<%= zone['l
     server unix:/var/vcap/data/cloud_controller_ng/cloud_controller.sock;
   }
 
+<%
+def thin_webserver_enabled?
+  if_p('cc.experimental.use_puma_webserver') do |prop|
+    return !prop
+  end
+
+  p('cc.temporary_enable_deprecated_thin_webserver')
+end
+-%>
+
+<% unless thin_webserver_enabled? -%>
+  upstream cloud_controller_metrics {
+    server unix:/var/vcap/data/cloud_controller_ng/cloud_controller_metrics.sock;
+  }
+<% end -%>
+
   # This block ensures the endpoints it serves are handled by mutual TLS.
   # Refer to the 'return 403' statement in the http block to see how we secure those endpoints.
   server {
@@ -137,7 +153,11 @@ limit_req_zone $http_authorization zone=<%= zone['name'] %>:10m rate=<%= zone['l
     proxy_connect_timeout       10;
 
     location /internal/v4/metrics {
+<%- if thin_webserver_enabled? -%>
       proxy_pass http://cloud_controller;
+<%- else -%>
+      proxy_pass http://cloud_controller_metrics;
+<%- end -%>
     }
   }
 <% end -%>

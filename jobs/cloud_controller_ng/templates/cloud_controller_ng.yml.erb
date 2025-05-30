@@ -138,6 +138,7 @@ request_timeout_in_seconds: <%= p("request_timeout_in_seconds") %>
 nginx:
   use_nginx: true
   instance_socket: "/var/vcap/data/cloud_controller_ng/cloud_controller.sock"
+  metrics_socket: "/var/vcap/data/cloud_controller_ng/cloud_controller_metrics.sock"
 
 index: <%= spec.index %>
 name: <%= name %>
