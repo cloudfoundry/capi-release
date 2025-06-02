@@ -13,9 +13,12 @@ echo 'Running migrations and seeds'
 /var/vcap/jobs/cloud_controller_ng/bin/seed_db
 echo 'Finished migrations and seeds'
 <% if !p('cc.database_encryption.skip_validation') %>
+echo 'Validating encryption keys'
 /var/vcap/jobs/cloud_controller_ng/bin/validate_encryption_keys
+echo 'Finished validating encryption keys'
 <% end %>
 <% end %>
+
 
 <% if p('cc.experimental.use_yjit_compiler') %>
 export RUBYOPT='--yjit'
