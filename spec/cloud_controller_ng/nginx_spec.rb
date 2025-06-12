@@ -87,6 +87,32 @@ module Bosh
               expect(@rendered_file).not_to include('include prom_scraper_mtls.conf')
             end
           end
+
+          describe 'separate metrics webserver' do
+            let(:manifest_properties) { { 'cc' => { 'prom_scraper_tls' => { 'public_cert' => 'a public cert', 'private_key' => 'a private key', 'ca_cert' => 'an authority' } } } }
+
+            it 'renders the unix socket of the second webserver' do
+              expect(@rendered_file).to include('unix:/var/vcap/data/cloud_controller_ng/cloud_controller_metrics.sock;')
+            end
+
+            it 'forwards requests for the metrics endpoint to second webserver' do
+              expect(@rendered_file).to include('proxy_pass http://cloud_controller_metrics;')
+            end
+
+            context 'when the webserver is not puma' do
+              let(:manifest_properties) do
+                super().merge('cc' => super()['cc'].merge('temporary_enable_deprecated_thin_webserver' => true))
+              end
+
+              it 'does not render the second webserver' do
+                expect(@rendered_file).not_to include('unix:/var/vcap/data/cloud_controller_ng/cloud_controller_metrics.sock;')
+              end
+
+              it 'forwards requests for metrics endpoint to main app' do
+                expect(@rendered_file).not_to include('proxy_pass http://cloud_controller_metrics;')
+              end
+            end
+          end
         end
       end
     end
