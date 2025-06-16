@@ -68,6 +68,7 @@ templates:
 packages:
   - capi_utils
   - cloud_controller_ng
+  - azure-storage-cli
   - nginx
   - nginx_newrelic_plugin
   - libpq
