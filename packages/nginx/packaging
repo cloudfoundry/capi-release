@@ -13,15 +13,15 @@ pushd nginx-upload-module-2.3.0
 popd
 
 echo "Extracting nginx..."
-tar xzvf nginx/nginx-1.27.5.tar.gz
+tar xzvf nginx/nginx-1.28.0.tar.gz
 
-sed -i 's@"nginx/"@"-/"@g' nginx-1.27.5/src/core/nginx.h
-sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.27.5/src/http/ngx_http_header_filter_module.c
-sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.27.5/src/http/v2/ngx_http_v2_filter_module.c
-sed -i 's@<hr><center>nginx</center>@@g' nginx-1.27.5/src/http/ngx_http_special_response.c
+sed -i 's@"nginx/"@"-/"@g' nginx-1.28.0/src/core/nginx.h
+sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.28.0/src/http/ngx_http_header_filter_module.c
+sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.28.0/src/http/v2/ngx_http_v2_filter_module.c
+sed -i 's@<hr><center>nginx</center>@@g' nginx-1.28.0/src/http/ngx_http_special_response.c
 
 echo "Building nginx..."
-pushd nginx-1.27.5
+pushd nginx-1.28.0
   ./configure \
     --prefix=${BOSH_INSTALL_TARGET} \
     --with-pcre=../pcre-8.45 \
