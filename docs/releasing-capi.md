@@ -19,4 +19,3 @@
     - Tell folks you shipped it.
       - Announce in #capi
       - Any specific teams/people who were waiting on the release
-    - If there were any changes to the V3 docs, [run the GitHub action](https://github.com/cloudfoundry/cloud_controller_ng/actions/workflows/deploy_v3_docs.yml)
