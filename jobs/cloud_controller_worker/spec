@@ -366,7 +366,7 @@ properties:
 
   cc.allowed_process_users:
     default: ['vcap']
-    description: "Allow-list of users that a Process/Task may use"
+    description: "Allow-list of users that a Process/Task may use in addition to 'vcap'. The 'vcap' user is always permitted."
 
   cc.allow_app_ssh_access:
     default: true
