@@ -844,8 +844,8 @@ properties:
     default: "2048M"
     description: "Maximum body size for nginx bits uploads"
 
-  cc.allowed_process_users:
-    default: ['vcap']
+  cc.additional_allowed_process_users:
+    default: []
     description: "Allow-list of users that a Process/Task may use in addition to 'vcap'. The 'vcap' user is always permitted."
 
   cc.default_app_log_rate_limit_in_bytes_per_second:
