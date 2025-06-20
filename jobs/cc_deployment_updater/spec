@@ -208,6 +208,10 @@ properties:
     description: "The file descriptors made available to each app instance"
     default: 16384
 
+  cc.additional_allowed_process_users:
+    default: []
+    description: "Allow-list of users that a Process/Task may use in addition to 'vcap'. The 'vcap' user is always permitted."
+
   cc.locket.host:
     default: "locket.service.cf.internal"
     description: "Hostname of the Locket server"

@@ -422,6 +422,10 @@ properties:
     default: 2048
     description: "The maximum amount of disk a user can request"
 
+  cc.additional_allowed_process_users:
+    default: []
+    description: "Allow-list of users that a Process/Task may use in addition to 'vcap'. The 'vcap' user is always permitted."
+
   cc.newrelic.license_key:
     default: ~
     description: "The api key for NewRelic"
