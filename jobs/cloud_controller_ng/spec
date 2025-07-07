@@ -971,7 +971,7 @@ properties:
 
   cc.server_keepalive_timeout:
     description: "Configure keep alive timeout for connections to cloud controller. This is a temporary field used for testing."
-    default: 75
+    default: 100
 
   cc.jobs.local.number_of_workers:
     default: 2
