@@ -199,4 +199,17 @@ end
     include nginx_external_endpoints.conf;
   }
   <% end %>
+
+  <% if !thin_webserver_enabled? && p('cc.use_status_check') %>
+  # This block handles the /internal/v4/status endpoint for health checks, which is called by ccng_monit_http_healthcheck.
+  server {
+    listen 9021;
+    server_name _;
+    server_name_in_redirect off;
+
+    location /internal/v4/status {
+      proxy_pass http://cloud_controller_metrics;
+    }
+  }
+  <% end %>
 }
