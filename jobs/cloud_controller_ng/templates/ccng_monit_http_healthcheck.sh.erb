@@ -25,14 +25,71 @@ function log_failure {
   echo "$(date --rfc-3339=ns) :: Healthcheck failed consistently, restarting CC"
 }
 
+echo $(date --rfc-3339=ns) 'Will restart CC over on repeated failures'
+trap log_failure EXIT
+
+<%
+def thin_webserver_enabled?
+  if_p('cc.experimental.use_puma_webserver') do |prop|
+    return !prop
+  end
+
+  p('cc.temporary_enable_deprecated_thin_webserver')
+end
+-%>
+
+<% if !thin_webserver_enabled? && p('cc.use_status_check') %>
+# Use /internal/v4/status readiness endpoint
+HOST=<%= p('cc.nginx.ip').empty? ? discover_external_ip : p('cc.nginx.ip') %>
+PORT=9021
+PROTOCOL="http"
+READINESS_URL="${PROTOCOL}://${HOST}:${PORT}/internal/v4/status"
+
+last_ok_response=$(date +%s)
+
+while true; do
+  set +e
+  readiness_code=$(curl --fail -sS -o /dev/null -w "%{http_code}" --max-time 2 -A "ccng_monit_http_healthcheck" "${READINESS_URL}")
+  set -e
+  status=$?
+
+  now=$(date +%s)
+  elapsed=$((now - last_ok_response))
+  if [[ "$readiness_code" == "200" ]]; then
+    # Reset timer on success
+    last_ok_response=$now
+    sleep 10
+    continue
+  fi
+
+  if [[ $status == 7 ]]; then
+    # Connection refused/unreachable, do not exit
+    sleep 10
+    continue
+  fi
+
+  if [[ "$readiness_code" == "503" ]]; then
+    echo "$(date --rfc-3339=ns) ccng_monit_http_healthcheck: readiness endpoint returned 503 (unhealthy), exiting to trigger restart"
+    exit $status
+  elif [[ "$readiness_code" == "429" ]]; then
+    echo "$(date --rfc-3339=ns) ccng_monit_http_healthcheck: readiness endpoint returned 429 (busy), not restarting"
+    # Do not exit, just log and continue
+  else
+    echo "$(date --rfc-3339=ns) ccng_monit_http_healthcheck: readiness endpoint returned unexpected HTTP code $readiness_code"
+  fi
+
+  # Killswitch: exit with non-zero if no 200 within 10 minutes
+  if [[ $elapsed -ge 600 ]]; then
+    echo "$(date --rfc-3339=ns) ccng_monit_http_healthcheck: readiness endpoint did not return 200 for $elapsed seconds, exiting with error"
+    exit 2
+  fi
+  sleep 10
+done
+<% else %>
 HOST=<%= p('cc.nginx.ip').empty? ? discover_external_ip : p('cc.nginx.ip') %>
 PORT=<%= p("cc.public_tls.port") %>
 PROTOCOL="https"
-URL="https://${HOST}:${PORT}/healthz"
-
-echo $(date --rfc-3339=ns) 'Will restart CC over on repeated failures'
-
-trap log_failure EXIT
+URL="${PROTOCOL}://${HOST}:${PORT}/healthz"
 
 # If we fail to curl the healthz endpoint 5 times (can be changed with cc.ccng_monit_http_healthcheck_retries) with
 # a delay of 10 seconds between each retry, exit in order to trigger a restart of cloud controller through monit.
@@ -58,3 +115,4 @@ while true; do
   fi
   sleep 10
 done
+<% end %>

@@ -113,6 +113,28 @@ module Bosh
               end
             end
           end
+
+          describe 'status endpoint' do
+            it 'does not expose the /internal/v4/status endpoint' do
+              expect(@rendered_file).not_to include('/internal/v4/status')
+            end
+
+            context 'when use_status_check is true' do
+              let(:manifest_properties) { { 'cc' => { 'use_status_check' => true } } }
+
+              it 'exposes the /internal/v4/status endpoint' do
+                expect(@rendered_file).to include('location /internal/v4/status')
+              end
+
+              context 'when Thin is used' do
+                let(:manifest_properties) { super().merge('cc' => super()['cc'].merge('temporary_enable_deprecated_thin_webserver' => true)) }
+
+                it 'does not expose the /internal/v4/status endpoint' do
+                  expect(@rendered_file).not_to include('location /internal/v4/status')
+                end
+              end
+            end
+          end
         end
       end
     end

@@ -1327,6 +1327,10 @@ properties:
   cc.enable_ipv6:
     description: "Enable IPv6 support in Cloud Controller."
 
+  cc.use_status_check:
+    description: "Let monit use the /internal/v4/status endpoint to determine if the Cloud Controller is healthy. Only if the status endpoint returns unhealthy or the status has not been OK for 600 seconds, it will trigger a restart. This only takes effect when Puma is used."
+    default: false
+
 # deprecated configuration
 
   cc.experimental.use_puma_webserver:
