@@ -34,7 +34,7 @@ packages:
   - libpq
   - jemalloc
   - mariadb_connector_c
-  - ruby-3.2
+  - ruby-3.4
 
 consumes:
 - name: database
