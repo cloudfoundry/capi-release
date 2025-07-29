@@ -28,7 +28,7 @@ module Bosh
           it 'renders the drain script with correct timeout' do
             rendered = template.render(properties)
             expect(rendered).to include('TIMEOUT_MINUTES="10m"')
-            expect(rendered).to include('DRAIN_TIMEOUT=$(( TIMEOUT_MINUTES * 60 ))')
+            expect(rendered).to include('DRAIN_TIMEOUT_IN_SECONDS=$(( TIMEOUT_MINUTES * 60 ))')
           end
         end
 
