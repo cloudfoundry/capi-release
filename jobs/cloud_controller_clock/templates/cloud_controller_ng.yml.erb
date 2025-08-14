@@ -367,3 +367,7 @@ cpu_weight_max_memory: <%= link("cloud_controller_internal").p("cc.cpu_weight_ma
 custom_metric_tag_prefix_list: <%= link("cloud_controller_internal").p("cc.custom_metric_tag_prefix_list") %>
 
 app_log_revision: <%= link("cloud_controller_internal").p("cc.app_log_revision") %>
+
+<% link("cloud_controller_internal").if_p("cc.feature_flag_overrides") do |feature_flag_overrides| %>
+feature_flag_overrides: <%= feature_flag_overrides.to_json %>
+<% end %>
