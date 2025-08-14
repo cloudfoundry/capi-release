@@ -17,7 +17,7 @@ if [ -f "$PID_FILE" ]; then
   while kill -0 "$(cat "$PID_FILE")" >/dev/null 2>&1; do
     NOW_TS=$(date +%s)
     ELAPSED=$(( NOW_TS - START_TS ))
-    if [ "$ELAPSED" -ge "DRAIN_TIMEOUT_IN_SECONDS" ]; then
+    if [ "$ELAPSED" -ge "$DRAIN_TIMEOUT_IN_SECONDS" ]; then
       echo "$(date): drain timeout reached after ${DRAIN_TIMEOUT_IN_SECONDS}s" >> "$LOG_FILE"
       break
     fi
