@@ -368,6 +368,10 @@ properties:
     default: []
     description: "Allow-list of users that a Process/Task may use in addition to 'vcap'. The 'vcap' user is always permitted."
 
+  cc.allow_docker_root_user:
+    default: true
+    description: "Whether to allow the use of the 'root' and '0' user for a Process/Task of a docker lifecycle App."
+
   cc.allow_app_ssh_access:
     default: true
     description: "Allow users to change the value of the app-level allow_ssh attribute"

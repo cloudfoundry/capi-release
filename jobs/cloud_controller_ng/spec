@@ -848,6 +848,10 @@ properties:
     default: []
     description: "Allow-list of users that a Process/Task may use in addition to 'vcap'. The 'vcap' user is always permitted."
 
+  cc.allow_docker_root_user:
+    default: true
+    description: "Whether to allow the use of the 'root' and '0' user for a Process/Task of a docker lifecycle App."
+
   cc.default_app_log_rate_limit_in_bytes_per_second:
     default: -1
     description: "Default application log rate limit"
