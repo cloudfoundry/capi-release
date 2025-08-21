@@ -569,16 +569,6 @@ perm:
 max_labels_per_resource: <%= p("cc.max_labels_per_resource") %>
 max_annotations_per_resource: <%= p("cc.max_annotations_per_resource") %>
 
-<%
-  internal_vip_range =  p("cc.internal_route_vip_range")
-  raise StandardError.new("invalid cc.internal_route_vip_range: #{internal_vip_range}") unless internal_vip_range =~ /\A (?:\d{1,3}\.){3} \d{1,3} \/ \d{1,3} \z/x
-
-  parts = internal_vip_range.split(/[\.\/]/).map(&:to_i)
-  raise StandardError.new("invalid cc.internal_route_vip_range: #{internal_vip_range}") if parts[0..3].any? {|x| x > 255} || parts[4] > 32
-%>
-
-internal_route_vip_range: <%= internal_vip_range %>
-
 threadpool_size: <%= p("cc.experimental.thin_server.thread_pool_size") %>
 
 default_app_lifecycle: <%= p("cc.default_app_lifecycle") %>
