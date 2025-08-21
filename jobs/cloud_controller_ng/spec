@@ -170,6 +170,7 @@ provides:
   - cc.logging.format.timestamp
   - cc.logging_level
   - cc.logging_max_retries
+  - cc.max_service_credential_bindings_per_app_service_instance
   - cc.max_labels_per_resource
   - cc.max_annotations_per_resource
   - cc.maximum_health_check_timeout
@@ -893,6 +894,14 @@ properties:
   cc.development_mode:
     default: false
     description: "Enable development features for monitoring and insight"
+
+  cc.max_service_credential_bindings_per_app_service_instance:
+    default: 1
+    description: |
+      Maximum number of service credential bindings allowed per app–service instance pair.
+      A value of 1 (default) enforces a single binding per app–service instance pair.
+      Higher values enable multiple bindings, e.g. for credential rotation without app redeployments.
+      Must be an integer greater than or equal to 1.
 
   cc.max_annotations_per_resource:
     description: "Maximum number of annotations allowed on any single resource. Too many annotations may degrade performance of annotation selectors."
