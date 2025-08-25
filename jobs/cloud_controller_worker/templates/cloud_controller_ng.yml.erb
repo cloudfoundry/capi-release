@@ -368,3 +368,7 @@ prometheus_port: <%= p("cc.prometheus_port") %>
 default_app_lifecycle: <%= link("cloud_controller_internal").p("cc.default_app_lifecycle") %>
 directories:
   tmpdir: <%= p("cc.directories.tmpdir") %>
+
+<% link("cloud_controller_internal").if_p("cc.feature_flag_overrides") do |feature_flag_overrides| %>
+feature_flag_overrides: <%= feature_flag_overrides.to_json %>
+<% end %>
