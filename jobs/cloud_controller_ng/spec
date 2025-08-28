@@ -233,6 +233,7 @@ provides:
   - cc.deprecated_stacks
   - cc.temporary_enable_deprecated_thin_webserver
   - cc.custom_root_links
+  - cc.feature_flag_overrides
   
 consumes:
 - name: database
@@ -1334,6 +1335,10 @@ properties:
   cc.use_status_check:
     description: "Let monit use the /internal/v4/status endpoint to determine if the Cloud Controller is healthy. Only if the status endpoint returns unhealthy or the status has not been OK for 600 seconds, it will trigger a restart. This only takes effect when Puma is used."
     default: false
+
+  cc.feature_flag_overrides:
+    description: "Feature flag key-value pairs to override default feature flags"
+    default: {}
 
 # deprecated configuration
 
