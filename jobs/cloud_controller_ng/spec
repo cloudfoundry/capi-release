@@ -111,10 +111,6 @@ provides:
   - cc.mutual_tls.ca_cert
   - cc.prom_metrics_server_tls_port
   - cc.prom_scraper_tls.ca_cert
-- name: cloud_controller_container_networking_info
-  type: cloud_controller_container_networking_info
-  properties:
-  - cc.internal_route_vip_range
 - name: cloud_controller_internal
   type: cloud_controller_internal
   properties:
@@ -216,7 +212,6 @@ provides:
   - cc.temporary_enable_v2
   - cc.tls_port
   - cc.uaa.client_timeout
-  - cc.internal_route_vip_range
   - cc.volume_services_enabled
   - credhub_api.ca_cert
   - credhub_api.hostname
@@ -1272,10 +1267,6 @@ properties:
   cc.credential_references.interpolate_service_bindings:
     description: "Controls whether CredHub credentials are automatically interpolated in VCAP_SERVICES"
     default: true
-
-  cc.internal_route_vip_range:
-    default: "127.128.0.0/9"
-    description: "This is only here cause cf networking needs it, we should coordinate a delete with them"
 
   cc.log_audit_events:
     default: true

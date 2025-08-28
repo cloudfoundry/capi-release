@@ -583,10 +583,6 @@ properties:
     description: "Maximum PID limit for containerized work running user-provided code"
     default: 1024
 
-  cc.internal_route_vip_range:
-    default: "127.128.0.0/9"
-    description: "This is only here cause cf networking needs it, we should coordinate a delete with them"
-
   cc.loggregator.internal_url:
     description: "Internal URL used to communicate with traffic_controller"
     default: "http://loggregator-trafficcontroller.service.cf.internal:8081"
