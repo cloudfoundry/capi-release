@@ -5,8 +5,6 @@ PID_FILE="/var/vcap/sys/run/bpm/cc_uploader/cc_uploader.pid"
 
 TIMEOUT_MINUTES="<%= p("capi.cc_uploader.cc_uploader_drain_timeout_in_minutes") %>"
 
-TIMEOUT_MINUTES="${TIMEOUT_MINUTES%m}"
-
 DRAIN_TIMEOUT_IN_SECONDS=$(( TIMEOUT_MINUTES * 60 ))
 START_TS=$(date +%s)
 

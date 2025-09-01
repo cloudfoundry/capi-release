@@ -78,6 +78,6 @@ properties:
     description: "PEM-encoded key for secure, mutually authenticated TLS communication"
 
   capi.cc_uploader.cc_uploader_drain_timeout_in_minutes:
-    description: Maximum time to wait for in‐flight uploads to finish before forcing shutdown
+    description: Maximum time in minutes to wait for in‐flight uploads to finish before forcing shutdown
     type: time
-    default: 15m
+    default: 15

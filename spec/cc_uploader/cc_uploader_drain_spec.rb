@@ -19,7 +19,7 @@ module Bosh
             {
               'capi' => {
                 'cc_uploader' => {
-                  'cc_uploader_drain_timeout_in_minutes' => '10m'
+                  'cc_uploader_drain_timeout_in_minutes' => '10'
                 }
               }
             }
@@ -27,7 +27,7 @@ module Bosh
 
           it 'renders the drain script with correct timeout' do
             rendered = template.render(properties)
-            expect(rendered).to include('TIMEOUT_MINUTES="10m"')
+            expect(rendered).to include('TIMEOUT_MINUTES="10"')
             expect(rendered).to include('DRAIN_TIMEOUT_IN_SECONDS=$(( TIMEOUT_MINUTES * 60 ))')
           end
         end
@@ -35,7 +35,7 @@ module Bosh
         context 'when capi.cc_uploader.cc_uploader_drain_timeout_in_minutes is not provided' do
           it 'defaults to 15 minutes' do
             rendered = template.render({})
-            expect(rendered).to include('TIMEOUT_MINUTES="15m"')
+            expect(rendered).to include('TIMEOUT_MINUTES="15"')
           end
         end
 
