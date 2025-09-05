@@ -74,6 +74,7 @@ packages:
   - jemalloc
   - mariadb_connector_c
   - ruby-3.2
+  - azure-storage-cli
 
 provides:
 - name: cloud_controller
@@ -234,6 +235,10 @@ provides:
   - cc.temporary_enable_deprecated_thin_webserver
   - cc.custom_root_links
   - cc.feature_flag_overrides
+  - cc.resource_pool.connection_config
+  - cc.packages.connection_config
+  - cc.droplets.connection_config
+  - cc.buildpacks.connection_config
   
 consumes:
 - name: database
@@ -562,6 +567,8 @@ properties:
   cc.resource_pool.cdn.key_pair_id:
     description: "Key pair name for signed download URIs"
     default: ""
+  cc.resource_pool.connection_config:
+    description: "Azure Storage Cli connection hash"
 
   cc.packages.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
@@ -610,6 +617,8 @@ properties:
   cc.packages.cdn.key_pair_id:
     description: "Key pair name for signed download URIs"
     default: ""
+  cc.packages.connection_config:
+    description: "Azure Storage Cli connection hash"
 
   cc.droplets.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
@@ -655,6 +664,8 @@ properties:
   cc.droplets.cdn.key_pair_id:
     description: "Key pair name for signed download URIs"
     default: ""
+  cc.droplets.connection_config:
+    description: "Azure Storage Cli connection hash"
 
   cc.buildpacks.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
@@ -697,6 +708,8 @@ properties:
   cc.buildpacks.cdn.key_pair_id:
     description: "Key pair name for signed download URIs"
     default: ""
+  cc.buildpacks.connection_config:
+    description: "Azure Storage Cli connection hash"
 
   ccdb.databases:
     description: "Contains the name of the database on the database server"
