@@ -583,14 +583,6 @@ properties:
     description: "Maximum PID limit for containerized work running user-provided code"
     default: 1024
 
-  cc.internal_route_vip_range:
-    default: "127.128.0.0/9"
-    description: "The IPv4 CIDR range of virtual IP addresses to be assigned to routes on internal domains.
-                  WARNING: Changing this range is not supported, and has undefined behaviors.
-                  It is recommended to leave this value as the default.
-                  If this range is changed, it is likely the routes on the internal service mesh domain
-                  will need to be recreated."
-
   cc.loggregator.internal_url:
     description: "Internal URL used to communicate with traffic_controller"
     default: "http://loggregator-trafficcontroller.service.cf.internal:8081"
