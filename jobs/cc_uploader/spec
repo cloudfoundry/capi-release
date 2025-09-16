@@ -14,6 +14,7 @@ templates:
   cc_uploader_server.crt.erb: config/certs/cc_uploader/server.crt
   cc_uploader_server.key.erb: config/certs/cc_uploader/server.key
   pre-start.erb: bin/pre-start
+  drain.sh.erb: bin/drain
 
 packages:
   - capi_utils
@@ -75,3 +76,8 @@ properties:
     description: "PEM-encoded certificate for secure, mutually authenticated TLS communication"
   capi.cc_uploader.mutual_tls.server_key:
     description: "PEM-encoded key for secure, mutually authenticated TLS communication"
+
+  capi.cc_uploader.cc_uploader_drain_timeout_in_minutes:
+    description: Maximum time in minutes to wait for in‐flight uploads to finish before forcing shutdown
+    type: time
+    default: 15
