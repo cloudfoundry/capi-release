@@ -1,14 +1,17 @@
 <%
   require 'cgi'
 
-  # Ensure Azure CLI connection_config has a default timeout if none is set
-  def cli_cfg_with_default_timeout(connection_cfg, blobstore_type, default_seconds: 41)
-    cfg = (connection_cfg || {}).dup
-    if blobstore_type == 'storage_cli' && !cfg.key?('put_timeout_in_seconds')
-      cfg['put_timeout_in_seconds'] = default_seconds.to_s
-    end
-    cfg
-  end
+  # # Ensure Azure CLI connection_config has a default timeout if none is set
+  # def cli_cfg_with_default_timeout(connection_cfg, blobstore_type, default_seconds: 41)
+  #   cfg = (connection_cfg || {}).dup
+  #   if blobstore_type == 'storage_cli' && !cfg.key?('put_timeout_in_seconds')
+  #     cfg['put_timeout_in_seconds'] = default_seconds.to_s
+  #   end
+  #   cfg
+  # end
+  # def connection_config_with_context(cfg, context)
+  #   (cfg || {}).merge('context' => context)
+  # end
 
   def discover_external_ip
     networks = spec.networks.marshal_dump
@@ -163,6 +166,10 @@ default_health_check_timeout: <%= p("cc.default_health_check_timeout") %>
 maximum_health_check_timeout: <%= p("cc.maximum_health_check_timeout") %>
 
 stacks_file: /var/vcap/jobs/cloud_controller_worker/config/stacks.yml
+storage_cli_config_file_droplets: /var/vcap/jobs/cloud_controller_worker/config/storage_cli_config_droplets.json
+storage_cli_config_file_buildpacks: /var/vcap/jobs/cloud_controller_worker/config/storage_cli_config_buildpacks.json
+storage_cli_config_file_packages: /var/vcap/jobs/cloud_controller_worker/config/storage_cli_config_packages.json
+storage_cli_config_file_resource_pool: /var/vcap/jobs/cloud_controller_worker/config/storage_cli_config_resource_pool.json
 
 resource_pool:
   blobstore_type: <%= p("cc.resource_pool.blobstore_type") %>
@@ -186,7 +193,7 @@ resource_pool:
   <% end %>
   fog_connection: <%= p("cc.resource_pool.fog_connection", {}).to_json %>
   <% if_p("cc.resource_pool.connection_config") do |cfg| %>
-    connection_config: <%= cli_cfg_with_default_timeout(cfg, p("cc.resource_pool.blobstore_type")).to_json %>
+  connection_config: <%= cfg.to_json %>
   <% end %>
   fog_aws_storage_options: <%= p("cc.resource_pool.fog_aws_storage_options", {}).to_json %>
   fog_gcp_storage_options: <%= p("cc.resource_pool.fog_gcp_storage_options", {}).to_json %>
@@ -213,7 +220,7 @@ packages:
   <% end %>
   fog_connection: <%= p("cc.packages.fog_connection", {}).to_json %>
   <% if_p("cc.packages.connection_config") do |cfg| %>
-    connection_config: <%= cli_cfg_with_default_timeout(cfg, p("cc.packages.blobstore_type")).to_json %>
+  connection_config: <%= cfg.to_json %>
   <% end %>
   fog_aws_storage_options: <%= p("cc.packages.fog_aws_storage_options", {}).to_json %>
   fog_gcp_storage_options: <%= p("cc.packages.fog_gcp_storage_options", {}).to_json %>
@@ -238,7 +245,7 @@ droplets:
   <% end %>
   fog_connection: <%= p("cc.droplets.fog_connection", {}).to_json %>
   <% if_p("cc.droplets.connection_config") do |cfg| %>
-    connection_config: <%= cli_cfg_with_default_timeout(cfg, p("cc.droplets.blobstore_type")).to_json %>
+  connection_config: <%= cfg.to_json %>
   <% end %>
   fog_aws_storage_options: <%= p("cc.droplets.fog_aws_storage_options", {}).to_json %>
   fog_gcp_storage_options: <%= p("cc.droplets.fog_gcp_storage_options", {}).to_json %>
@@ -263,7 +270,7 @@ buildpacks:
   <% end %>
   fog_connection: <%= p("cc.buildpacks.fog_connection", {}).to_json %>
   <% if_p("cc.buildpacks.connection_config") do |cfg| %>
-    connection_config: <%= cli_cfg_with_default_timeout(cfg, p("cc.buildpacks.blobstore_type")).to_json %>
+  connection_config: <%= cfg.to_json %>
   <% end %>
   fog_aws_storage_options: <%= p("cc.buildpacks.fog_aws_storage_options", {}).to_json %>
   fog_gcp_storage_options: <%= p("cc.buildpacks.fog_gcp_storage_options", {}).to_json %>

@@ -1,0 +1,47 @@
+<%
+require "json"
+
+ # Ensure Azure CLI connection_config has a default timeout if none is set
+def cli_cfg_with_default_timeout(connection_cfg, blobstore_type, default_seconds: 41)
+  cfg = (connection_cfg || {}).dup
+  if blobstore_type == 'storage_cli'
+    if !cfg.key?('put_timeout_in_seconds') || cfg['put_timeout_in_seconds'].to_s.empty?
+      cfg['put_timeout_in_seconds'] = default_seconds.to_s
+    end
+  end
+  cfg
+end
+
+# helper: add key only when value is present
+def add(h, key, val)
+  return if val.nil?
+  return if val.respond_to?(:empty?) && val.empty?
+  h[key] = val
+end
+
+scope = "cc.droplets.connection_config"
+provider = p("#{scope}.provider")
+
+if provider != "AzureRM"
+  options = {} # for now: all non-azure providers output an empty JSON object
+else
+  options = {}
+  options["provider"] = provider
+  options["account_name"]   = p("#{scope}.azure_storage_account_name")
+  options["container_name"] = p("#{scope}.container_name")
+  add(options, "account_key",        p("#{scope}.azure_storage_access_key"))
+  add(options, "environment",        p("#{scope}.environment", "AzureCloud"))
+
+  # optional passthrough for extra storage-cli flags
+  begin
+    custom = p("cc.droplets.connection_config.custom", {})
+    if custom.respond_to?(:each)
+      custom.each { |k, v| add(options, k.to_s, v) }
+    end
+  rescue
+    # ignore if property not defined
+  end
+  options = cli_cfg_with_default_timeout(options, 'storage_cli')
+end
+-%>
+<%= JSON.pretty_generate(options) %>
