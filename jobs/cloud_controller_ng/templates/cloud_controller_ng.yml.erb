@@ -1,11 +1,6 @@
 <%
   require 'cgi'
   require "yaml"
-
-  def connection_config_with_context(cfg, context)
-    (cfg || {}).merge('context' => context)
-  end
-
    # Ensure Azure CLI connection_config has a default timeout if none is set
   def cli_cfg_with_default_timeout(connection_cfg, blobstore_type, default_seconds: 41)
     cfg = (connection_cfg || {}).dup

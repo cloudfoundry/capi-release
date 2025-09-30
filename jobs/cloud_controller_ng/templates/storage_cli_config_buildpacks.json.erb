@@ -31,6 +31,7 @@ else
   options["container_name"] = p("#{scope}.container_name")
   add(options, "account_key",        p("#{scope}.azure_storage_access_key"))
   add(options, "environment",        p("#{scope}.environment", "AzureCloud"))
+  add(options, "put_timeout_in_seconds", p("#{scope}.put_timeout_in_seconds"))
 
   # optional passthrough for extra storage-cli flags
   begin
