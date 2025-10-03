@@ -94,7 +94,7 @@ postgres/postgresql-11.22.tar.gz:
   size: 26826810
   object_id: d1f8d34c-b438-44e7-7672-5daea8a6da66
   sha: sha256:6445a4e1533c1e8bb616d4a3784bdc4c0226b541f6f0c8d996d9f27d581d49c3
-valkey/7.2.10.tar.gz:
-  size: 3438950
-  object_id: 6532da18-5430-4650-7946-ae8f61c530fb
-  sha: sha256:af455ff2f18ddd9a7f1255ee1f4e2de5d560553a9e13c385551f0a9941ff2070
+valkey/7.2.11.tar.gz:
+  size: 3441067
+  object_id: ac3c2823-80c0-41e9-78e4-e42014aad04a
+  sha: sha256:7ed6733e1af05fc50aea374e73ec6bf29c5e50642c00e7964f00ae94188c7bd7

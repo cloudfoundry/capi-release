@@ -2,7 +2,7 @@
 
 function main() {
   local valkey_version
-  valkey_version="7.2.10"
+  valkey_version="7.2.11"
 
   mkdir -p "valkey-${valkey_version}" && tar xzf "valkey/${valkey_version}.tar.gz" -C "valkey-${valkey_version}" --strip-components=1
 
