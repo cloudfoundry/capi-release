@@ -27,6 +27,7 @@ templates:
   credhub_ca.crt.erb: config/certs/credhub_ca.crt
 
 packages:
+  - azure-storage-cli
   - capi_utils
   - cloud_controller_ng
   - nginx

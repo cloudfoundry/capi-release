@@ -37,6 +37,7 @@ templates:
   scrape_ca.crt.erb: config/certs/scrape_ca.crt
 
 packages:
+  - azure-storage-cli
   - capi_utils
   - cloud_controller_ng
   - nginx
