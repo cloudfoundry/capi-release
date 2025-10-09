@@ -70,6 +70,7 @@ templates:
   cloud_controller_local_worker_override.yml.erb: config/cloud_controller_local_worker_override.yml
 
 packages:
+  - azure-storage-cli
   - capi_utils
   - cloud_controller_ng
   - nginx
