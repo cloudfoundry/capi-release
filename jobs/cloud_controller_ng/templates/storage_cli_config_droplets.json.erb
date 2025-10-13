@@ -20,7 +20,7 @@ def add(h, key, val)
 end
 
 scope = "cc.droplets.connection_config"
-provider = p("#{scope}.provider")
+provider = p("cc.droplets.blobstore_provider", "AzureRM")
 
 if provider != "AzureRM"
   options = {} # for now: all non-azure providers output an empty JSON object

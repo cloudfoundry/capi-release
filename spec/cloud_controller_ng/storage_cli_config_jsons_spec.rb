@@ -22,10 +22,10 @@ module Bosh
         let(:props) do
           {
             'cc' => {
-              'droplets' => { 'connection_config' => {} },
-              'buildpacks' => { 'connection_config' => {} },
-              'packages' => { 'connection_config' => {} },
-              'resource_pool' => { 'connection_config' => {} }
+              'droplets' => { 'connection_config' => {}, 'blobstore_provider' => 'AzureRM' },
+              'buildpacks' => { 'connection_config' => {}, 'blobstore_provider' => 'AzureRM' },
+              'packages' => { 'connection_config' => {}, 'blobstore_provider' => 'AzureRM' },
+              'resource_pool' => { 'connection_config' => {}, 'blobstore_provider' => 'AzureRM' }
             }
           }
         end
@@ -73,7 +73,7 @@ module Bosh
             end
 
             it 'renders {} for non-Azure providers' do
-              set(props, keypath, { 'provider' => 'S3' })
+              keypath[0..-2].reduce(props) { |acc, elem| acc[elem] ||= {} }['blobstore_provider'] = 'S3'
 
               json = YAML.safe_load(template.render(props, consumes: links))
               expect(json).to eq({})

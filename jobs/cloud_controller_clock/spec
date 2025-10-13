@@ -40,7 +40,6 @@ packages:
   - jemalloc
   - mariadb_connector_c
   - ruby-3.2
-  - azure-storage-cli
 
 consumes:
 - name: database
@@ -177,6 +176,8 @@ properties:
   cc.staging_upload_password:
     description: "User's password used to access internal endpoints of Cloud Controller to upload files when staging"
 
+  cc.resource_pool.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
   cc.resource_pool.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"
@@ -225,6 +226,8 @@ properties:
   cc.resource_pool.connection_config:
     description: "Azure Storage Cli connection hash"
 
+  cc.packages.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
   cc.packages.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"
@@ -270,6 +273,8 @@ properties:
   cc.packages.connection_config:
     description: "Azure Storage Cli connection hash"
 
+  cc.droplets.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
   cc.droplets.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"
@@ -312,6 +317,8 @@ properties:
   cc.droplets.connection_config:
     description: "Azure Storage Cli connection hash"
 
+  cc.buildpacks.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
   cc.buildpacks.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"

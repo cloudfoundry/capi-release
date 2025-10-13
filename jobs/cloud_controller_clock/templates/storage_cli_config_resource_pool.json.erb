@@ -20,7 +20,7 @@ def add(h, key, val)
 end
 
 scope = "cc.resource_pool.connection_config"
-provider = p("#{scope}.provider")
+provider = p("cc.resource_pool.blobstore_provider")
 
 if provider != "AzureRM"
   options = {} # for now: all non-azure providers output an empty JSON object

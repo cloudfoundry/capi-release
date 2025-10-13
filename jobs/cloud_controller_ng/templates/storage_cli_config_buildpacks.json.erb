@@ -20,7 +20,7 @@ def add(h, key, val)
 end
 
 scope = "cc.buildpacks.connection_config"
-provider = p("#{scope}.provider")
+provider = p("cc.buildpacks.blobstore_provider")
 
 if provider != "AzureRM"
   options = {} # for now: all non-azure providers output an empty JSON object
