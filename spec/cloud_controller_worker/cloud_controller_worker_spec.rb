@@ -86,7 +86,8 @@ module Bosh
               'packages' => {
                 'max_valid_packages_stored' => 5
               },
-              'default_app_lifecycle' => 'cnb'
+              'default_app_lifecycle' => 'cnb',
+              'max_service_credential_bindings_per_app_service_instance' => 1
             }
           }
         end
