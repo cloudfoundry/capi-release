@@ -23,8 +23,30 @@ function setup_directories {
   chown -R vcap:vcap "$LOG_DIR"
 }
 
+write_blobstore_scope_configs() {
+  local cfg_json="${CONFIG_DIR}/blobstore_configs.json"
+  if [[ ! -f "$cfg_json" ]]; then
+    echo "blobstore_configs.json not found at $cfg_json; skipping fan-out"
+    return 0
+  fi
+
+  # Use the packaged Ruby if you prefer; system Ruby is usually fine on CF VMs.
+  CFG="$cfg_json" DEST="$BUNDLER_DIR" ruby <<'RUBY'
+  require "json"
+  cfg_path = ENV.fetch("CFG")
+  dest     = ENV.fetch("DEST")
+  data = JSON.parse(File.read(cfg_path))
+
+  %w[buildpacks droplets packages resource_pool].each do |k|
+    out = File.join(dest, "storage_cli_config_#{k}.json")
+    File.write(out, JSON.pretty_generate(data[k] || {}))
+  end
+RUBY
+}
+
 function main {
   setup_directories
+  write_blobstore_scope_configs
 }
 
 main

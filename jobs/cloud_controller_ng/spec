@@ -53,6 +53,7 @@ templates:
   restart_drain.sh.erb: bin/restart_drain
   resource_pool_ca_cert.pem.erb: config/certs/resource_pool_ca_cert.pem
   shutdown_drain.rb.erb: bin/shutdown_drain
+  blobstore_configs.json.erb: config/blobstore_configs.json
   ruby_version.sh.erb: bin/ruby_version.sh
   seed_db.sh.erb: bin/seed_db
   stack_check.sh.erb: bin/stack_check
@@ -115,6 +116,7 @@ provides:
 - name: cloud_controller_internal
   type: cloud_controller_internal
   properties:
+  - cc.buildpacks.blobstore_provider
   - cc.buildpacks.blobstore_type
   - cc.buildpacks.buildpack_directory_key
   - cc.buildpacks.cdn.key_pair_id
@@ -143,6 +145,7 @@ provides:
   - cc.default_stack
   - cc.default_app_lifecycle
   - cc.disable_private_domain_cross_space_context_path_route_sharing
+  - cc.droplets.blobstore_provider
   - cc.droplets.blobstore_type
   - cc.droplets.cdn.key_pair_id
   - cc.droplets.cdn.private_key
@@ -172,6 +175,7 @@ provides:
   - cc.max_annotations_per_resource
   - cc.maximum_health_check_timeout
   - cc.packages.app_package_directory_key
+  - cc.packages.blobstore_provider
   - cc.packages.blobstore_type
   - cc.packages.cdn.key_pair_id
   - cc.packages.cdn.private_key
@@ -187,6 +191,7 @@ provides:
   - cc.packages.webdav_config.private_endpoint
   - cc.packages.webdav_config.public_endpoint
   - cc.packages.webdav_config.username
+  - cc.resource_pool.blobstore_provider
   - cc.resource_pool.blobstore_type
   - cc.resource_pool.cdn.key_pair_id
   - cc.resource_pool.cdn.private_key
@@ -231,6 +236,10 @@ provides:
   - cc.temporary_enable_deprecated_thin_webserver
   - cc.custom_root_links
   - cc.feature_flag_overrides
+  - cc.resource_pool.connection_config
+  - cc.packages.connection_config
+  - cc.droplets.connection_config
+  - cc.buildpacks.connection_config
   
 consumes:
 - name: database
@@ -512,6 +521,8 @@ properties:
     default: default
     description: "The name of the quota definition CC will fallback on for org and space limits from the list of quota definitions."
 
+  cc.resource_pool.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
   cc.resource_pool.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"
@@ -559,7 +570,11 @@ properties:
   cc.resource_pool.cdn.key_pair_id:
     description: "Key pair name for signed download URIs"
     default: ""
+  cc.resource_pool.connection_config:
+    description: "Azure Storage Cli connection hash"
 
+  cc.packages.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
   cc.packages.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"
@@ -607,7 +622,11 @@ properties:
   cc.packages.cdn.key_pair_id:
     description: "Key pair name for signed download URIs"
     default: ""
+  cc.packages.connection_config:
+    description: "Azure Storage Cli connection hash"
 
+  cc.droplets.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
   cc.droplets.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"
@@ -652,7 +671,11 @@ properties:
   cc.droplets.cdn.key_pair_id:
     description: "Key pair name for signed download URIs"
     default: ""
+  cc.droplets.connection_config:
+    description: "Azure Storage Cli connection hash"
 
+  cc.buildpacks.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
   cc.buildpacks.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"
@@ -694,6 +717,8 @@ properties:
   cc.buildpacks.cdn.key_pair_id:
     description: "Key pair name for signed download URIs"
     default: ""
+  cc.buildpacks.connection_config:
+    description: "Azure Storage Cli connection hash"
 
   ccdb.databases:
     description: "Contains the name of the database on the database server"
