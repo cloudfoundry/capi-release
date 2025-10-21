@@ -16,10 +16,7 @@ templates:
   newrelic.yml.erb: config/newrelic.yml
   drain.sh.erb: bin/drain
   stacks.yml.erb: config/stacks.yml
-  storage_cli_config_droplets.json.erb: config/storage_cli_config_droplets.json
-  storage_cli_config_packages.json.erb: config/storage_cli_config_packages.json
-  storage_cli_config_buildpacks.json.erb: config/storage_cli_config_buildpacks.json
-  storage_cli_config_resource_pool.json.erb: config/storage_cli_config_resource_pool.json
+  blobstore_configs.json.erb: config/blobstore_configs.json
   ruby_version.sh.erb: bin/ruby_version.sh
   console.erb: bin/console
   blobstore_waiter.sh.erb: bin/blobstore_waiter.sh

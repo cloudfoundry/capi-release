@@ -53,10 +53,7 @@ templates:
   restart_drain.sh.erb: bin/restart_drain
   resource_pool_ca_cert.pem.erb: config/certs/resource_pool_ca_cert.pem
   shutdown_drain.rb.erb: bin/shutdown_drain
-  storage_cli_config_droplets.json.erb: config/storage_cli_config_droplets.json
-  storage_cli_config_packages.json.erb: config/storage_cli_config_packages.json
-  storage_cli_config_buildpacks.json.erb: config/storage_cli_config_buildpacks.json
-  storage_cli_config_resource_pool.json.erb: config/storage_cli_config_resource_pool.json
+  blobstore_configs.json.erb: config/blobstore_configs.json
   ruby_version.sh.erb: bin/ruby_version.sh
   seed_db.sh.erb: bin/seed_db
   stack_check.sh.erb: bin/stack_check
