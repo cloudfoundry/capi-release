@@ -113,10 +113,6 @@ provides:
   - cc.mutual_tls.ca_cert
   - cc.prom_metrics_server_tls_port
   - cc.prom_scraper_tls.ca_cert
-- name: cloud_controller_container_networking_info
-  type: cloud_controller_container_networking_info
-  properties:
-  - cc.internal_route_vip_range
 - name: cloud_controller_internal
   type: cloud_controller_internal
   properties:
@@ -174,6 +170,7 @@ provides:
   - cc.logging.format.timestamp
   - cc.logging_level
   - cc.logging_max_retries
+  - cc.max_service_credential_bindings_per_app_service_instance
   - cc.max_labels_per_resource
   - cc.max_annotations_per_resource
   - cc.maximum_health_check_timeout
@@ -222,7 +219,6 @@ provides:
   - cc.temporary_enable_v2
   - cc.tls_port
   - cc.uaa.client_timeout
-  - cc.internal_route_vip_range
   - cc.volume_services_enabled
   - credhub_api.ca_cert
   - credhub_api.hostname
@@ -925,6 +921,14 @@ properties:
     default: false
     description: "Enable development features for monitoring and insight"
 
+  cc.max_service_credential_bindings_per_app_service_instance:
+    default: 1
+    description: |
+      Maximum number of service credential bindings allowed per app–service instance pair.
+      A value of 1 (default) enforces a single binding per app–service instance pair.
+      Higher values enable multiple bindings, e.g. for credential rotation without app redeployments.
+      Must be an integer greater than or equal to 1.
+
   cc.max_annotations_per_resource:
     description: "Maximum number of annotations allowed on any single resource. Too many annotations may degrade performance of annotation selectors."
     default: 200
@@ -1299,14 +1303,6 @@ properties:
   cc.credential_references.interpolate_service_bindings:
     description: "Controls whether CredHub credentials are automatically interpolated in VCAP_SERVICES"
     default: true
-
-  cc.internal_route_vip_range:
-    default: "127.128.0.0/9"
-    description: "The IPv4 CIDR range of virtual IP addresses to be assigned to routes on internal domains.
-                  WARNING: Changing this range is not supported, and has undefined behaviors.
-                  It is recommended to leave this value as the default.
-                  If this range is changed, it is likely the routes on the internal service mesh domain
-                  will need to be recreated."
 
   cc.log_audit_events:
     default: true
