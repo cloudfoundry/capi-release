@@ -942,14 +942,14 @@ module Bosh
               end
             end
 
-            context 'when it is set to buildpack' do
+            context 'when it is set to buidpack' do
               before do
-                merged_manifest_properties['cc']['default_app_lifecycle'] = 'buildpack'
+                merged_manifest_properties['cc']['default_app_lifecycle'] = 'buidpack'
               end
 
-              it 'renders it as buildpack' do
+              it 'renders it as buidpack' do
                 template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['default_app_lifecycle']).to eq('buildpack')
+                expect(template_hash['default_app_lifecycle']).to eq('buidpack')
               end
             end
 
