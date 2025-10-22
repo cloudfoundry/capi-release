@@ -23,8 +23,39 @@ function setup_directories {
   chown -R vcap:vcap "$LOG_DIR"
 }
 
+CC_JOB_DIR="/var/vcap/jobs/cloud_controller_clock"
+CONFIG_DIR="${CC_JOB_DIR}/config"
+
+ruby_cmd="${RUBY_CMD:-}"
+if [[ -z "$ruby_cmd" ]]; then ruby_cmd="$(ls -1 /var/vcap/packages/ruby*/bin/ruby 2>/dev/null | sort -V | tail -n1 || true)"; fi
+if [[ -z "$ruby_cmd" ]]; then
+  echo "ERROR: No ruby found (set RUBY_CMD or ensure /var/vcap/packages/ruby*/bin/ruby exists)"
+  exit 1
+fi
+
+write_blobstore_configs() {
+  local cfg_json="${CONFIG_DIR}/blobstore_configs.json"
+  if [[ ! -f "$cfg_json" ]]; then
+    echo "blobstore_configs.json not found at $cfg_json;"
+    return 0
+  fi
+
+  BLOBSTORE_INPUT_CONFIG="$cfg_json" BLOBSTORE_OUTPUT_CONFIG="${CC_JOB_DIR}/config" "$ruby_cmd"  <<'RUBY'
+  require "json"
+  cfg_path = ENV.fetch("BLOBSTORE_INPUT_CONFIG")
+  dest     = ENV.fetch("BLOBSTORE_OUTPUT_CONFIG")
+  data = JSON.parse(File.read(cfg_path))
+
+  %w[buildpacks droplets packages resource_pool].each do |k|
+    out = File.join(dest, "storage_cli_config_#{k}.json")
+    File.write(out, JSON.pretty_generate(data[k] || {}))
+  end
+RUBY
+}
+
 function main {
   setup_directories
+  write_blobstore_configs
 }
 
 main

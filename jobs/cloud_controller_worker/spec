@@ -15,6 +15,7 @@ templates:
   setup_local_blobstore.sh.erb: bin/setup_local_blobstore.sh
   newrelic.yml.erb: config/newrelic.yml
   drain.sh.erb: bin/drain
+  blobstore_configs.json.erb: config/blobstore_configs.json
   stacks.yml.erb: config/stacks.yml
   ruby_version.sh.erb: bin/ruby_version.sh
   console.erb: bin/console
@@ -139,6 +140,10 @@ properties:
   cc.staging_upload_password:
     description: "User's password used to access internal endpoints of Cloud Controller to upload files when staging"
 
+  cc.resource_pool.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+  cc.resource_pool.connection_config:
+    description: "Azure Storage Cli connection hash"
   cc.resource_pool.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"
@@ -185,6 +190,10 @@ properties:
     description: "Key pair name for signed download URIs"
     default: ""
 
+  cc.packages.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+  cc.packages.connection_config:
+    description: "Azure Storage Cli connection hash"
   cc.packages.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"
@@ -228,6 +237,10 @@ properties:
     description: "Key pair name for signed download URIs"
     default: ""
 
+  cc.droplets.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+  cc.droplets.connection_config:
+    description: "Azure Storage Cli connection hash"
   cc.droplets.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"
@@ -268,6 +281,10 @@ properties:
     description: "Key pair name for signed download URIs"
     default: ""
 
+  cc.buildpacks.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+  cc.buildpacks.connection_config:
+    description: "Azure Storage Cli connection hash"
   cc.buildpacks.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
     default: "fog"
