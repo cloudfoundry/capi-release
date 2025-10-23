@@ -23,8 +23,7 @@ function setup_directories {
   chown -R vcap:vcap "$LOG_DIR"
 }
 
-CC_JOB_DIR="/var/vcap/jobs/cloud_controller_clock"
-CONFIG_DIR="${CC_JOB_DIR}/config"
+CONFIG_DIR="/var/vcap/jobs/cloud_controller_clock/config"
 
 ruby_cmd="${RUBY_CMD:-}"
 if [[ -z "$ruby_cmd" ]]; then ruby_cmd="$(ls -1 /var/vcap/packages/ruby*/bin/ruby 2>/dev/null | sort -V | tail -n1 || true)"; fi
@@ -40,7 +39,7 @@ write_blobstore_configs() {
     return 0
   fi
 
-  BLOBSTORE_INPUT_CONFIG="$cfg_json" BLOBSTORE_OUTPUT_CONFIG="${CC_JOB_DIR}/config" "$ruby_cmd"  <<'RUBY'
+  BLOBSTORE_INPUT_CONFIG="$cfg_json" BLOBSTORE_OUTPUT_CONFIG="${CONFIG_DIR}" "$ruby_cmd"  <<'RUBY'
   require "json"
   cfg_path = ENV.fetch("BLOBSTORE_INPUT_CONFIG")
   dest     = ENV.fetch("BLOBSTORE_OUTPUT_CONFIG")
