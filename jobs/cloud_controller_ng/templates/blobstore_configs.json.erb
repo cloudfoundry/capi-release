@@ -18,7 +18,7 @@ def add(h, key, val)
 end
 
 def options_for(scope_prefix, provider_prop)
-  provider = p(provider_prop)
+  provider = p(provider_prop, nil)
   if provider != "AzureRM"
     {} # for now: all non-azure providers output an empty JSON object
   else

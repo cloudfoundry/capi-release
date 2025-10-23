@@ -175,6 +175,7 @@ properties:
 
   cc.resource_pool.blobstore_provider:
     description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    default: ~
   cc.resource_pool.connection_config:
       description: "Azure Storage Cli connection hash"
   cc.resource_pool.blobstore_type:
@@ -225,6 +226,7 @@ properties:
 
   cc.packages.blobstore_provider:
     description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    default: ~
   cc.packages.connection_config:
     description: "Azure Storage Cli connection hash"
   cc.packages.blobstore_type:
@@ -272,6 +274,7 @@ properties:
 
   cc.droplets.blobstore_provider:
     description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    default: ~
   cc.droplets.connection_config:
     description: "Azure Storage Cli connection hash"
   cc.droplets.blobstore_type:
@@ -316,6 +319,7 @@ properties:
 
   cc.buildpacks.blobstore_provider:
     description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    default: ~
   cc.buildpacks.connection_config:
     description: "Azure Storage Cli connection hash"
   cc.buildpacks.blobstore_type:
