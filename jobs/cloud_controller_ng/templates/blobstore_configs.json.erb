@@ -18,28 +18,30 @@ def add(h, key, val)
 end
 
 def options_for(scope_prefix, provider_prop)
-  provider = p(provider_prop, nil)
-  return {} unless provider == "AzureRM"
+  provider = p(provider_prop)
+  if provider != "AzureRM"
+    {} # for now: all non-azure providers output an empty JSON object
+  else
+    h = {}
+    h["provider"]       = provider
+    h["account_name"]   = p("#{scope_prefix}.azure_storage_account_name")
+    h["container_name"] = p("#{scope_prefix}.container_name")
+    add(h, "account_key",            p("#{scope_prefix}.azure_storage_access_key"))
+    add(h, "environment",            p("#{scope_prefix}.environment", "AzureCloud"))
+    add(h, "put_timeout_in_seconds", p("#{scope_prefix}.put_timeout_in_seconds", nil))
 
-  h = {}
-  h["provider"]       = provider
-  h["account_name"]   = p("#{scope_prefix}.azure_storage_account_name")
-  h["container_name"] = p("#{scope_prefix}.container_name")
-  add(h, "account_key",            p("#{scope_prefix}.azure_storage_access_key"))
-  add(h, "environment",            p("#{scope_prefix}.environment", "AzureCloud"))
-  add(h, "put_timeout_in_seconds", p("#{scope_prefix}.put_timeout_in_seconds", nil))
-
-  # optional passthrough for extra storage-cli flags
-  begin
-    custom = p("#{scope_prefix}.custom", {})
-    if custom.respond_to?(:each)
-      custom.each { |k, v| add(h, k.to_s, v) }
+    # optional passthrough for extra storage-cli flags
+    begin
+      custom = p("#{scope_prefix}.custom", {})
+      if custom.respond_to?(:each)
+        custom.each { |k, v| add(h, k.to_s, v) }
+      end
+    rescue
+      # property might not exist; ignore
     end
-  rescue
-    # property might not exist; ignore
-  end
 
-  cli_cfg_with_default_timeout(h, 'storage_cli')
+    cli_cfg_with_default_timeout(h, 'storage_cli')
+  end
 end
 
 all = {

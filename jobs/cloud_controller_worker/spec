@@ -145,7 +145,7 @@ properties:
   cc.resource_pool.connection_config:
     description: "Azure Storage Cli connection hash"
   cc.resource_pool.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
+    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
     default: "fog"
   cc.resource_pool.fog_aws_storage_options:
     description: "Storage options passed to fog for aws blobstores. Valid keys: ['encryption']."
@@ -195,7 +195,7 @@ properties:
   cc.packages.connection_config:
     description: "Azure Storage Cli connection hash"
   cc.packages.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
+    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
     default: "fog"
   cc.packages.fog_aws_storage_options:
     description: "Storage options passed to fog for aws blobstores. Valid keys: ['encryption']."
@@ -242,7 +242,7 @@ properties:
   cc.droplets.connection_config:
     description: "Azure Storage Cli connection hash"
   cc.droplets.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
+    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
     default: "fog"
   cc.droplets.fog_aws_storage_options:
     description: "Storage options passed to fog for aws blobstores. Valid keys: ['encryption']."
@@ -286,7 +286,7 @@ properties:
   cc.buildpacks.connection_config:
     description: "Azure Storage Cli connection hash"
   cc.buildpacks.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
+    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
     default: "fog"
   cc.buildpacks.fog_aws_storage_options:
     description: "Storage options passed to fog for aws blobstores. Valid keys: ['encryption']."
