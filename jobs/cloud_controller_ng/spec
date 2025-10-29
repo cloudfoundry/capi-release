@@ -15,7 +15,6 @@ templates:
   post-restore-unlock.sh.erb: bin/bbr/post-restore-unlock
 
   cloud_controller_ng.yml.erb: config/cloud_controller_ng.yml
-  blobstore_configs.json.erb: config/blobstore_configs.json
   blobstore_waiter.sh.erb: bin/blobstore_waiter.sh
   buildpacks_ca_cert.pem.erb: config/certs/buildpacks_ca_cert.pem
   cloud_controller_api_health_check.erb: bin/cloud_controller_ng_health_check
@@ -57,6 +56,10 @@ templates:
   ruby_version.sh.erb: bin/ruby_version.sh
   seed_db.sh.erb: bin/seed_db
   stack_check.sh.erb: bin/stack_check
+  storage_cli_config_droplets.json.erb: config/storage_cli_config_droplets.json
+  storage_cli_config_packages.json.erb: config/storage_cli_config_packages.json
+  storage_cli_config_buildpacks.json.erb: config/storage_cli_config_buildpacks.json
+  storage_cli_config_resource_pool.json.erb: config/storage_cli_config_resource_pool.json
   setup_local_blobstore.sh.erb: bin/setup_local_blobstore.sh
   stacks.yml.erb: config/stacks.yml
   uaa_ca.crt.erb: config/certs/uaa_ca.crt

@@ -15,7 +15,6 @@ templates:
   setup_local_blobstore.sh.erb: bin/setup_local_blobstore.sh
   newrelic.yml.erb: config/newrelic.yml
   drain.sh.erb: bin/drain
-  blobstore_configs.json.erb: config/blobstore_configs.json
   stacks.yml.erb: config/stacks.yml
   ruby_version.sh.erb: bin/ruby_version.sh
   console.erb: bin/console
@@ -36,6 +35,10 @@ templates:
   scrape.crt.erb: config/certs/scrape.crt
   scrape.key.erb: config/certs/scrape.key
   scrape_ca.crt.erb: config/certs/scrape_ca.crt
+  storage_cli_config_droplets.json.erb: config/storage_cli_config_droplets.json
+  storage_cli_config_packages.json.erb: config/storage_cli_config_packages.json
+  storage_cli_config_buildpacks.json.erb: config/storage_cli_config_buildpacks.json
+  storage_cli_config_resource_pool.json.erb: config/storage_cli_config_resource_pool.json
 
 packages:
   - azure-storage-cli
