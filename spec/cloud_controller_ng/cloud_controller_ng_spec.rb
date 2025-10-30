@@ -942,14 +942,14 @@ module Bosh
               end
             end
 
-            context 'when it is set to buidpack' do
+            context 'when it is set to buildpack' do
               before do
-                merged_manifest_properties['cc']['default_app_lifecycle'] = 'buidpack'
+                merged_manifest_properties['cc']['default_app_lifecycle'] = 'buildpack'
               end
 
-              it 'renders it as buidpack' do
+              it 'renders it as buildpack' do
                 template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['default_app_lifecycle']).to eq('buidpack')
+                expect(template_hash['default_app_lifecycle']).to eq('buildpack')
               end
             end
 
@@ -978,6 +978,18 @@ module Bosh
                 template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
                 expect(template_hash['max_service_credential_bindings_per_app_service_instance']).to eq(5)
               end
+            end
+          end
+
+          describe 'storage_cli_config_file_* paths' do
+            let(:template) { job.template('config/cloud_controller_ng.yml') }
+
+            it 'renders absolute paths for all four scope files' do
+              yaml = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(yaml['storage_cli_config_file_droplets']).to eq('/var/vcap/jobs/cloud_controller_ng/config/storage_cli_config_droplets.json')
+              expect(yaml['storage_cli_config_file_packages']).to eq('/var/vcap/jobs/cloud_controller_ng/config/storage_cli_config_packages.json')
+              expect(yaml['storage_cli_config_file_buildpacks']).to eq('/var/vcap/jobs/cloud_controller_ng/config/storage_cli_config_buildpacks.json')
+              expect(yaml['storage_cli_config_file_resource_pool']).to eq('/var/vcap/jobs/cloud_controller_ng/config/storage_cli_config_resource_pool.json')
             end
           end
         end

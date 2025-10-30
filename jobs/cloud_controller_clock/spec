@@ -25,6 +25,10 @@ templates:
   uaa_ca.crt.erb: config/certs/uaa_ca.crt
   db_ca.crt.erb: config/certs/db_ca.crt
   credhub_ca.crt.erb: config/certs/credhub_ca.crt
+  storage_cli_config_droplets.json.erb: config/storage_cli_config_droplets.json
+  storage_cli_config_packages.json.erb: config/storage_cli_config_packages.json
+  storage_cli_config_buildpacks.json.erb: config/storage_cli_config_buildpacks.json
+  storage_cli_config_resource_pool.json.erb: config/storage_cli_config_resource_pool.json
 
 packages:
   - azure-storage-cli
@@ -172,8 +176,13 @@ properties:
   cc.staging_upload_password:
     description: "User's password used to access internal endpoints of Cloud Controller to upload files when staging"
 
+  cc.resource_pool.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    default: ~
+  cc.resource_pool.connection_config:
+      description: "Azure Storage Cli connection hash"
   cc.resource_pool.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
+    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
     default: "fog"
   cc.resource_pool.fog_aws_storage_options:
     description: "Storage options passed to fog for aws blobstores. Valid keys: ['encryption']."
@@ -218,8 +227,13 @@ properties:
     description: "Key pair name for signed download URIs"
     default: ""
 
+  cc.packages.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    default: ~
+  cc.packages.connection_config:
+    description: "Azure Storage Cli connection hash"
   cc.packages.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
+    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
     default: "fog"
   cc.packages.fog_aws_storage_options:
     description: "Storage options passed to fog for aws blobstores. Valid keys: ['encryption']."
@@ -261,8 +275,13 @@ properties:
     description: "Key pair name for signed download URIs"
     default: ""
 
+  cc.droplets.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    default: ~
+  cc.droplets.connection_config:
+    description: "Azure Storage Cli connection hash"
   cc.droplets.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
+    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
     default: "fog"
   cc.droplets.fog_aws_storage_options:
     description: "Storage options passed to fog for aws blobstores. Valid keys: ['encryption']."
@@ -301,8 +320,13 @@ properties:
     description: "Key pair name for signed download URIs"
     default: ""
 
+  cc.buildpacks.blobstore_provider:
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    default: ~
+  cc.buildpacks.connection_config:
+    description: "Azure Storage Cli connection hash"
   cc.buildpacks.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav']"
+    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
     default: "fog"
   cc.buildpacks.fog_aws_storage_options:
     description: "Storage options passed to fog for aws blobstores. Valid keys: ['encryption']."
