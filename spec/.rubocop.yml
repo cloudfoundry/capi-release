@@ -1,4 +1,4 @@
-require:
+plugins:
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-rspec
@@ -32,6 +32,9 @@ FactoryBot/RedundantFactoryOption:
   Enabled: true
 
 FactoryBot/SyntaxMethods:
+  Enabled: true
+
+Layout/EmptyLinesAfterModuleInclusion:
   Enabled: true
 
 Layout/ParameterAlignment:
@@ -139,7 +142,10 @@ Naming/FileName:
 Naming/HeredocDelimiterNaming:
   Enabled: true
 
-Naming/PredicateName:
+Naming/PredicateMethod:
+  Enabled: true
+
+Naming/PredicatePrefix:
   Enabled: true
 
 Naming/VariableNumber:
@@ -148,10 +154,19 @@ Naming/VariableNumber:
 Style/Alias:
   EnforcedStyle: prefer_alias_method
 
+Style/ArrayIntersectWithSingleElement:
+  Enabled: true
+
 Style/BlockDelimiters:
   Enabled: true
 
 Style/ClassAndModuleChildren:
+  Enabled: true
+
+Style/CollectionQuerying:
+  Enabled: true
+
+Style/ComparableBetween:
   Enabled: true
 
 Style/Documentation:
@@ -161,6 +176,9 @@ Style/DoubleNegation:
   Enabled: true
 
 Style/EachWithObject:
+  Enabled: true
+
+Style/EmptyStringInsideInterpolation:
   Enabled: true
 
 Style/Encoding:
@@ -175,10 +193,19 @@ Style/FrozenStringLiteralComment:
 Style/GuardClause:
   Enabled: true
 
-Style/IfUnlessModifier:
+Style/HashFetchChain:
+  Enabled: true
+
+Style/HashSlice:
   Enabled: true
 
 Style/ItAssignment:
+  Enabled: true
+
+Style/ItBlockParameter:
+  Enabled: true
+
+Style/IfUnlessModifier:
   Enabled: true
 
 Style/KeywordArgumentsMerging:
@@ -213,6 +240,12 @@ Style/PercentLiteralDelimiters:
 
 Style/RaiseArgs:
   EnforcedStyle: compact
+
+Style/RedundantArrayFlatten:
+  Enabled: true
+
+Style/RedundantFormat:
+  Enabled: true
 
 Style/RedundantSelf:
   Enabled: true
@@ -262,6 +295,9 @@ Style/ZeroLengthPredicate:
 Metrics/BlockLength:
   Enabled: true
 
+Gemspec/AttributeAssignment:
+  Enabled: true
+
 Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
 
@@ -286,6 +322,9 @@ Layout/SpaceBeforeBrackets:
 Lint/AmbiguousAssignment:
   Enabled: true
 
+Lint/ArrayLiteralInRegexp:
+  Enabled: true
+
 Lint/AmbiguousOperatorPrecedence:
   Enabled: true
 
@@ -296,6 +335,9 @@ Lint/ConstantOverwrittenInRescue:
   Enabled: true
 
 Lint/ConstantReassignment:
+  Enabled: true
+
+Lint/CopDirectiveSyntax:
   Enabled: true
 
 Lint/DeprecatedConstants:
@@ -349,6 +391,9 @@ Lint/OrAssignmentToConstant:
 Lint/RedundantDirGlobSort:
   Enabled: true
 
+Lint/RedundantTypeConversion:
+  Enabled: true
+
 Lint/RefinementImportMethods:
   Enabled: true
 
@@ -359,6 +404,9 @@ Lint/RequireRelativeSelfPath:
   Enabled: true
 
 Lint/SharedMutableDefault:
+  Enabled: true
+
+Lint/SuppressedExceptionInNumberConversion:
   Enabled: true
 
 Lint/SymbolConversion:
@@ -379,10 +427,19 @@ Lint/UnexpectedBlockArity:
 Lint/UnmodifiedReduceAccumulator:
   Enabled: true
 
+Lint/UselessConstantScoping:
+  Enabled: true
+
+Lint/UselessDefaultValueArgument:
+  Enabled: true
+
 Lint/UselessDefined:
   Enabled: true
 
 Lint/UselessNumericOperation:
+  Enabled: true
+
+Lint/UselessOr:
   Enabled: true
 
 Lint/UselessRescue:
@@ -598,10 +655,16 @@ Style/YAMLFileRead:
 Capybara/ClickLinkOrButtonStyle:
   Enabled: true
 
+Capybara/FindAllFirst:
+  Enabled: true
+
 Capybara/MatchStyle:
   Enabled: true
 
 Capybara/NegationMatcher:
+  Enabled: true
+
+Capybara/NegationMatcherAfterVisit:
   Enabled: true
 
 Capybara/RedundantWithinFind:
@@ -656,6 +719,9 @@ RSpec/ExpectInLet:
   Enabled: true
 
 RSpec/IdenticalEqualityAssertion:
+  Enabled: true
+
+RSpec/IncludeExamples:
   Enabled: true
 
 RSpec/IndexedLet:
