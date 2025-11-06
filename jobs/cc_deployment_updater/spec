@@ -27,6 +27,10 @@ templates:
   resource_pool_ca_cert.pem.erb: config/certs/resource_pool_ca_cert.pem
   droplets_ca_cert.pem.erb: config/certs/droplets_ca_cert.pem
   buildpacks_ca_cert.pem.erb: config/certs/buildpacks_ca_cert.pem
+  storage_cli_config_droplets.json.erb: config/storage_cli_config_droplets.json
+  storage_cli_config_packages.json.erb: config/storage_cli_config_packages.json
+  storage_cli_config_buildpacks.json.erb: config/storage_cli_config_buildpacks.json
+  storage_cli_config_resource_pool.json.erb: config/storage_cli_config_resource_pool.json
 
 packages:
   - capi_utils

@@ -152,6 +152,11 @@ maximum_health_check_timeout: <%= link("cloud_controller_internal").p("cc.maximu
 
 stacks_file: /var/vcap/jobs/cloud_controller_ng/config/stacks.yml
 
+storage_cli_config_file_droplets: /var/vcap/jobs/cc_deployment_updater/config/storage_cli_config_droplets.json
+storage_cli_config_file_buildpacks: /var/vcap/jobs/cc_deployment_updater/config/storage_cli_config_buildpacks.json
+storage_cli_config_file_packages: /var/vcap/jobs/cc_deployment_updater/config/storage_cli_config_packages.json
+storage_cli_config_file_resource_pool: /var/vcap/jobs/cc_deployment_updater/config/storage_cli_config_resource_pool.json
+
 resource_pool:
   blobstore_type: <%= link("cloud_controller_internal").p("cc.resource_pool.blobstore_type") %>
   webdav_config:
@@ -166,6 +171,8 @@ resource_pool:
   minimum_size: <%= link("cloud_controller_internal").p("cc.resource_pool.minimum_size") %>
   maximum_size: <%= link("cloud_controller_internal").p("cc.resource_pool.maximum_size") %>
   resource_directory_key: <%= link("cloud_controller_internal").p("cc.resource_pool.resource_directory_key") %>
+  blobstore_provider: <%= link("cloud_controller_internal").p("cc.resource_pool.blobstore_provider") %>
+  connection_config: <%= link("cloud_controller_internal").p("cc.resource_pool.connection_config", {}).to_json %>
   <% link("cloud_controller_internal").if_p("cc.resource_pool.cdn") do %>
   cdn:
     uri: <%= link("cloud_controller_internal").p("cc.resource_pool.cdn.uri") %>
@@ -188,6 +195,8 @@ packages:
     ca_cert_path: "/var/vcap/jobs/cc_deployment_updater/config/certs/packages_ca_cert.pem"
     <% end %>
   app_package_directory_key: <%= link("cloud_controller_internal").p("cc.packages.app_package_directory_key") %>
+  blobstore_provider: <%= link("cloud_controller_internal").p("cc.packages.blobstore_provider") %>
+  connection_config: <%= link("cloud_controller_internal").p("cc.packages.connection_config", {}).to_json %>
   max_package_size: <%= link("cloud_controller_internal").p("cc.packages.max_package_size") %>
   <% link("cloud_controller_internal").if_p("cc.packages.cdn") do %>
   cdn:
@@ -212,6 +221,8 @@ droplets:
     ca_cert_path: "/var/vcap/jobs/cc_deployment_updater/config/certs/droplets_ca_cert.pem"
     <% end %>
   droplet_directory_key: <%= link("cloud_controller_internal").p("cc.droplets.droplet_directory_key") %>
+  blobstore_provider: <%= link("cloud_controller_internal").p("cc.droplets.blobstore_provider") %>
+  connection_config: <%= link("cloud_controller_internal").p("cc.droplets.connection_config", {}).to_json %>
   <% link("cloud_controller_internal").if_p("cc.droplets.cdn") do %>
   cdn:
     uri: <%= link("cloud_controller_internal").p("cc.droplets.cdn.uri") %>
@@ -234,6 +245,8 @@ buildpacks:
     ca_cert_path: "/var/vcap/jobs/cc_deployment_updater/config/certs/buildpacks_ca_cert.pem"
     <% end %>
   buildpack_directory_key: <%= link("cloud_controller_internal").p("cc.buildpacks.buildpack_directory_key") %>
+  blobstore_provider: <%= link("cloud_controller_internal").p("cc.buildpacks.blobstore_provider") %>
+  connection_config: <%= link("cloud_controller_internal").p("cc.buildpacks.connection_config", {}).to_json %>
   <% link("cloud_controller_internal").if_p("cc.buildpacks.cdn") do %>
   cdn:
     uri: <%= link("cloud_controller_internal").p("cc.buildpacks.cdn.uri") %>
