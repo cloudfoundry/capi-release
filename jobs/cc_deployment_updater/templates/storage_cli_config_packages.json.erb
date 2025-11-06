@@ -19,23 +19,25 @@ def add(h, key, val)
   h[key] = val
 end
 
+l = link("cloud_controller_internal")
+
 scope = "cc.packages.connection_config"
-provider = p("cc.packages.blobstore_provider", nil)
+provider = l.p("cc.packages.blobstore_provider", nil)
 
 if provider != "AzureRM"
   options = {} # for now: all non-azure providers output an empty JSON object
 else
   options = {}
   options["provider"] = provider
-  options["account_name"]   = p("#{scope}.azure_storage_account_name")
-  options["container_name"] = p("#{scope}.container_name")
-  add(options, "account_key",        p("#{scope}.azure_storage_access_key"))
-  add(options, "environment",        p("#{scope}.environment", "AzureCloud"))
-  add(options, "put_timeout_in_seconds", p("#{scope}.put_timeout_in_seconds", nil))
+  options["account_name"]   = l.p("#{scope}.azure_storage_account_name")
+  options["container_name"] = l.p("#{scope}.container_name")
+  add(options, "account_key",        l.p("#{scope}.azure_storage_access_key"))
+  add(options, "environment",        l.p("#{scope}.environment", "AzureCloud"))
+  add(options, "put_timeout_in_seconds", l.p("#{scope}.put_timeout_in_seconds", nil))
 
   # optional passthrough for extra storage-cli flags
   begin
-    custom = p("#{scope}.custom", {})
+    custom = l.p("#{scope}.custom", {})
     if custom.respond_to?(:each)
       custom.each { |k, v| add(options, k.to_s, v) }
     end
