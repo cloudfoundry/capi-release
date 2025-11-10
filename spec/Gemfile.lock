@@ -75,4 +75,4 @@ DEPENDENCIES
   rubocop-rspec_rails
 
 BUNDLED WITH
-   2.4.10
+   2.6.6
