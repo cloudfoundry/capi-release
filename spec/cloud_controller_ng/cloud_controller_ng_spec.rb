@@ -581,125 +581,12 @@ module Bosh
               template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
               expect(template_hash['webserver']).to eq('puma')
             end
-
-            context 'when the puma webserver is enabled by deprecated config' do
-              before do
-                merged_manifest_properties['cc']['experimental']['use_puma_webserver'] = true
-              end
-
-              it 'uses Puma' do
-                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['webserver']).to eq('puma')
-              end
-
-              context 'when `cc.temporary_enable_deprecated_thin_webserver` is also enabled' do
-                before do
-                  merged_manifest_properties['cc']['temporary_enable_deprecated_thin_webserver'] = true
-                end
-
-                it 'uses Puma' do
-                  template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                  expect(template_hash['webserver']).to eq('puma')
-                end
-              end
-            end
-
-            context 'when the puma webserver is disabled by deprecated config' do
-              before do
-                merged_manifest_properties['cc']['experimental']['use_puma_webserver'] = false
-              end
-
-              it 'uses Thin' do
-                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['webserver']).to eq('thin')
-              end
-            end
-
-            context 'when `cc.temporary_enable_deprecated_thin_webserver` is enabled' do
-              before do
-                merged_manifest_properties['cc']['temporary_enable_deprecated_thin_webserver'] = true
-              end
-
-              it 'uses Thin' do
-                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['webserver']).to eq('thin')
-              end
-            end
           end
 
           describe 'valkey config' do
-            context 'when the puma webserver is used by default' do
-              it 'renders the valkey socket into the ccng config' do
-                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
-              end
-            end
-
-            context 'when the puma webserver is enabled by deprecated config' do
-              before do
-                merged_manifest_properties['cc']['experimental']['use_puma_webserver'] = true
-              end
-
-              it 'renders the valkey socket into the ccng config' do
-                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
-              end
-
-              context 'when `cc.temporary_enable_deprecated_thin_webserver` is also enabled' do
-                before do
-                  merged_manifest_properties['cc']['temporary_enable_deprecated_thin_webserver'] = true
-                end
-
-                it 'still uses Puma and renders the valkey socket into the ccng config' do
-                  template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                  expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
-                end
-              end
-            end
-
-            context 'when thin webserver is explicitly enabled' do
-              before do
-                merged_manifest_properties['cc']['temporary_enable_deprecated_thin_webserver'] = true
-              end
-
-              it 'does not render the valkey socket into the ccng config' do
-                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash).not_to have_key('redis')
-              end
-
-              context "when 'cc.experimental.use_redis' is set to 'true'" do
-                before do
-                  merged_manifest_properties['cc']['experimental']['use_redis'] = true
-                end
-
-                it 'renders the valkey socket into the ccng config' do
-                  template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                  expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
-                end
-              end
-            end
-
-            context 'when thin webserver is implicitly enabled through `cc.experimental.use_puma_webserver` => false' do
-              before do
-                merged_manifest_properties['cc']['experimental']['use_puma_webserver'] = false
-              end
-
-              it 'does not render the valkey socket into the ccng config' do
-                merged_manifest_properties['cc']['experimental']['use_puma_webserver'] = false
-                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash).not_to have_key('redis')
-              end
-
-              context "when 'cc.experimental.use_redis' is set to 'true'" do
-                before do
-                  merged_manifest_properties['cc']['experimental']['use_redis'] = true
-                end
-
-                it 'renders the valkey socket into the ccng config' do
-                  template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                  expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
-                end
-              end
+            it 'renders the valkey socket into the ccng config' do
+              template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(template_hash['redis']['socket']).to eq('/var/vcap/data/valkey/valkey.sock')
             end
           end
 

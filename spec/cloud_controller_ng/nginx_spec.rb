@@ -98,20 +98,6 @@ module Bosh
             it 'forwards requests for the metrics endpoint to second webserver' do
               expect(@rendered_file).to include('proxy_pass http://cloud_controller_metrics;')
             end
-
-            context 'when the webserver is not puma' do
-              let(:manifest_properties) do
-                super().merge('cc' => super()['cc'].merge('temporary_enable_deprecated_thin_webserver' => true))
-              end
-
-              it 'does not render the second webserver' do
-                expect(@rendered_file).not_to include('unix:/var/vcap/data/cloud_controller_ng/cloud_controller_metrics.sock;')
-              end
-
-              it 'forwards requests for metrics endpoint to main app' do
-                expect(@rendered_file).not_to include('proxy_pass http://cloud_controller_metrics;')
-              end
-            end
           end
 
           describe 'status endpoint' do
@@ -126,14 +112,6 @@ module Bosh
             context 'when the default for use_status_check is used' do
               it 'exposes the /internal/v4/status endpoint' do
                 expect(@rendered_file).to include('location /internal/v4/status')
-              end
-
-              context 'when Thin is used' do
-                let(:manifest_properties) { { 'cc' => { 'temporary_enable_deprecated_thin_webserver' => true } } }
-
-                it 'does not expose the /internal/v4/status endpoint' do
-                  expect(@rendered_file).not_to include('location /internal/v4/status')
-                end
               end
             end
           end
