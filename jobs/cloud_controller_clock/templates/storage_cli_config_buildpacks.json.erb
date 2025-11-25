@@ -12,20 +12,19 @@ def cli_cfg_with_default_timeout(connection_cfg, blobstore_type, default_seconds
   cfg
 end
 
-# helper: add key only when value is present
+# add key only when value is present
 def add(h, key, val)
   return if val.nil?
   return if val.respond_to?(:empty?) && val.empty?
   h[key] = val
 end
 
-# shared: merge custom hash into options
+# merge optional custom flags into options
 def apply_custom!(options, custom)
   return unless custom.respond_to?(:each)
   custom.each { |k, v| add(options, k.to_s, v) }
 end
 
-# for templates that use plain `p(...)`
 def apply_custom_from_props!(options, scope)
   begin
     custom = p("#{scope}.custom", {})
@@ -47,7 +46,6 @@ if provider == "AzureRM"
   add(options, "environment",        p("#{scope}.environment", "AzureCloud"))
   add(options, "put_timeout_in_seconds", p("#{scope}.put_timeout_in_seconds", nil))
 
-  # optional passthrough for extra storage-cli flags
   apply_custom_from_props!(options, scope)
   options = cli_cfg_with_default_timeout(options, 'storage_cli')
 elsif provider == "aliyun"
@@ -59,7 +57,6 @@ elsif provider == "aliyun"
   options["bucket_name"] = p("#{scope}.aliyun_oss_bucket")
   add(options, "region_id",            p("#{scope}.aliyun_region_id", nil))
 
-  # optional passthrough for extra storage-cli flags
   apply_custom_from_props!(options, scope)
 else
   options = {} # for now: all non-azure and non-aliyun providers output an empty JSON object
