@@ -19,32 +19,54 @@ def add(h, key, val)
   h[key] = val
 end
 
+# helper: merge optional custom flags into options
+def apply_custom!(options, custom)
+  return unless custom.respond_to?(:each)
+
+  custom.each do |k, v|
+    add(options, k.to_s, v)
+  end
+end
+
+def apply_custom_from_link!(options, link, scope)
+  begin
+    custom = link.p("#{scope}.custom", {})
+    apply_custom!(options, custom)
+  rescue
+    # ignore if property not defined
+  end
+end
+
 l = link("cloud_controller_internal")
 
 scope = "cc.droplets.connection_config"
 provider = l.p("cc.droplets.blobstore_provider", nil)
 
-if provider != "AzureRM"
-  options = {} # for now: all non-azure providers output an empty JSON object
-else
+if provider == "AzureRM"
   options = {}
   options["provider"] = provider
   options["account_name"]   = l.p("#{scope}.azure_storage_account_name")
   options["container_name"] = l.p("#{scope}.container_name")
-  add(options, "account_key",        l.p("#{scope}.azure_storage_access_key"))
+  options["account_key"] = l.p("#{scope}.azure_storage_access_key")
   add(options, "environment",        l.p("#{scope}.environment", "AzureCloud"))
   add(options, "put_timeout_in_seconds", l.p("#{scope}.put_timeout_in_seconds", nil))
 
   # optional passthrough for extra storage-cli flags
-  begin
-    custom = l.p("cc.droplets.connection_config.custom", {})
-    if custom.respond_to?(:each)
-      custom.each { |k, v| add(options, k.to_s, v) }
-    end
-  rescue
-    # ignore if property not defined
-  end
+  apply_custom_from_link!(options, l, scope)
   options = cli_cfg_with_default_timeout(options, 'storage_cli')
+elsif provider == "aliyun"
+  options = {}
+  options["provider"] = provider
+  options["access_key_id"] = l.p("#{scope}.aliyun_accesskey_id")
+  options["access_key_secret"] = l.p("#{scope}.aliyun_accesskey_secret")
+  options["endpoint"] = l.p("#{scope}.aliyun_oss_endpoint")
+  options["bucket_name"] = l.p("#{scope}.aliyun_oss_bucket")
+  add(options, "region_id",            l.p("#{scope}.aliyun_region_id", nil))
+
+  # optional passthrough for extra storage-cli flags
+  apply_custom_from_link!(options, l, scope)
+else
+  options = {} # for now: all non-azure and non-aliyun providers output an empty JSON object
 end
 -%>
 <%= JSON.pretty_generate(options) %>

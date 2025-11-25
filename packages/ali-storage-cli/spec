@@ -1,0 +1,4 @@
+---
+name: ali-storage-cli
+files:
+  - ali-storage-cli/ali-storage-cli-linux-amd64

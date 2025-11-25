@@ -1,0 +1,5 @@
+set -e
+
+mkdir -p ${BOSH_INSTALL_TARGET}/bin
+mv ali-storage-cli/ali-storage-cli-linux-amd64 ${BOSH_INSTALL_TARGET}/bin/ali-storage-cli
+chmod +x ${BOSH_INSTALL_TARGET}/bin/ali-storage-cli
