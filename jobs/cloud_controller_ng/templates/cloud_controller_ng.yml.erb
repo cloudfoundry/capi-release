@@ -42,14 +42,6 @@
     end
     raise "Error for database_encryption: #{active_keys.length} were marked active. Only one key may be active"
   end
-
-  def thin_webserver_enabled?
-  if_p('cc.experimental.use_puma_webserver') do |prop|
-   return !prop
-  end
-
-  p('cc.temporary_enable_deprecated_thin_webserver')
-end
 %>
 ---
 #Actually NGX host and port
@@ -61,7 +53,7 @@ local_route: <%= p('cc.nginx.ip') %>
 external_port: <%= p("cc.external_port") %>
 tls_port: <%= p("cc.tls_port") %>
 internal_service_hostname: <%= p("cc.internal_service_hostname") %>
-webserver: <%= thin_webserver_enabled? ? 'thin' : 'puma' %>
+webserver: puma
 puma:
   automatic_worker_count: <%= p("cc.puma.automatic_worker_count") %>
   workers: <%= p("cc.puma.workers") %>
@@ -526,10 +518,8 @@ rate_limiter_v2_api:
 
 temporary_enable_v2: <%= p("cc.temporary_enable_v2") %>
 
-<% unless thin_webserver_enabled? && !p("cc.experimental.use_redis") %>
 redis:
   socket: "/var/vcap/data/valkey/valkey.sock"
-<% end %>
 
 <%
 cc_uploader_url = nil
@@ -575,7 +565,7 @@ max_service_credential_bindings_per_app_service_instance: <%= p("cc.max_service_
 max_labels_per_resource: <%= p("cc.max_labels_per_resource") %>
 max_annotations_per_resource: <%= p("cc.max_annotations_per_resource") %>
 
-threadpool_size: <%= p("cc.experimental.thin_server.thread_pool_size") %>
+threadpool_size: 20
 
 default_app_lifecycle: <%= p("cc.default_app_lifecycle") %>
 custom_metric_tag_prefix_list: <%= p("cc.custom_metric_tag_prefix_list") %>
