@@ -28,17 +28,7 @@ function log_failure {
 echo $(date --rfc-3339=ns) 'Will restart CC over on repeated failures'
 trap log_failure EXIT
 
-<%
-def thin_webserver_enabled?
-  if_p('cc.experimental.use_puma_webserver') do |prop|
-    return !prop
-  end
-
-  p('cc.temporary_enable_deprecated_thin_webserver')
-end
--%>
-
-<% if !thin_webserver_enabled? && p('cc.use_status_check') %>
+<% if p('cc.use_status_check') %>
 # Use /internal/v4/status readiness endpoint
 HOST=<%= p('cc.nginx.ip').empty? ? discover_external_ip : p('cc.nginx.ip') %>
 PORT=9021
