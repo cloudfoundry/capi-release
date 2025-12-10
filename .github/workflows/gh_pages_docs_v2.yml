@@ -24,11 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout this repo
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         path: capi-release
     - name: Checkout CCNG
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: cloudfoundry/cloud_controller_ng
         path: cloud_controller_ng
