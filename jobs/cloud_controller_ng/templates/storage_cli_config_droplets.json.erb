@@ -1,3 +1,4 @@
+<%# Generate json configuration for droplets bucket depending on provider; Azure, Google, AWS, Ali, WebDAV %>
 <%
 require "json"
 
@@ -13,7 +14,7 @@ def cli_cfg_with_default_timeout(connection_cfg, blobstore_type, default_seconds
 end
 
 # helper: add key only when value is present
-def add(h, key, val)
+def add_optional(h, key, val)
   return if val.nil?
   return if val.respond_to?(:empty?) && val.empty?
   h[key] = val
@@ -21,28 +22,76 @@ end
 
 scope = "cc.droplets.connection_config"
 provider = p("cc.droplets.blobstore_provider", nil)
+options = {}
 
-if provider != "AzureRM"
-  options = {} # for now: all non-azure providers output an empty JSON object
-else
-  options = {}
+if provider == "AzureRM"
   options["provider"] = provider
   options["account_name"]   = p("#{scope}.azure_storage_account_name")
   options["container_name"] = p("#{scope}.container_name")
-  add(options, "account_key",        p("#{scope}.azure_storage_access_key"))
-  add(options, "environment",        p("#{scope}.environment", "AzureCloud"))
-  add(options, "put_timeout_in_seconds", p("#{scope}.put_timeout_in_seconds", nil))
+  options["account_key"] = p("#{scope}.azure_storage_access_key")
+  add_optional(options, "environment", p("#{scope}.environment", "AzureCloud"))
+  add_optional(options, "put_timeout_in_seconds", p("#{scope}.put_timeout_in_seconds", nil))
+  options = cli_cfg_with_default_timeout(options, 'storage_cli')
+end
 
-  # optional passthrough for extra storage-cli flags
+if provider == "Google"
+  options["provider"] = provider
+  options["credentials_source"] = "static"
+  options["json_key"] =  p("#{scope}.google_json_key_string")
+  add_optional(options, "storage_class", p("#{scope}.storage_class", nil))
+  add_optional(options, "encryption_key", p("#{scope}.encryption_key", nil))
+end
+
+if provider == "AWS"
+  options["provider"] = provider
+  options["bucket_name"] = p("#{scope}.bucket_name")
+  options["credentials_source"] = "static"
+  options["access_key_id"] = p("#{scope}.aws_access_key_id")
+  options["secret_access_key"] = p("#{scope}.aws_secret_access_key")
+  options["region"]=p("#{scope}.region")
+  add_optional(options, "host", p("#{scope}.host", nil))
+  add_optional(options, "port", p("#{scope}.port", nil))
+  add_optional(options, "ssl_verify_peer", p("#{scope}.ssl_verify_peer", nil))
+  add_optional(options, "use_ssl", p("#{scope}.use_ssl", nil))
+  add_optional(options, "singnature_version", p("#{scope}.singnature_version", nil))
+  add_optional(options, "server_side_encryption", p("#{scope}.encryption", nil))
+  add_optional(options, "sse_kms_key_id", p("#{scope}.x-amz-server-side-encryption-aws-kms-key-id", nil))
+  add_optional(options, "multipart_upload", p("#{scope}.multipart_upload", nil))
+end
+
+if provider ==  "aliyun"
+  options["provider"] = provider
+  options["access_key_id"] = p("#{scope}.aliyun_accesskey_id")
+  options["access_key_secret"] = p("#{scope}.aliyun_accesskey_secret")
+  options["endpoint"] = p("#{scope}.aliyun_oss_endpoint")
+  options["bucket_name"] = p("#{scope}.aliyun_oss_bucket")
+end
+  
+if provider == "webdav"
+  options["provider"] = provider
+  options["user"] = p("#{scope}.username")
+  options["password"] = p("#{scope}.password")
+  options["endpoint"] = p("#{scope}.public_endpoint")
+  add_optional(options, "secret", p("#{scope}.secret", nil))
+  add_optional(options, "retry_attempts", p("#{scope}.retry_attempts", nil))
+
+  # TLS nested object with a Cert inside
+  ca_cert=p("#{scope}.ca_cert",nil)
+  unless ca_cert.empty?
+    options["tls"]={"cert"=>ca_cert}
+  end
+end
+
+# optional 'custom' field passthrough for extra storage-cli flags
+unless options.empty?
   begin
-    custom = p("cc.droplets.connection_config.custom", {})
+    custom = p("#{scope}.custom", {})
     if custom.respond_to?(:each)
       custom.each { |k, v| add(options, k.to_s, v) }
     end
   rescue
     # ignore if property not defined
   end
-  options = cli_cfg_with_default_timeout(options, 'storage_cli')
 end
 -%>
 <%= JSON.pretty_generate(options) %>
