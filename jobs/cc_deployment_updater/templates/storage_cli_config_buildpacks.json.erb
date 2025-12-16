@@ -30,7 +30,7 @@ if provider == "AzureRM"
   options["provider"] = provider
   options["account_name"]   = l.p("#{scope}.azure_storage_account_name")
   options["container_name"] = l.p("#{scope}.container_name")
-  options["container_name"] = l.p("#{scope}.azure_storage_access_key")
+  options["account_key"] = l.p("#{scope}.azure_storage_access_key")
   add_optional(options, "environment", l.p("#{scope}.environment", "AzureCloud"))
   add_optional(options, "put_timeout_in_seconds", l.p("#{scope}.put_timeout_in_seconds", nil))
   options = cli_cfg_with_default_timeout(options, 'storage_cli')
@@ -40,6 +40,7 @@ if provider == "Google"
   options["provider"] = provider
   options["credentials_source"] = "static"
   options["json_key"] =  l.p("#{scope}.google_json_key_string")
+  options["bucket_name"] = l.p("#{scope}.bucket_name")
   add_optional(options, "storage_class", l.p("#{scope}.storage_class", nil))
   add_optional(options, "encryption_key", l.p("#{scope}.encryption_key", nil))
 end

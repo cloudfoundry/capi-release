@@ -38,6 +38,7 @@ if provider == "Google"
   options["provider"] = provider
   options["credentials_source"] = "static"
   options["json_key"] =  p("#{scope}.google_json_key_string")
+  options["bucket_name"] = p("#{scope}.bucket_name")
   add_optional(options, "storage_class", p("#{scope}.storage_class", nil))
   add_optional(options, "encryption_key", p("#{scope}.encryption_key", nil))
 end
