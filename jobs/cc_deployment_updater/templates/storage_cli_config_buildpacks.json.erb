@@ -85,16 +85,5 @@ if provider == "webdav"
   end
 end
   
-# optional 'custom' field passthrough for extra storage-cli flags
-unless options.empty?
-  begin
-    custom = l.p("#{scope}.custom", {})
-    if custom.respond_to?(:each)
-      custom.each { |k, v| add(options, k.to_s, v) }
-    end
-  rescue
-    # ignore if property not defined
-  end
-end
 -%>
 <%= JSON.pretty_generate(options) %>
