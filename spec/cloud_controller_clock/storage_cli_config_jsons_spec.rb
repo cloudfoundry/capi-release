@@ -38,10 +38,12 @@ module Bosh
         end
 
         describe 'Unsupported provider' do
-          let(:props) {props_for_provider("Unsupported")}
-          TEMPLATES.each_value do |(template_path, keypath)|
+          let(:props) { props_for_provider('Unsupported') }
+
+          TEMPLATES.each_value do |(template_path, _keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
+
               it 'renders empty JSON for unsupported provider' do
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to eq({})
@@ -50,8 +52,8 @@ module Bosh
           end
         end
 
-        describe "When Provider AzureRM" do
-          let(:props) {props_for_provider("AzureRM")}
+        describe 'When Provider AzureRM' do
+          let(:props) { props_for_provider('AzureRM') }
 
           TEMPLATES.each_value do |(template_path, keypath)|
             describe template_path do
@@ -90,8 +92,9 @@ module Bosh
           end
         end
 
-        describe "When Provider AWS" do
-          let(:props) {props_for_provider("AWS")}
+        describe 'When Provider AWS' do
+          let(:props) { props_for_provider('AWS') }
+
           TEMPLATES.each_value do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
@@ -106,53 +109,54 @@ module Bosh
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                      'provider' => 'AWS',
-                      'bucket_name' => 'bucket',
-                      'access_key_id' => 'key',
-                      'credentials_source' => 'static',
-                      'secret_access_key' => 'secret',
-                      'region' => 'us-east1'
+                  'provider' => 'AWS',
+                  'bucket_name' => 'bucket',
+                  'access_key_id' => 'key',
+                  'credentials_source' => 'static',
+                  'secret_access_key' => 'secret',
+                  'region' => 'us-east1'
                 )
               end
 
               it 'renders with optionals' do
                 set(props, keypath, {
-                    'provider' => 'AWS',
-                    'bucket_name' => 'bucket',
-                    'aws_access_key_id' => 'key',
-                    'aws_secret_access_key' => 'secret',
-                    'region' => 'us-east1',
-                    'host' => 'localhost',
-                    'ssl_verify_peer' => 'verfiy',
-                    'use_ssl' => 'true',
-                    'singnature_version' => 'v4',
-                    'encryption' => 'some-encryption',
-                    'x-amz-server-side-encryption-aws-kms-key-id' => 'id',
-                    'multipart_upload' => 'true'
-                })
+                      'provider' => 'AWS',
+                      'bucket_name' => 'bucket',
+                      'aws_access_key_id' => 'key',
+                      'aws_secret_access_key' => 'secret',
+                      'region' => 'us-east1',
+                      'host' => 'localhost',
+                      'ssl_verify_peer' => 'verfiy',
+                      'use_ssl' => 'true',
+                      'singnature_version' => 'v4',
+                      'encryption' => 'some-encryption',
+                      'x-amz-server-side-encryption-aws-kms-key-id' => 'id',
+                      'multipart_upload' => 'true'
+                    })
 
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                    'provider' => 'AWS',
-                    'bucket_name' => 'bucket',
-                    'access_key_id' => 'key',
-                    'secret_access_key' => 'secret',
-                    'region' => 'us-east1',
-                    'host' => 'localhost',
-                    'ssl_verify_peer' => 'verfiy',
-                    'use_ssl' => 'true',
-                    'singnature_version' => 'v4',
-                    'server_side_encryption' => 'some-encryption',
-                    'sse_kms_key_id' => 'id',
-                    'multipart_upload' => 'true'
+                  'provider' => 'AWS',
+                  'bucket_name' => 'bucket',
+                  'access_key_id' => 'key',
+                  'secret_access_key' => 'secret',
+                  'region' => 'us-east1',
+                  'host' => 'localhost',
+                  'ssl_verify_peer' => 'verfiy',
+                  'use_ssl' => 'true',
+                  'singnature_version' => 'v4',
+                  'server_side_encryption' => 'some-encryption',
+                  'sse_kms_key_id' => 'id',
+                  'multipart_upload' => 'true'
                 )
               end
             end
           end
         end
 
-        describe "When Provider Google" do
-          let(:props) {props_for_provider("Google")}
+        describe 'When Provider Google' do
+          let(:props) { props_for_provider('Google') }
+
           TEMPLATES.each_value do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
@@ -165,22 +169,22 @@ module Bosh
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                      'provider' => 'Google',
-                      'bucket_name' => 'bucket',
-                      'json_key' => '{}',
-                      'credentials_source' => 'static'
+                  'provider' => 'Google',
+                  'bucket_name' => 'bucket',
+                  'json_key' => '{}',
+                  'credentials_source' => 'static'
                 )
               end
 
               it 'renders with optionals' do
                 set(props, keypath, {
-                  'provider' => 'Google',
-                  'bucket_name' => 'bucket',
-                  'google_json_key_string' => '{}',
-                  'storage_class' => 'STANDARD',
-                  'encryption_key' => 'key'
+                      'provider' => 'Google',
+                      'bucket_name' => 'bucket',
+                      'google_json_key_string' => '{}',
+                      'storage_class' => 'STANDARD',
+                      'encryption_key' => 'key'
 
-                })
+                    })
 
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
@@ -196,8 +200,9 @@ module Bosh
           end
         end
 
-        describe "When Provider aliyun" do
-          let(:props) {props_for_provider("aliyun")}
+        describe 'When Provider aliyun' do
+          let(:props) { props_for_provider('aliyun') }
+
           TEMPLATES.each_value do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
@@ -212,19 +217,20 @@ module Bosh
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                      'provider' => 'aliyun',
-                      'access_key_id' => 'key',
-                      'access_key_secret' => 'secret',
-                      'endpoint' => 'aliyun.com',
-                      'bucket_name' => 'bucket'
+                  'provider' => 'aliyun',
+                  'access_key_id' => 'key',
+                  'access_key_secret' => 'secret',
+                  'endpoint' => 'aliyun.com',
+                  'bucket_name' => 'bucket'
                 )
               end
             end
           end
         end
 
-        describe "When Provider webdav" do
-          let(:props) {props_for_provider("webdav")}
+        describe 'When Provider webdav' do
+          let(:props) { props_for_provider('webdav') }
+
           TEMPLATES.each_value do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
@@ -239,14 +245,13 @@ module Bosh
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                      'provider' => 'webdav',
-                      'user' => 'user',
-                      'password' => 'secret',
-                      'endpoint' => 'webdav.com',
-                      'tls' => {"cert"=>"some_cert"}
+                  'provider' => 'webdav',
+                  'user' => 'user',
+                  'password' => 'secret',
+                  'endpoint' => 'webdav.com',
+                  'tls' => { 'cert' => 'some_cert' }
                 )
               end
-
 
               it 'renders with optionals' do
                 set(props, keypath, {
@@ -256,23 +261,22 @@ module Bosh
                       'public_endpoint' => 'webdav.com',
                       'ca_cert' => 'some_cert',
                       'secret' => 'secret',
-                      "retry_attempts" => '4'
+                      'retry_attempts' => '4'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                      'provider' => 'webdav',
-                      'user' => 'user',
-                      'password' => 'secret',
-                      'endpoint' => 'webdav.com',
-                      'tls' => {"cert"=>"some_cert"},
-                      'secret' => 'secret',
-                      "retry_attempts" => '4'
+                  'provider' => 'webdav',
+                  'user' => 'user',
+                  'password' => 'secret',
+                  'endpoint' => 'webdav.com',
+                  'tls' => { 'cert' => 'some_cert' },
+                  'secret' => 'secret',
+                  'retry_attempts' => '4'
                 )
               end
             end
           end
         end
-        
       end
     end
   end
