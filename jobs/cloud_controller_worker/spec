@@ -41,7 +41,7 @@ templates:
   storage_cli_config_resource_pool.json.erb: config/storage_cli_config_resource_pool.json
 
 packages:
-  - azure-storage-cli
+  - storage-cli
   - capi_utils
   - cloud_controller_ng
   - nginx
