@@ -37,7 +37,7 @@ module Bosh
           }
         end
 
-        describe 'Unsupported provider' do
+        describe 'unsupported provider' do
           let(:props) { props_for_provider('Unsupported') }
 
           TEMPLATES.each_value do |(template_path, _keypath)|
@@ -52,7 +52,7 @@ module Bosh
           end
         end
 
-        describe 'When Provider AzureRM' do
+        describe 'when provider is AzureRM' do
           let(:props) { props_for_provider('AzureRM') }
 
           TEMPLATES.each_value do |(template_path, keypath)|
@@ -92,14 +92,14 @@ module Bosh
           end
         end
 
-        describe 'When Provider AWS' do
+        describe 'when provider is AWS' do
           let(:props) { props_for_provider('AWS') }
 
           TEMPLATES.each_value do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'renders with valid config' do
+              it 'maps required properties into the rendered config' do
                 set(props, keypath, {
                       'provider' => 'AWS',
                       'bucket_name' => 'bucket',
@@ -118,7 +118,7 @@ module Bosh
                 )
               end
 
-              it 'renders with optionals' do
+              it 'includes optional properties when provided' do
                 set(props, keypath, {
                       'provider' => 'AWS',
                       'bucket_name' => 'bucket',
@@ -154,14 +154,14 @@ module Bosh
           end
         end
 
-        describe 'When Provider Google' do
+        describe 'when provider is Google' do
           let(:props) { props_for_provider('Google') }
 
           TEMPLATES.each_value do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'renders with valid config' do
+              it 'maps required properties into the rendered config' do
                 set(props, keypath, {
                       'provider' => 'Google',
                       'bucket_name' => 'bucket',
@@ -176,7 +176,7 @@ module Bosh
                 )
               end
 
-              it 'renders with optionals' do
+              it 'includes optional properties when provided' do
                 set(props, keypath, {
                       'provider' => 'Google',
                       'bucket_name' => 'bucket',
@@ -200,14 +200,14 @@ module Bosh
           end
         end
 
-        describe 'When Provider aliyun' do
+        describe 'when provider is aliyun' do
           let(:props) { props_for_provider('aliyun') }
 
           TEMPLATES.each_value do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'renders with valid config' do
+              it 'maps required properties into the rendered config' do
                 set(props, keypath, {
                       'provider' => 'aliyun',
                       'aliyun_accesskey_id' => 'key',
@@ -228,14 +228,14 @@ module Bosh
           end
         end
 
-        describe 'When Provider webdav' do
+        describe 'when provider is webdav' do
           let(:props) { props_for_provider('webdav') }
 
           TEMPLATES.each_value do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'renders with valid config' do
+              it 'maps required properties into the rendered config' do
                 set(props, keypath, {
                       'provider' => 'webdav',
                       'username' => 'user',
@@ -253,7 +253,7 @@ module Bosh
                 )
               end
 
-              it 'renders with optionals' do
+              it 'includes optional properties when provided' do
                 set(props, keypath, {
                       'provider' => 'webdav',
                       'username' => 'user',

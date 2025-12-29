@@ -36,7 +36,7 @@ module Bosh
           }
         end
 
-        describe 'Unsupported provider' do
+        describe 'unsupported provider' do
           let(:link_props) { props_for_provider('Unsupported') }
           let(:cc_link) do
             Bosh::Template::Test::Link.new(
@@ -59,7 +59,7 @@ module Bosh
           end
         end
 
-        describe 'When Provider AzureRM' do
+        describe 'when provider is AzureRM' do
           let(:link_props) { props_for_provider('AzureRM') }
           let(:cc_link) do
             Bosh::Template::Test::Link.new(
@@ -107,7 +107,7 @@ module Bosh
           end
         end
 
-        describe 'When Provider AWS' do
+        describe 'when provider is AWS' do
           let(:link_props) { props_for_provider('AWS') }
           let(:cc_link) do
             Bosh::Template::Test::Link.new(
@@ -122,7 +122,7 @@ module Bosh
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'renders with valid config' do
+              it 'maps requried properties into the rendered config' do
                 set(link_props, keypath, {
                       'provider' => 'AWS',
                       'bucket_name' => 'bucket',
@@ -141,7 +141,7 @@ module Bosh
                 )
               end
 
-              it 'renders with optionals' do
+              it 'includes optional properties when provided' do
                 set(link_props, keypath, {
                       'provider' => 'AWS',
                       'bucket_name' => 'bucket',
@@ -177,7 +177,7 @@ module Bosh
           end
         end
 
-        describe 'When Provider Google' do
+        describe 'when provider is Google' do
           let(:link_props) { props_for_provider('Google') }
           let(:cc_link) do
             Bosh::Template::Test::Link.new(
@@ -192,7 +192,7 @@ module Bosh
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'renders with valid config' do
+              it 'maps requried properties into the rendered config' do
                 set(link_props, keypath, {
                       'provider' => 'Google',
                       'bucket_name' => 'bucket',
@@ -207,7 +207,7 @@ module Bosh
                 )
               end
 
-              it 'renders with optionals' do
+              it 'includes optional properties when provided' do
                 set(link_props, keypath, {
                       'provider' => 'Google',
                       'bucket_name' => 'bucket',
@@ -231,7 +231,7 @@ module Bosh
           end
         end
 
-        describe 'When Provider aliyun' do
+        describe 'when provider is aliyun' do
           let(:link_props) { props_for_provider('aliyun') }
           let(:cc_link) do
             Bosh::Template::Test::Link.new(
@@ -246,7 +246,7 @@ module Bosh
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'renders with valid config' do
+              it 'maps requried properties into the rendered config' do
                 set(link_props, keypath, {
                       'provider' => 'aliyun',
                       'aliyun_accesskey_id' => 'key',
@@ -267,7 +267,7 @@ module Bosh
           end
         end
 
-        describe 'When Provider webdav' do
+        describe 'when provider is webdav' do
           let(:link_props) { props_for_provider('webdav') }
           let(:cc_link) do
             Bosh::Template::Test::Link.new(
@@ -282,7 +282,7 @@ module Bosh
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'renders with valid config' do
+              it 'maps requried properties into the rendered config' do
                 set(link_props, keypath, {
                       'provider' => 'webdav',
                       'username' => 'user',
@@ -300,7 +300,7 @@ module Bosh
                 )
               end
 
-              it 'renders with optionals' do
+              it 'includes optional properties when provided' do
                 set(link_props, keypath, {
                       'provider' => 'webdav',
                       'username' => 'user',
