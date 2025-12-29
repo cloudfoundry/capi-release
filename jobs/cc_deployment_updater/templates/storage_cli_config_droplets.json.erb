@@ -56,7 +56,7 @@ if provider == "AWS"
   add_optional(options, "port", l.p("#{scope}.port", nil))
   add_optional(options, "ssl_verify_peer", l.p("#{scope}.ssl_verify_peer", nil))
   add_optional(options, "use_ssl", l.p("#{scope}.use_ssl", nil))
-  add_optional(options, "singnature_version", l.p("#{scope}.singnature_version", nil))
+  add_optional(options, "signature_version", l.p("#{scope}.signature_version", nil))
   add_optional(options, "server_side_encryption", l.p("#{scope}.encryption", nil))
   add_optional(options, "sse_kms_key_id", l.p("#{scope}.x-amz-server-side-encryption-aws-kms-key-id", nil))
   add_optional(options, "multipart_upload", l.p("#{scope}.multipart_upload", nil))

@@ -128,7 +128,7 @@ module Bosh
                       'host' => 'localhost',
                       'ssl_verify_peer' => 'verfiy',
                       'use_ssl' => 'true',
-                      'singnature_version' => 'v4',
+                      'signature_version' => 'v4',
                       'encryption' => 'some-encryption',
                       'x-amz-server-side-encryption-aws-kms-key-id' => 'id',
                       'multipart_upload' => 'true'
@@ -144,7 +144,7 @@ module Bosh
                   'host' => 'localhost',
                   'ssl_verify_peer' => 'verfiy',
                   'use_ssl' => 'true',
-                  'singnature_version' => 'v4',
+                  'signature_version' => 'v4',
                   'server_side_encryption' => 'some-encryption',
                   'sse_kms_key_id' => 'id',
                   'multipart_upload' => 'true'
