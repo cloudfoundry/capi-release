@@ -1,6 +1,6 @@
 storage-cli-package
 ============
-storage-cli, a command line interface for interacting with storage provider like: Azure, Aliyun, Google, AWS and WebDav. It is used for BOSH deployments instead of outdated rubyfog tools.
+This package contains the Storage CLI. It is a unified CLI that allows interaction with Azure Blob Storage, AWS S3, Google Cloud Storage, Alibaba Cloud OSS, and WebDAV. The CLI replaces the deprecated Ruby Fog library.
 
 The file can be downloaded from the following location:
 
