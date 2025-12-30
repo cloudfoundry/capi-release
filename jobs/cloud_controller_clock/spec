@@ -31,7 +31,7 @@ templates:
   storage_cli_config_resource_pool.json.erb: config/storage_cli_config_resource_pool.json
 
 packages:
-  - azure-storage-cli
+  - storage-cli
   - capi_utils
   - cloud_controller_ng
   - nginx
@@ -177,7 +177,7 @@ properties:
     description: "User's password used to access internal endpoints of Cloud Controller to upload files when staging"
 
   cc.resource_pool.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM', 'AWS', 'aliyun', 'webdav', 'Google']"
     default: ~
   cc.resource_pool.connection_config:
       description: "Azure Storage Cli connection hash"
@@ -228,7 +228,7 @@ properties:
     default: ""
 
   cc.packages.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM', 'AWS', 'aliyun', 'webdav', 'Google']"
     default: ~
   cc.packages.connection_config:
     description: "Azure Storage Cli connection hash"
@@ -276,7 +276,7 @@ properties:
     default: ""
 
   cc.droplets.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM', 'AWS', 'aliyun', 'webdav', 'Google']"
     default: ~
   cc.droplets.connection_config:
     description: "Azure Storage Cli connection hash"
@@ -321,7 +321,7 @@ properties:
     default: ""
 
   cc.buildpacks.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM']"
+    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM', 'AWS', 'aliyun', 'webdav', 'Google']"
     default: ~
   cc.buildpacks.connection_config:
     description: "Azure Storage Cli connection hash"
