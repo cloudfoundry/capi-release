@@ -13,7 +13,7 @@ def cli_cfg_with_default_timeout(connection_cfg, blobstore_type, default_seconds
 end
 
 # helper: add key only when value is present
-def add(h, key, val)
+def add_optional(h, key, val)
   return if val.nil?
   return if val.respond_to?(:empty?) && val.empty?
   h[key] = val
@@ -23,28 +23,66 @@ l = link("cloud_controller_internal")
 
 scope = "cc.buildpacks.connection_config"
 provider = l.p("cc.buildpacks.blobstore_provider", nil)
+options = {}
 
-if provider != "AzureRM"
-  options = {} # for now: all non-azure providers output an empty JSON object
-else
-  options = {}
+if provider == "AzureRM"
   options["provider"] = provider
   options["account_name"]   = l.p("#{scope}.azure_storage_account_name")
   options["container_name"] = l.p("#{scope}.container_name")
-  add(options, "account_key",        l.p("#{scope}.azure_storage_access_key"))
-  add(options, "environment",        l.p("#{scope}.environment", "AzureCloud"))
-  add(options, "put_timeout_in_seconds", l.p("#{scope}.put_timeout_in_seconds", nil))
-
-  # optional passthrough for extra storage-cli flags
-  begin
-    custom = l.p("#{scope}.custom", {})
-    if custom.respond_to?(:each)
-      custom.each { |k, v| add(options, k.to_s, v) }
-    end
-  rescue
-    # ignore if property not defined
-  end
+  options["account_key"] = l.p("#{scope}.azure_storage_access_key")
+  add_optional(options, "environment", l.p("#{scope}.environment", "AzureCloud"))
+  add_optional(options, "put_timeout_in_seconds", l.p("#{scope}.put_timeout_in_seconds", nil))
   options = cli_cfg_with_default_timeout(options, 'storage_cli')
 end
+
+if provider == "Google"
+  options["provider"] = provider
+  options["credentials_source"] = "static"
+  options["json_key"] =  l.p("#{scope}.google_json_key_string")
+  options["bucket_name"] = l.p("#{scope}.bucket_name")
+  add_optional(options, "storage_class", l.p("#{scope}.storage_class", nil))
+  add_optional(options, "encryption_key", l.p("#{scope}.encryption_key", nil))
+end
+
+if provider == "AWS"
+  options["provider"] = provider
+  options["bucket_name"] = l.p("#{scope}.bucket_name")
+  options["credentials_source"] = "static"
+  options["access_key_id"] = l.p("#{scope}.aws_access_key_id")
+  options["secret_access_key"] = l.p("#{scope}.aws_secret_access_key")
+  add_optional(options, "region", l.p("#{scope}.region", nil))
+  add_optional(options, "host", l.p("#{scope}.host", nil))
+  add_optional(options, "port", l.p("#{scope}.port", nil))
+  add_optional(options, "ssl_verify_peer", l.p("#{scope}.ssl_verify_peer", nil))
+  add_optional(options, "use_ssl", l.p("#{scope}.use_ssl", nil))
+  add_optional(options, "signature_version", l.p("#{scope}.signature_version", nil))
+  add_optional(options, "server_side_encryption", l.p("#{scope}.encryption", nil))
+  add_optional(options, "sse_kms_key_id", l.p("#{scope}.x-amz-server-side-encryption-aws-kms-key-id", nil))
+  add_optional(options, "multipart_upload", l.p("#{scope}.multipart_upload", nil))
+end
+
+if provider ==  "aliyun"
+  options["provider"] = provider
+  options["access_key_id"] = l.p("#{scope}.aliyun_accesskey_id")
+  options["access_key_secret"] = l.p("#{scope}.aliyun_accesskey_secret")
+  options["endpoint"] = l.p("#{scope}.aliyun_oss_endpoint")
+  options["bucket_name"] = l.p("#{scope}.aliyun_oss_bucket")
+end
+  
+if provider == "webdav"
+  options["provider"] = provider
+  options["user"] = l.p("#{scope}.username")
+  options["password"] = l.p("#{scope}.password")
+  options["endpoint"] = l.p("#{scope}.public_endpoint")
+  add_optional(options, "secret", l.p("#{scope}.secret", nil))
+  add_optional(options, "retry_attempts", l.p("#{scope}.retry_attempts", nil))
+
+  # TLS nested object with a Cert inside
+  ca_cert=l.p("#{scope}.ca_cert",nil)
+  unless ca_cert.empty?
+    options["tls"]={"cert"=>ca_cert}
+  end
+end
+  
 -%>
 <%= JSON.pretty_generate(options) %>
