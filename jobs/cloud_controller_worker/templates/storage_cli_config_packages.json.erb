@@ -48,7 +48,7 @@ if provider == "AWS"
   options["credentials_source"] = "static"
   options["access_key_id"] = p("#{scope}.aws_access_key_id")
   options["secret_access_key"] = p("#{scope}.aws_secret_access_key")
-  options["region"]=p("#{scope}.region")
+  add_optional(options, "region", p("#{scope}.region", nil))
   add_optional(options, "host", p("#{scope}.host", nil))
   add_optional(options, "port", p("#{scope}.port", nil))
   add_optional(options, "ssl_verify_peer", p("#{scope}.ssl_verify_peer", nil))

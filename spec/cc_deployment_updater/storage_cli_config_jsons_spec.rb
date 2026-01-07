@@ -127,8 +127,7 @@ module Bosh
                       'provider' => 'AWS',
                       'bucket_name' => 'bucket',
                       'aws_access_key_id' => 'key',
-                      'aws_secret_access_key' => 'secret',
-                      'region' => 'us-east1'
+                      'aws_secret_access_key' => 'secret'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
@@ -136,8 +135,7 @@ module Bosh
                   'bucket_name' => 'bucket',
                   'access_key_id' => 'key',
                   'credentials_source' => 'static',
-                  'secret_access_key' => 'secret',
-                  'region' => 'us-east1'
+                  'secret_access_key' => 'secret'
                 )
               end
 
