@@ -9,7 +9,7 @@ module Bosh
       describe 'prom_scraper config template rendering' do
         let(:release_path) { File.join(File.dirname(__FILE__), '../..') }
         let(:release) { ReleaseDir.new(release_path) }
-        let(:job) { release.job('cloud_controller_worker') }
+        let(:job) { release.job('cloud_controller_clock') }
         let(:rendered_file) { template.render(manifest_properties, consumes: {}) }
 
         describe 'prom_scraper_config.yml' do
@@ -24,12 +24,12 @@ module Bosh
               manifest_properties['cc']['publish_metrics'] = true
             end
 
-            it 'renders default values' do
+            it('renders default values') do
               expect(rendered_file).to include('port: 9394')
-              expect(rendered_file).to include('source_id: "cloud_controller_worker"')
+              expect(rendered_file).to include('source_id: "cloud_controller_clock"')
               expect(rendered_file).to include('path: /metrics')
-              expect(rendered_file).to include('server_name: "cc_worker_metrics"')
-              expect(rendered_file).to include('origin: cc_worker')
+              expect(rendered_file).to include('server_name: "cc_clock_metrics"')
+              expect(rendered_file).to include('origin: cc_clock')
             end
 
             context 'when different port is given' do
