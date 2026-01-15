@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -eu
+
+JOB_DIR="/var/vcap/jobs/blobstore_benchmark"
+PKG_DIR="/var/vcap/packages/cloud_controller_ng"
+
+MODE="<%= p('blobstore_benchmark.mode') %>"
+echo "Performing blobstore benchmarks (mode: ${MODE})"
+
+export LD_PRELOAD=/var/vcap/packages/jemalloc/lib/libjemalloc.so
+
+perform_blobstore_benchmarks() {
+  export CLOUD_CONTROLLER_NG_CONFIG=/var/vcap/jobs/blobstore_benchmark/config/cloud_controller_ng.yml
+  source "${JOB_DIR}/bin/ruby_version.sh"
+  cd /var/vcap/packages/cloud_controller_ng/cloud_controller_ng
+
+  exec bundle exec rake benchmarks:perform_blobstore_benchmark
+}
+
+case ${1:-} in
+  run)
+    perform_blobstore_benchmarks
+    ;;
+
+  *)
+    /var/vcap/jobs/bpm/bin/bpm run blobstore_benchmark -p blobstore_benchmark
+  ;;
+
+esac

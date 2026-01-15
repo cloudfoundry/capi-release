@@ -1,0 +1,105 @@
+<%
+  require 'cgi'
+
+  def yaml_escape(input_string)
+    chars_to_escape = /[:\\"\x00-\x1f\x7f]/
+    chars_needing_quotes = /[ !#'&%*,:>@\[\]\\`{|}]/
+    delimiter = (chars_needing_quotes.match(input_string) ||
+                chars_to_escape.match(input_string)) ? '"' : ''
+    fixed_string = input_string.gsub(/(#{chars_to_escape})/) { |m| "\\x#{'%x' % m.ord}" }
+    "#{delimiter}#{fixed_string}#{delimiter}"
+  end
+
+  def deep_merge_without_overwrite(base, extra)
+    return base unless extra.is_a?(Hash)
+
+    extra.each do |k, v|
+      if !base.key?(k)
+        base[k] = v
+      else
+        if base[k].is_a?(Hash) && v.is_a?(Hash)
+          deep_merge_without_overwrite(base[k], v)
+        end
+        # else: keep base[k] as-is (do not overwrite)
+      end
+    end
+
+    base
+  end
+
+  cc_cfg = (link("cloud_controller_internal").p("cc") rescue {})
+
+  unless cc_cfg.is_a?(Hash)
+    raise "cc link did not return a Hash, got: #{cc_cfg.class}"
+  end
+
+  %w[resource_pool buildpacks packages droplets].each do |k|
+    section = cc_cfg[k]
+    next unless section.is_a?(Hash)
+
+    %w[fog_connection connection_config fog_aws_storage_options fog_gcp_storage_options webdav_config].each do |hk|
+      section[hk] = {} if section.key?(hk) && section[hk].nil?
+    end
+  end
+
+  db = link("cloud_controller_db").p("ccdb.databases").find { |d| d["tag"] == "cc" }
+  db_role = link("cloud_controller_db").p("ccdb.roles").find { |r| r["tag"] == "admin" }
+
+  database_address = nil
+  link('cloud_controller_db').if_p('ccdb.address') { |host| database_address = host }
+    .else { database_address = link('database').instances[0].address }
+
+  db_hash = {
+    'database' => {
+      'adapter' => (link("cloud_controller_db").p("ccdb.db_scheme") == "mysql" ? "mysql2" : link("cloud_controller_db").p("ccdb.db_scheme")),
+      'host' => database_address,
+      'port' => link("cloud_controller_db").p("ccdb.port"),
+      'user' => db_role["name"],
+      # Let YAML handle quoting/escaping correctly
+      'password' => db_role["password"].to_s,
+      'database' => db["name"],
+    },
+    'max_connections' => link("cloud_controller_db").p("ccdb.max_connections"),
+    'pool_timeout' => link("cloud_controller_db").p("ccdb.pool_timeout"),
+    # keep DB noise down
+    'log_level' => (cc_cfg['db_logging_level'] || 'error'),
+    'log_db_queries' => (cc_cfg.key?('log_db_queries') ? cc_cfg['log_db_queries'] : false),
+    'ssl_verify_hostname' => link("cloud_controller_db").p("ccdb.ssl_verify_hostname"),
+    'connection_validation_timeout' => link("cloud_controller_db").p("ccdb.connection_validation_timeout"),
+  }
+
+  if link("cloud_controller_db").p("ccdb.ca_cert", nil)
+    db_hash['ca_cert_path'] = '/var/vcap/jobs/blobstore_benchmark/config/certs/db_ca.crt'
+  end
+
+  logging_level = p("cc.logging_level", cc_cfg["logging_level"] || cc_cfg.dig("logging", "level") || "error")
+
+  final = {
+    'pid_filename' => '/var/vcap/sys/run/blobstore_benchmark/blobstore_benchmark.pid',
+    'index' => spec.index,
+    'name' => name,
+
+    'logging' => {
+      'file' => '/var/vcap/sys/log/blobstore_benchmark/blobstore_benchmark.log',
+      'syslog' => 'vcap.cloud_controller_ng',
+      'level' => logging_level.to_s,
+      'max_retries' => p("cc.logging_max_retries", cc_cfg["logging_max_retries"] || 0),
+      'format' => {
+        'timestamp' => (cc_cfg.dig("logging", "format", "timestamp") ||
+                        link("cloud_controller_internal").p("cc.logging.format.timestamp", "rfc3339"))
+      },
+      'stdout_sink_enabled' => p('cc.stdout_logging_enabled', false)
+    },
+
+    'db' => db_hash,
+
+    'storage_cli_config_file_resource_pool' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_resource_pool.json',
+    'storage_cli_config_file_buildpacks' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_buildpacks.json',
+    'storage_cli_config_file_packages' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_packages.json',
+    'storage_cli_config_file_droplets' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_droplets.json',
+  }
+
+  deep_merge_without_overwrite(final, cc_cfg)
+%>
+---
+<%= final.to_yaml.sub(/\A---\s*\n/, '') %>
