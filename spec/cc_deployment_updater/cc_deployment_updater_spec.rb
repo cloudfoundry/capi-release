@@ -11,7 +11,7 @@ module Bosh
       describe 'cloud_controller_ng job template rendering' do
         let(:release_path) { File.join(File.dirname(__FILE__), '../..') }
         let(:release) { ReleaseDir.new(release_path) }
-        let(:job) { release.job('cloud_controller_clock') }
+        let(:job) { release.job('cc_deployment_updater') }
 
         let(:manifest_properties) do
           {
@@ -49,22 +49,69 @@ module Bosh
           }
         end
 
+        let(:webdav_config) do
+          { 'blobstore_timeout' => 5,
+            'ca_cert' => '((service_cf_internal_ca.certificate))',
+            'password' => '((blobstore_admin_users_password))',
+            'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
+            'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
+            'username' => 'blobstore-user' }
+        end
+
         let(:properties) do
           {
             'router' => { 'route_services_secret' => '((router_route_services_secret))' },
+            'system_domain' => 'system',
+            'ssl' => {
+              'skip_cert_verify' => false
+            },
+            'routing_api' => { 'enabled' => false },
             'cc' => {
+              'external_port' => 9022,
+              'tls_port' => 9023,
+              'internal_service_hostname' => 'cloud-controller-ng.service.cf.internal',
+              'external_protocol' => 'https',
+              'external_host' => 'api',
+              'staging_timeout_in_seconds' => 900,
+              'staging_upload_user' => 'staging_user',
+              'staging_upload_password' => 'staging_user_password',
+              'default_health_check_timeout' => 60,
+              'maximum_health_check_timeout' => 180,
+              'resource_pool' => {
+                'minimum_size' => 65_536,
+                'maximum_size' => 536_870_912,
+                'resource_directory_key' => 'cc-resources',
+                'blobstore_type' => 'webdav',
+                'webdav_config' => webdav_config
+              },
+              'packages' => {
+                'min_package_size' => 65_536,
+                'max_package_size' => 536_870_912,
+                'app_package_directory_key' => 'cc-packages',
+                'blobstore_type' => 'webdav',
+                'webdav_config' => webdav_config
+              },
+              'droplets' => {
+                'droplet_directory_key' => 'cc-droplets',
+                'blobstore_type' => 'webdav',
+                'webdav_config' => webdav_config
+              },
+              'buildpacks' => {
+                'buildpack_directory_key' => 'cc-buildpacks',
+                'blobstore_type' => 'webdav',
+                'webdav_config' => webdav_config
+
+              },
+              'credential_references' => {
+                'interpolate_service_bindings' => true
+              },
               'system_hostnames' => '',
               'logging_max_retries' => 'bar1',
               'default_app_ssh_access' => 'something',
               'logging_level' => 'other thing',
-              'log_db_queries' => 'balsdkj',
               'logging' => { 'format' => { 'timestamp' => 'rfc3339' } },
               'db_logging_level' => 'bar2',
               'db_encryption_key' => 'bar3',
-              'volume_services_enabled' => true,
-              'uaa' => {
-                'client_timeout' => 10
-              },
               'database_encryption' => {
                 'experimental_pbkdf2_hmac_iterations' => 123,
                 'skip_validation' => false,
@@ -75,7 +122,6 @@ module Bosh
               'statsd_port' => 8125,
               'max_labels_per_resource' => true,
               'max_annotations_per_resource' => 'yus',
-              'disable_private_domain_cross_space_context_path_route_sharing' => false,
               'cpu_weight_min_memory' => 128,
               'cpu_weight_max_memory' => 8192,
               'custom_metric_tag_prefix_list' => ['heck.yes.example.com'],
@@ -120,33 +166,6 @@ module Bosh
           end.not_to raise_error
         end
 
-        describe 'max_number_of_failed_delayed_jobs' do
-          context "when 'cc.failed_jobs.max_number_of_failed_delayed_jobs' is set" do
-            it 'renders max_number_of_failed_delayed_jobs into the ccng config' do
-              manifest_properties['cc'].store('failed_jobs', { 'max_number_of_failed_delayed_jobs' => 1000 })
-              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
-              expect(template_hash['failed_jobs']['max_number_of_failed_delayed_jobs']).to eq(1000)
-            end
-          end
-
-          context "when 'cc.failed_jobs.max_number_of_failed_delayed_jobs' is not set (default)" do
-            it 'does not render max_number_of_failed_delayed_jobs into the ccng config' do
-              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
-              expect(template_hash['failed_jobs']).not_to have_key(:max_number_of_failed_delayed_jobs)
-            end
-          end
-        end
-
-        describe 'cc.jobs.read_ahead' do
-          context 'when cc.jobs.read_ahead is set to 5' do
-            it 'renders read_ahead into ccng config' do
-              manifest_properties['cc']['jobs'] = { 'read_ahead' => 5 }
-              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
-              expect(template_hash['jobs']['read_ahead']).to be(5)
-            end
-          end
-        end
-
         describe 'statsd' do
           it 'renders statsd_host and statsd_port from cloud_controller_internal link' do
             template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
@@ -175,7 +194,7 @@ module Bosh
           context 'when cc.prometheus_port not set' do
             it 'uses default' do
               template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
-              expect(template_hash['prometheus_port']).to eq(9394)
+              expect(template_hash['prometheus_port']).to eq(9395)
             end
           end
 

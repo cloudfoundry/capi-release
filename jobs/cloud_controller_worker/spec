@@ -466,7 +466,7 @@ properties:
 
   cc.publish_metrics:
     default: false
-    description: "When set to true a small webserver will be started in a seperate thread within the first worker's process.
+    description: "When set to true a small webserver will be started in a separate thread within the first worker's process.
                   This webserver will publish prometheus metrics of the workers under '/metrics'. The webserver will listen on the port
                   defined in 'cc.prometheus_port'."
   cc.prometheus_port:

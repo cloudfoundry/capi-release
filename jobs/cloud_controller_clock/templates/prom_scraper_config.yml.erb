@@ -1,0 +1,10 @@
+<% if p("cc.publish_metrics") && (p("cc.prom_scraper.disabled") != true) -%>
+port: <%= p("cc.prometheus_port") %>
+source_id: "cloud_controller_clock"
+instance_id: <%= spec.id || spec.index.to_s %>
+scheme: https
+server_name: "cc_clock_metrics"
+path: /metrics
+labels:
+  origin: cc_clock
+<% end -%>

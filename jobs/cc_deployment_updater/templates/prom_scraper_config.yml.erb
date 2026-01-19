@@ -1,0 +1,10 @@
+<% if p("cc.publish_metrics") && (p("cc.prom_scraper.disabled") != true) -%>
+port: <%= p("cc.prometheus_port") %>
+source_id: "cc_deployment_updater"
+instance_id: <%= spec.id || spec.index.to_s %>
+scheme: https
+server_name: "cc_deployment_updater_metrics"
+path: /metrics
+labels:
+  origin: cc_deployment_updater
+<% end -%>
