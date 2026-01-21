@@ -240,6 +240,7 @@ provides:
   - cc.packages.connection_config
   - cc.droplets.connection_config
   - cc.buildpacks.connection_config
+  - cc.storage_cli_optional_flags
 
 consumes:
 - name: database
@@ -521,6 +522,10 @@ properties:
     default: default
     description: "The name of the quota definition CC will fallback on for org and space limits from the list of quota definitions."
 
+  cc.storage_cli_optional_flags:
+    description: "Storage Cli extra flags string"
+    default: ""
+    
   cc.resource_pool.blobstore_provider:
     description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM', 'AWS', 'aliyun', 'webdav', 'Google']"
     default: ~
