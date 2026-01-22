@@ -1,0 +1,47 @@
+---
+name: blobstore_benchmark
+description: "Cloud Controller blobstore benchmark runner (errand)"
+
+templates:
+  bpm.yml.erb: config/bpm.yml
+  bin/run.erb: bin/run
+  cloud_controller_ng.yml.erb: config/cloud_controller_ng.yml
+  ruby_version.sh.erb: bin/ruby_version.sh
+  db_ca.crt.erb: config/certs/db_ca.crt
+  storage_cli_config_droplets.json.erb: config/storage_cli_config_droplets.json
+  storage_cli_config_packages.json.erb: config/storage_cli_config_packages.json
+  storage_cli_config_buildpacks.json.erb: config/storage_cli_config_buildpacks.json
+  storage_cli_config_resource_pool.json.erb: config/storage_cli_config_resource_pool.json
+
+packages:
+  - capi_utils
+  - cloud_controller_ng
+  - ruby-3.2
+  - jemalloc
+  - storage-cli
+
+
+consumes:
+- name: cloud_controller_internal
+  type: cloud_controller_internal
+  optional: false
+- name: cloud_controller_db
+  type: cloud_controller_db
+- name: database
+  type: database
+  optional: true
+
+properties:
+  blobstore_benchmark.mode:
+    description: "Which blobstore backend to benchmark ('storage-cli' or 'fog')."
+    default: "storage-cli"
+
+  blobstore_benchmark.cc_overrides:
+    description: "Hash merged into cc config for this errand."
+    default: {}
+  cc:
+    description: "Full Cloud Controller 'cc' config subtree."
+    default: {}
+  cc.stdout_logging_enabled:
+    default: false
+    description: "Enable logging to stdout"
