@@ -94,10 +94,10 @@ postgres/postgresql-11.22.tar.gz:
   size: 26826810
   object_id: d1f8d34c-b438-44e7-7672-5daea8a6da66
   sha: sha256:6445a4e1533c1e8bb616d4a3784bdc4c0226b541f6f0c8d996d9f27d581d49c3
-storage-cli/storage-cli-0.0.1-linux-amd64:
-  size: 59959431
-  object_id: 0bd00d1a-88a5-48e3-5908-6b0cc90d5f88
-  sha: sha256:302c54413358f07bd1a239aa27c0752167c21dc869ce8a9501e994969be49eea
+storage-cli/storage-cli-0.0.2-linux-amd64:
+  size: 59969310
+  object_id: 69df5cb4-8137-4fd0-4fa9-450e181566fd
+  sha: sha256:3ec961dfe2e8570d30781267bfe78002c6346c02c648277db0cc26fad51954af
 valkey/7.2.11.tar.gz:
   size: 3441067
   object_id: ac3c2823-80c0-41e9-78e4-e42014aad04a
