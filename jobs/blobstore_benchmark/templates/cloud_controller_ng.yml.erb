@@ -1,15 +1,6 @@
 <%
   require 'cgi'
 
-  def yaml_escape(input_string)
-    chars_to_escape = /[:\\"\x00-\x1f\x7f]/
-    chars_needing_quotes = /[ !#'&%*,:>@\[\]\\`{|}]/
-    delimiter = (chars_needing_quotes.match(input_string) ||
-                chars_to_escape.match(input_string)) ? '"' : ''
-    fixed_string = input_string.gsub(/(#{chars_to_escape})/) { |m| "\\x#{'%x' % m.ord}" }
-    "#{delimiter}#{fixed_string}#{delimiter}"
-  end
-
   def deep_merge_without_overwrite(base, extra)
     return base unless extra.is_a?(Hash)
 
@@ -28,10 +19,38 @@
   end
 
   cc_cfg = (link("cloud_controller_internal").p("cc") rescue {})
-
   unless cc_cfg.is_a?(Hash)
     raise "cc link did not return a Hash, got: #{cc_cfg.class}"
   end
+
+  overrides = p("blobstore_benchmark.cc_overrides", {})
+  unless overrides.is_a?(Hash)
+    raise "blobstore_benchmark.cc_overrides must be a Hash, got: #{overrides.class}"
+  end
+
+  def deep_stringify_keys(obj)
+    return obj unless obj.is_a?(Hash)
+
+    obj.each_with_object({}) do |(k, v), h|
+      h[k.to_s] = v.is_a?(Hash) ? deep_stringify_keys(v) : v
+    end
+  end
+
+  def deep_merge_overwrite(base, extra)
+    return base unless extra.is_a?(Hash)
+
+    extra.each do |k, v|
+      if base[k].is_a?(Hash) && v.is_a?(Hash)
+        deep_merge_overwrite(base[k], v)
+      else
+        base[k] = v
+      end
+    end
+
+    base
+  end
+
+  cc_cfg = deep_merge_overwrite(cc_cfg, overrides)
 
   %w[resource_pool buildpacks packages droplets].each do |k|
     section = cc_cfg[k]
@@ -72,7 +91,8 @@
     db_hash['ca_cert_path'] = '/var/vcap/jobs/blobstore_benchmark/config/certs/db_ca.crt'
   end
 
-  logging_level = p("cc.logging_level", cc_cfg["logging_level"] || cc_cfg.dig("logging", "level") || "error")
+  benchmark_logging_level = p("blobstore_benchmark.logging_level", "info")
+  benchmark_stdout_sink   = p("blobstore_benchmark.stdout_sink_enabled", false)
 
   final = {
     'pid_filename' => '/var/vcap/sys/run/blobstore_benchmark/blobstore_benchmark.pid',
@@ -82,22 +102,30 @@
     'logging' => {
       'file' => '/var/vcap/sys/log/blobstore_benchmark/blobstore_benchmark.log',
       'syslog' => 'vcap.cloud_controller_ng',
-      'level' => logging_level.to_s,
+      'level' => benchmark_logging_level.to_s,
+
       'max_retries' => p("cc.logging_max_retries", cc_cfg["logging_max_retries"] || 0),
       'format' => {
         'timestamp' => (cc_cfg.dig("logging", "format", "timestamp") ||
                         link("cloud_controller_internal").p("cc.logging.format.timestamp", "rfc3339"))
       },
-      'stdout_sink_enabled' => p('cc.stdout_logging_enabled', false)
+      'stdout_sink_enabled' => benchmark_stdout_sink
     },
 
     'db' => db_hash,
-
-    'storage_cli_config_file_resource_pool' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_resource_pool.json',
-    'storage_cli_config_file_buildpacks' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_buildpacks.json',
-    'storage_cli_config_file_packages' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_packages.json',
-    'storage_cli_config_file_droplets' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_droplets.json',
   }
+
+  mode = p("blobstore_benchmark.mode")
+
+  # Only configure storage-cli JSON config paths when running storage-cli mode
+  if mode == "storage-cli"
+    final.merge!(
+      'storage_cli_config_file_resource_pool' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_resource_pool.json',
+      'storage_cli_config_file_buildpacks' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_buildpacks.json',
+      'storage_cli_config_file_packages' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_packages.json',
+      'storage_cli_config_file_droplets' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_droplets.json',
+    )
+  end
 
   deep_merge_without_overwrite(final, cc_cfg)
 %>

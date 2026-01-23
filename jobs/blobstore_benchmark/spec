@@ -39,6 +39,12 @@ properties:
   blobstore_benchmark.cc_overrides:
     description: "Hash merged into cc config for this errand."
     default: {}
+  blobstore_benchmark.logging_level:
+    default: "info"
+    description: "Steno log level for the benchmark process (info|warn|error)."
+  blobstore_benchmark.stdout_sink_enabled:
+    default: false
+
   cc:
     description: "Full Cloud Controller 'cc' config subtree."
     default: {}
