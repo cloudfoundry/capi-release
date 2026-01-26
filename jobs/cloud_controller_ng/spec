@@ -524,7 +524,6 @@ properties:
 
   cc.storage_cli_optional_flags:
     description: "Storage Cli extra flags string"
-    default: ""
     
   cc.resource_pool.blobstore_provider:
     description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM', 'AWS', 'aliyun', 'webdav', 'Google']"

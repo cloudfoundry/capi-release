@@ -125,8 +125,7 @@ module Bosh
               'cpu_weight_min_memory' => 128,
               'cpu_weight_max_memory' => 8192,
               'custom_metric_tag_prefix_list' => ['heck.yes.example.com'],
-              'app_log_revision' => true,
-              'storage_cli_optional_flags' => ''
+              'app_log_revision' => true
             }
           }
         end

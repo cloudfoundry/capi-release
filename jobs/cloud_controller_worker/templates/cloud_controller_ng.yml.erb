@@ -159,7 +159,9 @@ storage_cli_config_file_droplets: /var/vcap/jobs/cloud_controller_worker/config/
 storage_cli_config_file_buildpacks: /var/vcap/jobs/cloud_controller_worker/config/storage_cli_config_buildpacks.json
 storage_cli_config_file_packages: /var/vcap/jobs/cloud_controller_worker/config/storage_cli_config_packages.json
 storage_cli_config_file_resource_pool: /var/vcap/jobs/cloud_controller_worker/config/storage_cli_config_resource_pool.json
-storage_cli_optional_flags: "<%= p("cc.storage_cli_optional_flags") %>"
+<% if_p('cc.storage_cli_optional_flags') do %>
+storage_cli_optional_flags: <%= p("cc.storage_cli_optional_flags") %>
+<% end %>
 
 resource_pool:
   blobstore_type: <%= p("cc.resource_pool.blobstore_type") %>
