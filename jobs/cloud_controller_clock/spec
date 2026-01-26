@@ -180,6 +180,9 @@ properties:
   cc.staging_upload_password:
     description: "User's password used to access internal endpoints of Cloud Controller to upload files when staging"
 
+  cc.storage_cli_optional_flags:
+    description: "Storage Cli extra flags string"
+
   cc.resource_pool.blobstore_provider:
     description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM', 'AWS', 'aliyun', 'webdav', 'Google']"
     default: ~
