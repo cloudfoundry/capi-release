@@ -52,6 +52,10 @@
 
   cc_cfg = deep_merge_overwrite(cc_cfg, overrides)
 
+  if cc_cfg.key?("storage_cli_optional_flags")
+    cc_cfg["storage_cli_optional_flags"] = cc_cfg["storage_cli_optional_flags"].to_s
+  end
+
   %w[resource_pool buildpacks packages droplets].each do |k|
     section = cc_cfg[k]
     next unless section.is_a?(Hash)
@@ -125,9 +129,6 @@
       'storage_cli_config_file_packages' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_packages.json',
       'storage_cli_config_file_droplets' => '/var/vcap/jobs/blobstore_benchmark/config/storage_cli_config_droplets.json',
     )
-    link("cloud_controller_internal").if_p("cc.storage_cli_optional_flags") do |flags|
-      final["storage_cli_optional_flags"] = flags
-    end
   end
 
   deep_merge_without_overwrite(final, cc_cfg)
