@@ -51,3 +51,5 @@ properties:
   cc.stdout_logging_enabled:
     default: false
     description: "Enable logging to stdout"
+  cc.storage_cli_optional_flags:
+    description: "Storage Cli extra flags string"

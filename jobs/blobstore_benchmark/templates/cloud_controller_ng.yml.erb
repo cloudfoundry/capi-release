@@ -52,6 +52,10 @@
 
   cc_cfg = deep_merge_overwrite(cc_cfg, overrides)
 
+  if cc_cfg.key?("storage_cli_optional_flags")
+    cc_cfg["storage_cli_optional_flags"] = cc_cfg["storage_cli_optional_flags"].to_s
+  end
+
   %w[resource_pool buildpacks packages droplets].each do |k|
     section = cc_cfg[k]
     next unless section.is_a?(Hash)
