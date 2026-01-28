@@ -13,7 +13,11 @@ function fix_bundler_home_permissions {
 
 fix_bundler_home_permissions
 
+<% if_p("cc.readiness_port.cloud_controller_worker") do |prop| %>
+<% if prop > 0 %>
 while ! nc -z localhost <%= p("cc.readiness_port.cloud_controller_worker") %>
 do
   sleep 1
 done
+<% end %>
+<% end %>
