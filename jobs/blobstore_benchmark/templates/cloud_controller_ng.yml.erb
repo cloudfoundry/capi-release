@@ -63,6 +63,10 @@
     %w[fog_connection connection_config fog_aws_storage_options fog_gcp_storage_options webdav_config].each do |hk|
       section[hk] = {} if section.key?(hk) && section[hk].nil?
     end
+
+    if section.key?('blobstore_provider') && section['blobstore_provider'].nil?
+      section.delete('blobstore_provider')
+    end
   end
 
   db = link("cloud_controller_db").p("ccdb.databases").find { |d| d["tag"] == "cc" }
