@@ -19,6 +19,7 @@ packages:
   - ruby-3.2
   - jemalloc
   - storage-cli
+  - mariadb_connector_c
 
 
 consumes:
