@@ -1,4 +1,4 @@
 ---
 name: storage-cli
 files:
-  - storage-cli/storage-cli-0.0.2-linux-amd64
+  - storage-cli/storage-cli-0.0.3-linux-amd64
