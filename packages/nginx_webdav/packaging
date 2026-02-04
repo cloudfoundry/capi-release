@@ -15,18 +15,18 @@ echo "Extracting pcre..."
 tar xzvf nginx/pcre-8.45.tar.gz
 
 echo "Extracting nginx..."
-tar xzvf nginx/nginx-1.28.1.tar.gz
+tar xzvf nginx/nginx-1.28.2.tar.gz
 
 echo "Extracting webdav extensions"
 tar xzvf nginx/nginx-dav-ext-module-3.0.0.tar.gz
 
-sed -i 's@"nginx/"@"-/"@g' nginx-1.28.1/src/core/nginx.h
-sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.28.1/src/http/ngx_http_header_filter_module.c
-sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.28.1/src/http/v2/ngx_http_v2_filter_module.c
-sed -i 's@<hr><center>nginx</center>@@g' nginx-1.28.1/src/http/ngx_http_special_response.c
+sed -i 's@"nginx/"@"-/"@g' nginx-1.28.2/src/core/nginx.h
+sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.28.2/src/http/ngx_http_header_filter_module.c
+sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.28.2/src/http/v2/ngx_http_v2_filter_module.c
+sed -i 's@<hr><center>nginx</center>@@g' nginx-1.28.2/src/http/ngx_http_special_response.c
 
 echo "Building nginx..."
-pushd nginx-1.28.1
+pushd nginx-1.28.2
   ./configure \
     --prefix=${BOSH_INSTALL_TARGET} \
     --with-ld-opt="-L /usr/local/lib" \
