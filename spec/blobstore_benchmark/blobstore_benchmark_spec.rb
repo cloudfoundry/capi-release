@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/BlockLength
 # frozen_string_literal: true
 
 require 'rspec'
@@ -182,5 +181,4 @@ module Bosh
     end
   end
 end
-# rubocop:enable Metrics/BlockLength
 # rubocop:enable Metrics/ModuleLength
