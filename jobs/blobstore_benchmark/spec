@@ -16,7 +16,7 @@ templates:
 packages:
   - capi_utils
   - cloud_controller_ng
-  - ruby-3.2
+  - ruby-3.3
   - jemalloc
   - storage-cli
   - mariadb_connector_c

@@ -1,2 +1,16 @@
 # shellcheck disable=1090
-source "${BOSH_PACKAGES_DIR:-/var/vcap/packages}/ruby-3.2/bosh/runtime.env"
+source "${BOSH_PACKAGES_DIR:-/var/vcap/packages}/ruby-3.3/bosh/runtime.env"
+
+CC_PACKAGE_DIR="${BOSH_PACKAGES_DIR:-/var/vcap/packages}/cloud_controller_ng"
+BUNDLER_VERSION=$(grep "BUNDLED WITH" ${CC_PACKAGE_DIR}/cloud_controller_ng/Gemfile.lock -A 1 | grep -v "BUNDLED" | awk '{print $1}')
+
+# Install the vendored bundler if it's not already installed
+# Use a lock file to avoid concurrent installations
+BUNDLER_LOCK_FILE="/var/vcap/sys/run/bundler_install.lock"
+mkdir -p "$(dirname $BUNDLER_LOCK_FILE)"
+(
+  flock -x 200
+  if ! gem list -i bundler -v $BUNDLER_VERSION > /dev/null 2>&1; then
+    gem install --local ${CC_PACKAGE_DIR}/cloud_controller_ng/vendor/cache/bundler-${BUNDLER_VERSION}.gem
+  fi
+) 200>$BUNDLER_LOCK_FILE
