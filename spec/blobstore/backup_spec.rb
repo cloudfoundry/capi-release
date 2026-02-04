@@ -16,21 +16,23 @@ module Bosh
           job.template('bin/bbr/backup')
         end
 
-        links = [
-          Link.new(name: 'directories_to_backup', properties: {
-                     'cc' => {
-                       'droplets' => {
-                         'droplet_directory_key' => 'some_droplets_directory_key'
-                       },
-                       'buildpacks' => {
-                         'buildpack_directory_key' => 'some_buildpacks_directory_key'
-                       },
-                       'packages' => {
-                         'app_package_directory_key' => 'some_packages_directory_key'
+        let(:links) do
+          [
+            Link.new(name: 'directories_to_backup', properties: {
+                       'cc' => {
+                         'droplets' => {
+                           'droplet_directory_key' => 'some_droplets_directory_key'
+                         },
+                         'buildpacks' => {
+                           'buildpack_directory_key' => 'some_buildpacks_directory_key'
+                         },
+                         'packages' => {
+                           'app_package_directory_key' => 'some_packages_directory_key'
+                         }
                        }
-                     }
-                   })
-        ]
+                     })
+          ]
+        end
 
         it 'templates all the backup commands' do
           expect(template.render({}, consumes: links)).to(

@@ -4,806 +4,564 @@ plugins:
   - rubocop-rspec
   - rubocop-rspec_rails
 
+
+#### BASE SECTION
 AllCops:
   TargetRubyVersion: 3.2
 
-Bundler/DuplicatedGem:
-  Enabled: true
 
-FactoryBot/AssociationStyle:
-  Enabled: true
-
-FactoryBot/ConsistentParenthesesStyle:
-  Enabled: true
-
-FactoryBot/ExcessiveCreateList:
-  Enabled: true
-
-FactoryBot/FactoryNameStyle:
-  Enabled: true
-
-FactoryBot/FactoryAssociationWithStrategy:
-  Enabled: true
-
-FactoryBot/IdSequence:
-  Enabled: true
-
-FactoryBot/RedundantFactoryOption:
-  Enabled: true
-
-FactoryBot/SyntaxMethods:
-  Enabled: true
-
-Layout/EmptyLinesAfterModuleInclusion:
-  Enabled: true
-
-Layout/ParameterAlignment:
-  Enabled: true
-
-Layout/ClosingParenthesisIndentation:
-  Enabled: true
-
+#### CUSTOMIZED SECTION
 Layout/DotPosition:
   EnforcedStyle: trailing
-
 Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
-
-Layout/FirstHashElementIndentation:
-  Enabled: true
-
-Layout/MultilineArrayBraceLayout:
-  Enabled: true
-
-Layout/MultilineBlockLayout:
-  Enabled: true
-
-Layout/MultilineHashBraceLayout:
-  Enabled: true
-
-Layout/MultilineMethodCallBraceLayout:
-  Enabled: true
-
-Layout/MultilineMethodDefinitionBraceLayout:
-  Enabled: true
-
-Layout/MultilineOperationIndentation:
-  Enabled: true
-
-Layout/SpaceAroundEqualsInParameterDefault:
-  EnforcedStyle: no_space
-
-Lint/AmbiguousBlockAssociation:
-  Enabled: true
-
-Lint/AmbiguousRegexpLiteral:
-  Enabled: true
-
-Lint/DuplicateMatchPattern:
-  Enabled: true
-
-Lint/ItWithoutArgumentsInBlock:
-  Enabled: true
-
-Lint/LiteralAssignmentInCondition:
-  Enabled: true
-
-Lint/MixedCaseRange:
-  Enabled: true
-
-Lint/RedundantRegexpQuantifiers:
-  Enabled: true
-
-Lint/SuppressedException:
-  Enabled: true
-
-Lint/ScriptPermission:
-  Enabled: true
-
-Lint/UnifiedInteger:
-  Enabled: true
-
-Lint/UnusedBlockArgument:
-  Enabled: true
-
-Lint/UnusedMethodArgument:
-  Enabled: true
-
-Lint/UriEscapeUnescape:
-  Enabled: true
-
-Metrics/AbcSize:
-  Enabled: true
-
-Metrics/ClassLength:
-  Enabled: true
-
-Metrics/CyclomaticComplexity:
-  Max: 12
-
 Layout/LineLength:
   Max: 180
-
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+Metrics/CyclomaticComplexity:
+  Max: 12
 Metrics/MethodLength:
   Max: 60
-
-Metrics/ModuleLength:
-  Enabled: false
-
-Metrics/ParameterLists:
-  Enabled: true
-
-Metrics/PerceivedComplexity:
-  Enabled: true
-
-Naming/FileName:
-  Enabled: true
-
-Naming/HeredocDelimiterNaming:
-  Enabled: true
-
-Naming/PredicateMethod:
-  Enabled: true
-
-Naming/PredicatePrefix:
-  Enabled: true
-
-Naming/VariableNumber:
-  Enabled: true
-
 Style/Alias:
   EnforcedStyle: prefer_alias_method
-
-Style/ArrayIntersectWithSingleElement:
-  Enabled: true
-
-Style/BlockDelimiters:
-  Enabled: true
-
-Style/ClassAndModuleChildren:
-  Enabled: true
-
-Style/CollectionQuerying:
-  Enabled: true
-
-Style/ComparableBetween:
-  Enabled: true
-
 Style/Documentation:
   AllowedConstants: ['Test']
-
-Style/DoubleNegation:
-  Enabled: true
-
-Style/EachWithObject:
-  Enabled: true
-
-Style/EmptyStringInsideInterpolation:
-  Enabled: true
-
-Style/Encoding:
-  Enabled: true
-
 Style/FormatString:
   EnforcedStyle: sprintf
-
-Style/FrozenStringLiteralComment:
-  Enabled: true
-
-Style/GuardClause:
-  Enabled: true
-
-Style/HashFetchChain:
-  Enabled: true
-
-Style/HashSlice:
-  Enabled: true
-
-Style/ItAssignment:
-  Enabled: true
-
-Style/ItBlockParameter:
-  Enabled: true
-
-Style/IfUnlessModifier:
-  Enabled: true
-
-Style/KeywordArgumentsMerging:
-  Enabled: true
-
-Style/Lambda:
-  Enabled: true
-
-Style/MapIntoArray:
-  Enabled: true
-
-Style/MultilineBlockChain:
-  Enabled: true
-
-Style/NegatedIf:
-  Enabled: true
-
-Style/Next:
-  Enabled: true
-
-Style/NumericLiteralPrefix:
-  Enabled: true
-
-Style/NumericLiterals:
-  Enabled: true
-
-Style/NumericPredicate:
-  Enabled: true
-
-Style/PercentLiteralDelimiters:
-  Enabled: true
-
 Style/RaiseArgs:
   EnforcedStyle: compact
 
+
+#### ENABLED SECTION
+Bundler/DuplicatedGem:
+  Enabled: true
+Capybara/ClickLinkOrButtonStyle:
+  Enabled: true
+Capybara/FindAllFirst:
+  Enabled: true
+Capybara/MatchStyle:
+  Enabled: true
+Capybara/NegationMatcher:
+  Enabled: true
+Capybara/NegationMatcherAfterVisit:
+  Enabled: true
+Capybara/RedundantWithinFind:
+  Enabled: true
+Capybara/RSpec/HaveSelector:
+  Enabled: true
+Capybara/RSpec/PredicateMatcher:
+  Enabled: true
+Capybara/SpecificActions:
+  Enabled: true
+Capybara/SpecificFinders:
+  Enabled: true
+Capybara/SpecificMatcher:
+  Enabled: true
+FactoryBot/AssociationStyle:
+  Enabled: true
+FactoryBot/ConsistentParenthesesStyle:
+  Enabled: true
+FactoryBot/ExcessiveCreateList:
+  Enabled: true
+FactoryBot/FactoryAssociationWithStrategy:
+  Enabled: true
+FactoryBot/FactoryNameStyle:
+  Enabled: true
+FactoryBot/IdSequence:
+  Enabled: true
+FactoryBot/RedundantFactoryOption:
+  Enabled: true
+FactoryBot/SyntaxMethods:
+  Enabled: true
+Gemspec/AddRuntimeDependency:
+  Enabled: true
+Gemspec/AttributeAssignment:
+  Enabled: true
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: true
+Gemspec/DevelopmentDependencies:
+  Enabled: true
+Gemspec/RequireMFA:
+  Enabled: true
+Layout/ClosingParenthesisIndentation:
+  Enabled: true
+Layout/EmptyLinesAfterModuleInclusion:
+  Enabled: true
+Layout/FirstHashElementIndentation:
+  Enabled: true
+Layout/LineContinuationLeadingSpace:
+  Enabled: true
+Layout/LineContinuationSpacing:
+  Enabled: true
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: true
+Layout/MultilineArrayBraceLayout:
+  Enabled: true
+Layout/MultilineBlockLayout:
+  Enabled: true
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: true
+Layout/MultilineMethodDefinitionBraceLayout:
+  Enabled: true
+Layout/MultilineOperationIndentation:
+  Enabled: true
+Layout/ParameterAlignment:
+  Enabled: true
+Layout/SpaceBeforeBrackets:
+  Enabled: true
+Lint/AmbiguousAssignment:
+  Enabled: true
+Lint/AmbiguousBlockAssociation:
+  Enabled: true
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: true
+Lint/AmbiguousRange:
+  Enabled: true
+Lint/AmbiguousRegexpLiteral:
+  Enabled: true
+Lint/ArrayLiteralInRegexp:
+  Enabled: true
+Lint/ConstantOverwrittenInRescue:
+  Enabled: true
+Lint/ConstantReassignment:
+  Enabled: true
+Lint/CopDirectiveSyntax:
+  Enabled: true
+Lint/DeprecatedConstants:
+  Enabled: true
+Lint/DuplicateBranch:
+  Enabled: true
+Lint/DuplicateMagicComment:
+  Enabled: true
+Lint/DuplicateMatchPattern:
+  Enabled: true
+Lint/DuplicateRegexpCharacterClassElement:
+  Enabled: true
+Lint/DuplicateSetElement:
+  Enabled: true
+Lint/EmptyBlock:
+  Enabled: true
+Lint/EmptyClass:
+  Enabled: true
+Lint/EmptyInPattern:
+  Enabled: true
+Lint/HashNewWithKeywordArgumentsAsDefault:
+  Enabled: true
+Lint/IncompatibleIoSelectWithFiberScheduler:
+  Enabled: true
+Lint/ItWithoutArgumentsInBlock:
+  Enabled: true
+Lint/LambdaWithoutLiteralBlock:
+  Enabled: true
+Lint/LiteralAssignmentInCondition:
+  Enabled: true
+Lint/MixedCaseRange:
+  Enabled: true
+Lint/NoReturnInBeginEndBlocks:
+  Enabled: true
+Lint/NonAtomicFileOperation:
+  Enabled: true
+Lint/NumberedParameterAssignment:
+  Enabled: true
+Lint/NumericOperationWithConstantResult:
+  Enabled: true
+Lint/OrAssignmentToConstant:
+  Enabled: true
+Lint/RedundantDirGlobSort:
+  Enabled: true
+Lint/RedundantRegexpQuantifiers:
+  Enabled: true
+Lint/RedundantTypeConversion:
+  Enabled: true
+Lint/RefinementImportMethods:
+  Enabled: true
+Lint/RequireRangeParentheses:
+  Enabled: true
+Lint/RequireRelativeSelfPath:
+  Enabled: true
+Lint/ScriptPermission:
+  Enabled: true
+Lint/SharedMutableDefault:
+  Enabled: true
+Lint/SuppressedException:
+  Enabled: true
+Lint/SuppressedExceptionInNumberConversion:
+  Enabled: true
+Lint/SymbolConversion:
+  Enabled: true
+Lint/ToEnumArguments:
+  Enabled: true
+Lint/TripleQuotes:
+  Enabled: true
+Lint/UnescapedBracketInRegexp:
+  Enabled: true
+Lint/UnexpectedBlockArity:
+  Enabled: true
+Lint/UnifiedInteger:
+  Enabled: true
+Lint/UnmodifiedReduceAccumulator:
+  Enabled: true
+Lint/UnusedBlockArgument:
+  Enabled: true
+Lint/UnusedMethodArgument:
+  Enabled: true
+Lint/UriEscapeUnescape:
+  Enabled: true
+Lint/UselessConstantScoping:
+  Enabled: true
+Lint/UselessDefaultValueArgument:
+  Enabled: true
+Lint/UselessDefined:
+  Enabled: true
+Lint/UselessNumericOperation:
+  Enabled: true
+Lint/UselessOr:
+  Enabled: true
+Lint/UselessRescue:
+  Enabled: true
+Lint/UselessRuby2Keywords:
+  Enabled: true
+Metrics/AbcSize:
+  Enabled: true
+Metrics/BlockLength:
+  Enabled: true
+Metrics/ClassLength:
+  Enabled: true
+Metrics/CollectionLiteralLength:
+  Enabled: true
+Metrics/ParameterLists:
+  Enabled: true
+Metrics/PerceivedComplexity:
+  Enabled: true
+Naming/BlockForwarding:
+  Enabled: true
+Naming/FileName:
+  Enabled: true
+Naming/HeredocDelimiterNaming:
+  Enabled: true
+Naming/PredicateMethod:
+  Enabled: true
+Naming/PredicatePrefix:
+  Enabled: true
+Naming/VariableNumber:
+  Enabled: true
+RSpec/BeEmpty:
+  Enabled: true
+RSpec/BeEq:
+  Enabled: true
+RSpec/BeNil:
+  Enabled: true
+RSpec/ChangeByZero:
+  Enabled: true
+RSpec/ContainExactly:
+  Enabled: true
+RSpec/DuplicatedMetadata:
+  Enabled: true
+RSpec/EmptyMetadata:
+  Enabled: true
+RSpec/EmptyOutput:
+  Enabled: true
+RSpec/Eq:
+  Enabled: true
+RSpec/ExcessiveDocstringSpacing:
+  Enabled: true
+RSpec/ExpectInLet:
+  Enabled: true
+RSpec/IdenticalEqualityAssertion:
+  Enabled: true
+RSpec/IncludeExamples:
+  Enabled: true
+RSpec/IndexedLet:
+  Enabled: true
+RSpec/IsExpectedSpecify:
+  Enabled: true
+RSpec/LeakyLocalVariable:
+  Enabled: true
+RSpec/MatchArray:
+  Enabled: true
+RSpec/MetadataStyle:
+  Enabled: true
+RSpec/NoExpectationExample:
+  Enabled: true
+RSpec/Output:
+  Enabled: true
+RSpec/PendingWithoutReason:
+  Enabled: true
+RSpec/ReceiveMessages:
+  Enabled: true
+RSpec/RedundantAround:
+  Enabled: true
+RSpec/RedundantPredicateMatcher:
+  Enabled: true
+RSpec/RemoveConst:
+  Enabled: true
+RSpec/RepeatedSubjectCall:
+  Enabled: true
+RSpec/SkipBlockInsideExample:
+  Enabled: true
+RSpec/SortMetadata:
+  Enabled: true
+RSpec/SpecFilePathFormat:
+  Enabled: true
+RSpec/SpecFilePathSuffix:
+  Enabled: true
+RSpec/SubjectDeclaration:
+  Enabled: true
+RSpec/UndescriptiveLiteralsDescription:
+  Enabled: true
+RSpec/VerifiedDoubleReference:
+  Enabled: true
+RSpecRails/AvoidSetupHook:
+  Enabled: true
+RSpecRails/HaveHttpStatus:
+  Enabled: true
+RSpecRails/HttpStatusNameConsistency:
+  Enabled: true
+RSpecRails/InferredSpecType:
+  Enabled: true
+RSpecRails/MinitestAssertions:
+  Enabled: true
+RSpecRails/NegationBeValid:
+  Enabled: true
+RSpecRails/TravelAround:
+  Enabled: true
+Security/CompoundHash:
+  Enabled: true
+Security/IoMethods:
+  Enabled: true
+Style/AmbiguousEndlessMethodDefinition:
+  Enabled: true
+Style/ArgumentsForwarding:
+  Enabled: true
+Style/ArrayIntersect:
+  Enabled: true
+Style/ArrayIntersectWithSingleElement:
+  Enabled: true
+Style/BitwisePredicate:
+  Enabled: true
+Style/BlockDelimiters:
+  Enabled: true
+Style/ClassAndModuleChildren:
+  Enabled: true
+Style/CollectionCompact:
+  Enabled: true
+Style/CollectionQuerying:
+  Enabled: true
+Style/CombinableDefined:
+  Enabled: true
+Style/ComparableBetween:
+  Enabled: true
+Style/ComparableClamp:
+  Enabled: true
+Style/ConcatArrayLiterals:
+  Enabled: true
+Style/DataInheritance:
+  Enabled: true
+Style/DigChain:
+  Enabled: true
+Style/DirEmpty:
+  Enabled: true
+Style/DocumentDynamicEvalDefinition:
+  Enabled: true
+Style/DoubleNegation:
+  Enabled: true
+Style/EachWithObject:
+  Enabled: true
+Style/EmptyClassDefinition:
+  Enabled: true
+Style/EmptyHeredoc:
+  Enabled: true
+Style/EmptyStringInsideInterpolation:
+  Enabled: true
+Style/Encoding:
+  Enabled: true
+Style/EndlessMethod:
+  Enabled: true
+Style/EnvHome:
+  Enabled: true
+Style/ExactRegexpMatch:
+  Enabled: true
+Style/FetchEnvVar:
+  Enabled: true
+Style/FileEmpty:
+  Enabled: true
+Style/FileNull:
+  Enabled: true
+Style/FileRead:
+  Enabled: true
+Style/FileTouch:
+  Enabled: true
+Style/FileWrite:
+  Enabled: true
+Style/FrozenStringLiteralComment:
+  Enabled: true
+Style/GuardClause:
+  Enabled: true
+Style/HashConversion:
+  Enabled: true
+Style/HashExcept:
+  Enabled: true
+Style/HashFetchChain:
+  Enabled: true
+Style/HashSlice:
+  Enabled: true
+Style/IfUnlessModifier:
+  Enabled: true
+Style/IfWithBooleanLiteralBranches:
+  Enabled: true
+Style/InPatternThen:
+  Enabled: true
+Style/ItAssignment:
+  Enabled: true
+Style/ItBlockParameter:
+  Enabled: true
+Style/KeywordArgumentsMerging:
+  Enabled: true
+Style/Lambda:
+  Enabled: true
+Style/MagicCommentFormat:
+  Enabled: true
+Style/MapCompactWithConditionalBlock:
+  Enabled: true
+Style/MapIntoArray:
+  Enabled: true
+Style/MapToHash:
+  Enabled: true
+Style/MapToSet:
+  Enabled: true
+Style/MinMaxComparison:
+  Enabled: true
+Style/ModuleMemberExistenceCheck:
+  Enabled: true
+Style/MultilineBlockChain:
+  Enabled: true
+Style/MultilineInPatternThen:
+  Enabled: true
+Style/NegatedIf:
+  Enabled: true
+Style/NegatedIfElseCondition:
+  Enabled: true
+Style/NegativeArrayIndex:
+  Enabled: true
+Style/NestedFileDirname:
+  Enabled: true
+Style/Next:
+  Enabled: true
+Style/NilLambda:
+  Enabled: true
+Style/NumberedParameters:
+  Enabled: true
+Style/NumberedParametersLimit:
+  Enabled: true
+Style/NumericLiteralPrefix:
+  Enabled: true
+Style/NumericLiterals:
+  Enabled: true
+Style/NumericPredicate:
+  Enabled: true
+Style/ObjectThen:
+  Enabled: true
+Style/OpenStructUse:
+  Enabled: true
+Style/OperatorMethodCall:
+  Enabled: true
+Style/PercentLiteralDelimiters:
+  Enabled: true
+Style/QuotedSymbols:
+  Enabled: true
+Style/RedundantArgument:
+  Enabled: true
+Style/RedundantArrayConstructor:
+  Enabled: true
 Style/RedundantArrayFlatten:
   Enabled: true
-
+Style/RedundantConstantBase:
+  Enabled: true
+Style/RedundantCurrentDirectoryInPath:
+  Enabled: true
+Style/RedundantDoubleSplatHashBraces:
+  Enabled: true
+Style/RedundantEach:
+  Enabled: true
+Style/RedundantFilterChain:
+  Enabled: true
 Style/RedundantFormat:
   Enabled: true
-
+Style/RedundantHeredocDelimiterQuotes:
+  Enabled: true
+Style/RedundantInitialize:
+  Enabled: true
+Style/RedundantInterpolationUnfreeze:
+  Enabled: true
+Style/RedundantLineContinuation:
+  Enabled: true
+Style/RedundantRegexpArgument:
+  Enabled: true
+Style/RedundantRegexpConstructor:
+  Enabled: true
 Style/RedundantSelf:
   Enabled: true
-
+Style/RedundantSelfAssignmentBranch:
+  Enabled: true
+Style/RedundantStringEscape:
+  Enabled: true
 Style/RescueModifier:
   Enabled: true
-
+Style/ReturnNilInPredicateMethodDefinition:
+  Enabled: true
+Style/ReverseFind:
+  Enabled: true
 Style/SafeNavigation:
   Enabled: true
-
+Style/SafeNavigationChainLength:
+  Enabled: true
+Style/SelectByRegexp:
+  Enabled: true
 Style/SendWithLiteralMethodName:
   Enabled: true
-
 Style/SignalException:
   Enabled: true
-
 Style/SingleLineBlockParams:
   Enabled: true
-
+Style/SingleLineDoEndBlock:
+  Enabled: true
+Style/StringChars:
+  Enabled: true
 Style/StructInheritance:
   Enabled: true
-
 Style/SuperArguments:
   Enabled: true
-
+Style/SuperWithArgsParentheses:
+  Enabled: true
+Style/SwapValues:
+  Enabled: true
 Style/SymbolArray:
   Enabled: true
-
 Style/TernaryParentheses:
   Enabled: true
-
 Style/TrailingCommaInArguments:
   Enabled: true
-
 Style/TrailingUnderscoreVariable:
   Enabled: true
-
 Style/TrivialAccessors:
   Enabled: true
-
 Style/WordArray:
   Enabled: true
-
+Style/YAMLFileRead:
+  Enabled: true
 Style/ZeroLengthPredicate:
   Enabled: true
 
-Metrics/BlockLength:
-  Enabled: true
 
-Gemspec/AttributeAssignment:
-  Enabled: true
-
-Gemspec/DeprecatedAttributeAssignment:
-  Enabled: true
-
-Gemspec/DevelopmentDependencies:
-  Enabled: true
-
-Gemspec/RequireMFA:
-  Enabled: true
-
-Layout/LineContinuationLeadingSpace:
-  Enabled: true
-
-Layout/LineContinuationSpacing:
-  Enabled: true
-
-Layout/LineEndStringConcatenationIndentation:
-  Enabled: true
-
-Layout/SpaceBeforeBrackets:
-  Enabled: true
-
-Lint/AmbiguousAssignment:
-  Enabled: true
-
-Lint/ArrayLiteralInRegexp:
-  Enabled: true
-
-Lint/AmbiguousOperatorPrecedence:
-  Enabled: true
-
-Lint/AmbiguousRange:
-  Enabled: true
-
-Lint/ConstantOverwrittenInRescue:
-  Enabled: true
-
-Lint/ConstantReassignment:
-  Enabled: true
-
-Lint/CopDirectiveSyntax:
-  Enabled: true
-
-Lint/DeprecatedConstants:
-  Enabled: true
-
-Lint/DuplicateBranch:
-  Enabled: true
-
-Lint/DuplicateMagicComment:
-  Enabled: true
-
-Lint/DuplicateRegexpCharacterClassElement:
-  Enabled: true
-
-Lint/DuplicateSetElement:
-  Enabled: true
-
-Lint/EmptyBlock:
-  Enabled: true
-
-Lint/EmptyClass:
-  Enabled: true
-
-Lint/EmptyInPattern:
-  Enabled: true
-
-Lint/HashNewWithKeywordArgumentsAsDefault:
-  Enabled: true
-
-Lint/IncompatibleIoSelectWithFiberScheduler:
-  Enabled: true
-
-Lint/LambdaWithoutLiteralBlock:
-  Enabled: true
-
-Lint/NoReturnInBeginEndBlocks:
-  Enabled: true
-
-Lint/NonAtomicFileOperation:
-  Enabled: true
-
-Lint/NumberedParameterAssignment:
-  Enabled: true
-
-Lint/NumericOperationWithConstantResult:
-  Enabled: true
-
-Lint/OrAssignmentToConstant:
-  Enabled: true
-
-Lint/RedundantDirGlobSort:
-  Enabled: true
-
-Lint/RedundantTypeConversion:
-  Enabled: true
-
-Lint/RefinementImportMethods:
-  Enabled: true
-
-Lint/RequireRangeParentheses:
-  Enabled: true
-
-Lint/RequireRelativeSelfPath:
-  Enabled: true
-
-Lint/SharedMutableDefault:
-  Enabled: true
-
-Lint/SuppressedExceptionInNumberConversion:
-  Enabled: true
-
-Lint/SymbolConversion:
-  Enabled: true
-
-Lint/ToEnumArguments:
-  Enabled: true
-
-Lint/TripleQuotes:
-  Enabled: true
-
-Lint/UnescapedBracketInRegexp:
-  Enabled: true
-
-Lint/UnexpectedBlockArity:
-  Enabled: true
-
-Lint/UnmodifiedReduceAccumulator:
-  Enabled: true
-
-Lint/UselessConstantScoping:
-  Enabled: true
-
-Lint/UselessDefaultValueArgument:
-  Enabled: true
-
-Lint/UselessDefined:
-  Enabled: true
-
-Lint/UselessNumericOperation:
-  Enabled: true
-
-Lint/UselessOr:
-  Enabled: true
-
-Lint/UselessRescue:
-  Enabled: true
-
-Lint/UselessRuby2Keywords:
-  Enabled: true
-
-Metrics/CollectionLiteralLength:
-  Enabled: true
-
-Naming/BlockForwarding:
-  Enabled: true
-
-Security/CompoundHash:
-  Enabled: true
-
-Security/IoMethods:
-  Enabled: true
-
-Style/AmbiguousEndlessMethodDefinition:
-  Enabled: true
-
-Style/ArgumentsForwarding:
-  Enabled: true
-
-Style/ArrayIntersect:
-  Enabled: true
-
-Style/BitwisePredicate:
-  Enabled: true
-
-Style/CombinableDefined:
-  Enabled: true
-
-Style/CollectionCompact:
-  Enabled: true
-
-Style/ComparableClamp:
-  Enabled: true
-
-Style/ConcatArrayLiterals:
-  Enabled: true
-
-Style/DataInheritance:
-  Enabled: true
-
-Style/DigChain:
-  Enabled: true
-
-Style/DirEmpty:
-  Enabled: true
-
-Style/DocumentDynamicEvalDefinition:
-  Enabled: true
-
-Style/EmptyHeredoc:
-  Enabled: true
-
-Style/EndlessMethod:
-  Enabled: true
-
-Style/EnvHome:
-  Enabled: true
-
-Style/ExactRegexpMatch:
-  Enabled: true
-
-Style/FileEmpty:
-  Enabled: true
-
-Style/FileNull:
-  Enabled: true
-
-Style/FileTouch:
-  Enabled: true
-
-Style/FetchEnvVar:
-  Enabled: true
-
-Style/FileRead:
-  Enabled: true
-
-Style/FileWrite:
-  Enabled: true
-
-Style/HashConversion:
-  Enabled: true
-
-Style/HashExcept:
-  Enabled: true
-
-Style/IfWithBooleanLiteralBranches:
-  Enabled: true
-
-Style/InPatternThen:
-  Enabled: true
-
-Style/MagicCommentFormat:
-  Enabled: true
-
-Style/MapCompactWithConditionalBlock:
-  Enabled: true
-
-Style/MapToHash:
-  Enabled: true
-
-Style/MapToSet:
-  Enabled: true
-
-Style/MinMaxComparison:
-  Enabled: true
-
-Style/MultilineInPatternThen:
-  Enabled: true
-
-Style/NegatedIfElseCondition:
-  Enabled: true
-
-Style/NestedFileDirname:
-  Enabled: true
-
-Style/NilLambda:
-  Enabled: true
-
-Style/NumberedParameters:
-  Enabled: true
-
-Style/NumberedParametersLimit:
-  Enabled: true
-
-Style/ObjectThen:
-  Enabled: true
-
-Style/OpenStructUse:
-  Enabled: true
-
-Style/OperatorMethodCall:
-  Enabled: true
-
-Style/QuotedSymbols:
-  Enabled: true
-
-Style/RedundantArgument:
-  Enabled: true
-
-Style/RedundantArrayConstructor:
-  Enabled: true
-
-Style/RedundantConstantBase:
-  Enabled: true
-
-Style/RedundantCurrentDirectoryInPath:
-  Enabled: true
-
-Style/RedundantDoubleSplatHashBraces:
-  Enabled: true
-
-Style/RedundantEach:
-  Enabled: true
-
-Style/RedundantFilterChain:
-  Enabled: true
-
-Style/RedundantHeredocDelimiterQuotes:
-  Enabled: true
-
-Style/RedundantInitialize:
-  Enabled: true
-
-Style/RedundantInterpolationUnfreeze:
-  Enabled: true
-
-Style/RedundantLineContinuation:
-  Enabled: true
-
-Style/RedundantRegexpArgument:
-  Enabled: true
-
-Style/RedundantRegexpConstructor:
-  Enabled: true
-
-Style/RedundantSelfAssignmentBranch:
-  Enabled: true
-
-Style/RedundantStringEscape:
-  Enabled: true
-
-Style/ReturnNilInPredicateMethodDefinition:
-  Enabled: true
-
-Style/SafeNavigationChainLength:
-  Enabled: true
-
-Style/SelectByRegexp:
-  Enabled: true
-
-Style/SingleLineDoEndBlock:
-  Enabled: true
-
-Style/StringChars:
-  Enabled: true
-
-Style/SuperWithArgsParentheses:
-  Enabled: true
-
-Style/SwapValues:
-  Enabled: true
-
-Style/YAMLFileRead:
-  Enabled: true
-
-Capybara/ClickLinkOrButtonStyle:
-  Enabled: true
-
-Capybara/FindAllFirst:
-  Enabled: true
-
-Capybara/MatchStyle:
-  Enabled: true
-
-Capybara/NegationMatcher:
-  Enabled: true
-
-Capybara/NegationMatcherAfterVisit:
-  Enabled: true
-
-Capybara/RedundantWithinFind:
-  Enabled: true
-
-Capybara/RSpec/HaveSelector:
-  Enabled: true
-
-Capybara/RSpec/PredicateMatcher:
-  Enabled: true
-
-Capybara/SpecificActions:
-  Enabled: true
-
-Capybara/SpecificFinders:
-  Enabled: true
-
-Capybara/SpecificMatcher:
-  Enabled: true
-
-RSpec/BeEmpty:
-  Enabled: true
-
-RSpec/BeEq:
-  Enabled: true
-
-RSpec/BeNil:
-  Enabled: true
-
-RSpec/ChangeByZero:
-  Enabled: true
-
-RSpec/ContainExactly:
-  Enabled: true
-
-RSpec/DuplicatedMetadata:
-  Enabled: true
-
-RSpec/EmptyMetadata:
-  Enabled: true
-
-RSpec/EmptyOutput:
-  Enabled: true
-
-RSpec/Eq:
-  Enabled: true
-
-RSpec/ExcessiveDocstringSpacing:
-  Enabled: true
-
-RSpec/ExpectInLet:
-  Enabled: true
-
-RSpec/IdenticalEqualityAssertion:
-  Enabled: true
-
-RSpec/IncludeExamples:
-  Enabled: true
-
-RSpec/IndexedLet:
-  Enabled: true
-
-RSpec/IsExpectedSpecify:
-  Enabled: true
-
-RSpec/MatchArray:
-  Enabled: true
-
-RSpec/MetadataStyle:
-  Enabled: true
-
-RSpec/NoExpectationExample:
-  Enabled: true
-
-RSpec/PendingWithoutReason:
-  Enabled: true
-
-RSpec/ReceiveMessages:
-  Enabled: true
-
-RSpec/RedundantAround:
-  Enabled: true
-
-RSpec/RedundantPredicateMatcher:
-  Enabled: true
-
-RSpec/RemoveConst:
-  Enabled: true
-
-RSpec/RepeatedSubjectCall:
-  Enabled: true
-
-RSpec/SkipBlockInsideExample:
-  Enabled: true
-
-RSpec/SortMetadata:
-  Enabled: true
-
-RSpec/SpecFilePathFormat:
-  Enabled: true
-
-RSpec/SpecFilePathSuffix:
-  Enabled: true
-
-RSpec/SubjectDeclaration:
-  Enabled: true
-
-RSpec/UndescriptiveLiteralsDescription:
-  Enabled: true
-
-RSpec/VerifiedDoubleReference:
-  Enabled: true
-
-RSpecRails/AvoidSetupHook:
-  Enabled: true
-
-RSpecRails/HaveHttpStatus:
-  Enabled: true
-
-RSpecRails/InferredSpecType:
-  Enabled: true
-
-RSpecRails/MinitestAssertions:
-  Enabled: true
-
-RSpecRails/NegationBeValid:
-  Enabled: true
-
-RSpecRails/TravelAround:
-  Enabled: true
-
-RSpec/MultipleMemoizedHelpers:
+#### DISABLED SECTION
+Metrics/ModuleLength:
   Enabled: false
-
-RSpec/MultipleExpectations:
-  Enabled: false
-
 RSpec/ExampleLength:
   Enabled: false
-
-Gemspec/AddRuntimeDependency:
-  Enabled: true
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
