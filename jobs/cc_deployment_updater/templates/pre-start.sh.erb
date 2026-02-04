@@ -5,6 +5,9 @@ set -ex
 source /var/vcap/packages/capi_utils/syslog_utils.sh
 tee_output_to_sys_log "cc_deployment_updater.$(basename "$0")"
 
+SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+source "${SCRIPT_DIR}/ruby_version.sh"
+
 function setup_directories {
   RUN_DIR="/var/vcap/sys/run/cc_deployment_updater"
   LOG_DIR="/var/vcap/sys/log/cc_deployment_updater"

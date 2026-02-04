@@ -7,7 +7,10 @@ tee_output_to_sys_log "cloud_controller_worker.$(basename "$0")"
 
 source /var/vcap/jobs/cloud_controller_worker/bin/setup_local_blobstore.sh
 
+
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+source "${SCRIPT_DIR}/ruby_version.sh"
+
 
 function setup_directories {
   setup_local_blobstore
