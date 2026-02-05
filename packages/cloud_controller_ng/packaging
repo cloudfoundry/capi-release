@@ -8,10 +8,15 @@ cd ${BOSH_INSTALL_TARGET}/cloud_controller_ng
 mariadb_dir=/var/vcap/packages/mariadb_connector_c
 libpq_dir=/var/vcap/packages/libpq
 export PATH=$libpq_dir/bin:$PATH
+# Ensure extconf can find pg_config
+export PG_CONFIG=$libpq_dir/bin/pg_config
+# Ensure compiler/linker see libpq include and lib dirs
+export CPPFLAGS="-I$libpq_dir/include ${CPPFLAGS:-}"
+export LDFLAGS="-L$libpq_dir/lib ${LDFLAGS:-}"
 
 bundle config build.pg --with-pg-lib=$libpq_dir/lib --with-pg-include=$libpq_dir/include
-# Configure sequel_pg native extension to use the same libpq paths
-bundle config build.sequel_pg --with-pg-lib=$libpq_dir/lib --with-pg-include=$libpq_dir/include
+# Configure sequel_pg native extension to use libpq via pg_config and explicit dirs
+bundle config build.sequel_pg --with-pg-config=$libpq_dir/bin/pg_config --with-pg-dir=$libpq_dir --with-pg-lib=$libpq_dir/lib --with-pg-include=$libpq_dir/include
 bundle config build.mysql2 --with-mysql-config=$mariadb_dir/bin/mariadb_config-wrapper.sh
 bosh_bundle_local --deployment
 
