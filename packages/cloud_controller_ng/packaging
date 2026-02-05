@@ -27,7 +27,7 @@ bundle_exit=$?
 set -e
 if [ $bundle_exit -ne 0 ]; then
   echo "Bundler install failed with exit code $bundle_exit. Searching for mkmf.log under gem_home..."
-  gem_home_dir="../gem_home"
+  gem_home_dir="/var/vcap/data/packages/cloud_controller_ng"
   if [ -d "$gem_home_dir" ]; then
     # Print all mkmf.log files found
     while IFS= read -r -d '' log; do
