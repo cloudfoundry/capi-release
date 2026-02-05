@@ -22,6 +22,20 @@ function main() {
     popd > /dev/null
   popd > /dev/null
 
+  # Ensure lib directory exists
+  mkdir -p "${BOSH_INSTALL_TARGET}/lib"
+
+  # Fallback: if libpq libs not found in install target, copy from build tree
+  if ! ls "${BOSH_INSTALL_TARGET}/lib"/libpq.* >/dev/null 2>&1; then
+    if [ -d "${pgversion}/src/interfaces/libpq" ]; then
+      if ls "${pgversion}/src/interfaces/libpq"/.libs/libpq.* >/dev/null 2>&1; then
+        cp -av "${pgversion}/src/interfaces/libpq"/.libs/libpq.* "${BOSH_INSTALL_TARGET}/lib/"
+      elif ls "${pgversion}/src/interfaces/libpq"/libpq.* >/dev/null 2>&1; then
+        cp -av "${pgversion}/src/interfaces/libpq"/libpq.* "${BOSH_INSTALL_TARGET}/lib/"
+      fi
+    fi
+  fi
+
   # Ensure unversioned linker name exists so -lpq can resolve
   if [ -d "${BOSH_INSTALL_TARGET}/lib" ]; then
     pushd "${BOSH_INSTALL_TARGET}/lib" > /dev/null
