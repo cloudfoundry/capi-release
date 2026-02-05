@@ -94,6 +94,10 @@ postgres/postgresql-11.22.tar.gz:
   size: 26826810
   object_id: d1f8d34c-b438-44e7-7672-5daea8a6da66
   sha: sha256:6445a4e1533c1e8bb616d4a3784bdc4c0226b541f6f0c8d996d9f27d581d49c3
+postgres/postgresql-16.9.tar.gz:
+  size: 32809221
+  object_id: bad063ad-ed63-4bdf-48ec-b95ee3cad333
+  sha: sha256:df5aaddcf7841457cbf9d31b7d79124a2057cdc7cdae47e8e0271c973546618e
 storage-cli/storage-cli-0.0.3-linux-amd64:
   size: 60494421
   object_id: 72e3d912-7baf-4b99-47a2-6bed0455890e
