@@ -26,16 +26,15 @@ bosh_bundle_local --deployment
 bundle_exit=$?
 set -e
 if [ $bundle_exit -ne 0 ]; then
-  echo "Bundler install failed with exit code $bundle_exit. Searching for mkmf.log under gem_home..."
-  gem_home_dir="/var/vcap/data/packages/cloud_controller_ng"
+  echo "Bundler install failed with exit code $bundle_exit. Searching for mkmf.log under \`sequel_pg-1.18.2\`..."
+  gem_home_dir='/var/vcap/data/packages/cloud_controller_ng'
   if [ -d "$gem_home_dir" ]; then
-    # Print all mkmf.log files found
+    target_pattern='*/sequel_pg-1.18.2/mkmf.log'
     while IFS= read -r -d '' log; do
       echo "===== BEGIN mkmf.log: $log ====="
-      # Show a short header with path, then full contents
       cat "$log" || true
       echo "===== END mkmf.log: $log ====="
-    done < <(find "$gem_home_dir" -type f -name mkmf.log -print0)
+    done < <(find "$gem_home_dir" -type f -path "$target_pattern" -print0)
   else
     echo "gem_home directory not found at $gem_home_dir"
   fi
