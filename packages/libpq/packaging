@@ -21,6 +21,16 @@ function main() {
       make install
     popd > /dev/null
   popd > /dev/null
+
+  # Ensure unversioned linker name exists so -lpq can resolve
+  if [ -d "${BOSH_INSTALL_TARGET}/lib" ]; then
+    pushd "${BOSH_INSTALL_TARGET}/lib" > /dev/null
+      if [ ! -f libpq.so ] && ls libpq.so.* >/dev/null 2>&1; then
+        latest=$(ls -1 libpq.so.* | sort -V | tail -n1)
+        ln -sf "$latest" libpq.so
+      fi
+    popd > /dev/null
+  fi
 }
 
 main
