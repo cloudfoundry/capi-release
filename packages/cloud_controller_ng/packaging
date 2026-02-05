@@ -18,7 +18,29 @@ bundle config build.pg --with-pg-lib=$libpq_dir/lib --with-pg-include=$libpq_dir
 # Configure sequel_pg native extension to use libpq via pg_config and explicit dirs
 bundle config build.sequel_pg --with-pg-config=$libpq_dir/bin/pg_config --with-pg-dir=$libpq_dir --with-pg-lib=$libpq_dir/lib --with-pg-include=$libpq_dir/include
 bundle config build.mysql2 --with-mysql-config=$mariadb_dir/bin/mariadb_config-wrapper.sh
+
+
+# Run bundler with debug logging; on failure, search and print mkmf.log(s)
+set +e
 bosh_bundle_local --deployment
+bundle_exit=$?
+set -e
+if [ $bundle_exit -ne 0 ]; then
+  echo "Bundler install failed with exit code $bundle_exit. Searching for mkmf.log under gem_home..."
+  gem_home_dir="../gem_home"
+  if [ -d "$gem_home_dir" ]; then
+    # Print all mkmf.log files found
+    while IFS= read -r -d '' log; do
+      echo "===== BEGIN mkmf.log: $log ====="
+      # Show a short header with path, then full contents
+      cat "$log" || true
+      echo "===== END mkmf.log: $log ====="
+    done < <(find "$gem_home_dir" -type f -name mkmf.log -print0)
+  else
+    echo "gem_home directory not found at $gem_home_dir"
+  fi
+  exit $bundle_exit
+fi
 
 # remove world-writable permissions on files if a gem has them
 chmod -R o-w ../gem_home
