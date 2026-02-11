@@ -2,12 +2,12 @@
 
 function main() {
   local pgversion
-  pgversion="postgresql-11.22"
+  pgversion="postgresql-18.1"
 
   tar xzf "postgres/${pgversion}.tar.gz"
 
   pushd "${pgversion}" > /dev/null
-    ./configure --prefix="${BOSH_INSTALL_TARGET}" --with-openssl
+    ./configure --prefix="${BOSH_INSTALL_TARGET}" --with-openssl --without-icu
 
     pushd src/bin/pg_config > /dev/null
       make
