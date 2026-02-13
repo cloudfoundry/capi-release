@@ -9,6 +9,9 @@ BUNDLER_DIR=/var/vcap/data/cloud_controller_clock/tmp/bundler
 chpst -u vcap:vcap mkdir -p $BUNDLER_DIR
 chpst -u vcap:vcap chmod -R go-w $BUNDLER_DIR
 
+SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+source "${SCRIPT_DIR}/ruby_version.sh"
+
 source /var/vcap/packages/capi_utils/syslog_utils.sh
 tee_output_to_sys_log "cloud_controller_clock.$(basename "$0")"
 

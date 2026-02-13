@@ -1,13 +1,17 @@
 set -e -x
 
 # shellcheck disable=1090
-source "${BOSH_PACKAGES_DIR:-/var/vcap/packages}/ruby-3.2/bosh/compile.env"
+source "${BOSH_PACKAGES_DIR:-/var/vcap/packages}/ruby-3.3/bosh/compile.env"
 cp -a * ${BOSH_INSTALL_TARGET}
 cd ${BOSH_INSTALL_TARGET}/cloud_controller_ng
 
 mariadb_dir=/var/vcap/packages/mariadb_connector_c
 libpq_dir=/var/vcap/packages/libpq
 export PATH=$libpq_dir/bin:$PATH
+
+BUNDLER_VERSION=$(grep "BUNDLED WITH" Gemfile.lock -A 1 | grep -v "BUNDLED" | awk '{print $1}')
+
+gem install --local vendor/cache/bundler-${BUNDLER_VERSION}.gem
 
 bundle config build.pg --with-pg-lib=$libpq_dir/lib --with-pg-include=$libpq_dir/include
 bundle config build.mysql2 --with-mysql-config=$mariadb_dir/bin/mariadb_config-wrapper.sh
