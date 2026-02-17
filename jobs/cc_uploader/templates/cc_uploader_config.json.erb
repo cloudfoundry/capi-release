@@ -13,7 +13,9 @@
   config[:lager_config] = { log_level: p("capi.cc_uploader.log_level"), time_format: p("capi.cc_uploader.logging.format.timestamp") }
 
   config[:listen_addr] = "#{p("capi.cc_uploader.bind_addr")}:#{p("http_port")}"
-  config[:debug_server_config] = { debug_address: "#{p("capi.cc_uploader.debug_bind_addr")}:#{p("capi.cc_uploader.debug_port")}" }
+  if_p("capi.cc_uploader.debug_port") do |debug_port|
+    config[:debug_server_config] = { debug_address: "#{p("capi.cc_uploader.debug_bind_addr")}:#{debug_port}" }
+  end
 
   config[:cc_ca_cert] = "#{conf_dir}/certs/cc/ca.crt"
   config[:cc_client_cert] = "#{conf_dir}/certs/cc/client.crt"
