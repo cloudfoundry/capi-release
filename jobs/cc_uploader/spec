@@ -41,7 +41,7 @@ properties:
 
   temporary_disable_non_tls_endpoints:
     description: "nginx_cc and cc_uploader components disable non-TLS endpoints"
-    default: false
+    default: true
 
   capi.cc_uploader.bind_addr:
     description: "Address of interface on which to serve files"
@@ -50,8 +50,7 @@ properties:
     description: "Address at which to serve debug info"
     default: "127.0.0.1"
   capi.cc_uploader.debug_port:
-    description: "Port at which to serve debug info"
-    default: 17018
+    description: "Port at which to serve debug info, e.g. 17018. Debug server is disabled if not configured."
   capi.cc_uploader.cc.job_polling_interval_in_seconds:
     description: "the interval between job polling requests"
   capi.cc_uploader.log_level:
