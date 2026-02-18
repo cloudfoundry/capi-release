@@ -35,6 +35,25 @@ if [ "${exit_code}" != "0" ]; then
   exit "${exit_code}"
 fi
 
+BUNDLER_VERSION=$(grep "BUNDLED WITH" Gemfile.lock -A 1 | grep -v "BUNDLED" | awk '{print $1}')
+if [ -z "$BUNDLER_VERSION" ]; then
+  echo "ERROR: Failed to find BUNDLER_VERSION in Gemfile.lock"
+  exit 1
+fi
+
+# Fetch and vendor the right bundler ourselves, as bundler won't vendor itself
+gem fetch bundler --version=$BUNDLER_VERSION
+if [ "$?" != "0" ]; then
+  echo "ERROR: Failed to fetch bundler version $BUNDLER_VERSION"
+  exit 1
+fi
+
+mv bundler-${BUNDLER_VERSION}.gem vendor/cache/
+if [ "$?" != "0" ]; then
+  echo "ERROR: Failed to move bundler-${BUNDLER_VERSION}.gem to vendor/cache/bundler-${BUNDLER_VERSION}.gem"
+  exit 1
+fi
+
 rm -rf ./vendor/cache/ruby
 rm -rf ./vendor/cache/vendor
 bundle config --delete NO_INSTALL
