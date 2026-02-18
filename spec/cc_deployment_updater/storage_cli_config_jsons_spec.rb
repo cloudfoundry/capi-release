@@ -149,15 +149,25 @@ module Bosh
                       'host' => 'localhost',
                       'ssl_verify_peer' => 'verify',
                       'use_ssl' => 'true',
-                      'signature_version' => 'v4',
                       'encryption' => 'some-encryption',
                       'x-amz-server-side-encryption-aws-kms-key-id' => 'id',
-                      'multipart_upload' => 'true'
+                      'multipart_upload' => 'true',
+                      'port' => 0,
+                      'folder_name' => 'tmp',
+                      'assume_role_arn' => 'admin',
+                      'swift_auth_account' => 'account',
+                      'swift_temp_url_key' => 'http://some-host',
+                      'download_concurrency' => 5,
+                      'download_part_size' =>  1024,
+                      'upload_concurrency' => 10,
+                      'upload_part_size' => 2048,
+                      'multipart_copy_threshold' => 1024,
+                      'multipart_copy_part_size' =>  1024
                     })
 
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'AWS',
+                 'provider' => 'AWS',
                   'bucket_name' => 'bucket',
                   'access_key_id' => 'key',
                   'secret_access_key' => 'secret',
@@ -165,10 +175,20 @@ module Bosh
                   'host' => 'localhost',
                   'ssl_verify_peer' => 'verify',
                   'use_ssl' => 'true',
-                  'signature_version' => 'v4',
                   'server_side_encryption' => 'some-encryption',
                   'sse_kms_key_id' => 'id',
-                  'multipart_upload' => 'true'
+                  'multipart_upload' => 'true',
+                  'port' => 0,
+                  'folder_name' => 'tmp',
+                  'assume_role_arn' => 'admin',
+                  'swift_auth_account' => 'account',
+                  'swift_temp_url_key' => 'http://some-host',
+                  'download_concurrency' => 5,
+                  'download_part_size' =>  1024,
+                  'upload_concurrency' => 10,
+                  'upload_part_size' => 2048,
+                  'multipart_copy_threshold' => 1024,
+                  'multipart_copy_part_size' =>  1024
                 )
               end
             end
