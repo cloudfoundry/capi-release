@@ -135,11 +135,11 @@ module Bosh
                       'swift_auth_account' => 'account',
                       'swift_temp_url_key' => 'http://some-host',
                       'download_concurrency' => 5,
-                      'download_part_size' =>  1024,
+                      'download_part_size' => 1024,
                       'upload_concurrency' => 10,
                       'upload_part_size' => 2048,
                       'multipart_copy_threshold' => 1024,
-                      'multipart_copy_part_size' =>  1024
+                      'multipart_copy_part_size' => 1024
                     })
 
                 json = YAML.safe_load(template.render(props, consumes: links))
@@ -161,11 +161,11 @@ module Bosh
                   'swift_auth_account' => 'account',
                   'swift_temp_url_key' => 'http://some-host',
                   'download_concurrency' => 5,
-                  'download_part_size' =>  1024,
+                  'download_part_size' => 1024,
                   'upload_concurrency' => 10,
                   'upload_part_size' => 2048,
                   'multipart_copy_threshold' => 1024,
-                  'multipart_copy_part_size' =>  1024
+                  'multipart_copy_part_size' => 1024
                 )
               end
             end
