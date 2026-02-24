@@ -44,19 +44,29 @@ end
 
 if provider == "AWS"
   options["provider"] = provider
-  options["bucket_name"] = p("#{scope}.bucket_name")
-  options["credentials_source"] = "static"
   options["access_key_id"] = p("#{scope}.aws_access_key_id")
   options["secret_access_key"] = p("#{scope}.aws_secret_access_key")
-  add_optional(options, "region", p("#{scope}.region", nil))
+  options["bucket_name"] = p("#{scope}.bucket_name")
+  options["credentials_source"] = "static"
+  add_optional(options, "folder_name", p("#{scope}.folder_name", nil))
   add_optional(options, "host", p("#{scope}.host", nil))
   add_optional(options, "port", p("#{scope}.port", nil))
+  add_optional(options, "region", p("#{scope}.region", nil))
   add_optional(options, "ssl_verify_peer", p("#{scope}.ssl_verify_peer", nil))
   add_optional(options, "use_ssl", p("#{scope}.use_ssl", nil))
-  add_optional(options, "signature_version", p("#{scope}.signature_version", nil))
   add_optional(options, "server_side_encryption", p("#{scope}.encryption", nil))
   add_optional(options, "sse_kms_key_id", p("#{scope}.x-amz-server-side-encryption-aws-kms-key-id", nil))
+  add_optional(options, "assume_role_arn", p("#{scope}.assume_role_arn", nil))
   add_optional(options, "multipart_upload", p("#{scope}.multipart_upload", nil))
+  add_optional(options, "host_style", p("#{scope}.host_style", nil))
+  add_optional(options, "swift_auth_account", p("#{scope}.swift_auth_account", nil))
+  add_optional(options, "swift_temp_url_key", p("#{scope}.swift_temp_url_key", nil))
+  add_optional(options, "download_concurrency", p("#{scope}.download_concurrency", nil))
+  add_optional(options, "download_part_size", p("#{scope}.download_part_size", nil))
+  add_optional(options, "upload_concurrency", p("#{scope}.upload_concurrency", nil))
+  add_optional(options, "upload_part_size", p("#{scope}.upload_part_size", nil))
+  add_optional(options, "multipart_copy_threshold", p("#{scope}.multipart_copy_threshold", nil))
+  add_optional(options, "multipart_copy_part_size", p("#{scope}.multipart_copy_part_size", nil))
 end
 
 if provider ==  "aliyun"
