@@ -73,8 +73,8 @@ properties:
     description: "PEM-encoded client key"
 
   capi.tps.watcher.debug_addr:
-    description: "address at which to serve debug info"
-    default: "127.0.0.1:17015"
+    description: "Address at which to serve debug info, e.g. 127.0.0.1:17015. Debug server is disabled if empty (default)."
+    default: ""
   capi.tps.watcher.locket.api_location:
     description: "Hostname and port of the Locket server"
     default: ""
