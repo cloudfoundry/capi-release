@@ -17,6 +17,36 @@ module Bosh
           let(:links) { [] }
           let(:template) { job.template('config/tps_watcher_config.json') }
 
+          describe 'debug server' do
+            it 'disables the debug server by default' do
+              rendered_template = template.render({}, consumes: links)
+              parsed_template = JSON.parse(rendered_template)
+
+              expect(parsed_template['debug_server_config']['debug_address']).to eq('')
+            end
+
+            context 'when capi.tps.watcher.debug_addr is configured' do
+              let(:manifest_overrides) do
+                {
+                  'capi' => {
+                    'tps' => {
+                      'watcher' => {
+                        'debug_addr' => '127.0.0.1:17015'
+                      }
+                    }
+                  }
+                }
+              end
+
+              it 'sets the debug address' do
+                rendered_template = template.render(manifest_overrides, consumes: links)
+                parsed_template = JSON.parse(rendered_template)
+
+                expect(parsed_template['debug_server_config']['debug_address']).to eq('127.0.0.1:17015')
+              end
+            end
+          end
+
           describe 'log time format' do
             it 'defaults the log timestamp format to rfc3339' do
               rendered_template = template.render({}, consumes: links)
