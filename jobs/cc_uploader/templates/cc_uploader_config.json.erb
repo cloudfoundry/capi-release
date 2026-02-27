@@ -12,7 +12,6 @@
   end
   config[:lager_config] = { log_level: p("capi.cc_uploader.log_level"), time_format: p("capi.cc_uploader.logging.format.timestamp") }
 
-  config[:listen_addr] = "#{p("capi.cc_uploader.bind_addr")}:#{p("http_port")}"
   if_p("capi.cc_uploader.debug_port") do |debug_port|
     config[:debug_server_config] = { debug_address: "#{p("capi.cc_uploader.debug_bind_addr")}:#{debug_port}" }
   end
@@ -31,7 +30,5 @@
   if_p("capi.cc_uploader.cc.job_polling_interval_in_seconds") do |interval|
     config[:job_polling_interval_in_seconds] = "#{interval}s"
   end
-
-  config[:disable_non_tls] = !!p('temporary_disable_non_tls_endpoints')
 %>
 <%= config.to_json %>

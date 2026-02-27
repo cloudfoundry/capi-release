@@ -25,23 +25,15 @@ provides:
     type: cc_uploader
     properties:
     - internal_hostname
-    - http_port
     - https_port
 
 properties:
   internal_hostname:
     description: "Hostname by which clients will communicate with the cc uploader"
     default: cc-uploader.service.cf.internal
-  http_port:
-    description: "Port by which clients will communicate with the cc uploader using http"
-    default: 9090
   https_port:
     description: "Port by which clients will communicate with the cc uploader using https (mutual TLS)"
     default: 9091
-
-  temporary_disable_non_tls_endpoints:
-    description: "nginx_cc and cc_uploader components disable non-TLS endpoints"
-    default: true
 
   capi.cc_uploader.bind_addr:
     description: "Address of interface on which to serve files"

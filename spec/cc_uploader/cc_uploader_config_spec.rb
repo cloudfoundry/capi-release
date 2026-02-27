@@ -18,13 +18,6 @@ module Bosh
           let(:template) { job.template('config/cc_uploader_config.json') }
 
           describe 'default settings' do
-            it 'defaults disable_non_tls to true' do
-              rendered_template = template.render({}, consumes: links)
-              parsed_template = JSON.parse(rendered_template)
-
-              expect(parsed_template['disable_non_tls']).to be(true)
-            end
-
             it 'does not include debug_server_config by default' do
               rendered_template = template.render({}, consumes: links)
               parsed_template = JSON.parse(rendered_template)
