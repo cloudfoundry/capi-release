@@ -23,7 +23,9 @@ scope = "cc.packages.connection_config"
 provider = p("cc.packages.blobstore_provider", nil)
 options = {}
 
-if provider == "AzureRM"
+# Support both native storage-cli types (azurebs) AND legacy fog names (AzureRM)
+# Legacy fog name support to be REMOVED May 2026
+if provider == "AzureRM" || provider == "azurebs"
   options["provider"] = provider
   options["account_name"]   = p("#{scope}.azure_storage_account_name")
   options["container_name"] = p("#{scope}.container_name")
@@ -33,7 +35,9 @@ if provider == "AzureRM"
   options = cli_cfg_with_default_timeout(options, 'storage_cli')
 end
 
-if provider == "Google"
+# Support both native storage-cli types (gcs) AND legacy fog names (Google)
+# Legacy fog name support to be REMOVED May 2026
+if provider == "Google" || provider == "gcs"
   options["provider"] = provider
   options["credentials_source"] = "static"
   options["json_key"] =  p("#{scope}.google_json_key_string")
@@ -42,7 +46,9 @@ if provider == "Google"
   add_optional(options, "encryption_key", p("#{scope}.encryption_key", nil))
 end
 
-if provider == "AWS"
+# Support both native storage-cli types (s3) AND legacy fog names (AWS)
+# Legacy fog name support to be REMOVED May 2026
+if provider == "AWS" || provider == "s3"
   options["provider"] = provider
   options["access_key_id"] = p("#{scope}.aws_access_key_id")
   options["secret_access_key"] = p("#{scope}.aws_secret_access_key")
@@ -69,7 +75,9 @@ if provider == "AWS"
   add_optional(options, "multipart_copy_part_size", p("#{scope}.multipart_copy_part_size", nil))
 end
 
-if provider ==  "aliyun"
+# Support both native storage-cli types (alioss) AND legacy fog names (aliyun)
+# Legacy fog name support to be REMOVED May 2026
+if provider ==  "aliyun" || provider == "alioss"
   options["provider"] = provider
   options["access_key_id"] = p("#{scope}.aliyun_accesskey_id")
   options["access_key_secret"] = p("#{scope}.aliyun_accesskey_secret")
@@ -77,7 +85,8 @@ if provider ==  "aliyun"
   options["bucket_name"] = p("#{scope}.aliyun_oss_bucket")
 end
 
-if provider == "webdav"
+# WebDAV/dav support intentionally excluded (not fully implemented)
+if provider == "webdav" || provider == "dav"
   options["provider"] = provider
   options["user"] = p("#{scope}.username")
   options["password"] = p("#{scope}.password")

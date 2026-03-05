@@ -184,7 +184,7 @@ properties:
     description: "Storage Cli extra flags string"
 
   cc.resource_pool.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM', 'AWS', 'aliyun', 'webdav', 'Google']"
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs'] (native) or ['AzureRM', 'AWS', 'aliyun', 'Google'] (legacy, to be removed May 2026)"
     default: ~
   cc.resource_pool.connection_config:
       description: "Azure Storage Cli connection hash"
@@ -235,7 +235,7 @@ properties:
     default: ""
 
   cc.packages.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM', 'AWS', 'aliyun', 'webdav', 'Google']"
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs'] (native) or ['AzureRM', 'AWS', 'aliyun', 'Google'] (legacy, to be removed May 2026)"
     default: ~
   cc.packages.connection_config:
     description: "Azure Storage Cli connection hash"
@@ -283,7 +283,7 @@ properties:
     default: ""
 
   cc.droplets.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM', 'AWS', 'aliyun', 'webdav', 'Google']"
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs'] (native) or ['AzureRM', 'AWS', 'aliyun', 'Google'] (legacy, to be removed May 2026)"
     default: ~
   cc.droplets.connection_config:
     description: "Azure Storage Cli connection hash"
@@ -328,7 +328,7 @@ properties:
     default: ""
 
   cc.buildpacks.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['AzureRM', 'AWS', 'aliyun', 'webdav', 'Google']"
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs'] (native) or ['AzureRM', 'AWS', 'aliyun', 'Google'] (legacy, to be removed May 2026)"
     default: ~
   cc.buildpacks.connection_config:
     description: "Azure Storage Cli connection hash"
