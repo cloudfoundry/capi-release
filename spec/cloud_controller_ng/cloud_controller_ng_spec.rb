@@ -533,6 +533,48 @@ module Bosh
             end
           end
 
+          describe 'diego.sshd config' do
+            it 'does not render sshd section when properties are not set' do
+              template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(template_hash['diego']['sshd']).to be_nil
+            end
+
+            context 'when SSH algorithms are configured' do
+              before do
+                merged_manifest_properties['cc']['diego']['sshd'] = {
+                  'allowed_ciphers' => 'cipher-1,cipher-2',
+                  'allowed_host_key_algorithms' => 'hostkeyalg-1,hostkeyalg-2',
+                  'allowed_key_exchanges' => 'kex-1,kex-2',
+                  'allowed_macs' => 'mac-1,mac-2'
+                }
+              end
+
+              it 'renders the configured SSH algorithms' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['diego']['sshd']['allowed_ciphers']).to eq('cipher-1,cipher-2')
+                expect(template_hash['diego']['sshd']['allowed_host_key_algorithms']).to eq('hostkeyalg-1,hostkeyalg-2')
+                expect(template_hash['diego']['sshd']['allowed_key_exchanges']).to eq('kex-1,kex-2')
+                expect(template_hash['diego']['sshd']['allowed_macs']).to eq('mac-1,mac-2')
+              end
+            end
+
+            context 'when only some SSH algorithms are configured' do
+              before do
+                merged_manifest_properties['cc']['diego']['sshd'] = {
+                  'allowed_ciphers' => 'cipher-1,cipher-2'
+                }
+              end
+
+              it 'renders only the configured properties' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['diego']['sshd']['allowed_ciphers']).to eq('cipher-1,cipher-2')
+                expect(template_hash['diego']['sshd']['allowed_host_key_algorithms']).to be_nil
+                expect(template_hash['diego']['sshd']['allowed_key_exchanges']).to be_nil
+                expect(template_hash['diego']['sshd']['allowed_macs']).to be_nil
+              end
+            end
+          end
+
           describe 'broker_client_max_async_poll_interval_seconds config' do
             it 'defaults to 86400 seconds' do
               template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))

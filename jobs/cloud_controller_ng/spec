@@ -241,6 +241,10 @@ provides:
   - cc.droplets.connection_config
   - cc.buildpacks.connection_config
   - cc.storage_cli_optional_flags
+  - cc.diego.sshd.allowed_ciphers
+  - cc.diego.sshd.allowed_host_key_algorithms
+  - cc.diego.sshd.allowed_key_exchanges
+  - cc.diego.sshd.allowed_macs
 
 consumes:
 - name: database
@@ -1276,6 +1280,15 @@ properties:
   cc.diego.pid_limit:
     description: "Maximum pid limit for containerized work running user-provided code"
     default: 1024
+
+  cc.diego.sshd.allowed_ciphers:
+    description: "Comma separated list of allowed SSH cipher algorithms for diego-sshd. If not set, diego-sshd will use its defaults."
+  cc.diego.sshd.allowed_host_key_algorithms:
+    description: "Comma separated list of allowed SSH host key algorithms for diego-sshd. If not set, diego-sshd will use its defaults."
+  cc.diego.sshd.allowed_key_exchanges:
+    description: "Comma separated list of allowed SSH key exchange algorithms for diego-sshd. If not set, diego-sshd will use its defaults."
+  cc.diego.sshd.allowed_macs:
+    description: "Comma separated list of allowed SSH MAC algorithms for diego-sshd. If not set, diego-sshd will use its defaults."
 
   cc.logcache.host:
     description: "Hostname of the Logcache server"
