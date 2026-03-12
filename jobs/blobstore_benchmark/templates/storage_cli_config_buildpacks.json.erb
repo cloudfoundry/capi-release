@@ -46,10 +46,14 @@ end
 
 if provider == "AWS"
   options["provider"] = provider
-  options["access_key_id"] = l.p("#{scope}.aws_access_key_id")
-  options["secret_access_key"] = l.p("#{scope}.aws_secret_access_key")
   options["bucket_name"] = l.p("#{scope}.bucket_name")
-  options["credentials_source"] = "static"
+  if l.p("#{scope}.use_iam_profile", false)
+    options["credentials_source"] = "env_or_profile"
+  else
+    options["credentials_source"] = "static"
+    options["access_key_id"] = l.p("#{scope}.aws_access_key_id")
+    options["secret_access_key"] = l.p("#{scope}.aws_secret_access_key")
+  end
   add_optional(options, "folder_name", l.p("#{scope}.folder_name", nil))
   add_optional(options, "host", l.p("#{scope}.host", nil))
   add_optional(options, "port", l.p("#{scope}.port", nil))

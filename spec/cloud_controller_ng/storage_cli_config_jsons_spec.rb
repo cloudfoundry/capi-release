@@ -117,6 +117,30 @@ module Bosh
                 )
               end
 
+              context 'when use_iam_profile is true' do
+                let(:json) do
+                  set(props, keypath, {
+                        'provider' => 'AWS',
+                        'bucket_name' => 'bucket',
+                        'use_iam_profile' => true
+                      })
+                  YAML.safe_load(template.render(props, consumes: links))
+                end
+
+                it 'uses env_or_profile credentials source' do
+                  expect(json).to include(
+                    'provider' => 'AWS',
+                    'bucket_name' => 'bucket',
+                    'credentials_source' => 'env_or_profile'
+                  )
+                end
+
+                it 'omits static keys' do
+                  expect(json).not_to have_key('access_key_id')
+                  expect(json).not_to have_key('secret_access_key')
+                end
+              end
+
               it 'includes optional properties when provided' do
                 set(props, keypath, {
                       'provider' => 'AWS',

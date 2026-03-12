@@ -122,7 +122,7 @@ module Bosh
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'maps requried properties into the rendered config' do
+              it 'maps required properties into the rendered config' do
                 set(link_props, keypath, {
                       'provider' => 'AWS',
                       'bucket_name' => 'bucket',
@@ -137,6 +137,30 @@ module Bosh
                   'credentials_source' => 'static',
                   'secret_access_key' => 'secret'
                 )
+              end
+
+              context 'when use_iam_profile is true' do
+                let(:json) do
+                  set(link_props, keypath, {
+                        'provider' => 'AWS',
+                        'bucket_name' => 'bucket',
+                        'use_iam_profile' => true
+                      })
+                  YAML.safe_load(template.render(props, consumes: links))
+                end
+
+                it 'uses env_or_profile credentials source' do
+                  expect(json).to include(
+                    'provider' => 'AWS',
+                    'bucket_name' => 'bucket',
+                    'credentials_source' => 'env_or_profile'
+                  )
+                end
+
+                it 'omits static keys' do
+                  expect(json).not_to have_key('access_key_id')
+                  expect(json).not_to have_key('secret_access_key')
+                end
               end
 
               it 'includes optional properties when provided' do
@@ -210,7 +234,7 @@ module Bosh
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'maps requried properties into the rendered config' do
+              it 'maps required properties into the rendered config' do
                 set(link_props, keypath, {
                       'provider' => 'Google',
                       'bucket_name' => 'bucket',
@@ -264,7 +288,7 @@ module Bosh
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'maps requried properties into the rendered config' do
+              it 'maps required properties into the rendered config' do
                 set(link_props, keypath, {
                       'provider' => 'aliyun',
                       'aliyun_accesskey_id' => 'key',
@@ -300,7 +324,7 @@ module Bosh
             describe template_path do
               let(:template) { job.template(template_path) }
 
-              it 'maps requried properties into the rendered config' do
+              it 'maps required properties into the rendered config' do
                 set(link_props, keypath, {
                       'provider' => 'webdav',
                       'username' => 'user',
