@@ -329,6 +329,24 @@ diego:
     send_timeout: <%= p("cc.diego.bbs.send_timeout") %>
     receive_timeout: <%= p("cc.diego.bbs.receive_timeout") %>
   pid_limit: <%= p("cc.diego.pid_limit") %>
+<% if_link("cloud_controller_internal") do |cc_internal|
+     sshd_ciphers = cc_internal.p("cc.diego.sshd.allowed_ciphers", nil)
+     sshd_host_key_algs = cc_internal.p("cc.diego.sshd.allowed_host_key_algorithms", nil)
+     sshd_kex = cc_internal.p("cc.diego.sshd.allowed_key_exchanges", nil)
+     sshd_macs = cc_internal.p("cc.diego.sshd.allowed_macs", nil)
+     if sshd_ciphers || sshd_host_key_algs || sshd_kex || sshd_macs %>
+  sshd:
+<%     if sshd_ciphers %>
+    allowed_ciphers: "<%= sshd_ciphers %>"
+<%     end; if sshd_host_key_algs %>
+    allowed_host_key_algorithms: "<%= sshd_host_key_algs %>"
+<%     end; if sshd_kex %>
+    allowed_key_exchanges: "<%= sshd_kex %>"
+<%     end; if sshd_macs %>
+    allowed_macs: "<%= sshd_macs %>"
+<%     end
+     end
+   end %>
 
 <% if p("routing_api.enabled") %>
 routing_api:
