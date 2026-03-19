@@ -895,17 +895,17 @@ module Bosh
           end
 
           context 'with max_service_credential_bindings_per_app_service_instance parameter' do
-            it 'defaults to 1' do
+            it 'defaults to 5' do
               template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-              expect(template_hash['max_service_credential_bindings_per_app_service_instance']).to eq(1)
+              expect(template_hash['max_service_credential_bindings_per_app_service_instance']).to eq(5)
             end
 
             context 'when set in the manifest' do
-              before { merged_manifest_properties['cc']['max_service_credential_bindings_per_app_service_instance'] = 5 }
+              before { merged_manifest_properties['cc']['max_service_credential_bindings_per_app_service_instance'] = 3 }
 
               it 'renders the value from the manifest' do
                 template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-                expect(template_hash['max_service_credential_bindings_per_app_service_instance']).to eq(5)
+                expect(template_hash['max_service_credential_bindings_per_app_service_instance']).to eq(3)
               end
             end
           end
