@@ -329,7 +329,7 @@ module Bosh
                       'provider' => 'webdav',
                       'username' => 'user',
                       'password' => 'secret',
-                      'public_endpoint' => 'webdav.com',
+                      'private_endpoint' => 'https://webdav.com',
                       'ca_cert' => 'some_cert'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
@@ -337,8 +337,8 @@ module Bosh
                   'provider' => 'webdav',
                   'user' => 'user',
                   'password' => 'secret',
-                  'endpoint' => 'webdav.com',
-                  'tls' => { 'cert' => 'some_cert' }
+                  'endpoint' => 'https://webdav.com/admin/',
+                  'tls' => { 'cert' => { 'ca' => 'some_cert' } }
                 )
               end
 
@@ -347,9 +347,10 @@ module Bosh
                       'provider' => 'webdav',
                       'username' => 'user',
                       'password' => 'secret',
-                      'public_endpoint' => 'webdav.com',
+                      'private_endpoint' => 'https://webdav.com',
                       'ca_cert' => 'some_cert',
                       'secret' => 'secret',
+                      'signing_method' => 'md5',
                       'retry_attempts' => '4'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
@@ -357,9 +358,10 @@ module Bosh
                   'provider' => 'webdav',
                   'user' => 'user',
                   'password' => 'secret',
-                  'endpoint' => 'webdav.com',
-                  'tls' => { 'cert' => 'some_cert' },
+                  'endpoint' => 'https://webdav.com/admin/',
+                  'tls' => { 'cert' => { 'ca' => 'some_cert' } },
                   'secret' => 'secret',
+                  'signing_method' => 'md5',
                   'retry_attempts' => '4'
                 )
               end
