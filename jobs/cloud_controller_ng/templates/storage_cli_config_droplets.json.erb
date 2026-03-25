@@ -94,14 +94,15 @@ if provider == "webdav" || provider == "dav"
   options["provider"] = provider
   options["user"] = p("#{scope}.username")
   options["password"] = p("#{scope}.password")
-  options["endpoint"] = p("#{scope}.public_endpoint")
+  options["endpoint"] = p("#{scope}.private_endpoint") + "/admin/"
   add_optional(options, "secret", p("#{scope}.secret", nil))
+  add_optional(options, "signing_method", p("#{scope}.signing_method", nil))
   add_optional(options, "retry_attempts", p("#{scope}.retry_attempts", nil))
 
   # TLS nested object with a Cert inside
   ca_cert=p("#{scope}.ca_cert",nil)
   unless ca_cert.empty?
-    options["tls"]={"cert"=>ca_cert}
+    options["tls"]={"cert"=>{"ca"=>ca_cert}}
   end
 end
 
