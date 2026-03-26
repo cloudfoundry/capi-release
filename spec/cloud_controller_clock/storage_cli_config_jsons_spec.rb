@@ -273,13 +273,24 @@ module Bosh
         describe 'when provider is webdav' do
           let(:props) { props_for_provider('webdav') }
 
+          # Helper to determine expected directory key based on template path
+          def expected_directory_key(template_path)
+            case template_path
+            when /droplets/ then 'cc-droplets'
+            when /packages/ then 'cc-packages'
+            when /buildpacks/ then 'cc-buildpacks'
+            when /resource_pool/ then 'cc-resources'
+            end
+          end
+
           TEMPLATES.each_value do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
+              let(:directory_key) { expected_directory_key(template_path) }
 
               it 'maps required properties into the rendered config' do
                 set(props, keypath, {
-                      'provider' => 'webdav',
+                      'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.com',
@@ -287,17 +298,17 @@ module Bosh
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'webdav',
+                  'provider' => 'dav',
                   'user' => 'user',
                   'password' => 'secret',
-                  'endpoint' => 'https://webdav.com/admin/',
+                  'endpoint' => "https://webdav.com/admin/#{directory_key}",
                   'tls' => { 'cert' => { 'ca' => 'some_cert' } }
                 )
               end
 
               it 'includes optional properties when provided' do
                 set(props, keypath, {
-                      'provider' => 'webdav',
+                      'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.com',
@@ -308,10 +319,10 @@ module Bosh
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'webdav',
+                  'provider' => 'dav',
                   'user' => 'user',
                   'password' => 'secret',
-                  'endpoint' => 'https://webdav.com/admin/',
+                  'endpoint' => "https://webdav.com/#{directory_key}",
                   'tls' => { 'cert' => { 'ca' => 'some_cert' } },
                   'secret' => 'secret',
                   'signing_method' => 'md5',
