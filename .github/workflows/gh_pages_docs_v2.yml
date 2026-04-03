@@ -33,7 +33,7 @@ jobs:
         repository: cloudfoundry/cloud_controller_ng
         path: cloud_controller_ng
     - name: Setup Pages
-      uses: actions/configure-pages@v5
+      uses: actions/configure-pages@v6
     - name: Render index template
       working-directory: cloud_controller_ng/docs/v2
       run: |
