@@ -85,7 +85,6 @@ route_services_enabled: false
 
 logging:
   file: /var/vcap/sys/log/cloud_controller_worker/cloud_controller_worker.log
-  syslog: vcap.cloud_controller_ng
   level: "<%= p("cc.logging_level") %>"
   max_retries: <%= p("cc.logging_max_retries") %>
   format:

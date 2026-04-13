@@ -28,7 +28,6 @@ name: <%= name %>
 
 logging:
   file: /var/vcap/sys/log/cc_deployment_updater/cc_deployment_updater.log
-  syslog: vcap.cloud_controller_ng
   level: "<%= p("cc.logging_level") %>"
   max_retries: <%= p("cc.logging_max_retries") %>
   format:

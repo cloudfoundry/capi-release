@@ -2,8 +2,8 @@
 
 set -ex
 
-source /var/vcap/packages/capi_utils/syslog_utils.sh
-tee_output_to_sys_log "cc_deployment_updater.$(basename "$0")"
+source /var/vcap/packages/capi_utils/output_utils.sh
+write_output_with_datetime
 
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 source "${SCRIPT_DIR}/ruby_version.sh"

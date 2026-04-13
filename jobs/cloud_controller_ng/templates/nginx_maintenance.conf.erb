@@ -4,7 +4,6 @@ daemon off;
 pid       /var/vcap/data/cloud_controller_ng/nginx_maintenance.pid;
 
 error_log /var/vcap/sys/log/cloud_controller_ng/nginx-maintenance-error.log <%= p("cc.nginx_error_log_level") %>;
-error_log syslog:server=127.0.0.1,severity=error,tag=vcap_nginx_error <%= p("cc.nginx_error_log_level") %>;
 
 worker_processes auto;
 
@@ -26,7 +25,6 @@ http {
 
   log_format main  '<%= p("cc.nginx_access_log_format").chomp %>';
   access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-maintenence-access.log main;
-  access_log  syslog:server=127.0.0.1,severity=info,tag=vcap_nginx_access main;
 
   # This block ensures the endpoints it serves are handled by mutual TLS.
   # Refer to the 'return 403' statement in the http block to see how we secure those endpoints.

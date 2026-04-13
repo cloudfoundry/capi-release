@@ -9,7 +9,7 @@ templates:
   post-restore-unlock.sh.erb: bin/bbr/post-restore-unlock
   pre-start.erb: bin/pre-start
 
-  tps_watcher_as_vcap.erb: bin/tps_watcher_as_vcap
+  tps_watcher.erb: bin/tps_watcher
   bbs_ca.crt.erb: config/certs/bbs/ca.crt
   bbs_client.crt.erb: config/certs/bbs/client.crt
   bbs_client.key.erb: config/certs/bbs/client.key
