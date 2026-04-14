@@ -41,7 +41,7 @@ jobs:
         ls
         ./render.sh
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v4
+      uses: actions/upload-pages-artifact@v5
       with:
         path: cloud_controller_ng/docs/v2
 
