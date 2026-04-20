@@ -142,9 +142,6 @@ logging:
 
 log_audit_events: <%= p("cc.log_audit_events") %>
 
-loggregator:
-  router: <%= p("metron_endpoint.host") %>:<%= p("metron_endpoint.port") %>
-
 <% db = p("ccdb.databases").find { |db| db["tag"] == "cc" } %>
 <% db_role = p("ccdb.roles").find { |role| role["tag"] == "admin" } %>
 <%
