@@ -68,7 +68,9 @@ templates:
   credhub_ca.crt.erb: config/certs/credhub_ca.crt
   prom_scraper_config.yml.erb: config/prom_scraper_config.yml
   cloud_controller_local_worker_override.yml.erb: config/cloud_controller_local_worker_override.yml
-
+  loggregator_tls.crt.erb: config/certs/loggregator_tls.crt
+  loggregator_tls.key.erb: config/certs/loggregator_tls.key
+  loggregator_tls_ca.crt.erb: config/certs/loggregator_tls_ca.crt
 packages:
   - storage-cli
   - capi_utils
@@ -819,7 +821,7 @@ properties:
     default: "127.0.0.1"
   metron_endpoint.port:
     description: "The port used to emit messages to the Metron agent"
-    default: 3457
+    default: 3458
 
   doppler.use_ssl:
     description: "Whether to use ssl for the doppler_logging_endpoint listed at /v2/info"
@@ -1304,10 +1306,13 @@ properties:
   cc.logcache_tls.subject_name:
     description: "The host name the client will accept on the server certificate when communicating with Log Cache via mTLS"
     default: "log_cache"
-
-  cc.loggregator.internal_url:
-    description: "Internal URL used to communicate with traffic_controller"
-    default: "http://loggregator-trafficcontroller.service.cf.internal:8081"
+  
+  cc.loggregator_tls.ca_cert:
+    description: "PEM-encoded CA certificate for mTLS communication with Loggregator"
+  cc.loggregator_tls.certificate:
+    description: "PEM-encoded client certificate for mTLS communication with Loggregator"
+  cc.loggregator_tls.private_key:
+    description: "PEM-encoded private key for mTLS communication with Loggregator"
 
   credhub_api.hostname:
     description: "Hostname used to resolve the address of CredHub"

@@ -185,8 +185,10 @@ logcache_tls:
   subject_name: <%= p("cc.logcache_tls.subject_name") %>
 
 loggregator:
-  router: <%= p("metron_endpoint.host") %>:<%= p("metron_endpoint.port") %>
-  internal_url: <%= p("cc.loggregator.internal_url") %>
+  endpoint: <%= p("metron_endpoint.host") %>:<%= p("metron_endpoint.port") %>
+  key_file: /var/vcap/jobs/cloud_controller_ng/config/certs/loggregator_tls.key
+  cert_file: /var/vcap/jobs/cloud_controller_ng/config/certs/loggregator_tls.crt
+  ca_file: /var/vcap/jobs/cloud_controller_ng/config/certs/loggregator_tls_ca.crt
 
 log_stream:
   url: https://log-stream.<%= p("system_domain") %>
