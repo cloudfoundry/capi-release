@@ -620,6 +620,9 @@ properties:
     description: "PEM-encoded client certificate for mTLS communication with Loggregator"
   cc.loggregator_tls.private_key:
     description: "PEM-encoded private key for mTLS communication with Loggregator"
+  cc.loggregator_tls.subject_name:
+    description: "The host name the client will accept on the server certificate when communicating with Loggregator via mTLS"
+    default: "metron"
 
   cc.perform_blob_cleanup:
     description: "Whether or not to perform the blob cleanup job"

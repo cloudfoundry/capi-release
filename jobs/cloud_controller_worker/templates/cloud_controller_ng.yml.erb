@@ -95,6 +95,7 @@ log_audit_events: <%= p("cc.log_audit_events") %>
 
 loggregator:
   endpoint: <%= p("metron_endpoint.host") %>:<%= p("metron_endpoint.port") %>
+  subject_name: <%= p("cc.loggregator_tls.subject_name") %>
   key_file: /var/vcap/jobs/cloud_controller_worker/config/certs/loggregator_tls.key
   cert_file: /var/vcap/jobs/cloud_controller_worker/config/certs/loggregator_tls.crt
   ca_file: /var/vcap/jobs/cloud_controller_worker/config/certs/loggregator_tls_ca.crt
