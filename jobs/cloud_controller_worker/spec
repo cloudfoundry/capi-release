@@ -88,7 +88,7 @@ properties:
 
   cc.readiness_port.cloud_controller_worker:
     description: "Readiness port used in k8s to check that db migrations are complete before component update"
-    default: 9025
+    default: -1
 
   cc.jobs.global.timeout_in_seconds:
     description: "The longest any job can take before it is cancelled unless overriden per job"
