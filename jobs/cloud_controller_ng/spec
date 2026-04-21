@@ -148,6 +148,7 @@ provides:
   - cc.default_stack
   - cc.default_app_lifecycle
   - cc.disable_private_domain_cross_space_context_path_route_sharing
+  - cc.max_route_options_size
   - cc.droplets.blobstore_provider
   - cc.droplets.blobstore_type
   - cc.droplets.cdn.key_pair_id
@@ -1142,6 +1143,10 @@ properties:
   cc.disable_private_domain_cross_space_context_path_route_sharing:
     description: "Disallow route collisions over shared private domains when created in different spaces"
     default: false
+
+  cc.max_route_options_size:
+    description: "Maximum size in bytes for the serialized route options JSON. Routes with options exceeding this limit will be rejected with HTTP 422 Unprocessable Entity. See RFC-0027 for details on tuning this alongside route emit interval."
+    default: 1024
 
   cc.core_file_pattern:
     description: "Filename template for core dump files. Use an empty string if you don't want core files saved."
