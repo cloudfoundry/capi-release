@@ -94,7 +94,11 @@ logging:
 log_audit_events: <%= p("cc.log_audit_events") %>
 
 loggregator:
-  router: <%= p("metron_endpoint.host") %>:<%= p("metron_endpoint.port") %>
+  endpoint: <%= p("metron_endpoint.host") %>:<%= p("metron_endpoint.port") %>
+  subject_name: <%= p("cc.loggregator_tls.subject_name") %>
+  key_file: /var/vcap/jobs/cloud_controller_worker/config/certs/loggregator_tls.key
+  cert_file: /var/vcap/jobs/cloud_controller_worker/config/certs/loggregator_tls.crt
+  ca_file: /var/vcap/jobs/cloud_controller_worker/config/certs/loggregator_tls_ca.crt
 
 <% db = p("ccdb.databases").find { |db| db["tag"] == "cc" } %>
 <% db_role = p("ccdb.roles").find { |role| role["tag"] == "admin" } %>

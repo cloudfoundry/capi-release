@@ -426,13 +426,6 @@ properties:
     description: "The internal URL used by UAA"
     default: "uaa.service.cf.internal"
 
-  metron_endpoint.host:
-    description: "The host used to emit messages to the Metron agent"
-    default: "127.0.0.1"
-  metron_endpoint.port:
-    description: "The port used to emit messages to the Metron agent"
-    default: 3457
-
   cc.db_encryption_key:
     default: ""
     description: "key for encrypting sensitive values in the CC database"

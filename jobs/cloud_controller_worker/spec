@@ -29,6 +29,9 @@ templates:
   mutual_tls_ca.crt.erb: config/certs/mutual_tls_ca.crt
   mutual_tls.crt.erb: config/certs/mutual_tls.crt
   mutual_tls.key.erb: config/certs/mutual_tls.key
+  loggregator_tls_ca.crt.erb: config/certs/loggregator_tls_ca.crt
+  loggregator_tls.crt.erb: config/certs/loggregator_tls.crt
+  loggregator_tls.key.erb: config/certs/loggregator_tls.key
   uaa_ca.crt.erb: config/certs/uaa_ca.crt
   db_ca.crt.erb: config/certs/db_ca.crt
   prom_scraper_config.yml.erb: config/prom_scraper_config.yml
@@ -423,7 +426,7 @@ properties:
     default: "127.0.0.1"
   metron_endpoint.port:
     description: "The port used to emit messages to the Metron agent"
-    default: 3457
+    default: 3458
 
   cc.broker_client_timeout_seconds:
     default: 60
@@ -611,9 +614,15 @@ properties:
     description: "Maximum PID limit for containerized work running user-provided code"
     default: 1024
 
-  cc.loggregator.internal_url:
-    description: "Internal URL used to communicate with traffic_controller"
-    default: "http://loggregator-trafficcontroller.service.cf.internal:8081"
+  cc.loggregator_tls.ca_cert:
+    description: "PEM-encoded CA certificate for mTLS communication with Loggregator"
+  cc.loggregator_tls.certificate:
+    description: "PEM-encoded client certificate for mTLS communication with Loggregator"
+  cc.loggregator_tls.private_key:
+    description: "PEM-encoded private key for mTLS communication with Loggregator"
+  cc.loggregator_tls.subject_name:
+    description: "The host name the client will accept on the server certificate when communicating with Loggregator via mTLS"
+    default: "metron"
 
   cc.perform_blob_cleanup:
     description: "Whether or not to perform the blob cleanup job"
