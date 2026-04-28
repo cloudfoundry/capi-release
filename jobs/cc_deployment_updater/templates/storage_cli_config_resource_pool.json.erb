@@ -91,19 +91,35 @@ if provider ==  "aliyun" || provider == "alioss"
   options["bucket_name"] = l.p("#{scope}.aliyun_oss_bucket")
 end
   
-# WebDAV/dav support intentionally excluded (not fully implemented)
+# Support both native storage-cli types (dav) AND legacy fog names (webdav)
+# Legacy fog name support to be REMOVED May 2026
 if provider == "webdav" || provider == "dav"
-  options["provider"] = provider
+  options["provider"] = "dav"
   options["user"] = l.p("#{scope}.username")
   options["password"] = l.p("#{scope}.password")
-  options["endpoint"] = l.p("#{scope}.public_endpoint")
-  add_optional(options, "secret", l.p("#{scope}.secret", nil))
+
+  # Resource-specific directory for compatibility with fog/webdav
+  resource_dir = l.p("cc.resource_pool.resource_directory_key", "cc-resources")
+
+  # When using signed URLs (secret present), endpoint points to resource directory
+  # When using basic auth only (no secret), endpoint includes /admin/ prefix
+  secret = l.p("#{scope}.secret", nil)
+  base_endpoint = l.p("#{scope}.private_endpoint")
+
+  if secret.nil? || secret.empty?
+    options["endpoint"] = "#{base_endpoint}/admin/#{resource_dir}"
+  else
+    options["endpoint"] = "#{base_endpoint}/#{resource_dir}"
+  end
+
+  add_optional(options, "secret", secret)
+  add_optional(options, "signing_method", l.p("#{scope}.signing_method", nil))
   add_optional(options, "retry_attempts", l.p("#{scope}.retry_attempts", nil))
 
   # TLS nested object with a Cert inside
   ca_cert=l.p("#{scope}.ca_cert",nil)
   unless ca_cert.empty?
-    options["tls"]={"cert"=>ca_cert}
+    options["tls"]={"cert"=>{"ca"=>ca_cert}}
   end
 end
 
