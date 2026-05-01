@@ -15,7 +15,7 @@ function write_output_to_file_with_datetime {
 
 # write_output_with_datetime
 #
-# Send stdout and stderr with Prependended datetime
+# Send stdout and stderr with prepended datetime
 function write_output_with_datetime {
   exec > >(prepend_datetime >> /dev/stdout)
   exec 2> >(prepend_datetime >> /dev/stderr)
