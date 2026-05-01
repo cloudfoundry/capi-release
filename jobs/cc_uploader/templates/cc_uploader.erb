@@ -4,5 +4,5 @@ LOG_DIR=/var/vcap/sys/log/cc_uploader
 CONF_DIR=/var/vcap/jobs/cc_uploader/config
 
 exec /var/vcap/packages/cc_uploader/bin/cc-uploader -configPath "${CONF_DIR}/cc_uploader_config.json" \
-  2> >(tee -a $LOG_DIR/cc_uploader.stderr.log | logger -p user.error -t vcap.cc-uploader) \
-  1> >(tee -a $LOG_DIR/cc_uploader.stdout.log | logger -p user.info -t vcap.cc-uploader)
+  2> $LOG_DIR/cc_uploader.stderr.log \
+  1> $LOG_DIR/cc_uploader.stdout.log

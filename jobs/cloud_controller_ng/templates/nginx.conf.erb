@@ -2,7 +2,6 @@ daemon off;
 
 pid       /var/vcap/data/cloud_controller_ng/nginx.pid;
 error_log /var/vcap/sys/log/cloud_controller_ng/nginx-error.log <%= p("cc.nginx_error_log_level") %>;
-error_log syslog:server=127.0.0.1,severity=error,tag=vcap_nginx_error <%= p("cc.nginx_error_log_level") %>;
 
 worker_processes auto;
 
@@ -19,7 +18,6 @@ http {
   log_format main escape=<%= p("cc.nginx_access_log_escaping") %> '<%= p("cc.nginx_access_log_format").chomp %>';
 
   access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-access.log main;
-  access_log  syslog:server=127.0.0.1,severity=info,tag=vcap_nginx_access main;
 
   proxy_hide_header X-USER-GUID;  #user guid header should not be forwarded to client
 

@@ -9,10 +9,10 @@ LOG_DIR=/var/vcap/sys/log/nfs_mounter
 export CONFIG_DIR="${NFS_JOB_DIR}/config"
 export NFS_SHARE=<%= p('nfs_server.share_path') %>
 
-source /var/vcap/packages/capi_utils/syslog_utils.sh
+source /var/vcap/packages/capi_utils/output_utils.sh
 source "${NFS_JOB_DIR}/bin/handle_nfs_blobstore.sh"
 
-tee_output_to_sys_log_and_file "${LOG_DIR}" "$(basename "$0")"
+write_output_to_file_with_datetime "${LOG_DIR}" "$(basename "$0")"
 
 function mounter_running() {
   [[ $(pgrep -c -f nfs_mounter_ctl) -gt 16 ]]

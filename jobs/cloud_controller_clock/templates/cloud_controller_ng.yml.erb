@@ -134,7 +134,6 @@ name: <%= name %>
 
 logging:
   file: /var/vcap/sys/log/cloud_controller_clock/cloud_controller_clock.log
-  syslog: vcap.cloud_controller_ng
   level: "<%= p("cc.logging_level") %>"
   max_retries: <%= p("cc.logging_max_retries") %>
   format:

@@ -1,8 +1,0 @@
-#!/bin/bash -e
-
-LOG_DIR=/var/vcap/sys/log/tps
-CONF_DIR=/var/vcap/jobs/tps/config
-
-exec /var/vcap/packages/tps/bin/tps-watcher -configPath "${CONF_DIR}/tps_watcher_config.json" \
-  2> >(tee -a $LOG_DIR/tps_watcher.stderr.log | logger -p user.error -t vcap.tps-watcher) \
-  1> >(tee -a $LOG_DIR/tps_watcher.stdout.log | logger -p user.info -t vcap.tps-watcher)

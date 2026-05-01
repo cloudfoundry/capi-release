@@ -10,7 +10,6 @@ location /internal/v5/ {
 # proxy and log all CC traffic
 location / {
   access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-access.log main;
-  access_log                  syslog:server=127.0.0.1,severity=info,tag=vcap_nginx_access main;
   proxy_buffering             off;
   proxy_set_header            Host $host;
   proxy_set_header            X-Real_IP $remote_addr;

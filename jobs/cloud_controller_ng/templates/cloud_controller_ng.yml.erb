@@ -162,7 +162,6 @@ directories:
 
 logging:
   file: /var/vcap/sys/log/cloud_controller_ng/cloud_controller_ng.log
-  syslog: vcap.cloud_controller_ng
   level: "<%= p("cc.logging_level") %>"
   max_retries: <%= p("cc.logging_max_retries") %>
   anonymize_ips: <%= p("cc.logging_anonymize_ips") %>

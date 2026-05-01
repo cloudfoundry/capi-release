@@ -980,7 +980,7 @@ properties:
     description: "NewRelic's SQL statement recording mode: [off | obfuscated | raw]"
 
   cc.nginx_access_log_destination:
-    description: "The nginx access log destination. This can be used to route access logs to a file, syslog, or a memory buffer."
+    description: "The nginx access log destination. This can be used to route access logs to a file, or a memory buffer."
     default: "/var/vcap/sys/log/nginx_cc/nginx.access.log"
   cc.nginx_access_log_format:
     description: "The nginx log format string to use when writing to the access log."
@@ -991,7 +991,7 @@ properties:
     description: "The characters escaping used for logging variables: [default | json]"
     default: default
   cc.nginx_error_log_destination:
-    description: "The nginx error log destination. This can be used to route error logs to a file, syslog, or a memory buffer."
+    description: "The nginx error log destination. This can be used to route error logs to a file, or a memory buffer."
     default: "/var/vcap/sys/log/nginx_cc/nginx.error.log"
   cc.nginx_error_log_level:
     description: "The lowest severity nginx log level to capture in the error log."

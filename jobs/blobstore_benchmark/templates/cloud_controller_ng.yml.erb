@@ -109,7 +109,6 @@
 
     'logging' => {
       'file' => '/var/vcap/sys/log/blobstore_benchmark/blobstore_benchmark.log',
-      'syslog' => 'vcap.cloud_controller_ng',
       'level' => benchmark_logging_level.to_s,
 
       'max_retries' => p("cc.logging_max_retries", cc_cfg["logging_max_retries"] || 0),
