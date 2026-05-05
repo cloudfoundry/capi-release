@@ -40,11 +40,13 @@ Capybara/ClickLinkOrButtonStyle:
   Enabled: true
 Capybara/FindAllFirst:
   Enabled: true
-Capybara/MatchStyle:
+Capybara/AssertStyle:
   Enabled: true
-Capybara/NegationMatcher:
+Capybara/RSpec/MatchStyle:
   Enabled: true
-Capybara/NegationMatcherAfterVisit:
+Capybara/RSpec/NegationMatcher:
+  Enabled: true
+Capybara/RSpec/NegationMatcherAfterVisit:
   Enabled: true
 Capybara/RedundantWithinFind:
   Enabled: true
@@ -52,11 +54,11 @@ Capybara/RSpec/HaveSelector:
   Enabled: true
 Capybara/RSpec/PredicateMatcher:
   Enabled: true
+Capybara/RSpec/SpecificMatcher:
+  Enabled: true
 Capybara/SpecificActions:
   Enabled: true
 Capybara/SpecificFinders:
-  Enabled: true
-Capybara/SpecificMatcher:
   Enabled: true
 FactoryBot/AssociationStyle:
   Enabled: true
