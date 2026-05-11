@@ -4,18 +4,20 @@ require 'rspec'
 require 'yaml'
 require 'bosh/template/test'
 
-TEMPLATES = {
-  droplets: ['config/storage_cli_config_droplets.json', %w[cc droplets connection_config]],
-  buildpacks: ['config/storage_cli_config_buildpacks.json', %w[cc buildpacks connection_config]],
-  packages: ['config/storage_cli_config_packages.json', %w[cc packages connection_config]],
-  resource_pool: ['config/storage_cli_config_resource_pool.json', %w[cc resource_pool connection_config]]
-}.freeze
-
 module Bosh
   module Template
     module Test
       RSpec.describe 'storage-cli JSON templates' do
-        let(:release_path) { File.join(File.dirname(__FILE__), '../..') }
+        def self.storage_cli_templates
+          [
+            ['config/storage_cli_config_droplets.json', %w[cc droplets connection_config]],
+            ['config/storage_cli_config_buildpacks.json', %w[cc buildpacks connection_config]],
+            ['config/storage_cli_config_packages.json', %w[cc packages connection_config]],
+            ['config/storage_cli_config_resource_pool.json', %w[cc resource_pool connection_config]]
+          ]
+        end
+
+        let(:release_path) { File.expand_path('../..', __dir__) }
         let(:release) { ReleaseDir.new(release_path) }
         let(:job) { release.job('cloud_controller_worker') }
         let(:links) { {} }
@@ -40,7 +42,7 @@ module Bosh
         describe 'unsupported provider' do
           let(:props) { props_for_provider('Unsupported') }
 
-          TEMPLATES.each_value do |(template_path, _keypath)|
+          storage_cli_templates.each do |(template_path, _keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -55,7 +57,7 @@ module Bosh
         describe 'when provider is AzureRM' do
           let(:props) { props_for_provider('AzureRM') }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -95,7 +97,7 @@ module Bosh
         describe 'when provider is AWS' do
           let(:props) { props_for_provider('AWS') }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -199,7 +201,7 @@ module Bosh
         describe 'when provider is Google' do
           let(:props) { props_for_provider('Google') }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -245,7 +247,7 @@ module Bosh
         describe 'when provider is aliyun' do
           let(:props) { props_for_provider('aliyun') }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -283,14 +285,14 @@ module Bosh
             end
           end
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
               let(:directory_key) { expected_directory_key(template_path) }
 
               it 'maps required properties into the rendered config' do
                 set(props, keypath, {
-                      'provider' => 'dav',
+                      'provider' => 'webdav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',
@@ -309,7 +311,7 @@ module Bosh
 
               it 'includes public_endpoint when provided' do
                 set(props, keypath, {
-                      'provider' => 'dav',
+                      'provider' => 'webdav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',
@@ -329,7 +331,7 @@ module Bosh
 
               it 'includes optional properties when provided' do
                 set(props, keypath, {
-                      'provider' => 'dav',
+                      'provider' => 'webdav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',
@@ -355,7 +357,7 @@ module Bosh
 
               it 'omits public_endpoint when empty' do
                 set(props, keypath, {
-                      'provider' => 'dav',
+                      'provider' => 'webdav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',

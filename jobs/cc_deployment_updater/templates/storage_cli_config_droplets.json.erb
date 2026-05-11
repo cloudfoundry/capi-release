@@ -104,11 +104,7 @@ if provider == "webdav" || provider == "dav"
   private_base = l.p("#{scope}.private_endpoint")
   options["endpoint"] = "#{private_base}/admin/#{resource_dir}"
 
-  public_base = l.p("#{scope}.public_endpoint", nil)
-  if public_base && !public_base.empty?
-    options["public_endpoint"] = public_base
-  end
-
+  add_optional(options, "public_endpoint", l.p("#{scope}.public_endpoint", nil))
   add_optional(options, "secret", l.p("#{scope}.secret", nil))
   add_optional(options, "signed_url_format", l.p("#{scope}.signed_url_format", nil))
   add_optional(options, "retry_attempts", l.p("#{scope}.retry_attempts", nil))

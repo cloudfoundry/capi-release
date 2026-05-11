@@ -4,18 +4,20 @@ require 'rspec'
 require 'yaml'
 require 'bosh/template/test'
 
-TEMPLATES = {
-  droplets: ['config/storage_cli_config_droplets.json', %w[cc droplets connection_config]],
-  buildpacks: ['config/storage_cli_config_buildpacks.json', %w[cc buildpacks connection_config]],
-  packages: ['config/storage_cli_config_packages.json', %w[cc packages connection_config]],
-  resource_pool: ['config/storage_cli_config_resource_pool.json', %w[cc resource_pool connection_config]]
-}.freeze
-
 module Bosh
   module Template
     module Test
       RSpec.describe 'storage-cli JSON templates' do
-        let(:release_path) { File.join(File.dirname(__FILE__), '../..') }
+        def self.storage_cli_templates
+          [
+            ['config/storage_cli_config_droplets.json', %w[cc droplets connection_config]],
+            ['config/storage_cli_config_buildpacks.json', %w[cc buildpacks connection_config]],
+            ['config/storage_cli_config_packages.json', %w[cc packages connection_config]],
+            ['config/storage_cli_config_resource_pool.json', %w[cc resource_pool connection_config]]
+          ]
+        end
+
+        let(:release_path) { File.expand_path('../..', __dir__) }
         let(:release)      { ReleaseDir.new(release_path) }
         let(:job)          { release.job('cc_deployment_updater') }
 
@@ -47,7 +49,7 @@ module Bosh
           let(:links) { [cc_link] }
           let(:props) { {} }
 
-          TEMPLATES.each_value do |(template_path, _keypath)|
+          storage_cli_templates.each do |(template_path, _keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -70,7 +72,7 @@ module Bosh
           let(:links) { [cc_link] }
           let(:props) { {} }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -118,7 +120,7 @@ module Bosh
           let(:links) { [cc_link] }
           let(:props) { {} }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -230,7 +232,7 @@ module Bosh
           let(:links) { [cc_link] }
           let(:props) { {} }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -284,7 +286,7 @@ module Bosh
           let(:links) { [cc_link] }
           let(:props) { {} }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -330,7 +332,7 @@ module Bosh
             end
           end
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
               let(:directory_key) { expected_directory_key(template_path) }
