@@ -101,24 +101,21 @@ if provider == "webdav" || provider == "dav"
   # Resource-specific directory for compatibility with fog/webdav
   resource_dir = l.p("cc.buildpacks.buildpack_directory_key", "cc-buildpacks")
 
-  # When using signed URLs (secret present), endpoint points to resource directory
-  # When using basic auth only (no secret), endpoint includes /admin/ prefix
-  secret = l.p("#{scope}.secret", nil)
-  base_endpoint = l.p("#{scope}.private_endpoint")
+  private_base = l.p("#{scope}.private_endpoint")
+  options["endpoint"] = "#{private_base}/admin/#{resource_dir}"
 
-  if secret.nil? || secret.empty?
-    options["endpoint"] = "#{base_endpoint}/admin/#{resource_dir}"
-  else
-    options["endpoint"] = "#{base_endpoint}/#{resource_dir}"
+  public_base = l.p("#{scope}.public_endpoint", nil)
+  if public_base && !public_base.empty?
+    options["public_endpoint"] = public_base
   end
 
-  add_optional(options, "secret", secret)
-  add_optional(options, "signing_method", l.p("#{scope}.signing_method", nil))
+  add_optional(options, "secret", l.p("#{scope}.secret", nil))
+  add_optional(options, "signed_url_format", l.p("#{scope}.signed_url_format", nil))
   add_optional(options, "retry_attempts", l.p("#{scope}.retry_attempts", nil))
 
   # TLS nested object with a Cert inside
   ca_cert=l.p("#{scope}.ca_cert",nil)
-  unless ca_cert.empty?
+  unless ca_cert.nil? || ca_cert.empty?
     options["tls"]={"cert"=>{"ca"=>ca_cert}}
   end
 end
