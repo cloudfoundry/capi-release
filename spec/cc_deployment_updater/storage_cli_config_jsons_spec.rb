@@ -340,7 +340,7 @@ module Bosh
                       'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
-                      'private_endpoint' => 'https://webdav.com',
+                      'private_endpoint' => 'https://webdav.internal',
                       'ca_cert' => 'some_cert'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
@@ -348,7 +348,28 @@ module Bosh
                   'provider' => 'dav',
                   'user' => 'user',
                   'password' => 'secret',
-                  'endpoint' => "https://webdav.com/admin/#{directory_key}",
+                  'endpoint' => "https://webdav.internal/admin/#{directory_key}",
+                  'tls' => { 'cert' => { 'ca' => 'some_cert' } }
+                )
+                expect(json).not_to have_key('public_endpoint')
+              end
+
+              it 'includes public_endpoint when provided' do
+                set(link_props, keypath, {
+                      'provider' => 'dav',
+                      'username' => 'user',
+                      'password' => 'secret',
+                      'private_endpoint' => 'https://webdav.internal',
+                      'public_endpoint' => 'https://webdav.example.com',
+                      'ca_cert' => 'some_cert'
+                    })
+                json = YAML.safe_load(template.render(props, consumes: links))
+                expect(json).to include(
+                  'provider' => 'dav',
+                  'user' => 'user',
+                  'password' => 'secret',
+                  'endpoint' => "https://webdav.internal/admin/#{directory_key}",
+                  'public_endpoint' => 'https://webdav.example.com',
                   'tls' => { 'cert' => { 'ca' => 'some_cert' } }
                 )
               end
@@ -358,10 +379,11 @@ module Bosh
                       'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
-                      'private_endpoint' => 'https://webdav.com',
+                      'private_endpoint' => 'https://webdav.internal',
+                      'public_endpoint' => 'https://webdav.example.com',
                       'ca_cert' => 'some_cert',
-                      'secret' => 'secret',
-                      'signing_method' => 'md5',
+                      'secret' => 'my-secret',
+                      'signed_url_format' => 'external-nginx-secure-link-signer',
                       'retry_attempts' => '4'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
@@ -369,12 +391,26 @@ module Bosh
                   'provider' => 'dav',
                   'user' => 'user',
                   'password' => 'secret',
-                  'endpoint' => "https://webdav.com/#{directory_key}",
+                  'endpoint' => "https://webdav.internal/admin/#{directory_key}",
+                  'public_endpoint' => 'https://webdav.example.com',
                   'tls' => { 'cert' => { 'ca' => 'some_cert' } },
-                  'secret' => 'secret',
-                  'signing_method' => 'md5',
+                  'secret' => 'my-secret',
+                  'signed_url_format' => 'external-nginx-secure-link-signer',
                   'retry_attempts' => '4'
                 )
+              end
+
+              it 'omits public_endpoint when empty' do
+                set(link_props, keypath, {
+                      'provider' => 'dav',
+                      'username' => 'user',
+                      'password' => 'secret',
+                      'private_endpoint' => 'https://webdav.internal',
+                      'public_endpoint' => '',
+                      'ca_cert' => 'some_cert'
+                    })
+                json = YAML.safe_load(template.render(props, consumes: links))
+                expect(json).not_to have_key('public_endpoint')
               end
             end
           end
