@@ -67,6 +67,29 @@ server {
     proxy_pass http://blob_url_signer;
   }
 
+  # SHA256 HMAC signed URLs (storage-cli compatible)
+  location ~ ^/signed/(?<blob_path>.+)$ {
+    if ( $request_method !~ ^(GET|HEAD|PUT)$ ) {
+      return 405;
+    }
+
+    # Enable PUT for uploads
+    dav_methods PUT;
+    create_full_put_path on;
+
+    # SHA256 HMAC signature verification
+    secure_link_hmac $arg_st,$arg_ts,$arg_e;
+    secure_link_hmac_secret <%= p('blobstore.secure_link.secret') %>;
+    secure_link_hmac_message $request_method$blob_path$arg_ts$arg_e;
+    secure_link_hmac_algorithm sha256;
+
+    if ($secure_link_hmac != "1") {
+      return 403;
+    }
+
+    alias /var/vcap/store/shared/$blob_path;
+  }
+
   # ensure the contents of this location block always match the public server /read/ location block
   location /read/ {
     if ( $request_method !~ ^(GET|HEAD)$ ) {
@@ -124,6 +147,29 @@ server {
 
   access_log /var/vcap/sys/log/blobstore/public_access.log;
   error_log  /var/vcap/sys/log/blobstore/public_error.log;
+
+  # SHA256 HMAC signed URLs (storage-cli compatible)
+  location ~ ^/signed/(?<blob_path>.+)$ {
+    if ( $request_method !~ ^(GET|HEAD|PUT)$ ) {
+      return 405;
+    }
+
+    # Enable PUT for uploads
+    dav_methods PUT;
+    create_full_put_path on;
+
+    # SHA256 HMAC signature verification
+    secure_link_hmac $arg_st,$arg_ts,$arg_e;
+    secure_link_hmac_secret <%= p('blobstore.secure_link.secret') %>;
+    secure_link_hmac_message $request_method$blob_path$arg_ts$arg_e;
+    secure_link_hmac_algorithm sha256;
+
+    if ($secure_link_hmac != "1") {
+      return 403;
+    }
+
+    alias /var/vcap/store/shared/$blob_path;
+  }
 
   # ensure the contents of this location block always match the internal server /read/ location block
   location /read/ {
@@ -187,6 +233,29 @@ server {
 
   access_log /var/vcap/sys/log/blobstore/public_access.log;
   error_log  /var/vcap/sys/log/blobstore/public_error.log;
+
+  # SHA256 HMAC signed URLs (storage-cli compatible)
+  location ~ ^/signed/(?<blob_path>.+)$ {
+    if ( $request_method !~ ^(GET|HEAD|PUT)$ ) {
+      return 405;
+    }
+
+    # Enable PUT for uploads
+    dav_methods PUT;
+    create_full_put_path on;
+
+    # SHA256 HMAC signature verification
+    secure_link_hmac $arg_st,$arg_ts,$arg_e;
+    secure_link_hmac_secret <%= p('blobstore.secure_link.secret') %>;
+    secure_link_hmac_message $request_method$blob_path$arg_ts$arg_e;
+    secure_link_hmac_algorithm sha256;
+
+    if ($secure_link_hmac != "1") {
+      return 403;
+    }
+
+    alias /var/vcap/store/shared/$blob_path;
+  }
 
   # ensure the contents of this location block always match the internal server /read/ location block
   location /read/ {
