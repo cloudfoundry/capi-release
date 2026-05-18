@@ -3,6 +3,7 @@
 source 'https://rubygems.org'
 
 group :develop do
+  gem 'ostruct'
   gem 'rubocop'
   gem 'rubocop-capybara'
   gem 'rubocop-factory_bot'

@@ -1,7 +1,7 @@
 set -ex
 # shellcheck disable=1090
 
-source "${BOSH_PACKAGES_DIR:-/var/vcap/packages}/ruby-3.3/bosh/compile.env"
+source "${BOSH_PACKAGES_DIR:-/var/vcap/packages}/ruby-4.0/bosh/compile.env"
 
 echo "Installing nginx newrelic plugin"
 
@@ -9,5 +9,6 @@ cp -a nginx/newrelic_nginx_agent/* ${BOSH_INSTALL_TARGET}
 
 # Forcing an update to get BOSH to recompile this package
 pushd ${BOSH_INSTALL_TARGET}
-  bosh_bundle_local --deployment
+  bundle config set deployment true
+  bosh_bundle_local
 popd
