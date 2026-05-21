@@ -1,22 +1,23 @@
 # frozen_string_literal: true
 
 require 'rspec'
-require 'yaml' # frozen_string_literal: true
-
+require 'yaml'
 require 'bosh/template/test'
-
-TEMPLATES = {
-  droplets: ['config/storage_cli_config_droplets.json', %w[cc droplets connection_config]],
-  buildpacks: ['config/storage_cli_config_buildpacks.json', %w[cc buildpacks connection_config]],
-  packages: ['config/storage_cli_config_packages.json', %w[cc packages connection_config]],
-  resource_pool: ['config/storage_cli_config_resource_pool.json', %w[cc resource_pool connection_config]]
-}.freeze
 
 module Bosh
   module Template
     module Test
       RSpec.describe 'storage-cli JSON templates' do
-        let(:release_path) { File.join(File.dirname(__FILE__), '../..') }
+        def self.storage_cli_templates
+          [
+            ['config/storage_cli_config_droplets.json', %w[cc droplets connection_config]],
+            ['config/storage_cli_config_buildpacks.json', %w[cc buildpacks connection_config]],
+            ['config/storage_cli_config_packages.json', %w[cc packages connection_config]],
+            ['config/storage_cli_config_resource_pool.json', %w[cc resource_pool connection_config]]
+          ]
+        end
+
+        let(:release_path) { File.expand_path('../..', __dir__) }
         let(:release) { ReleaseDir.new(release_path) }
         let(:job) { release.job('cloud_controller_ng') }
         let(:links) { {} }
@@ -41,7 +42,7 @@ module Bosh
         describe 'unsupported provider' do
           let(:props) { props_for_provider('Unsupported') }
 
-          TEMPLATES.each_value do |(template_path, _keypath)|
+          storage_cli_templates.each do |(template_path, _keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -56,7 +57,7 @@ module Bosh
         describe 'when provider is AzureRM' do
           let(:props) { props_for_provider('AzureRM') }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -96,7 +97,7 @@ module Bosh
         describe 'when provider is AWS' do
           let(:props) { props_for_provider('AWS') }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -200,7 +201,7 @@ module Bosh
         describe 'when provider is Google' do
           let(:props) { props_for_provider('Google') }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -246,7 +247,7 @@ module Bosh
         describe 'when provider is aliyun' do
           let(:props) { props_for_provider('aliyun') }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
 
@@ -274,25 +275,57 @@ module Bosh
         describe 'when provider is webdav' do
           let(:props) { props_for_provider('webdav') }
 
-          TEMPLATES.each_value do |(template_path, keypath)|
+          # Helper to determine expected directory key based on template path
+          def expected_directory_key(template_path)
+            case template_path
+            when /droplets/ then 'cc-droplets'
+            when /packages/ then 'cc-packages'
+            when /buildpacks/ then 'cc-buildpacks'
+            when /resource_pool/ then 'cc-resources'
+            end
+          end
+
+          storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
               let(:template) { job.template(template_path) }
+              let(:directory_key) { expected_directory_key(template_path) }
 
               it 'maps required properties into the rendered config' do
                 set(props, keypath, {
                       'provider' => 'webdav',
                       'username' => 'user',
                       'password' => 'secret',
-                      'public_endpoint' => 'webdav.com',
+                      'private_endpoint' => 'https://webdav.internal',
                       'ca_cert' => 'some_cert'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'webdav',
+                  'provider' => 'dav',
                   'user' => 'user',
                   'password' => 'secret',
-                  'endpoint' => 'webdav.com',
-                  'tls' => { 'cert' => 'some_cert' }
+                  'endpoint' => "https://webdav.internal/admin/#{directory_key}",
+                  'tls' => { 'cert' => { 'ca' => 'some_cert' } }
+                )
+                expect(json).not_to have_key('public_endpoint')
+              end
+
+              it 'includes public_endpoint when provided' do
+                set(props, keypath, {
+                      'provider' => 'webdav',
+                      'username' => 'user',
+                      'password' => 'secret',
+                      'private_endpoint' => 'https://webdav.internal',
+                      'public_endpoint' => 'https://webdav.example.com',
+                      'ca_cert' => 'some_cert'
+                    })
+                json = YAML.safe_load(template.render(props, consumes: links))
+                expect(json).to include(
+                  'provider' => 'dav',
+                  'user' => 'user',
+                  'password' => 'secret',
+                  'endpoint' => "https://webdav.internal/admin/#{directory_key}",
+                  'public_endpoint' => 'https://webdav.example.com',
+                  'tls' => { 'cert' => { 'ca' => 'some_cert' } }
                 )
               end
 
@@ -301,21 +334,38 @@ module Bosh
                       'provider' => 'webdav',
                       'username' => 'user',
                       'password' => 'secret',
-                      'public_endpoint' => 'webdav.com',
+                      'private_endpoint' => 'https://webdav.internal',
+                      'public_endpoint' => 'https://webdav.example.com',
                       'ca_cert' => 'some_cert',
-                      'secret' => 'secret',
+                      'secret' => 'my-secret',
+                      'signed_url_format' => 'external-nginx-secure-link-signer',
                       'retry_attempts' => '4'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'webdav',
+                  'provider' => 'dav',
                   'user' => 'user',
                   'password' => 'secret',
-                  'endpoint' => 'webdav.com',
-                  'tls' => { 'cert' => 'some_cert' },
-                  'secret' => 'secret',
+                  'endpoint' => "https://webdav.internal/admin/#{directory_key}",
+                  'public_endpoint' => 'https://webdav.example.com',
+                  'tls' => { 'cert' => { 'ca' => 'some_cert' } },
+                  'secret' => 'my-secret',
+                  'signed_url_format' => 'external-nginx-secure-link-signer',
                   'retry_attempts' => '4'
                 )
+              end
+
+              it 'omits public_endpoint when empty' do
+                set(props, keypath, {
+                      'provider' => 'webdav',
+                      'username' => 'user',
+                      'password' => 'secret',
+                      'private_endpoint' => 'https://webdav.internal',
+                      'public_endpoint' => '',
+                      'ca_cert' => 'some_cert'
+                    })
+                json = YAML.safe_load(template.render(props, consumes: links))
+                expect(json).not_to have_key('public_endpoint')
               end
             end
           end

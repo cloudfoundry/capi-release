@@ -89,19 +89,28 @@ if provider ==  "aliyun" || provider == "alioss"
   options["bucket_name"] = p("#{scope}.aliyun_oss_bucket")
 end
 
-# WebDAV/dav support intentionally excluded (not fully implemented)
+# Support both native storage-cli types (dav) AND legacy fog names (webdav)
+# Legacy fog name support to be REMOVED May 2026
 if provider == "webdav" || provider == "dav"
-  options["provider"] = provider
+  options["provider"] = "dav"
   options["user"] = p("#{scope}.username")
   options["password"] = p("#{scope}.password")
-  options["endpoint"] = p("#{scope}.public_endpoint")
+
+  # Resource-specific directory for compatibility with fog/webdav
+  resource_dir = p("cc.droplets.droplet_directory_key", "cc-droplets")
+
+  private_base = p("#{scope}.private_endpoint")
+  options["endpoint"] = "#{private_base}/admin/#{resource_dir}"
+
+  add_optional(options, "public_endpoint", p("#{scope}.public_endpoint", nil))
   add_optional(options, "secret", p("#{scope}.secret", nil))
+  add_optional(options, "signed_url_format", p("#{scope}.signed_url_format", nil))
   add_optional(options, "retry_attempts", p("#{scope}.retry_attempts", nil))
 
   # TLS nested object with a Cert inside
   ca_cert=p("#{scope}.ca_cert",nil)
-  unless ca_cert.empty?
-    options["tls"]={"cert"=>ca_cert}
+  unless ca_cert.nil? || ca_cert.empty?
+    options["tls"]={"cert"=>{"ca"=>ca_cert}}
   end
 end
 
