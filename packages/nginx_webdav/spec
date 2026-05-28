@@ -5,3 +5,4 @@ files:
   - nginx/nginx-1.28.3.tar.gz
   - nginx/pcre-8.45.tar.gz
   - nginx/nginx-dav-ext-module-3.0.0.tar.gz
+  - nginx/ngx_http_hmac_secure_link_module-0.3.tar.gz
