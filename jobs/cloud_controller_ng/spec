@@ -20,7 +20,6 @@ templates:
   cloud_controller_api_health_check.erb: bin/cloud_controller_ng_health_check
   ccng_monit_http_healthcheck.sh.erb: bin/ccng_monit_http_healthcheck
   console.erb: bin/console
-  dns_health_check.erb: bin/dns_health_check
   drain.sh.erb: bin/drain
   droplets_ca_cert.pem.erb: config/certs/droplets_ca_cert.pem
   local_blobstore_downloads.conf.erb: config/local_blobstore_downloads.conf
