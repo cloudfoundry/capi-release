@@ -5,7 +5,6 @@ templates:
   bpm.yml.erb:        config/bpm.yml
   bin/blobstore_nginx.erb:  bin/blobstore_nginx
 
-  dns_health_check.erb: bin/dns_health_check
   nginx.conf.erb:       config/nginx.conf
   blobstore.conf.erb:   config/sites/blobstore.conf
   mime.types:           config/mime.types
