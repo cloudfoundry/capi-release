@@ -145,6 +145,10 @@ properties:
     description: "How often operations stuck in state 'create'/'initial' should be cleaned up."
     default: 300 # 5 minutes
 
+  cc.service_operations_create_in_progress_cleanup.frequency_in_seconds:
+    description: "How often operations stuck in state 'in progress' should be cleaned up."
+    default: 3600 # 1 hour
+
   cc.external_protocol:
     default: "https"
     description: "The protocol used to access the CC API from an external entity"
