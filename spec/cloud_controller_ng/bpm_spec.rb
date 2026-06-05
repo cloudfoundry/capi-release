@@ -39,9 +39,6 @@ module Bosh
         let(:properties_debug_gcp) do
           { 'cc' => { 'log_fog_requests' => true, 'packages' => { 'fog_connection' => { 'provider' => 'Google' } } } }
         end
-        let(:properties_debug_azure) do
-          { 'cc' => { 'log_fog_requests' => true, 'packages' => { 'fog_connection' => { 'provider' => 'AzureRm' } } } }
-        end
         let(:properties_debug_ali) do
           { 'cc' => { 'log_fog_requests' => true, 'packages' => { 'fog_connection' => { 'provider' => 'aliyun' } } } }
         end
@@ -62,18 +59,6 @@ module Bosh
               results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
               expect(results.length).to eq(1)
               expect_default_debug_env_vars(results[0]['env'])
-            end
-
-            it 'sets the FOG_DEBUG env var for Azure' do
-              template_hash = YAML.safe_load(template.render(properties_debug_azure, consumes: {}))
-
-              results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
-              expect(results.length).to eq(1)
-              env_vars = results[0]['env']
-              expect(env_vars).not_to have_key('DEBUG')
-              expect(env_vars).to have_key('FOG_DEBUG')
-              expect(env_vars).not_to have_key('ALIYUN_OSS_SDK_LOG_LEVEL')
-              expect(env_vars['FOG_DEBUG']).to be(true)
             end
 
             it 'sets the ALIYUN_OSS_SDK_LOG_LEVEL env var for Ali' do

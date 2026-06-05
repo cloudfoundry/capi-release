@@ -20,7 +20,7 @@ module Bosh
               'logging' => { 'format' => { 'timestamp' => 'rfc3339' } },
 
               'resource_pool' => {
-                'blobstore_provider' => 'AzureRM',
+                'blobstore_provider' => 'azurebs',
                 'blobstore_type' => 'storage-cli',
                 'connection_config' => {
                   'azure_storage_account_name' => 'acct',
@@ -30,7 +30,7 @@ module Bosh
                 }
               },
               'buildpacks' => {
-                'blobstore_provider' => 'AzureRM',
+                'blobstore_provider' => 'azurebs',
                 'blobstore_type' => 'storage-cli',
                 'connection_config' => {
                   'azure_storage_account_name' => 'acct',
@@ -40,7 +40,7 @@ module Bosh
                 }
               },
               'packages' => {
-                'blobstore_provider' => 'AzureRM',
+                'blobstore_provider' => 'azurebs',
                 'blobstore_type' => 'storage-cli',
                 'connection_config' => {
                   'azure_storage_account_name' => 'acct',
@@ -50,7 +50,7 @@ module Bosh
                 }
               },
               'droplets' => {
-                'blobstore_provider' => 'AzureRM',
+                'blobstore_provider' => 'azurebs',
                 'blobstore_type' => 'storage-cli',
                 'connection_config' => {
                   'azure_storage_account_name' => 'acct',

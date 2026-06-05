@@ -23,8 +23,6 @@ end
 def enable_fog_debugging!(config)
     if p("cc.log_fog_requests")
         case p("cc.packages.fog_connection.provider", "").downcase
-        when "azurerm"
-          config["env"]["FOG_DEBUG"] = true
         when  "aliyun"
           config["env"]["ALIYUN_OSS_SDK_LOG_LEVEL"] = "debug"
           config["env"]["FOG_DEBUG"] = true

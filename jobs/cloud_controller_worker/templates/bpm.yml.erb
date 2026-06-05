@@ -36,8 +36,6 @@ config = { "processes" => [] }
 
   if p("cc.log_fog_requests")
         case p("cc.packages.fog_connection.provider", "").downcase
-        when "azurerm"
-          worker_config["env"]["FOG_DEBUG"] = true
         when  "aliyun"
           worker_config["env"]["ALIYUN_OSS_SDK_LOG_LEVEL"] = "debug"
           worker_config["env"]["FOG_DEBUG"] = true

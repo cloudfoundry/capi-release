@@ -59,8 +59,8 @@ module Bosh
           end
         end
 
-        describe 'when provider is AzureRM' do
-          let(:link_props) { props_for_provider('AzureRM') }
+        describe 'when provider is azurebs' do
+          let(:link_props) { props_for_provider('azurebs') }
           let(:cc_link) do
             Bosh::Template::Test::Link.new(
               name: 'cloud_controller_internal',
@@ -76,7 +76,7 @@ module Bosh
 
               it 'renders and normalizes put_timeout_in_seconds to "41" when blank' do
                 set(link_props, keypath, {
-                      'provider' => 'AzureRM',
+                      'provider' => 'azurebs',
                       'azure_storage_account_name' => 'acc',
                       'azure_storage_access_key' => 'key',
                       'container_name' => 'cont',
@@ -84,7 +84,7 @@ module Bosh
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'AzureRM',
+                  'provider' => 'azurebs',
                   'account_name' => 'acc',
                   'account_key' => 'key',
                   'container_name' => 'cont',
@@ -94,7 +94,7 @@ module Bosh
 
               it 'keeps existing put_timeout_in_seconds when provided' do
                 set(link_props, keypath, {
-                      'provider' => 'AzureRM',
+                      'provider' => 'azurebs',
                       'azure_storage_account_name' => 'acc',
                       'azure_storage_access_key' => 'key',
                       'container_name' => 'cont',

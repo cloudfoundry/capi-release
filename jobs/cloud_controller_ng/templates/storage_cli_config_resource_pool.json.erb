@@ -23,9 +23,7 @@ scope = "cc.resource_pool.connection_config"
 provider = p("cc.resource_pool.blobstore_provider", nil)
 options = {}
 
-# Support both native storage-cli types (azurebs) AND legacy fog names (AzureRM)
-# Legacy fog name support to be REMOVED May 2026
-if provider == "AzureRM" || provider == "azurebs"
+if provider == "azurebs"
   options["provider"] = provider
   options["account_name"]   = p("#{scope}.azure_storage_account_name")
   options["container_name"] = p("#{scope}.container_name")
