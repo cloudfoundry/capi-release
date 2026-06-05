@@ -98,7 +98,6 @@ if provider == "webdav" || provider == "dav"
   options["user"] = l.p("#{scope}.username")
   options["password"] = l.p("#{scope}.password")
 
-  # Resource-specific directory for compatibility with fog/webdav
   resource_dir = l.p("cc.resource_pool.resource_directory_key", "cc-resources")
 
   private_base = l.p("#{scope}.private_endpoint")
@@ -106,10 +105,8 @@ if provider == "webdav" || provider == "dav"
 
   add_optional(options, "public_endpoint", l.p("#{scope}.public_endpoint", nil))
   add_optional(options, "secret", l.p("#{scope}.secret", nil))
-  add_optional(options, "signed_url_format", l.p("#{scope}.signed_url_format", nil))
   add_optional(options, "retry_attempts", l.p("#{scope}.retry_attempts", nil))
 
-  # TLS nested object with a Cert inside
   ca_cert=l.p("#{scope}.ca_cert",nil)
   unless ca_cert.nil? || ca_cert.empty?
     options["tls"]={"cert"=>{"ca"=>ca_cert}}

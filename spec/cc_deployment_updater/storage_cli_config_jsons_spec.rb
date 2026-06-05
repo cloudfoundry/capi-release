@@ -385,7 +385,6 @@ module Bosh
                       'public_endpoint' => 'https://webdav.example.com',
                       'ca_cert' => 'some_cert',
                       'secret' => 'my-secret',
-                      'signed_url_format' => 'external-nginx-secure-link-signer',
                       'retry_attempts' => '4'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
@@ -397,7 +396,6 @@ module Bosh
                   'public_endpoint' => 'https://webdav.example.com',
                   'tls' => { 'cert' => { 'ca' => 'some_cert' } },
                   'secret' => 'my-secret',
-                  'signed_url_format' => 'external-nginx-secure-link-signer',
                   'retry_attempts' => '4'
                 )
               end

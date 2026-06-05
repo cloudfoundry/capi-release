@@ -74,10 +74,10 @@ nginx/newrelic_nginx_agent-1.2.1.tar.gz:
   size: 5222
   object_id: c63358f6-574a-4e20-9d2b-7e1450368b6d
   sha: sha256:a5a7f9b3a7e20302943b1dd448d9b725cf3cb28d774d79f618aab7c4ddeea52b
-nginx/nginx-1.28.3.tar.gz:
-  size: 1284562
-  object_id: 4320d61a-2a45-4211-5bc0-94363cf6cdaa
-  sha: sha256:2c96a946bfb0882a21744ed429770a2123ae1828c7c48665092993ddee91a918
+nginx/nginx-1.30.2.tar.gz:
+  size: 1325247
+  object_id: f20dbcca-6e95-4b37-40d3-ce0856fbb571
+  sha: sha256:7df3090907fca3cc0e456d6dc00ceb230da74ea88026ceff0affc29dbbd9ac4c
 nginx/nginx-dav-ext-module-3.0.0.tar.gz:
   size: 14558
   object_id: 44648d53-c24b-45e4-4434-007713aa5fe7
@@ -86,6 +86,10 @@ nginx/nginx-upload-module-2.3.0.tar.gz:
   size: 40139
   object_id: 2f8f59a7-8e90-4bf5-67d8-1637924ab331
   sha: sha256:c86e318addb9c88d70fdbd58ff1f6ef6f404a93070f6db8017a1f880c97946c4
+nginx/ngx_http_hmac_secure_link_module-0.3.tar.gz:
+  size: 5452
+  object_id: ede41169-975a-4873-5a9e-d2d1aac3e865
+  sha: sha256:0d4a69f39b513a3427f5fb41a7503844e703395ca04517d0a55400e4a3150927
 nginx/pcre-8.45.tar.gz:
   size: 2096552
   object_id: a90f9f20-e23b-4755-59c7-101197325dab
@@ -94,10 +98,13 @@ postgres/postgresql-18.1.tar.gz:
   size: 29294939
   object_id: 808e5f9e-83b4-4b0f-46dc-3ab4d5036365
   sha: sha256:b0f18c2d6973d2aa023cfc77feda787d7bbe9c31a3977d0f04ac29885fb98ec4
-storage-cli/storage-cli-0.0.6-linux-amd64:
-  size: 59824141
-  object_id: dbe5fe41-3296-4a33-53b0-897774ff69ea
-  sha: sha256:4018cc72489359eefab01b6cc53ce82c0067f27b99aaf3a5fc5b6bbe9342a9e7
+storage-cli/storage-cli-0.0.7-linux-amd64:
+  size: 60034395
+  object_id: a58ed62e-4497-46f3-6728-6c763f700438
+  sha: sha256:fb686ed933f6dc4451fcde613bfd2ca529ad5e7eba44e8171f30172baa5b024c
+storage-cli/storage-cli-linux-amd64:
+  size: 42672290
+  sha: sha256:bf65e33fa72a78169e82dd3ec17a9817a3954a6635a718a94eb0b655695cfe78
 valkey/7.2.13.tar.gz:
   size: 3446469
   object_id: 8cc08c82-1212-47bb-6aaa-368eeb33acf6

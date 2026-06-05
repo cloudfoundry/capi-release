@@ -2,5 +2,5 @@ set -e
 
 storage_cli_version="0.0.6"
 mkdir -p ${BOSH_INSTALL_TARGET}/bin
-mv storage-cli/storage-cli-${storage_cli_version}-linux-amd64 ${BOSH_INSTALL_TARGET}/bin/storage-cli
+mv storage-cli/storage-cli-linux-amd64 ${BOSH_INSTALL_TARGET}/bin/storage-cli
 chmod +x ${BOSH_INSTALL_TARGET}/bin/storage-cli
