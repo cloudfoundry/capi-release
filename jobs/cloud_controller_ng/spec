@@ -939,7 +939,7 @@ properties:
     description: |
       Maximum number of service credential bindings allowed per app-service instance pair.
       A value of 1 enforces a single binding per app-service instance pair.
-      Higher values (e.g. default of 5) enable multiple bindings, e.g. for credential rotation without app redeployments.
+      Higher values (e.g. default of 5) enable multiple bindings, e.g. for credential rotation.
       Must be an integer greater than or equal to 1.
 
   cc.max_annotations_per_resource:
