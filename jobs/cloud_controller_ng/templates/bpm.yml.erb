@@ -21,17 +21,10 @@ def mount_valkey_volume!(config)
 end
 
 def enable_fog_debugging!(config)
-    if p("cc.log_fog_requests")
-        case p("cc.packages.fog_connection.provider", "").downcase
-        when  "aliyun"
-          config["env"]["ALIYUN_OSS_SDK_LOG_LEVEL"] = "debug"
-          config["env"]["FOG_DEBUG"] = true
-          config["env"]["DEBUG"] = true
-        else
-          config["env"]["DEBUG"] = true
-          config["env"]["FOG_DEBUG"] = true
-        end
-    end
+  if p("cc.log_fog_requests")
+    config["env"]["DEBUG"] = true
+    config["env"]["FOG_DEBUG"] = true
+  end
 end
 
 cloud_controller_ng_config = {

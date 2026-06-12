@@ -12,7 +12,6 @@ module Bosh
         def expect_default_debug_env_vars(env_vars)
           expect(env_vars).to have_key('DEBUG')
           expect(env_vars).to have_key('FOG_DEBUG')
-          expect(env_vars).not_to have_key('ALIYUN_OSS_SDK_LOG_LEVEL')
           expect(env_vars['DEBUG']).to be(true)
           expect(env_vars['FOG_DEBUG']).to be(true)
         end
@@ -39,14 +38,11 @@ module Bosh
         let(:properties_debug_gcp) do
           { 'cc' => { 'log_fog_requests' => true, 'packages' => { 'fog_connection' => { 'provider' => 'Google' } } } }
         end
-        let(:properties_debug_ali) do
-          { 'cc' => { 'log_fog_requests' => true, 'packages' => { 'fog_connection' => { 'provider' => 'aliyun' } } } }
-        end
         let(:properties_debug_foo) do
           { 'cc' => { 'log_fog_requests' => true, 'packages' => { 'fog_connection' => { 'provider' => 'foo' } } } }
         end
         let(:properties_without_debug) do
-          { 'cc' => { 'log_fog_requests' => false, 'packages' => { 'fog_connection' => { 'provider' => 'aliyun' } } } }
+          { 'cc' => { 'log_fog_requests' => false, 'packages' => { 'fog_connection' => { 'provider' => 'foo' } } } }
         end
 
         describe 'config/bpm.yml' do
@@ -59,20 +55,6 @@ module Bosh
               results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
               expect(results.length).to eq(1)
               expect_default_debug_env_vars(results[0]['env'])
-            end
-
-            it 'sets the ALIYUN_OSS_SDK_LOG_LEVEL env var for Ali' do
-              template_hash = YAML.safe_load(template.render(properties_debug_ali, consumes: {}))
-
-              results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
-              expect(results.length).to eq(1)
-              env_vars = results[0]['env']
-              expect(env_vars).to have_key('DEBUG')
-              expect(env_vars).to have_key('FOG_DEBUG')
-              expect(env_vars).to have_key('ALIYUN_OSS_SDK_LOG_LEVEL')
-              expect(env_vars['DEBUG']).to be(true)
-              expect(env_vars['FOG_DEBUG']).to be(true)
-              expect(env_vars['ALIYUN_OSS_SDK_LOG_LEVEL']).to eq('debug')
             end
 
             it 'sets not any debug env var for Foo' do
@@ -93,7 +75,6 @@ module Bosh
               env_vars = results[0]['env']
               expect(env_vars).not_to have_key('DEBUG')
               expect(env_vars).not_to have_key('FOG_DEBUG')
-              expect(env_vars).not_to have_key('ALIYUN_OSS_SDK_LOG_LEVEL')
             end
           end
 

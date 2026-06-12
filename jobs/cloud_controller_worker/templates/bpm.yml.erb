@@ -34,16 +34,9 @@ config = { "processes" => [] }
    worker_config["env"]["NEWRELIC_ENABLE"] = true
   end
 
-  if p("cc.log_fog_requests")
-        case p("cc.packages.fog_connection.provider", "").downcase
-        when  "aliyun"
-          worker_config["env"]["ALIYUN_OSS_SDK_LOG_LEVEL"] = "debug"
-          worker_config["env"]["FOG_DEBUG"] = true
-          worker_config["env"]["DEBUG"] = true
-        else
-          worker_config["env"]["DEBUG"] = true
-          worker_config["env"]["FOG_DEBUG"] = true
-        end
+    if p("cc.log_fog_requests")
+      worker_config["env"]["DEBUG"] = true
+      worker_config["env"]["FOG_DEBUG"] = true
     end
 
   config["processes"] << worker_config
