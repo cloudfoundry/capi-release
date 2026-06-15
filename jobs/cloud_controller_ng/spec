@@ -1173,6 +1173,9 @@ properties:
   cc.rate_limiter.unauthenticated_limit:
     description: "The number of requests that an unauthenticated client is allowed to make over an hour-long interval"
     default: 100
+  cc.rate_limiter.admin_limit:
+    description: "The number of requests an admin user or client is allowed to make over the configured interval. Set to -1 for no limit."
+    default: -1
   cc.rate_limiter.reset_interval_in_minutes:
     description: "The interval in minutes after which a user's available API requests will be reset"
     default: 60
