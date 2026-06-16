@@ -86,6 +86,10 @@ nginx/nginx-upload-module-2.3.0.tar.gz:
   size: 40139
   object_id: 2f8f59a7-8e90-4bf5-67d8-1637924ab331
   sha: sha256:c86e318addb9c88d70fdbd58ff1f6ef6f404a93070f6db8017a1f880c97946c4
+nginx/ngx_http_hmac_secure_link_module-0.3.tar.gz:
+  size: 5452
+  object_id: ede41169-975a-4873-5a9e-d2d1aac3e865
+  sha: sha256:0d4a69f39b513a3427f5fb41a7503844e703395ca04517d0a55400e4a3150927
 nginx/pcre-8.45.tar.gz:
   size: 2096552
   object_id: a90f9f20-e23b-4755-59c7-101197325dab
