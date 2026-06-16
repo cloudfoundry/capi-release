@@ -149,6 +149,11 @@ properties:
     description: "How often operations stuck in state 'in progress' should be cleaned up."
     default: 3600 # 1 hour
 
+  # One-off backfill - to be removed in a future version.
+  cc.lifecycle_type_backfill.frequency_in_seconds:
+    description: "How often the one-off lifecycle_type backfill job runs"
+    default: 3600 # 1 hour
+
   cc.external_protocol:
     default: "https"
     description: "The protocol used to access the CC API from an external entity"
