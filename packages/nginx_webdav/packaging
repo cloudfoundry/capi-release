@@ -1,4 +1,5 @@
 set -e -x
+# enable secure_link_hmac (SHA256 signed URLs)
 
 echo "Extracting expat..."
 tar xvf expat/expat-2.5.0.tar.bz2
@@ -15,18 +16,21 @@ echo "Extracting pcre..."
 tar xzvf nginx/pcre-8.45.tar.gz
 
 echo "Extracting nginx..."
-tar xzvf nginx/nginx-1.28.3.tar.gz
+tar xzvf nginx/nginx-1.30.2.tar.gz
 
 echo "Extracting webdav extensions"
 tar xzvf nginx/nginx-dav-ext-module-3.0.0.tar.gz
 
-sed -i 's@"nginx/"@"-/"@g' nginx-1.28.3/src/core/nginx.h
-sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.28.3/src/http/ngx_http_header_filter_module.c
-sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.28.3/src/http/v2/ngx_http_v2_filter_module.c
-sed -i 's@<hr><center>nginx</center>@@g' nginx-1.28.3/src/http/ngx_http_special_response.c
+echo "Extracting HMAC secure link module"
+tar xzvf nginx/ngx_http_hmac_secure_link_module-0.3.tar.gz
+
+sed -i 's@"nginx/"@"-/"@g' nginx-1.30.2/src/core/nginx.h
+sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.30.2/src/http/ngx_http_header_filter_module.c
+sed -i 's@r->headers_out.server == NULL@0@g' nginx-1.30.2/src/http/v2/ngx_http_v2_filter_module.c
+sed -i 's@<hr><center>nginx</center>@@g' nginx-1.30.2/src/http/ngx_http_special_response.c
 
 echo "Building nginx..."
-pushd nginx-1.28.3
+pushd nginx-1.30.2
   ./configure \
     --prefix=${BOSH_INSTALL_TARGET} \
     --with-ld-opt="-L /usr/local/lib" \
@@ -35,7 +39,8 @@ pushd nginx-1.28.3
     --with-http_dav_module \
     --with-http_secure_link_module \
     --with-http_ssl_module \
-    --add-module=../nginx-dav-ext-module-3.0.0
+    --add-module=../nginx-dav-ext-module-3.0.0 \
+    --add-module=../ngx_http_hmac_secure_link_module-0.3
 
   make
   make install

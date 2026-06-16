@@ -1,3 +1,37 @@
+<%
+# /signed/ location pair — emitted once per server block (internal, public HTTP, public TLS).
+# Split into two locations to avoid nginx's regex+alias+dav_methods collision on large PUTs:
+# the verify location checks HMAC and rewrites; the internal location does the actual file I/O.
+signed_location = <<~NGINX
+  # ensure the contents of this location block always match the other server /signed/ location blocks
+  location ~ ^/signed/(?<blob_path>.+)$ {
+    if ( $request_method !~ ^(GET|HEAD|PUT)$ ) {
+      return 405;
+    }
+
+    secure_link_hmac $arg_st,$arg_ts,$arg_e;
+    secure_link_hmac_secret #{p('blobstore.secure_link.secret')};
+    secure_link_hmac_message $request_method$blob_path$arg_ts$arg_e;
+    secure_link_hmac_algorithm sha256;
+
+    if ($secure_link_hmac != "1") {
+      return 403;
+    }
+
+    rewrite ^/signed/(.*)$ /signed-internal/$1 last;
+  }
+
+  location /signed-internal/ {
+    internal;
+
+    dav_methods PUT DELETE;
+    create_full_put_path on;
+    send_timeout 600s;
+
+    alias /var/vcap/store/shared/;
+  }
+NGINX
+%>
 # Default server
 #
 
@@ -67,6 +101,8 @@ server {
     proxy_pass http://blob_url_signer;
   }
 
+<%= signed_location %>
+
   # ensure the contents of this location block always match the public server /read/ location block
   location /read/ {
     if ( $request_method !~ ^(GET|HEAD)$ ) {
@@ -124,6 +160,8 @@ server {
 
   access_log /var/vcap/sys/log/blobstore/public_access.log;
   error_log  /var/vcap/sys/log/blobstore/public_error.log;
+
+<%= signed_location %>
 
   # ensure the contents of this location block always match the internal server /read/ location block
   location /read/ {
@@ -187,6 +225,8 @@ server {
 
   access_log /var/vcap/sys/log/blobstore/public_access.log;
   error_log  /var/vcap/sys/log/blobstore/public_error.log;
+
+<%= signed_location %>
 
   # ensure the contents of this location block always match the internal server /read/ location block
   location /read/ {

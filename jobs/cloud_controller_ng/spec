@@ -20,7 +20,6 @@ templates:
   cloud_controller_api_health_check.erb: bin/cloud_controller_ng_health_check
   ccng_monit_http_healthcheck.sh.erb: bin/ccng_monit_http_healthcheck
   console.erb: bin/console
-  dns_health_check.erb: bin/dns_health_check
   drain.sh.erb: bin/drain
   droplets_ca_cert.pem.erb: config/certs/droplets_ca_cert.pem
   local_blobstore_downloads.conf.erb: config/local_blobstore_downloads.conf
@@ -532,7 +531,7 @@ properties:
     description: "Storage Cli extra flags string"
     
   cc.resource_pool.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AzureRM', 'AWS', 'aliyun', 'Google', 'webdav'] (legacy, to be removed May 2026)"
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS', 'aliyun', 'Google'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.resource_pool.connection_config:
     description: "Storage CLI connection configuration"
@@ -585,7 +584,8 @@ properties:
     default: ""
 
   cc.packages.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AzureRM', 'AWS', 'aliyun', 'Google', 'webdav'] (legacy, to be removed May 2026)"
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs'] (native) or ['AWS', 'aliyun', 'Google'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS', 'aliyun', 'Google'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.packages.connection_config:
     description: "Storage CLI connection configuration"
@@ -638,7 +638,8 @@ properties:
     default: ""
 
   cc.droplets.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AzureRM', 'AWS', 'aliyun', 'Google', 'webdav'] (legacy, to be removed May 2026)"
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs'] (native) or ['AWS', 'aliyun', 'Google'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS', 'aliyun', 'Google'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.droplets.connection_config:
     description: "Storage CLI connection configuration"
@@ -688,7 +689,8 @@ properties:
     default: ""
 
   cc.buildpacks.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AzureRM', 'AWS', 'aliyun', 'Google', 'webdav'] (legacy, to be removed May 2026)"
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs'] (native) or ['AWS', 'aliyun', 'Google'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS', 'aliyun', 'Google'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.buildpacks.connection_config:
     description: "Storage CLI connection configuration"
@@ -940,7 +942,7 @@ properties:
     description: |
       Maximum number of service credential bindings allowed per app-service instance pair.
       A value of 1 enforces a single binding per app-service instance pair.
-      Higher values (e.g. default of 5) enable multiple bindings, e.g. for credential rotation without app redeployments.
+      Higher values (e.g. default of 5) enable multiple bindings, e.g. for credential rotation.
       Must be an integer greater than or equal to 1.
 
   cc.max_annotations_per_resource:
@@ -1174,6 +1176,9 @@ properties:
   cc.rate_limiter.unauthenticated_limit:
     description: "The number of requests that an unauthenticated client is allowed to make over an hour-long interval"
     default: 100
+  cc.rate_limiter.admin_limit:
+    description: "The number of requests an admin user or client is allowed to make over the configured interval. Set to -1 for no limit."
+    default: -1
   cc.rate_limiter.reset_interval_in_minutes:
     description: "The interval in minutes after which a user's available API requests will be reset"
     default: 60

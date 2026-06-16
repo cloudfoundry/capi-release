@@ -508,6 +508,8 @@ rate_limiter:
   per_process_general_limit: <%= (p("cc.rate_limiter.general_limit").to_f/instances).ceil %>
   global_unauthenticated_limit: <%= p("cc.rate_limiter.unauthenticated_limit") %>
   per_process_unauthenticated_limit: <%= (p("cc.rate_limiter.unauthenticated_limit").to_f/instances).ceil %>
+  global_admin_limit: <%= p("cc.rate_limiter.admin_limit") %>
+  per_process_admin_limit: <%= p("cc.rate_limiter.admin_limit") == -1 ? -1 : (p("cc.rate_limiter.admin_limit").to_f/instances).ceil %>
   reset_interval_in_minutes: <%= p("cc.rate_limiter.reset_interval_in_minutes") %>
 
 max_concurrent_service_broker_requests: <%= p("cc.max_concurrent_service_broker_requests") %>

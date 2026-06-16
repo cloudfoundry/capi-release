@@ -6,4 +6,4 @@ This file can be downloaded from the following locations:
 
 | Filename               | Download URL |
 |------------------------| ------------ |
-| jemalloc-5.3.0.tar.bz2 | https://github.com/jemalloc/jemalloc/releases/download/5.3.0/jemalloc-5.3.0.tar.bz2 |
+| jemalloc-5.3.1.tar.bz2 | https://github.com/jemalloc/jemalloc/releases/download/5.3.1/jemalloc-5.3.1.tar.bz2 |
