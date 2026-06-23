@@ -1051,19 +1051,15 @@ properties:
   cc.thresholds.api.restart_if_consistently_above_memory_percent:
     description: "The cc will restart if memory remains above this percent threshold for n monit cycles. If specified, this threshold is used over `cc.thresholds.api.restart_if_consistently_above_mb` and `restart_if_above_mb`. Value must be percent integer, e.g. '80'."
 
-  dea_next.staging_memory_limit_mb:
-    description: "Memory limit in MB for staging tasks"
+  cc.minimum_staging_memory_mb:
+    description: "Minimum memory in MB guaranteed for staging tasks. A staging task will get at least this amount of memory, even if the app is configured with less."
     default: 1024
-  dea_next.staging_disk_limit_mb:
-    description: "Disk limit in MB for staging tasks"
+  cc.minimum_staging_disk_mb:
+    description: "Minimum disk space in MB guaranteed for staging tasks. A staging task will get at least this amount of disk, even if the app is configured with less."
     default: 4096
   cc.staging_file_descriptor_limit:
-    description: "File descriptor limit for staging tasks"
+    description: "Minimum number of file descriptors guaranteed for staging tasks. A staging task will get at least this many file descriptors."
     default: 16384
-
-  dea_next.advertise_interval_in_seconds:
-    description: "Advertise interval for DEAs"
-    default: 5
   cc.renderer.max_results_per_page:
     description: "Maximum number of results returned per page"
     default: 100
