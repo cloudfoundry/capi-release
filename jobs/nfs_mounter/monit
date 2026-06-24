@@ -1,8 +1,0 @@
-<% if properties.nfs_server.address %>
-
-check file nfs_mounter path /etc/cron.d/nfs_mounter_crontab
-  start program "/var/vcap/jobs/nfs_mounter/bin/nfs_mounter_ctl install"
-  stop program "/var/vcap/jobs/nfs_mounter/bin/nfs_mounter_ctl unmount"
-  group vcap
-
-<% end %>
