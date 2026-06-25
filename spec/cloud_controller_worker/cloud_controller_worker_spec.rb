@@ -74,6 +74,7 @@ module Bosh
               },
               'max_labels_per_resource' => true,
               'max_annotations_per_resource' => 'yus',
+              'max_route_options_size' => 1024,
               'disable_private_domain_cross_space_context_path_route_sharing' => false,
               'cpu_weight_min_memory' => 128,
               'cpu_weight_max_memory' => 8192,
