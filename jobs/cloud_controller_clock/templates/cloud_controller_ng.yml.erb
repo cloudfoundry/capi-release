@@ -127,6 +127,9 @@ pending_builds:
 diego_sync:
   frequency_in_seconds: <%= p("cc.diego_sync.frequency_in_seconds") %>
 
+# One-off backfill - to be removed in a future version.
+lifecycle_type_backfill:
+  frequency_in_seconds: <%= p("cc.lifecycle_type_backfill.frequency_in_seconds") %>
 
 nginx:
   use_nginx: true
