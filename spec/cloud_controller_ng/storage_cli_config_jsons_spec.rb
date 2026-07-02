@@ -244,8 +244,8 @@ module Bosh
           end
         end
 
-        describe 'when provider is aliyun' do
-          let(:props) { props_for_provider('aliyun') }
+        describe 'when provider is alioss' do
+          let(:props) { props_for_provider('alioss') }
 
           storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
@@ -253,18 +253,18 @@ module Bosh
 
               it 'maps required properties into the rendered config' do
                 set(props, keypath, {
-                      'provider' => 'aliyun',
+                      'provider' => 'alioss',
                       'aliyun_accesskey_id' => 'key',
                       'aliyun_accesskey_secret' => 'secret',
-                      'aliyun_oss_endpoint' => 'aliyun.com',
+                      'aliyun_oss_endpoint' => 'alioss.com',
                       'aliyun_oss_bucket' => 'bucket'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'aliyun',
+                  'provider' => 'alioss',
                   'access_key_id' => 'key',
                   'access_key_secret' => 'secret',
-                  'endpoint' => 'aliyun.com',
+                  'endpoint' => 'alioss.com',
                   'bucket_name' => 'bucket'
                 )
               end

@@ -79,9 +79,7 @@ if provider == "AWS" || provider == "s3"
   add_optional(options, "multipart_copy_part_size", l.p("#{scope}.multipart_copy_part_size", nil))
 end
 
-# Support both native storage-cli types (alioss) AND legacy fog names (aliyun)
-# Legacy fog name support to be REMOVED May 2026
-if provider ==  "aliyun" || provider == "alioss"
+if provider == "alioss"
   options["provider"] = provider
   options["access_key_id"] = l.p("#{scope}.aliyun_accesskey_id")
   options["access_key_secret"] = l.p("#{scope}.aliyun_accesskey_secret")
