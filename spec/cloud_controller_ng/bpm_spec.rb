@@ -35,11 +35,8 @@ module Bosh
         let(:release) { ReleaseDir.new(release_path) }
         let(:job) { release.job('cloud_controller_ng') }
 
-        let(:properties_debug_gcp) do
-          { 'cc' => { 'log_fog_requests' => true, 'packages' => { 'fog_connection' => { 'provider' => 'Google' } } } }
-        end
-        let(:properties_debug_foo) do
-          { 'cc' => { 'log_fog_requests' => true, 'packages' => { 'fog_connection' => { 'provider' => 'foo' } } } }
+        let(:properties_debug_fog) do
+          { 'cc' => { 'log_fog_requests' => true, 'packages' => { 'fog_connection' => { 'provider' => 'AWS' } } } }
         end
         let(:properties_without_debug) do
           { 'cc' => { 'log_fog_requests' => false, 'packages' => { 'fog_connection' => { 'provider' => 'foo' } } } }
@@ -49,16 +46,8 @@ module Bosh
           let(:template) { job.template('config/bpm.yml') }
 
           context 'when fog debug logging is enabled' do
-            it 'sets the DEBUG env var for GCP' do
-              template_hash = YAML.safe_load(template.render(properties_debug_gcp, consumes: {}))
-
-              results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
-              expect(results.length).to eq(1)
-              expect_default_debug_env_vars(results[0]['env'])
-            end
-
-            it 'sets not any debug env var for Foo' do
-              template_hash = YAML.safe_load(template.render(properties_debug_foo, consumes: {}))
+            it 'sets the DEBUG env var' do
+              template_hash = YAML.safe_load(template.render(properties_debug_fog, consumes: {}))
 
               results = template_hash['processes'].select { |p| p['name'].include?('cloud_controller_ng') }
               expect(results.length).to eq(1)
