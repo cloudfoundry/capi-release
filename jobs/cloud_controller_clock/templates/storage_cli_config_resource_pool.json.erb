@@ -33,9 +33,7 @@ if provider == "azurebs"
   options = cli_cfg_with_default_timeout(options, 'storage_cli')
 end
 
-# Support both native storage-cli types (gcs) AND legacy fog names (Google)
-# Legacy fog name support to be REMOVED May 2026
-if provider == "Google" || provider == "gcs"
+if provider == "gcs"
   options["provider"] = provider
   options["credentials_source"] = "static"
   options["json_key"] =  p("#{scope}.google_json_key_string")

@@ -222,7 +222,7 @@ module Bosh
         end
 
         describe 'when provider is Google' do
-          let(:link_props) { props_for_provider('Google') }
+          let(:link_props) { props_for_provider('gcs') }
           let(:cc_link) do
             Bosh::Template::Test::Link.new(
               name: 'cloud_controller_internal',
@@ -238,13 +238,13 @@ module Bosh
 
               it 'maps required properties into the rendered config' do
                 set(link_props, keypath, {
-                      'provider' => 'Google',
+                      'provider' => 'gcs',
                       'bucket_name' => 'bucket',
                       'google_json_key_string' => '{}'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'Google',
+                  'provider' => 'gcs',
                   'bucket_name' => 'bucket',
                   'json_key' => '{}',
                   'credentials_source' => 'static'
@@ -253,7 +253,7 @@ module Bosh
 
               it 'includes optional properties when provided' do
                 set(link_props, keypath, {
-                      'provider' => 'Google',
+                      'provider' => 'gcs',
                       'bucket_name' => 'bucket',
                       'google_json_key_string' => '{}',
                       'storage_class' => 'STANDARD',
@@ -263,7 +263,7 @@ module Bosh
 
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'Google',
+                  'provider' => 'gcs',
                   'bucket_name' => 'bucket',
                   'json_key' => '{}',
                   'credentials_source' => 'static',

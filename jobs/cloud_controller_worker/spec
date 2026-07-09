@@ -150,7 +150,7 @@ properties:
     description: "Storage Cli extra flags string"
 
   cc.resource_pool.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS', 'Google'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.resource_pool.connection_config:
     description: "Storage CLI connection configuration"
@@ -201,7 +201,7 @@ properties:
     default: ""
 
   cc.packages.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS', 'Google'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.packages.connection_config:
     description: "Storage CLI connection configuration"
@@ -249,7 +249,7 @@ properties:
     default: ""
 
   cc.droplets.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS', 'Google'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.droplets.connection_config:
     description: "Storage CLI connection configuration"
@@ -294,7 +294,7 @@ properties:
     default: ""
 
   cc.buildpacks.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS', 'Google'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
+    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native) or ['AWS'] (legacy, to be removed May 2026). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.buildpacks.connection_config:
     description: "Storage CLI connection configuration"
