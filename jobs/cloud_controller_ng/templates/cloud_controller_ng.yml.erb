@@ -241,6 +241,27 @@ db: &db
   migration_psql_worker_memory_kb: <%= psql_worker_memory_kb %>
 <% end %>
   enable_paginate_window: <%= p("ccdb.enable_paginate_window") %>
+<% if_p("ccdb.psql.statement_timeout", "ccdb.psql.idle_in_transaction_session_timeout", "ccdb.psql.keepalives", "ccdb.psql.keepalives_idle", "ccdb.psql.keepalives_interval", "ccdb.psql.keepalives_count") do %>
+  psql:
+<% if_p("ccdb.psql.statement_timeout") do |v| %>
+    statement_timeout: <%= v %>
+<% end %>
+<% if_p("ccdb.psql.idle_in_transaction_session_timeout") do |v| %>
+    idle_in_transaction_session_timeout: <%= v %>
+<% end %>
+<% if_p("ccdb.psql.keepalives") do |v| %>
+    keepalives: <%= v %>
+<% end %>
+<% if_p("ccdb.psql.keepalives_idle") do |v| %>
+    keepalives_idle: <%= v %>
+<% end %>
+<% if_p("ccdb.psql.keepalives_interval") do |v| %>
+    keepalives_interval: <%= v %>
+<% end %>
+<% if_p("ccdb.psql.keepalives_count") do |v| %>
+    keepalives_count: <%= v %>
+<% end %>
+<% end %>
 
 <% scheme = p("login.protocol")
    system_domain = p("system_domain") %>
