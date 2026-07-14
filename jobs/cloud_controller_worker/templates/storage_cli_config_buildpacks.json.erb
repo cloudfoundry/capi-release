@@ -42,9 +42,7 @@ if provider == "gcs"
   add_optional(options, "encryption_key", p("#{scope}.encryption_key", nil))
 end
 
-# Support both native storage-cli types (s3) AND legacy fog names (AWS)
-# Legacy fog name support to be REMOVED May 2026
-if provider == "AWS" || provider == "s3"
+if provider == "s3"
   options["provider"] = provider
   options["bucket_name"] = p("#{scope}.bucket_name")
   if p("#{scope}.use_iam_profile", false)
@@ -84,7 +82,6 @@ if provider == "alioss"
 end
 
 # Support both native storage-cli types (dav) AND legacy fog names (webdav)
-# Legacy fog name support to be REMOVED May 2026
 if provider == "webdav" || provider == "dav"
   options["provider"] = "dav"
   options["user"] = p("#{scope}.username")
