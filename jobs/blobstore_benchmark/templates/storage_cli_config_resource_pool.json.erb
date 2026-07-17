@@ -83,8 +83,8 @@ if provider == "alioss"
   options["bucket_name"] = l.p("#{scope}.aliyun_oss_bucket")
 end
 
-# Support both native (dav) and legacy (webdav) provider names
-if provider == "webdav" || provider == "dav"
+
+if provider == "dav"
   options["provider"] = "dav"
   options["user"] = l.p("#{scope}.username")
   options["password"] = l.p("#{scope}.password")

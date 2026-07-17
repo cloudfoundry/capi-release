@@ -272,8 +272,8 @@ module Bosh
           end
         end
 
-        describe 'when provider is webdav' do
-          let(:props) { props_for_provider('webdav') }
+        describe 'when provider is dav' do
+          let(:props) { props_for_provider('dav') }
 
           # Helper to determine expected directory key based on template path
           def expected_directory_key(template_path)
@@ -292,7 +292,7 @@ module Bosh
 
               it 'maps required properties into the rendered config' do
                 set(props, keypath, {
-                      'provider' => 'webdav',
+                      'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',
@@ -311,7 +311,7 @@ module Bosh
 
               it 'includes public_endpoint when provided' do
                 set(props, keypath, {
-                      'provider' => 'webdav',
+                      'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',
@@ -331,7 +331,7 @@ module Bosh
 
               it 'includes optional properties when provided' do
                 set(props, keypath, {
-                      'provider' => 'webdav',
+                      'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',
@@ -355,7 +355,7 @@ module Bosh
 
               it 'omits public_endpoint when empty' do
                 set(props, keypath, {
-                      'provider' => 'webdav',
+                      'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',

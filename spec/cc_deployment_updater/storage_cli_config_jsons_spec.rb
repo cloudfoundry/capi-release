@@ -311,8 +311,8 @@ module Bosh
           end
         end
 
-        describe 'when provider is webdav' do
-          let(:link_props) { props_for_provider('webdav') }
+        describe 'when provider is dav' do
+          let(:link_props) { props_for_provider('dav') }
           let(:cc_link) do
             Bosh::Template::Test::Link.new(
               name: 'cloud_controller_internal',
