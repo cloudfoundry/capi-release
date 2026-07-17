@@ -126,7 +126,6 @@ provides:
   - cc.buildpacks.cdn.key_pair_id
   - cc.buildpacks.cdn.private_key
   - cc.buildpacks.cdn.uri
-  - cc.buildpacks.fog_connection
   - cc.buildpacks.webdav_config.blobstore_timeout
   - cc.buildpacks.webdav_config.ca_cert
   - cc.buildpacks.webdav_config.password
@@ -154,7 +153,6 @@ provides:
   - cc.droplets.cdn.private_key
   - cc.droplets.cdn.uri
   - cc.droplets.droplet_directory_key
-  - cc.droplets.fog_connection
   - cc.droplets.webdav_config.blobstore_timeout
   - cc.droplets.webdav_config.ca_cert
   - cc.droplets.webdav_config.password
@@ -181,7 +179,6 @@ provides:
   - cc.packages.cdn.key_pair_id
   - cc.packages.cdn.private_key
   - cc.packages.cdn.uri
-  - cc.packages.fog_connection
   - cc.packages.max_package_size
   - cc.packages.max_valid_packages_stored
   - cc.packages.webdav_config.blobstore_timeout
@@ -195,7 +192,6 @@ provides:
   - cc.resource_pool.cdn.key_pair_id
   - cc.resource_pool.cdn.private_key
   - cc.resource_pool.cdn.uri
-  - cc.resource_pool.fog_connection
   - cc.resource_pool.maximum_size
   - cc.resource_pool.minimum_size
   - cc.resource_pool.resource_directory_key
@@ -462,9 +458,6 @@ properties:
   cc.db_logging_level:
     default: "debug2"
     description: "Level at which cc database operations will be logged if cc.log_db_queries is set to true."
-  cc.log_fog_requests:
-    default: false
-    description: "Log fog requests and responses."
 
   cc.staging_timeout_in_seconds:
     default: 900
@@ -558,8 +551,6 @@ properties:
   cc.resource_pool.resource_directory_key:
     description: "Directory (bucket) used store app resources.  It does not have be pre-created."
     default: "cc-resources"
-  cc.resource_pool.fog_connection:
-    description: "Fog connection hash"
   cc.resource_pool.cdn.uri:
     description: "URI for a CDN to used for resource pool downloads"
     default: ""
@@ -605,8 +596,6 @@ properties:
   cc.packages.max_valid_packages_stored:
     description: "Number of recent, valid packages stored per app (not including package for current droplet)"
     default: 5
-  cc.packages.fog_connection:
-    description: "Fog connection hash"
   cc.packages.cdn.uri:
     description: "URI for a CDN to used for app package downloads"
     default: ""
@@ -649,8 +638,6 @@ properties:
   cc.droplets.max_staged_droplets_stored:
     description: "Number of recent, staged droplets stored per app (not including current droplet)"
     default: 5
-  cc.droplets.fog_connection:
-    description: "Fog connection hash"
   cc.droplets.cdn.uri:
     description: "URI for a CDN to used for droplet downloads"
     default: ""
@@ -690,8 +677,6 @@ properties:
   cc.buildpacks.buildpack_directory_key:
     description: "Directory (bucket) used store buildpacks.  It does not have be pre-created.  Should contain only alphanumeric characters, '-', '_', and '.'"
     default: "cc-buildpacks"
-  cc.buildpacks.fog_connection:
-    description: "Fog connection hash"
   cc.buildpacks.cdn.uri:
     description: "URI for a CDN to used for buildpack downloads"
     default: ""

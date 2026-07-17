@@ -81,7 +81,7 @@ if provider == "alioss"
   options["bucket_name"] = p("#{scope}.aliyun_oss_bucket")
 end
   
-# Support both native storage-cli types (dav) AND legacy fog names (webdav)
+# Support both native (dav) and legacy (webdav) provider names
 if provider == "webdav" || provider == "dav"
   options["provider"] = "dav"
   options["user"] = p("#{scope}.username")
