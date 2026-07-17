@@ -73,6 +73,10 @@ if provider == "s3"
   add_optional(options, "upload_part_size", l.p("#{scope}.upload_part_size", nil))
   add_optional(options, "multipart_copy_threshold", l.p("#{scope}.multipart_copy_threshold", nil))
   add_optional(options, "multipart_copy_part_size", l.p("#{scope}.multipart_copy_part_size", nil))
+  add_optional(options, "single_upload_threshold", l.p("#{scope}.single_upload_threshold", nil))
+  add_optional(options, "request_checksum_calculation_enabled", l.p("#{scope}.request_checksum_calculation_enabled", nil))
+  add_optional(options, "response_checksum_calculation_enabled", l.p("#{scope}.response_checksum_calculation_enabled", nil))
+  add_optional(options, "uploader_request_checksum_calculation_enabled", l.p("#{scope}.uploader_request_checksum_calculation_enabled", nil))
 end
 
 if provider == "alioss"

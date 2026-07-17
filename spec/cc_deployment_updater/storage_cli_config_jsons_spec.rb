@@ -188,7 +188,11 @@ module Bosh
                       'upload_concurrency' => 10,
                       'upload_part_size' => 2048,
                       'multipart_copy_threshold' => 1024,
-                      'multipart_copy_part_size' => 1024
+                      'multipart_copy_part_size' => 1024,
+                      'single_upload_threshold' => 2048,
+                      'request_checksum_calculation_enabled' => false,
+                      'response_checksum_calculation_enabled' => false,
+                      'uploader_request_checksum_calculation_enabled' => false
                     })
 
                 json = YAML.safe_load(template.render(props, consumes: links))
@@ -214,7 +218,11 @@ module Bosh
                   'upload_concurrency' => 10,
                   'upload_part_size' => 2048,
                   'multipart_copy_threshold' => 1024,
-                  'multipart_copy_part_size' => 1024
+                  'multipart_copy_part_size' => 1024,
+                  'single_upload_threshold' => 2048,
+                  'request_checksum_calculation_enabled' => false,
+                  'response_checksum_calculation_enabled' => false,
+                  'uploader_request_checksum_calculation_enabled' => false
                 )
               end
             end
