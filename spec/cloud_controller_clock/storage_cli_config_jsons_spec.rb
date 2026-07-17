@@ -272,8 +272,8 @@ module Bosh
           end
         end
 
-        describe 'when provider is dav' do
-          let(:props) { props_for_provider('dav') }
+        describe 'when provider is webdav' do
+          let(:props) { props_for_provider('webdav') }
 
           # Helper to determine expected directory key based on template path
           def expected_directory_key(template_path)
