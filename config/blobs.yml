@@ -102,7 +102,7 @@ storage-cli/storage-cli-0.0.9-linux-amd64:
   size: 60328655
   object_id: d5d5fbbd-7ad0-4b29-5d52-94aac664d4ef
   sha: sha256:85306e62d240c32e7e64e3b6acb10c8dd09f2baa2e8d02e5b49a97e9782306e9
-valkey/7.2.13.tar.gz:
-  size: 3446469
-  object_id: 8cc08c82-1212-47bb-6aaa-368eeb33acf6
-  sha: sha256:4c90d76b3346bc5ebf40f46dacce084c76496523f0b688b34bc5e36f71a49bc9
+valkey/7.2.14.tar.gz:
+  size: 3459331
+  object_id: ddd0008e-2cbf-453a-5a34-850c18f4cda1
+  sha: sha256:e5570a0fdaa789e10e5c16ca79b9dbca8323b6b3244fbc17b37973ed7e99035d
