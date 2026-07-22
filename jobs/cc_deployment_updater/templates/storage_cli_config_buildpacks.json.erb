@@ -88,7 +88,7 @@ if provider == "alioss"
 end
 
 
-if provider == "webdav" || provider == "dav"
+if provider == "dav"
   options["provider"] = "dav"
   options["user"] = l.p("#{scope}.username")
   options["password"] = l.p("#{scope}.password")
