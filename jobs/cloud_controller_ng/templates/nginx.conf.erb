@@ -50,6 +50,8 @@ limit_req_zone $http_authorization zone=<%= zone['name'] %>:10m rate=<%= zone['l
 
   upstream cloud_controller {
     server unix:/var/vcap/data/cloud_controller_ng/cloud_controller.sock;
+    keepalive 32;
+    keepalive_timeout <%= p("cc.nginx_upstream_keepalive_timeout") %>s;
   }
 
   upstream cloud_controller_metrics {
