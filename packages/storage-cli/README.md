@@ -6,4 +6,4 @@ The file can be downloaded from the following location:
 
 | Filename                         | Download URL                                                                                                    |
 |----------------------------------|-----------------------------------------------------------------------------------------------------------------|
-| storage-cli/storage-cli-0.0.9-linux-amd64             | [https://github.com/cloudfoundry/storage-cli](https://github.com/cloudfoundry/storage-cli/releases/download/v0.0.9/storage-cli-0.0.9-linux-amd64)|
+| storage-cli/storage-cli-1.0.0-linux-amd64             | [https://github.com/cloudfoundry/storage-cli](https://github.com/cloudfoundry/storage-cli/releases/download/v1.0.0/storage-cli-1.0.0-linux-amd64)|
