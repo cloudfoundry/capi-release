@@ -123,7 +123,6 @@ properties:
   cc.db_logging_level:
     default: "debug2"
     description: "Level at which cc database operations will be logged if cc.log_db_queries is set to true."
-    default: false
   cc.log_audit_events:
     default: true
     description: "Log audit events"
@@ -153,8 +152,7 @@ properties:
   cc.resource_pool.connection_config:
     description: "Storage CLI connection configuration"
   cc.resource_pool.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
-    default: "fog"
+    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
   cc.resource_pool.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5
@@ -198,8 +196,7 @@ properties:
   cc.packages.connection_config:
     description: "Storage CLI connection configuration"
   cc.packages.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
-    default: "fog"
+    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
   cc.packages.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5
@@ -240,8 +237,7 @@ properties:
   cc.droplets.connection_config:
     description: "Storage CLI connection configuration"
   cc.droplets.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
-    default: "fog"
+    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
   cc.droplets.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5
@@ -279,8 +275,7 @@ properties:
   cc.buildpacks.connection_config:
     description: "Storage CLI connection configuration"
   cc.buildpacks.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
-    default: "fog"
+    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
   cc.buildpacks.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5

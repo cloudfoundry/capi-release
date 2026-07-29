@@ -198,8 +198,7 @@ properties:
   cc.resource_pool.connection_config:
       description: "Storage CLI connection configuration"
   cc.resource_pool.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
-    default: "fog"
+    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
   cc.resource_pool.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5
@@ -243,8 +242,7 @@ properties:
   cc.packages.connection_config:
     description: "Storage CLI connection configuration"
   cc.packages.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
-    default: "fog"
+    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
   cc.packages.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5
@@ -285,8 +283,7 @@ properties:
   cc.droplets.connection_config:
     description: "Storage CLI connection configuration"
   cc.droplets.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
-    default: "fog"
+    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
   cc.droplets.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5
@@ -324,8 +321,7 @@ properties:
   cc.buildpacks.connection_config:
     description: "Storage CLI connection configuration"
   cc.buildpacks.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['fog', 'webdav', 'storage-cli']"
-    default: "fog"
+    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
   cc.buildpacks.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5

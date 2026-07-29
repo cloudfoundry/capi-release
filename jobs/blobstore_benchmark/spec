@@ -34,7 +34,7 @@ consumes:
 
 properties:
   blobstore_benchmark.mode:
-    description: "Which blobstore backend to benchmark ('storage-cli' or 'fog')."
+    description: "Which blobstore backend to benchmark ('storage-cli')."
     default: "storage-cli"
 
   blobstore_benchmark.cc_overrides:

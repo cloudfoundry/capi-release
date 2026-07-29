@@ -27,26 +27,7 @@ function wait_for_blobstore {
     max_attempts=30
     sleep_length=1
 
-    <% if properties.nfs_server.address && p('cc.buildpacks.blobstore_type') == 'fog' %>
-
-    NFS_SHARE=/var/vcap/data/nfs
-
-    echo "Checking for NFS to be mounted"
-
-    nfs_check_attempts=0
-    while [[ ! -f $NFS_SHARE/shared/.nfs_test ]]; do
-      sleep $sleep_length
-      nfs_check_attempts=$((nfs_check_attempts+1))
-
-      if [[ $nfs_check_attempts -eq $max_attempts ]]; then
-        echo "Failed to find NFS mount"
-        exit 1
-      fi
-    done
-
-    echo "NFS is mounted"
-
-    <% elsif p('cc.buildpacks.blobstore_type') == 'webdav' %>
+    <% if p('cc.buildpacks.blobstore_type') == 'webdav' %>
 
     echo "Checking for blobstore availability"
     try_to_curl "<%= p('cc.buildpacks.webdav_config.private_endpoint') %>" $max_attempts $sleep_length
