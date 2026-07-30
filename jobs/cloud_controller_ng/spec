@@ -1040,6 +1040,10 @@ properties:
     description: "Configure keep alive timeout for connections to cloud controller. This is a temporary field used for testing."
     default: 100
 
+  cc.nginx_upstream_keepalive_timeout:
+    description: "Keepalive timeout in seconds for nginx upstream connections to Puma. Must be less than cc.puma.persistent_timeout (default 20s) to prevent stale keepalive connections causing broken pipe errors."
+    default: 15
+
   cc.jobs.local.number_of_workers:
     default: 2
     description: "Number of local cloud_controller_worker workers"
