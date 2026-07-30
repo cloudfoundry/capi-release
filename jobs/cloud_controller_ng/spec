@@ -58,7 +58,6 @@ templates:
   storage_cli_config_packages.json.erb: config/storage_cli_config_packages.json
   storage_cli_config_buildpacks.json.erb: config/storage_cli_config_buildpacks.json
   storage_cli_config_resource_pool.json.erb: config/storage_cli_config_resource_pool.json
-  setup_local_blobstore.sh.erb: bin/setup_local_blobstore.sh
   stacks.yml.erb: config/stacks.yml
   uaa_ca.crt.erb: config/certs/uaa_ca.crt
   validate_encryption_keys.sh.erb: bin/validate_encryption_keys

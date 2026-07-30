@@ -12,7 +12,6 @@ templates:
   post-restore-unlock.sh.erb: bin/bbr/post-restore-unlock
 
   cloud_controller_ng.yml.erb: config/cloud_controller_ng.yml
-  setup_local_blobstore.sh.erb: bin/setup_local_blobstore.sh
   newrelic.yml.erb: config/newrelic.yml
   drain.sh.erb: bin/drain
   stacks.yml.erb: config/stacks.yml
