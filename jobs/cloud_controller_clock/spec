@@ -193,12 +193,13 @@ properties:
     description: "Storage Cli extra flags string"
 
   cc.resource_pool.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
+    description: "The provider of blobstore storage cli to use. Required when blobstore_type is 'storage-cli'. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.resource_pool.connection_config:
       description: "Storage CLI connection configuration"
   cc.resource_pool.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
+    default: "storage-cli"
   cc.resource_pool.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5
@@ -237,12 +238,13 @@ properties:
     default: ""
 
   cc.packages.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
+    description: "The provider of blobstore storage cli to use. Required when blobstore_type is 'storage-cli'. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.packages.connection_config:
     description: "Storage CLI connection configuration"
   cc.packages.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
+    default: "storage-cli"
   cc.packages.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5
@@ -278,12 +280,13 @@ properties:
     default: ""
 
   cc.droplets.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
+    description: "The provider of blobstore storage cli to use. Required when blobstore_type is 'storage-cli'. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.droplets.connection_config:
     description: "Storage CLI connection configuration"
   cc.droplets.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
+    default: "storage-cli"
   cc.droplets.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5
@@ -316,12 +319,13 @@ properties:
     default: ""
 
   cc.buildpacks.blobstore_provider:
-    description: "The provider of blobstore storage cli to use. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
+    description: "The provider of blobstore storage cli to use. Required when blobstore_type is 'storage-cli'. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
     default: ~
   cc.buildpacks.connection_config:
     description: "Storage CLI connection configuration"
   cc.buildpacks.blobstore_type:
     description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
+    default: "storage-cli"
   cc.buildpacks.webdav_config.blobstore_timeout:
     description: "The timeout in seconds for requests to the blobstore"
     default: 5
