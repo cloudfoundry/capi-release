@@ -181,15 +181,6 @@ properties:
   cc.resource_pool.resource_directory_key:
     description: "Directory (bucket) used store app resources.  It does not have be pre-created."
     default: "cc-resources"
-  cc.resource_pool.cdn.uri:
-    description: "URI for a CDN to used for resource pool downloads"
-    default: ""
-  cc.resource_pool.cdn.private_key:
-    description: "Private key for signing download URIs"
-    default: ""
-  cc.resource_pool.cdn.key_pair_id:
-    description: "Key pair name for signed download URIs"
-    default: ""
 
   cc.packages.blobstore_provider:
     description: "The provider of blobstore storage cli to use. Required when blobstore_type is 'storage-cli'. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
@@ -223,15 +214,6 @@ properties:
   cc.packages.max_package_size:
     description: "Maximum size of application package"
     default: 1073741824
-  cc.packages.cdn.uri:
-    description: "URI for a CDN to used for app package downloads"
-    default: ""
-  cc.packages.cdn.private_key:
-    description: "Private key for signing download URIs"
-    default: ""
-  cc.packages.cdn.key_pair_id:
-    description: "Key pair name for signed download URIs"
-    default: ""
 
   cc.droplets.blobstore_provider:
     description: "The provider of blobstore storage cli to use. Required when blobstore_type is 'storage-cli'. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
@@ -262,15 +244,6 @@ properties:
   cc.droplets.droplet_directory_key:
     description: "Directory (bucket) used store droplets.  It does not have be pre-created."
     default: "cc-droplets"
-  cc.droplets.cdn.uri:
-    description: "URI for a CDN to used for droplet downloads"
-    default: ""
-  cc.droplets.cdn.private_key:
-    description: "Private key for signing download URIs"
-    default: ""
-  cc.droplets.cdn.key_pair_id:
-    description: "Key pair name for signed download URIs"
-    default: ""
 
   cc.buildpacks.blobstore_provider:
     description: "The provider of blobstore storage cli to use. Required when blobstore_type is 'storage-cli'. Valid values: ['azurebs', 's3', 'alioss', 'gcs', 'dav'] (native). Note: 'AzureRM' is no longer a valid provider, use 'azurebs' instead."
@@ -301,15 +274,6 @@ properties:
   cc.buildpacks.buildpack_directory_key:
     description: "Directory (bucket) used store buildpacks.  It does not have be pre-created."
     default: "cc-buildpacks"
-  cc.buildpacks.cdn.uri:
-    description: "URI for a CDN to used for buildpack downloads"
-    default: ""
-  cc.buildpacks.cdn.private_key:
-    description: "Private key for signing download URIs"
-    default: ""
-  cc.buildpacks.cdn.key_pair_id:
-    description: "Key pair name for signed download URIs"
-    default: ""
 
   ccdb.databases:
     description: "Contains the name of the database on the database server"

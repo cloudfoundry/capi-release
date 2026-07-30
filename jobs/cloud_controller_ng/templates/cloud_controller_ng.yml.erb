@@ -335,12 +335,6 @@ resource_pool:
   minimum_size: <%= p("cc.resource_pool.minimum_size") %>
   maximum_size: <%= p("cc.resource_pool.maximum_size") %>
   resource_directory_key: <%= p("cc.resource_pool.resource_directory_key") %>
-  <% if_p("cc.resource_pool.cdn") do %>
-  cdn:
-    uri: <%= p("cc.resource_pool.cdn.uri") %>
-    key_pair_id: <%= p("cc.resource_pool.cdn.key_pair_id") %>
-    private_key: <%= p("cc.resource_pool.cdn.private_key").inspect %>
-  <% end %>
 
 packages:
   blobstore_type: <%= p("cc.packages.blobstore_type") %>
@@ -356,12 +350,6 @@ packages:
   app_package_directory_key: <%= p("cc.packages.app_package_directory_key") %>
   max_valid_packages_stored: <%= p("cc.packages.max_valid_packages_stored") %>
   max_package_size: <%= p("cc.packages.max_package_size") %>
-  <% if_p("cc.packages.cdn") do %>
-  cdn:
-    uri: <%= p("cc.packages.cdn.uri") %>
-    key_pair_id: <%= p("cc.packages.cdn.key_pair_id") %>
-    private_key: <%= p("cc.packages.cdn.private_key").inspect %>
-  <% end %>
 
 droplets:
   blobstore_type: <%= p("cc.droplets.blobstore_type") %>
@@ -375,12 +363,6 @@ droplets:
     ca_cert_path: "/var/vcap/jobs/cloud_controller_ng/config/certs/droplets_ca_cert.pem"
     <% end %>
   droplet_directory_key: <%= p("cc.droplets.droplet_directory_key") %>
-  <% if_p("cc.droplets.cdn") do %>
-  cdn:
-    uri: <%= p("cc.droplets.cdn.uri") %>
-    key_pair_id: <%= p("cc.droplets.cdn.key_pair_id") %>
-    private_key: <%= p("cc.droplets.cdn.private_key").inspect %>
-  <% end %>
   max_staged_droplets_stored: <%= p("cc.droplets.max_staged_droplets_stored") %>
 
 buildpacks:
@@ -395,12 +377,6 @@ buildpacks:
     ca_cert_path: "/var/vcap/jobs/cloud_controller_ng/config/certs/buildpacks_ca_cert.pem"
     <% end %>
   buildpack_directory_key: <%= p("cc.buildpacks.buildpack_directory_key") %>
-  <% if_p("cc.buildpacks.cdn") do %>
-  cdn:
-    uri: <%= p("cc.buildpacks.cdn.uri") %>
-    key_pair_id: <%= p("cc.buildpacks.cdn.key_pair_id") %>
-    private_key: <%= p("cc.buildpacks.cdn.private_key").inspect %>
-  <% end %>
 
 db_encryption_key: <%= p("cc.db_encryption_key") %>
 
