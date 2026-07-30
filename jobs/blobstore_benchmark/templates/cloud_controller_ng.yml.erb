@@ -60,7 +60,7 @@
     section = cc_cfg[k]
     next unless section.is_a?(Hash)
 
-    %w[fog_connection connection_config fog_aws_storage_options fog_gcp_storage_options webdav_config].each do |hk|
+    %w[connection_config webdav_config].each do |hk|
       section[hk] = {} if section.key?(hk) && section[hk].nil?
     end
 

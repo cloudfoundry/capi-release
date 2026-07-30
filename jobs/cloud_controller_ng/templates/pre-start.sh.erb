@@ -10,8 +10,6 @@ CC_JOB_DIR="/var/vcap/jobs/cloud_controller_ng"
 CONFIG_DIR="${CC_JOB_DIR}/config"
 export CLOUD_CONTROLLER_NG_CONFIG="${CONFIG_DIR}/cloud_controller_ng.yml"
 
-source ${CC_JOB_DIR}/bin/setup_local_blobstore.sh
-
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 source "${SCRIPT_DIR}/ruby_version.sh"
 
@@ -74,7 +72,6 @@ function setup_api_directories {
 }
 
 function setup_directories {
-  setup_local_blobstore
   setup_api_directories
   setup_nginx_directories
   setup_nginx_plugin_directories

@@ -114,8 +114,6 @@ limit_req_zone $http_authorization zone=<%= zone['name'] %>:10m rate=<%= zone['l
       upload_cleanup 400-505;
     }
 
-    include local_blobstore_downloads.conf;
-
     # Pass altered request body to a backend
     location @cc_uploads {
       proxy_pass http://cloud_controller;
@@ -159,7 +157,6 @@ limit_req_zone $http_authorization zone=<%= zone['name'] %>:10m rate=<%= zone['l
     proxy_read_timeout          <%= p("request_timeout_in_seconds") %>;
     <% end -%>
 
-    include local_blobstore_downloads.conf;
     include nginx_external_endpoints.conf;
   }
 
@@ -180,7 +177,6 @@ limit_req_zone $http_authorization zone=<%= zone['name'] %>:10m rate=<%= zone['l
     proxy_read_timeout          <%= p("request_timeout_in_seconds") %>;
     <% end -%>
 
-    include local_blobstore_downloads.conf;
     include nginx_external_endpoints.conf;
   }
   <% end %>

@@ -95,7 +95,7 @@ module Bosh
         end
 
         describe 'when provider is AWS' do
-          let(:props) { props_for_provider('AWS') }
+          let(:props) { props_for_provider('s3') }
 
           storage_cli_templates.each do |(template_path, keypath)|
             describe template_path do
@@ -103,14 +103,14 @@ module Bosh
 
               it 'maps required properties into the rendered config' do
                 set(props, keypath, {
-                      'provider' => 'AWS',
+                      'provider' => 's3',
                       'bucket_name' => 'bucket',
                       'aws_access_key_id' => 'key',
                       'aws_secret_access_key' => 'secret'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'AWS',
+                  'provider' => 's3',
                   'bucket_name' => 'bucket',
                   'access_key_id' => 'key',
                   'credentials_source' => 'static',
@@ -121,7 +121,7 @@ module Bosh
               context 'when use_iam_profile is true' do
                 let(:json) do
                   set(props, keypath, {
-                        'provider' => 'AWS',
+                        'provider' => 's3',
                         'bucket_name' => 'bucket',
                         'use_iam_profile' => true
                       })
@@ -130,7 +130,7 @@ module Bosh
 
                 it 'uses env_or_profile credentials source' do
                   expect(json).to include(
-                    'provider' => 'AWS',
+                    'provider' => 's3',
                     'bucket_name' => 'bucket',
                     'credentials_source' => 'env_or_profile'
                   )
@@ -144,7 +144,7 @@ module Bosh
 
               it 'includes optional properties when provided' do
                 set(props, keypath, {
-                      'provider' => 'AWS',
+                      'provider' => 's3',
                       'bucket_name' => 'bucket',
                       'aws_access_key_id' => 'key',
                       'aws_secret_access_key' => 'secret',
@@ -174,7 +174,7 @@ module Bosh
 
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'AWS',
+                  'provider' => 's3',
                   'bucket_name' => 'bucket',
                   'access_key_id' => 'key',
                   'secret_access_key' => 'secret',
@@ -280,8 +280,8 @@ module Bosh
           end
         end
 
-        describe 'when provider is webdav' do
-          let(:props) { props_for_provider('webdav') }
+        describe 'when provider is dav' do
+          let(:props) { props_for_provider('dav') }
 
           # Helper to determine expected directory key based on template path
           def expected_directory_key(template_path)
@@ -300,7 +300,7 @@ module Bosh
 
               it 'maps required properties into the rendered config' do
                 set(props, keypath, {
-                      'provider' => 'webdav',
+                      'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',
@@ -319,7 +319,7 @@ module Bosh
 
               it 'includes public_endpoint when provided' do
                 set(props, keypath, {
-                      'provider' => 'webdav',
+                      'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',
@@ -339,7 +339,7 @@ module Bosh
 
               it 'includes optional properties when provided' do
                 set(props, keypath, {
-                      'provider' => 'webdav',
+                      'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',
@@ -363,7 +363,7 @@ module Bosh
 
               it 'omits public_endpoint when empty' do
                 set(props, keypath, {
-                      'provider' => 'webdav',
+                      'provider' => 'dav',
                       'username' => 'user',
                       'password' => 'secret',
                       'private_endpoint' => 'https://webdav.internal',

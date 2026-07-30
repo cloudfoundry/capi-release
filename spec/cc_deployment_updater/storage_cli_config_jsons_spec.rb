@@ -110,7 +110,7 @@ module Bosh
         end
 
         describe 'when provider is AWS' do
-          let(:link_props) { props_for_provider('AWS') }
+          let(:link_props) { props_for_provider('s3') }
           let(:cc_link) do
             Bosh::Template::Test::Link.new(
               name: 'cloud_controller_internal',
@@ -126,14 +126,14 @@ module Bosh
 
               it 'maps required properties into the rendered config' do
                 set(link_props, keypath, {
-                      'provider' => 'AWS',
+                      'provider' => 's3',
                       'bucket_name' => 'bucket',
                       'aws_access_key_id' => 'key',
                       'aws_secret_access_key' => 'secret'
                     })
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'AWS',
+                  'provider' => 's3',
                   'bucket_name' => 'bucket',
                   'access_key_id' => 'key',
                   'credentials_source' => 'static',
@@ -144,7 +144,7 @@ module Bosh
               context 'when use_iam_profile is true' do
                 let(:json) do
                   set(link_props, keypath, {
-                        'provider' => 'AWS',
+                        'provider' => 's3',
                         'bucket_name' => 'bucket',
                         'use_iam_profile' => true
                       })
@@ -153,7 +153,7 @@ module Bosh
 
                 it 'uses env_or_profile credentials source' do
                   expect(json).to include(
-                    'provider' => 'AWS',
+                    'provider' => 's3',
                     'bucket_name' => 'bucket',
                     'credentials_source' => 'env_or_profile'
                   )
@@ -167,7 +167,7 @@ module Bosh
 
               it 'includes optional properties when provided' do
                 set(link_props, keypath, {
-                      'provider' => 'AWS',
+                      'provider' => 's3',
                       'bucket_name' => 'bucket',
                       'aws_access_key_id' => 'key',
                       'aws_secret_access_key' => 'secret',
@@ -197,7 +197,7 @@ module Bosh
 
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json).to include(
-                  'provider' => 'AWS',
+                  'provider' => 's3',
                   'bucket_name' => 'bucket',
                   'access_key_id' => 'key',
                   'secret_access_key' => 'secret',
@@ -319,8 +319,8 @@ module Bosh
           end
         end
 
-        describe 'when provider is webdav' do
-          let(:link_props) { props_for_provider('webdav') }
+        describe 'when provider is dav' do
+          let(:link_props) { props_for_provider('dav') }
           let(:cc_link) do
             Bosh::Template::Test::Link.new(
               name: 'cloud_controller_internal',

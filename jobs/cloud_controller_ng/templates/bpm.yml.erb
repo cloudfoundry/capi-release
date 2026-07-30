@@ -20,13 +20,6 @@ def mount_valkey_volume!(config)
   }
 end
 
-def enable_fog_debugging!(config)
-  if p("cc.log_fog_requests")
-    config["env"]["DEBUG"] = true
-    config["env"]["FOG_DEBUG"] = true
-  end
-end
-
 cloud_controller_ng_config = {
   "name" => "cloud_controller_ng",
   "executable" => "/var/vcap/jobs/cloud_controller_ng/bin/cloud_controller_ng",
@@ -49,7 +42,6 @@ if !!properties.cc.newrelic.license_key || p("cc.development_mode")
     cloud_controller_ng_config["env"]["NEWRELIC_ENABLE"] = true
 end
 
-enable_fog_debugging!(cloud_controller_ng_config)
 
 if properties.env
     if properties.env.http_proxy
@@ -127,7 +119,6 @@ config = {
    local_worker_config["env"]["NEWRELIC_ENABLE"] = true
   end
 
-  enable_fog_debugging!(local_worker_config)
 
   config["processes"] << local_worker_config
 end

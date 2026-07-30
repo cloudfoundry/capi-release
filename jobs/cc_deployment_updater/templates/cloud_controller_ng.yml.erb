@@ -216,15 +216,6 @@ resource_pool:
   blobstore_provider: <%= rp_provider %>
   <% end %>
   connection_config: <%= link("cloud_controller_internal").p("cc.resource_pool.connection_config", {}).to_json %>
-  <% link("cloud_controller_internal").if_p("cc.resource_pool.cdn") do %>
-  cdn:
-    uri: <%= link("cloud_controller_internal").p("cc.resource_pool.cdn.uri") %>
-    key_pair_id: <%= link("cloud_controller_internal").p("cc.resource_pool.cdn.key_pair_id") %>
-    private_key: <%= link("cloud_controller_internal").p("cc.resource_pool.cdn.private_key").inspect %>
-  <% end %>
-  fog_connection: <%= link("cloud_controller_internal").p("cc.resource_pool.fog_connection", {}).to_json %>
-  fog_aws_storage_options: <%= link("cloud_controller_internal").p("cc.resource_pool.fog_aws_storage_options", {}).to_json %>
-  fog_gcp_storage_options: <%= link("cloud_controller_internal").p("cc.resource_pool.fog_gcp_storage_options", {}).to_json %>
 
 packages:
   blobstore_type: <%= link("cloud_controller_internal").p("cc.packages.blobstore_type") %>
@@ -243,15 +234,6 @@ packages:
   <% end %>
   connection_config: <%= link("cloud_controller_internal").p("cc.packages.connection_config", {}).to_json %>
   max_package_size: <%= link("cloud_controller_internal").p("cc.packages.max_package_size") %>
-  <% link("cloud_controller_internal").if_p("cc.packages.cdn") do %>
-  cdn:
-    uri: <%= link("cloud_controller_internal").p("cc.packages.cdn.uri") %>
-    key_pair_id: <%= link("cloud_controller_internal").p("cc.packages.cdn.key_pair_id") %>
-    private_key: <%= link("cloud_controller_internal").p("cc.packages.cdn.private_key").inspect %>
-  <% end %>
-  fog_connection: <%= link("cloud_controller_internal").p("cc.packages.fog_connection", {}).to_json %>
-  fog_aws_storage_options: <%= link("cloud_controller_internal").p("cc.packages.fog_aws_storage_options", {}).to_json %>
-  fog_gcp_storage_options: <%= link("cloud_controller_internal").p("cc.packages.fog_gcp_storage_options", {}).to_json %>
 
 
 droplets:
@@ -270,15 +252,6 @@ droplets:
   blobstore_provider: <%= dp_provider %>
   <% end %>
   connection_config: <%= link("cloud_controller_internal").p("cc.droplets.connection_config", {}).to_json %>
-  <% link("cloud_controller_internal").if_p("cc.droplets.cdn") do %>
-  cdn:
-    uri: <%= link("cloud_controller_internal").p("cc.droplets.cdn.uri") %>
-    key_pair_id: <%= link("cloud_controller_internal").p("cc.droplets.cdn.key_pair_id") %>
-    private_key: <%= link("cloud_controller_internal").p("cc.droplets.cdn.private_key").inspect %>
-  <% end %>
-  fog_connection: <%= link("cloud_controller_internal").p("cc.droplets.fog_connection", {}).to_json %>
-  fog_aws_storage_options: <%= link("cloud_controller_internal").p("cc.droplets.fog_aws_storage_options", {}).to_json %>
-  fog_gcp_storage_options: <%= link("cloud_controller_internal").p("cc.droplets.fog_gcp_storage_options", {}).to_json %>
 
 buildpacks:
   blobstore_type: <%= link("cloud_controller_internal").p("cc.buildpacks.blobstore_type") %>
@@ -296,15 +269,6 @@ buildpacks:
   blobstore_provider: <%= bp_provider %>
   <% end %>
   connection_config: <%= link("cloud_controller_internal").p("cc.buildpacks.connection_config", {}).to_json %>
-  <% link("cloud_controller_internal").if_p("cc.buildpacks.cdn") do %>
-  cdn:
-    uri: <%= link("cloud_controller_internal").p("cc.buildpacks.cdn.uri") %>
-    key_pair_id: <%= link("cloud_controller_internal").p("cc.buildpacks.cdn.key_pair_id") %>
-    private_key: <%= link("cloud_controller_internal").p("cc.buildpacks.cdn.private_key").inspect %>
-  <% end %>
-  fog_connection: <%= link("cloud_controller_internal").p("cc.buildpacks.fog_connection", {}).to_json %>
-  fog_aws_storage_options: <%= link("cloud_controller_internal").p("cc.buildpacks.fog_aws_storage_options", {}).to_json %>
-  fog_gcp_storage_options: <%= link("cloud_controller_internal").p("cc.buildpacks.fog_gcp_storage_options", {}).to_json %>
 
 skip_cert_verify: <%= link("cloud_controller_internal").p("ssl.skip_cert_verify") %>
 

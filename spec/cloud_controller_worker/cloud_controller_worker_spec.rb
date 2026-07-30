@@ -28,7 +28,11 @@ module Bosh
                 'current_key_label' => 'encryption_key_0',
                 :keys => { 'encryption_key_0' => '((cc_db_encryption_key))' }
               },
-              'directories' => {}
+              'directories' => {},
+              'resource_pool' => { 'blobstore_type' => 'storage-cli' },
+              'packages' => { 'blobstore_type' => 'storage-cli' },
+              'droplets' => { 'blobstore_type' => 'storage-cli' },
+              'buildpacks' => { 'blobstore_type' => 'storage-cli' }
             },
             'ccdb' => {
               'db_scheme' => 'mysql',

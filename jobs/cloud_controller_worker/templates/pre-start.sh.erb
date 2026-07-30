@@ -5,16 +5,12 @@ set -ex
 source /var/vcap/packages/capi_utils/output_utils.sh
 write_output_with_datetime
 
-source /var/vcap/jobs/cloud_controller_worker/bin/setup_local_blobstore.sh
-
 
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 source "${SCRIPT_DIR}/ruby_version.sh"
 
 
 function setup_directories {
-  setup_local_blobstore
-
   mkdir -p "/var/vcap/sys/run/cloud_controller_worker"
   chown -R vcap:vcap "/var/vcap/sys/run/cloud_controller_worker"
 
