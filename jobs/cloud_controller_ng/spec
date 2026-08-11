@@ -395,6 +395,14 @@ properties:
     description: "Enable V2 endpoints"
     default: false
 
+  cc.temporary_enable_async_recursive_delete.apps:
+    description: "Enable experimental async recursive delete for apps. Disabled by default."
+    default: false
+
+  cc.temporary_enable_async_recursive_delete.service_instances:
+    description: "Enable experimental async recursive delete for service instances. Disabled by default."
+    default: false
+
   cc.directories.tmpdir:
     default: "/var/vcap/data/cloud_controller_ng/tmp"
     description: "The directory to use for temporary files"
