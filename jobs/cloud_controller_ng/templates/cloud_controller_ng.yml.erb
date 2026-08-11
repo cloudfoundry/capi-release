@@ -511,6 +511,10 @@ rate_limiter_v2_api:
 
 temporary_enable_v2: <%= p("cc.temporary_enable_v2") %>
 
+temporary_enable_async_recursive_delete:
+  apps: <%= p("cc.temporary_enable_async_recursive_delete.apps") %>
+  service_instances: <%= p("cc.temporary_enable_async_recursive_delete.service_instances") %>
+
 redis:
   socket: "/var/vcap/data/valkey/valkey.sock"
 
