@@ -192,7 +192,8 @@ module Bosh
                       'single_upload_threshold' => 2048,
                       'request_checksum_calculation_enabled' => false,
                       'response_checksum_calculation_enabled' => false,
-                      'uploader_request_checksum_calculation_enabled' => false
+                      'uploader_request_checksum_calculation_enabled' => false,
+                      'http_request_timeout' => '30s'
                     })
 
                 json = YAML.safe_load(template.render(props, consumes: links))
@@ -222,7 +223,8 @@ module Bosh
                   'single_upload_threshold' => 2048,
                   'request_checksum_calculation_enabled' => false,
                   'response_checksum_calculation_enabled' => false,
-                  'uploader_request_checksum_calculation_enabled' => false
+                  'uploader_request_checksum_calculation_enabled' => false,
+                  'http_request_timeout' => '30s'
                 )
               end
             end
@@ -265,8 +267,8 @@ module Bosh
                       'bucket_name' => 'bucket',
                       'google_json_key_string' => '{}',
                       'storage_class' => 'STANDARD',
-                      'encryption_key' => 'key'
-
+                      'encryption_key' => 'key',
+                      'http_request_timeout' => '30s'
                     })
 
                 json = YAML.safe_load(template.render(props, consumes: links))
@@ -276,7 +278,8 @@ module Bosh
                   'json_key' => '{}',
                   'credentials_source' => 'static',
                   'storage_class' => 'STANDARD',
-                  'encryption_key' => 'key'
+                  'encryption_key' => 'key',
+                  'http_request_timeout' => '30s'
                 )
               end
             end
@@ -314,6 +317,19 @@ module Bosh
                   'endpoint' => 'alioss.com',
                   'bucket_name' => 'bucket'
                 )
+              end
+
+              it 'includes http_request_timeout when provided' do
+                set(link_props, keypath, {
+                      'provider' => 'alioss',
+                      'aliyun_accesskey_id' => 'key',
+                      'aliyun_accesskey_secret' => 'secret',
+                      'aliyun_oss_endpoint' => 'alioss.com',
+                      'aliyun_oss_bucket' => 'bucket',
+                      'http_request_timeout' => '30s'
+                    })
+                json = YAML.safe_load(template.render(props, consumes: links))
+                expect(json).to include('http_request_timeout' => '30s')
               end
             end
           end
