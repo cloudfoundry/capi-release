@@ -1114,6 +1114,22 @@ properties:
     description: "The interval in minutes after which a user's available API requests will be reset"
     default: 60
 
+  cc.concurrency_rate_limiter.enabled:
+    description: "Enable concurrency rate limiting for UAA-authenticated endpoints per user or client"
+    default: false
+  cc.concurrency_rate_limiter.blocking_limit:
+    description: "Maximum number of concurrent requests per user before blocking. Use -1 to disable"
+    default: 10
+  cc.concurrency_rate_limiter.logging_limit:
+    description: "Number of concurrent requests per user at which to start logging warnings. Use -1 to disable."
+    default: 5
+  cc.concurrency_rate_limiter.redis_connection_pool_size:
+    description: "Redis connection pool size for the concurrency rate limiter, should match total puma threads"
+    default: 40
+  cc.concurrency_rate_limiter.redis_counter_ttl_seconds:
+    description: "TTL in seconds for concurrency counter keys in Redis. Should be aligned with the request timeout to ensure counters expire if a request never completes."
+    default: 901
+
   cc.max_concurrent_service_broker_requests:
     description: "Maximum number of concurrent requests to service brokers per user. Set to 0 to not limit concurrent requests"
     default: 0
