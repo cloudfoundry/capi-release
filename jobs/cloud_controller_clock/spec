@@ -149,8 +149,8 @@ properties:
     description: "How often operations stuck in state 'in progress' should be cleaned up."
     default: 3600 # 1 hour
 
-  cc.service_operations_update_in_progress_cleanup.frequency_in_seconds:
-    description: "How often 'update' operations stuck in state 'in progress' should be cleaned up."
+  cc.service_operations_update_stuck_in_progress_failed.frequency_in_seconds:
+    description: "How often 'update' operations stuck in state 'in progress' should be marked as 'failed'."
     default: 3600 # 1 hour
 
   # One-off backfill - to be removed in a future version.
