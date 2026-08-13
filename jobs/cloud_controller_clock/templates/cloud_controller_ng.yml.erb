@@ -113,6 +113,9 @@ service_operations_initial_cleanup:
 service_operations_create_in_progress_cleanup:
   frequency_in_seconds: <%= p("cc.service_operations_create_in_progress_cleanup.frequency_in_seconds") %>
 
+service_operations_update_in_progress_cleanup:
+  frequency_in_seconds: <%= p("cc.service_operations_update_in_progress_cleanup.frequency_in_seconds") %>
+
 completed_tasks:
   cutoff_age_in_days: <%= p("cc.completed_tasks.cutoff_age_in_days") %>
 
