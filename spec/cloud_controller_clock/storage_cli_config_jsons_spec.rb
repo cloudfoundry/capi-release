@@ -90,6 +90,29 @@ module Bosh
                 json = YAML.safe_load(template.render(props, consumes: links))
                 expect(json['put_timeout_in_seconds']).to eq('7')
               end
+
+              it 'passes http_request_timeout when provided' do
+                set(props, keypath, {
+                      'provider' => 'azurebs',
+                      'azure_storage_account_name' => 'acc',
+                      'azure_storage_access_key' => 'key',
+                      'container_name' => 'cont',
+                      'http_request_timeout' => '30s'
+                    })
+                json = YAML.safe_load(template.render(props, consumes: links))
+                expect(json['http_request_timeout']).to eq('30s')
+              end
+
+              it 'omits http_request_timeout when not provided' do
+                set(props, keypath, {
+                      'provider' => 'azurebs',
+                      'azure_storage_account_name' => 'acc',
+                      'azure_storage_access_key' => 'key',
+                      'container_name' => 'cont'
+                    })
+                json = YAML.safe_load(template.render(props, consumes: links))
+                expect(json).not_to have_key('http_request_timeout')
+              end
             end
           end
         end

@@ -30,6 +30,7 @@ if provider == "azurebs"
   options["account_key"] = p("#{scope}.azure_storage_access_key")
   add_optional(options, "environment", p("#{scope}.environment", "AzureCloud"))
   add_optional(options, "put_timeout_in_seconds", p("#{scope}.put_timeout_in_seconds", nil))
+  add_optional(options, "http_request_timeout", p("#{scope}.http_request_timeout", nil))
   options = cli_cfg_with_default_timeout(options, 'storage_cli')
 end
 
