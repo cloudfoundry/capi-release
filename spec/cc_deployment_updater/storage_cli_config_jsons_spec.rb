@@ -106,7 +106,7 @@ module Bosh
                 expect(json['put_timeout_in_seconds']).to eq('7')
               end
 
-              it 'passes http_request_timeout when provided' do
+              it 'includes http_request_timeout when provided' do
                 set(link_props, keypath, {
                       'provider' => 'azurebs',
                       'azure_storage_account_name' => 'acc',
@@ -118,7 +118,7 @@ module Bosh
                 expect(json['http_request_timeout']).to eq('30s')
               end
 
-              it 'omits http_request_timeout when not provided' do
+              it 'excludes http_request_timeout when not provided' do
                 set(link_props, keypath, {
                       'provider' => 'azurebs',
                       'azure_storage_account_name' => 'acc',
