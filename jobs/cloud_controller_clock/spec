@@ -157,6 +157,10 @@ properties:
     description: "How often 'delete' operations stuck in state 'in progress' should be retried by re-enqueuing the polling job."
     default: 3600 # 1 hour
 
+  cc.service_operations_binding_delete_stuck_in_progress_retry.frequency_in_seconds:
+    description: "How often binding 'delete' operations stuck in state 'in progress' should be retried by re-enqueuing the polling job."
+    default: 3600 # 1 hour
+
   # One-off backfill - to be removed in a future version.
   cc.lifecycle_type_backfill.frequency_in_seconds:
     description: "How often the one-off lifecycle_type backfill job runs"

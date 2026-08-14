@@ -119,6 +119,9 @@ service_operations_update_stuck_in_progress_failed:
 service_operations_delete_stuck_in_progress_retry:
   frequency_in_seconds: <%= p("cc.service_operations_delete_stuck_in_progress_retry.frequency_in_seconds") %>
 
+service_operations_binding_delete_stuck_in_progress_retry:
+  frequency_in_seconds: <%= p("cc.service_operations_binding_delete_stuck_in_progress_retry.frequency_in_seconds") %>
+
 completed_tasks:
   cutoff_age_in_days: <%= p("cc.completed_tasks.cutoff_age_in_days") %>
 
