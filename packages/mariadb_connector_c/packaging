@@ -1,13 +1,13 @@
 set -e -x
 
-VERSION=3.3.5
+VERSION=3.4.8
 
 tar xzf mariadb_connector_c/mariadb-connector-c-${VERSION}-src.tar.gz
 
 pushd mariadb-connector-c-${VERSION}-src > /dev/null
 	mkdir bld
 	cd bld
-	cmake .. -DCMAKE_INSTALL_PREFIX=${BOSH_INSTALL_TARGET}
+	cmake .. -DCMAKE_INSTALL_PREFIX=${BOSH_INSTALL_TARGET} -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF
 	make
 	make install
 popd > /dev/null
