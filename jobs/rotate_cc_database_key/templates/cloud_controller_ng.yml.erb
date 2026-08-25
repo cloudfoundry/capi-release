@@ -67,6 +67,9 @@ db: &db
   log_level: "<%= p("cc.db_logging_level", link("cloud_controller_internal").p("cc.db_logging_level")) %>"
   log_db_queries: <%= p("cc.log_db_queries", link("cloud_controller_internal").p("cc.log_db_queries")) %>
   ssl_verify_hostname: <%= link("cloud_controller_db").p("ccdb.ssl_verify_hostname") %>
+<% link("cloud_controller_db").if_p('ccdb.ssl_mode') do |ssl_mode| %>
+  ssl_mode: <%= ssl_mode %>
+<% end %>
   read_timeout: <%= link("cloud_controller_db").p("ccdb.read_timeout") %>
   connection_validation_timeout: <%= link("cloud_controller_db").p("ccdb.connection_validation_timeout") %>
 <% link("cloud_controller_db").if_p('ccdb.ca_cert') do %>

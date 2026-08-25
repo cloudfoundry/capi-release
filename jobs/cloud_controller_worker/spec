@@ -361,6 +361,8 @@ properties:
   ccdb.ssl_verify_hostname:
     default: true
     description: "Verify that the database SSL certificate matches the host to which the connection is attempted"
+  ccdb.ssl_mode:
+    description: "Explicit SSL mode for the DB connection, used only when ccdb.ca_cert is not set. MySQL: disabled or required. Postgres: disable, allow, prefer, or require."
   ccdb.read_timeout:
     default: 3600
     description: "The read timeout in seconds for query responses, passed directly to the Sequel gem - see https://github.com/jeremyevans/sequel/blob/master/doc/opening_databases.rdoc for details"

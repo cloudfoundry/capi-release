@@ -123,6 +123,9 @@ db: &db
   log_level: "<%= p("cc.db_logging_level") %>"
   log_db_queries: <%= p("cc.log_db_queries") %>
   ssl_verify_hostname: <%= p("ccdb.ssl_verify_hostname") %>
+  <% if_p("ccdb.ssl_mode") do |ssl_mode| %>
+  ssl_mode: <%= ssl_mode %>
+  <% end %>
   read_timeout: <%= p("ccdb.read_timeout") %>
   connection_validation_timeout: <%= p("ccdb.connection_validation_timeout") %>
   <% if_p("ccdb.ca_cert") do %>

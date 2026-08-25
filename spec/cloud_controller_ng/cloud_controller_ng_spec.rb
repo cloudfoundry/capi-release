@@ -504,6 +504,24 @@ module Bosh
             end
           end
 
+          context 'when ccdb.ssl_mode is set' do
+            before do
+              merged_manifest_properties['ccdb']['ssl_mode'] = 'required'
+            end
+
+            it 'renders ssl_mode into the db block' do
+              template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(template_hash['db']['ssl_mode']).to eq('required')
+            end
+          end
+
+          context 'when ccdb.ssl_mode is not set' do
+            it 'does not render an ssl_mode key' do
+              template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(template_hash['db']).not_to have_key('ssl_mode')
+            end
+          end
+
           context 'when the file_server link is present' do
             let(:links) { [db_link, file_server_link] }
 

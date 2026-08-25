@@ -99,6 +99,8 @@
     db_hash['ca_cert_path'] = '/var/vcap/jobs/blobstore_benchmark/config/certs/db_ca.crt'
   end
 
+  link("cloud_controller_db").if_p("ccdb.ssl_mode") { |ssl_mode| db_hash['ssl_mode'] = ssl_mode }
+
   benchmark_logging_level = p("blobstore_benchmark.logging_level", "info")
   benchmark_stdout_sink   = p("blobstore_benchmark.stdout_sink_enabled", false)
 
