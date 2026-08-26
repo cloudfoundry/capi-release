@@ -203,6 +203,42 @@ module Bosh
             end
           end
         end
+
+        describe 'bin/run' do
+          let(:template) { job.template('bin/run') }
+
+          def disables_peer_verification?(db_scheme:, ca_cert:)
+            ccdb = {
+              'db_scheme' => db_scheme,
+              'databases' => [{ 'tag' => 'cc', 'name' => 'ccdb' }],
+              'roles' => [{ 'tag' => 'admin', 'name' => 'u', 'password' => 'p' }],
+              'port' => 3306
+            }
+            ccdb['ca_cert'] = ca_cert unless ca_cert.nil?
+            db_link = Link.new(name: 'cloud_controller_db', properties: { 'ccdb' => ccdb },
+                               instances: [LinkInstance.new(address: 'cloud_controller_db')])
+            rendered = template.render({}, consumes: [cloud_controller_internal_link, db_link])
+            rendered.include?('export MARIADB_TLS_DISABLE_PEER_VERIFICATION="1"')
+          end
+
+          context 'when the database is mysql and no ca_cert is configured' do
+            it 'disables peer verification' do
+              expect(disables_peer_verification?(db_scheme: 'mysql', ca_cert: nil)).to be(true)
+            end
+          end
+
+          context 'when the database is mysql and a ca_cert is configured' do
+            it 'does not disable peer verification' do
+              expect(disables_peer_verification?(db_scheme: 'mysql', ca_cert: 'a-ca-cert')).to be(false)
+            end
+          end
+
+          context 'when the database is postgres' do
+            it 'does not disable peer verification' do
+              expect(disables_peer_verification?(db_scheme: 'postgres', ca_cert: nil)).to be(false)
+            end
+          end
+        end
       end
     end
   end

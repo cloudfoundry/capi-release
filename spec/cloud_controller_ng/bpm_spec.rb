@@ -45,6 +45,52 @@ module Bosh
               expect(valkey_volume_mounted?(results[0])).to be_truthy
             end
           end
+
+          describe 'MySQL TLS peer verification' do
+            def db_process_envs(properties)
+              template_hash = YAML.safe_load(template.render(properties, consumes: {}))
+              db_process_names = %w[cloud_controller_ng local_worker_1]
+              template_hash['processes'].
+                select { |p| db_process_names.include?(p['name']) }.
+                to_h { |p| [p['name'], p['env']] }
+            end
+
+            context 'when the database is mysql and no ca_cert is configured' do
+              let(:properties) { { 'ccdb' => { 'db_scheme' => 'mysql' } } }
+
+              it 'disables peer verification on every db process' do
+                envs = db_process_envs(properties)
+                expect(envs.keys).to contain_exactly('cloud_controller_ng', 'local_worker_1')
+                envs.each_value do |env|
+                  expect(env['MARIADB_TLS_DISABLE_PEER_VERIFICATION']).to eq('1')
+                end
+              end
+            end
+
+            context 'when the database is mysql and a ca_cert is configured' do
+              let(:properties) { { 'ccdb' => { 'db_scheme' => 'mysql', 'ca_cert' => 'a-ca-cert' } } }
+
+              it 'does not disable peer verification on any db process' do
+                envs = db_process_envs(properties)
+                expect(envs.keys).to contain_exactly('cloud_controller_ng', 'local_worker_1')
+                envs.each_value do |env|
+                  expect(env).not_to have_key('MARIADB_TLS_DISABLE_PEER_VERIFICATION')
+                end
+              end
+            end
+
+            context 'when the database is postgres' do
+              let(:properties) { { 'ccdb' => { 'db_scheme' => 'postgres' } } }
+
+              it 'does not disable peer verification on any db process' do
+                envs = db_process_envs(properties)
+                expect(envs.keys).to contain_exactly('cloud_controller_ng', 'local_worker_1')
+                envs.each_value do |env|
+                  expect(env).not_to have_key('MARIADB_TLS_DISABLE_PEER_VERIFICATION')
+                end
+              end
+            end
+          end
         end
       end
     end
