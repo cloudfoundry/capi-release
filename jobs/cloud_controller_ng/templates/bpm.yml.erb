@@ -20,6 +20,21 @@ def mount_valkey_volume!(config)
   }
 end
 
+# MariaDB Connector/C 3.4.x verifies the server certificate by default. When
+# CC talks to a MySQL database without a ccdb.ca_cert (e.g. use-external-dbs.yml
+# strips it, as with GCP Cloud SQL's self-signed CA), there is no CA to verify
+# against, so the connection can only fail. Disable peer verification in that
+# case to restore the pre-3.4.x encrypt-without-verify behavior. When a ca_cert
+# is configured, verification stays on. Only set for MySQL; Postgres uses libpq,
+# which this variable does not affect.
+def disable_mysql_tls_peer_verification!(config)
+  return unless p("ccdb.db_scheme") == "mysql"
+  ca_cert_configured = false
+  if_p("ccdb.ca_cert") { |ca_cert| ca_cert_configured = !ca_cert.to_s.strip.empty? }
+  return if ca_cert_configured
+  config["env"]["MARIADB_TLS_DISABLE_PEER_VERIFICATION"] = "1"
+end
+
 cloud_controller_ng_config = {
   "name" => "cloud_controller_ng",
   "executable" => "/var/vcap/jobs/cloud_controller_ng/bin/cloud_controller_ng",
@@ -59,6 +74,7 @@ if properties.env
 end
 mount_nfs_volume!(cloud_controller_ng_config)
 mount_valkey_volume!(cloud_controller_ng_config)
+disable_mysql_tls_peer_verification!(cloud_controller_ng_config)
 
 nginx_config = {
   "name" => "nginx",
@@ -114,11 +130,11 @@ config = {
     }
   }
   mount_nfs_volume!(local_worker_config)
+  disable_mysql_tls_peer_verification!(local_worker_config)
 
   if !!properties.cc.newrelic.license_key
    local_worker_config["env"]["NEWRELIC_ENABLE"] = true
   end
-
 
   config["processes"] << local_worker_config
 end
