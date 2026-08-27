@@ -33,22 +33,23 @@ export BUNDLE_GEMFILE="${CC_PACKAGE_DIR}/cloud_controller_ng/Gemfile"
 source "${CC_JOB_DIR}/bin/ruby_version.sh"
 source /var/vcap/packages/capi_utils/output_utils.sh
 source /var/vcap/packages/capi_utils/monit_utils.sh
+source /var/vcap/packages/capi_utils/privdrop_utils.sh
 
 write_output_with_datetime
 
 function fix_bundler_home_permissions {
   BUNDLER_DIR1=/tmp/bundler
   BUNDLER_DIR2=/var/vcap/data/cloud_controller_ng/tmp/bundler
-  chpst -u vcap:vcap mkdir -p $BUNDLER_DIR1 $BUNDLER_DIR2
+  run_as_vcap mkdir -p $BUNDLER_DIR1 $BUNDLER_DIR2
   chown vcap:vcap -R $BUNDLER_DIR1 $BUNDLER_DIR2
-  chpst -u vcap:vcap chmod -R go-w $BUNDLER_DIR1 $BUNDLER_DIR2
-  chpst -u vcap:vcap chmod -R +t $BUNDLER_DIR1 $BUNDLER_DIR2
+  run_as_vcap chmod -R go-w $BUNDLER_DIR1 $BUNDLER_DIR2
+  run_as_vcap chmod -R +t $BUNDLER_DIR1 $BUNDLER_DIR2
 }
 
 function install_buildpacks {
   <% if spec.bootstrap %>
   pushd "${CC_PACKAGE_DIR}/cloud_controller_ng" > /dev/null
-    chpst -u vcap:vcap bundle exec rake buildpacks:install
+    run_as_vcap bundle exec rake buildpacks:install
 
     if [[ $? -ne 0 ]]; then
       echo "Buildpacks installation failed"
