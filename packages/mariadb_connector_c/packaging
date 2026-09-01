@@ -7,7 +7,7 @@ tar xzf mariadb_connector_c/mariadb-connector-c-${VERSION}-src.tar.gz
 pushd mariadb-connector-c-${VERSION}-src > /dev/null
 	mkdir bld
 	cd bld
-	cmake .. -DCMAKE_INSTALL_PREFIX=${BOSH_INSTALL_TARGET} -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF
+	cmake .. -DCMAKE_INSTALL_PREFIX=${BOSH_INSTALL_TARGET} -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF -DDEFAULT_SSL_VERIFY_SERVER_CERT=OFF
 	make
 	make install
 popd > /dev/null
