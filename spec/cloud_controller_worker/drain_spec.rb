@@ -59,6 +59,31 @@ module Bosh
             # Default job name is 'me' in tests (bosh-template)
             expect(rendered_file).to include('bundle exec rake jobs:clear_pending_locks[cc_global_worker.me.0."${i}"]')
           end
+
+          describe 'MySQL TLS peer verification' do
+            def disables_peer_verification?(properties)
+              rendered = template.render(properties, consumes: {})
+              rendered.include?('export MARIADB_TLS_DISABLE_PEER_VERIFICATION="1"')
+            end
+
+            context 'when the database is mysql and no ca_cert is configured' do
+              it 'disables peer verification' do
+                expect(disables_peer_verification?({ 'ccdb' => { 'db_scheme' => 'mysql' } })).to be(true)
+              end
+            end
+
+            context 'when the database is mysql and a ca_cert is configured' do
+              it 'does not disable peer verification' do
+                expect(disables_peer_verification?({ 'ccdb' => { 'db_scheme' => 'mysql', 'ca_cert' => 'a-ca-cert' } })).to be(false)
+              end
+            end
+
+            context 'when the database is postgres' do
+              it 'does not disable peer verification' do
+                expect(disables_peer_verification?({ 'ccdb' => { 'db_scheme' => 'postgres' } })).to be(false)
+              end
+            end
+          end
         end
       end
     end
