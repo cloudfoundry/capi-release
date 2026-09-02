@@ -60,6 +60,7 @@ if provider == "s3"
   add_optional(options, "region", l.p("#{scope}.region", nil))
   add_optional(options, "ssl_verify_peer", l.p("#{scope}.ssl_verify_peer", nil))
   add_optional(options, "use_ssl", l.p("#{scope}.use_ssl", nil))
+  add_optional(options, "signature_version", l.p("#{scope}.signature_version", nil))
   add_optional(options, "server_side_encryption", l.p("#{scope}.encryption", nil))
   add_optional(options, "sse_kms_key_id", l.p("#{scope}.x-amz-server-side-encryption-aws-kms-key-id", nil))
   add_optional(options, "assume_role_arn", l.p("#{scope}.assume_role_arn", nil))
