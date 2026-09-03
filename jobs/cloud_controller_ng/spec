@@ -77,7 +77,7 @@ packages:
   - libpq
   - jemalloc
   - mariadb_connector_c
-  - ruby-3.3
+  - ruby-4.0
 
 provides:
 - name: cloud_controller
