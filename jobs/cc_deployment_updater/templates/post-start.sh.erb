@@ -2,13 +2,15 @@
 
 set -ex
 
+source /var/vcap/packages/capi_utils/privdrop_utils.sh
+
 function fix_bundler_home_permissions {
   BUNDLER_DIR1=/tmp/bundler
   BUNDLER_DIR2=/var/vcap/data/cc_deployment_updater/tmp/bundler
-  chpst -u vcap:vcap mkdir -p $BUNDLER_DIR1 $BUNDLER_DIR2
+  run_as_vcap mkdir -p $BUNDLER_DIR1 $BUNDLER_DIR2
   chown vcap:vcap -R $BUNDLER_DIR1 $BUNDLER_DIR2
-  chpst -u vcap:vcap chmod -R go-w $BUNDLER_DIR1 $BUNDLER_DIR2
-  chpst -u vcap:vcap chmod -R +t $BUNDLER_DIR1 $BUNDLER_DIR2
+  run_as_vcap chmod -R go-w $BUNDLER_DIR1 $BUNDLER_DIR2
+  run_as_vcap chmod -R +t $BUNDLER_DIR1 $BUNDLER_DIR2
 }
 
 fix_bundler_home_permissions

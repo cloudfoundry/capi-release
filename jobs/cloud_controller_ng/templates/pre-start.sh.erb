@@ -4,6 +4,7 @@ set -ex
 export LANG="en_US.UTF-8"
 
 source /var/vcap/packages/capi_utils/output_utils.sh
+source /var/vcap/packages/capi_utils/privdrop_utils.sh
 write_output_with_datetime
 
 CC_JOB_DIR="/var/vcap/jobs/cloud_controller_ng"
@@ -14,8 +15,8 @@ export CLOUD_CONTROLLER_NG_CONFIG="${CONFIG_DIR}/cloud_controller_ng.yml"
   # DB migrations, seeding and encryption-key validation run here in pre-start
   # (outside bpm) and open a ccdb connection. Disable MySQL TLS peer
   # verification when no ccdb.ca_cert is set. See the config/bpm.yml template
-  # for the rationale. chpst preserves this exported env for the migrate/seed/
-  # validate scripts.
+  # for the rationale. run_as_vcap preserves this exported env for the
+  # migrate/seed/validate scripts.
   ca_cert_configured = false
   if_p("ccdb.ca_cert") { |ca_cert| ca_cert_configured = !ca_cert.to_s.strip.empty? }
   if p("ccdb.db_scheme") == "mysql" && !ca_cert_configured
@@ -74,8 +75,8 @@ function setup_api_directories {
 
   BUNDLER_DIR1=/tmp/bundler
   BUNDLER_DIR2=/var/vcap/data/cloud_controller_ng/tmp/bundler
-  chpst -u vcap:vcap mkdir -p $BUNDLER_DIR1 $BUNDLER_DIR2
-  chpst -u vcap:vcap chmod -R go-w $BUNDLER_DIR1 $BUNDLER_DIR2
+  run_as_vcap mkdir -p $BUNDLER_DIR1 $BUNDLER_DIR2
+  run_as_vcap chmod -R go-w $BUNDLER_DIR1 $BUNDLER_DIR2
 
   # Configure the core file location
   <% if p("cc.core_file_pattern") %>
@@ -97,19 +98,19 @@ function setup_directories {
 
 function perform_migration {
   pushd "${CC_PACKAGE_DIR}/cloud_controller_ng" > /dev/null
-    chpst -u vcap:vcap "${SCRIPT_DIR}/migrate_db"
+    run_as_vcap "${SCRIPT_DIR}/migrate_db"
   popd > /dev/null
 }
 
 function seed_db {
   pushd "${CC_PACKAGE_DIR}/cloud_controller_ng" > /dev/null
-    chpst -u vcap:vcap "${SCRIPT_DIR}/seed_db"
+    run_as_vcap "${SCRIPT_DIR}/seed_db"
   popd > /dev/null
 }
 
 function validate_encryption_keys {
   pushd "${CC_PACKAGE_DIR}/cloud_controller_ng" > /dev/null
-    chpst -u vcap:vcap "${SCRIPT_DIR}/validate_encryption_keys"
+    run_as_vcap "${SCRIPT_DIR}/validate_encryption_keys"
   popd > /dev/null
 }
 
@@ -130,7 +131,7 @@ function start_bosh_dns_or_consul {
 
 function stack_check() {
   pushd "${CC_PACKAGE_DIR}/cloud_controller_ng" > /dev/null
-    chpst -u vcap:vcap "${SCRIPT_DIR}/stack_check"
+    run_as_vcap "${SCRIPT_DIR}/stack_check"
   popd > /dev/null
 }
 
@@ -140,7 +141,7 @@ function start_consul_agent {
     # If consul is already running, start exits 1
     set +e
     /var/vcap/jobs/consul_agent/bin/pre-start
-    chpst -u vcap:vcap /var/vcap/jobs/consul_agent/bin/agent_ctl start &> /dev/null
+    run_as_vcap /var/vcap/jobs/consul_agent/bin/agent_ctl start &> /dev/null
     set -e
   fi
 }
