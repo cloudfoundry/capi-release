@@ -30,6 +30,7 @@ if provider == "azurebs"
   options["account_key"] = p("#{scope}.azure_storage_access_key")
   add_optional(options, "environment", p("#{scope}.environment", "AzureCloud"))
   add_optional(options, "put_timeout_in_seconds", p("#{scope}.put_timeout_in_seconds", nil))
+  add_optional(options, "http_request_timeout", p("#{scope}.http_request_timeout", nil))
   options = cli_cfg_with_default_timeout(options, 'storage_cli')
 end
 
@@ -40,6 +41,7 @@ if provider == "gcs"
   options["bucket_name"] = p("#{scope}.bucket_name")
   add_optional(options, "storage_class", p("#{scope}.storage_class", nil))
   add_optional(options, "encryption_key", p("#{scope}.encryption_key", nil))
+  add_optional(options, "http_request_timeout", p("#{scope}.http_request_timeout", nil))
 end
 
 if provider == "s3"
@@ -76,6 +78,7 @@ if provider == "s3"
   add_optional(options, "request_checksum_calculation_enabled", p("#{scope}.request_checksum_calculation_enabled", nil))
   add_optional(options, "response_checksum_calculation_enabled", p("#{scope}.response_checksum_calculation_enabled", nil))
   add_optional(options, "uploader_request_checksum_calculation_enabled", p("#{scope}.uploader_request_checksum_calculation_enabled", nil))
+  add_optional(options, "http_request_timeout", p("#{scope}.http_request_timeout", nil))
 end
 
 if provider == "alioss"
@@ -84,8 +87,9 @@ if provider == "alioss"
   options["access_key_secret"] = p("#{scope}.aliyun_accesskey_secret")
   options["endpoint"] = p("#{scope}.aliyun_oss_endpoint")
   options["bucket_name"] = p("#{scope}.aliyun_oss_bucket")
+  add_optional(options, "http_request_timeout", p("#{scope}.http_request_timeout", nil))
 end
-
+  
 
 if provider == "dav"
   options["provider"] = "dav"
