@@ -209,6 +209,33 @@ module Bosh
             end
           end
         end
+
+        describe 'log_audit_events' do
+          context 'when cc.log_audit_events is not set' do
+            it 'defaults to true' do
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['log_audit_events']).to be(true)
+            end
+          end
+
+          context 'when cc.log_audit_events is false' do
+            before { manifest_properties['cc']['log_audit_events'] = false }
+
+            it 'sets log_audit_events to false' do
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['log_audit_events']).to be(false)
+            end
+          end
+
+          context 'when cc.log_audit_events is true' do
+            before { manifest_properties['cc']['log_audit_events'] = true }
+
+            it 'sets log_audit_events to true' do
+              template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))
+              expect(template_hash['log_audit_events']).to be(true)
+            end
+          end
+        end
       end
     end
   end

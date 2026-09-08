@@ -145,6 +145,9 @@ properties:
   cc.db_logging_level:
     default: "debug2"
     description: "Level at which cc database operations will be logged if cc.log_db_queries is set to true."
+  cc.log_audit_events:
+    default: true
+    description: "Log audit events"
 
   cc.thresholds.api.alert_if_above_mb:
     description: "The CC will alert if memory remains above this threshold for 3 monit cycles"

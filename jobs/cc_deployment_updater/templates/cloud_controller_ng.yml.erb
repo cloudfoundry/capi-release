@@ -33,6 +33,8 @@ logging:
   format:
     timestamp: <%= link("cloud_controller_internal").p("cc.logging.format.timestamp") %>
 
+log_audit_events: <%= p("cc.log_audit_events") %>
+
 external_port: <%= link("cloud_controller_internal").p("cc.external_port") %>
 tls_port: <%= link("cloud_controller_internal").p("cc.tls_port") %>
 internal_service_hostname: <%= link("cloud_controller_internal").p("cc.internal_service_hostname") %>
