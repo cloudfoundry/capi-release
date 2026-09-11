@@ -6,3 +6,4 @@ files:
 - capi_utils/pid_utils.sh
 - capi_utils/output_utils.sh
 - capi_utils/monit_utils.sh
+- capi_utils/privdrop_utils.sh

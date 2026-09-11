@@ -3,6 +3,7 @@
 set -ex
 
 source /var/vcap/packages/capi_utils/output_utils.sh
+source /var/vcap/packages/capi_utils/privdrop_utils.sh
 write_output_with_datetime
 
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
@@ -19,8 +20,8 @@ function setup_directories {
   chown -R vcap:vcap "$LOG_DIR"
 
   BUNDLER_DIR=/var/vcap/data/cc_deployment_updater/tmp/bundler
-  chpst -u vcap:vcap bash -c "mkdir -p $BUNDLER_DIR"
-  chpst -u vcap:vcap bash -c "chmod -R go-w $BUNDLER_DIR"
+  run_as_vcap bash -c "mkdir -p $BUNDLER_DIR"
+  run_as_vcap bash -c "chmod -R go-w $BUNDLER_DIR"
 }
 
 function main {

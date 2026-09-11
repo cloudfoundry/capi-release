@@ -3,6 +3,7 @@
 set -ex
 
 source /var/vcap/packages/capi_utils/output_utils.sh
+source /var/vcap/packages/capi_utils/privdrop_utils.sh
 write_output_with_datetime
 
 
@@ -21,8 +22,8 @@ function setup_directories {
   chown vcap:vcap "<%= p("cc.directories.tmpdir") %>"
 
   BUNDLER_DIR="<%= p("cc.directories.tmpdir") %>/bundler"
-  chpst -u vcap:vcap mkdir -p $BUNDLER_DIR
-  chpst -u vcap:vcap chmod -R go-w $BUNDLER_DIR
+  run_as_vcap mkdir -p $BUNDLER_DIR
+  run_as_vcap chmod -R go-w $BUNDLER_DIR
 }
 
 function main {
