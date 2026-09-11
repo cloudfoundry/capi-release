@@ -473,6 +473,43 @@ module Bosh
             end
           end
 
+          context 'when concurrency rate limiting is configured' do
+            before do
+              merged_manifest_properties['cc']['concurrency_rate_limiter'] = {
+                'enabled' => true,
+                'blocking_limit' => 20,
+                'logging_limit' => 10,
+                'redis_connection_pool_size' => 40,
+                'redis_counter_ttl_seconds' => 901
+              }
+            end
+
+            it 'enables concurrency rate limiting' do
+              template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(template_hash['concurrency_rate_limiter']['enabled']).to be(true)
+            end
+
+            it 'sets blocking_limit' do
+              template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(template_hash['concurrency_rate_limiter']['blocking_limit']).to eq(20)
+            end
+
+            it 'sets logging_limit' do
+              template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(template_hash['concurrency_rate_limiter']['logging_limit']).to eq(10)
+            end
+
+            it 'sets redis_connection_pool_size' do
+              template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(template_hash['concurrency_rate_limiter']['redis_connection_pool_size']).to eq(40)
+            end
+
+            it 'sets redis_counter_ttl_seconds' do
+              template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(template_hash['concurrency_rate_limiter']['redis_counter_ttl_seconds']).to eq(901)
+            end
+          end
+
           describe 'enable v2 API' do
             it 'is by default false' do
               template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
