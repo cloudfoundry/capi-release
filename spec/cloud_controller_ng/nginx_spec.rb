@@ -116,6 +116,29 @@ module Bosh
             end
           end
         end
+
+        describe 'nginx_external_endpoints.conf' do
+          let(:template) { job.template('config/nginx_external_endpoints.conf') }
+          let(:manifest_properties) { {} }
+
+          before do
+            @rendered_file = template.render(manifest_properties, consumes: {})
+          end
+
+          context 'when local blobstore is configured' do
+            let(:manifest_properties) { { 'cc' => { 'packages' => { 'blobstore_type' => 'local' } } } }
+
+            it 'does not forbid access to staging endpoints' do
+              expect(@rendered_file).not_to match(%r(location ~ /staging/\s*\{[^}]*return 403))
+            end
+          end
+
+          context 'when no local blobstore is configured' do
+            it 'forbids access to staging endpoints' do
+              expect(@rendered_file).to match(%r(location ~ /staging/\s*\{[^}]*return 403))
+            end
+          end
+        end
       end
     end
   end

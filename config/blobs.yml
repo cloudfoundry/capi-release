@@ -6,10 +6,10 @@ jemalloc/jemalloc-5.3.1.tar.bz2:
   size: 920181
   object_id: 70c25209-2f7b-43c5-48ed-68dd155af980
   sha: sha256:3826bc80232f22ed5c4662f3034f799ca316e819103bdc7bb99018a421706f92
-mariadb_connector_c/mariadb-connector-c-3.3.5-src.tar.gz:
-  size: 1392609
-  object_id: ca059f02-93a8-491b-74cb-44dcc0a59bbc
-  sha: sha256:ca72eb26f6db2befa77e48ff966f71bcd3cb44b33bd8bbb810b65e6d011c1e5c
+mariadb_connector_c/mariadb-connector-c-3.4.8-src.tar.gz:
+  size: 1380411
+  object_id: 652faffa-0c2f-45f1-6b2e-84312cdc7f21
+  sha: sha256:156aed3b49f857d0ac74fb76f1982968bcbfd8382da3f5b6ae71f616729920d7
 nfs-debs/keyutils_1.5.9-8ubuntu1_amd64.deb:
   size: 47054
   object_id: a7207ad8-8660-4e0d-72a1-7fdd605e131d
@@ -98,10 +98,10 @@ postgres/postgresql-18.1.tar.gz:
   size: 29294939
   object_id: 808e5f9e-83b4-4b0f-46dc-3ab4d5036365
   sha: sha256:b0f18c2d6973d2aa023cfc77feda787d7bbe9c31a3977d0f04ac29885fb98ec4
-storage-cli/storage-cli-1.0.1-linux-amd64:
-  size: 61714865
-  object_id: 6432db41-0e3e-423a-7a72-7c811ddb1001
-  sha: sha256:3f6a036bebc8c57ad567365ad9745b5d48908092a3c87c1a64d97f74124eb4f4
+storage-cli/storage-cli-1.0.5-linux-amd64:
+  size: 61867215
+  object_id: b6282bf4-1864-4abf-47e3-a331979db346
+  sha: sha256:6301fd3cc64b01d022415ad1627ea5be2dbf96eaca06d9a268efd9a4e09746a8
 valkey/7.2.14.tar.gz:
   size: 3459331
   object_id: ddd0008e-2cbf-453a-5a34-850c18f4cda1

@@ -2,6 +2,7 @@
 set -e
 
 source /var/vcap/jobs/cloud_controller_ng/bin/ruby_version.sh
+source /var/vcap/packages/capi_utils/privdrop_utils.sh
 
 CC_JOB_DIR="/var/vcap/jobs/cloud_controller_ng"
 CC_PACKAGE_DIR="/var/vcap/packages/cloud_controller_ng"
@@ -12,7 +13,7 @@ export BUNDLE_GEMFILE="${CC_PACKAGE_DIR}/cloud_controller_ng/Gemfile"
 function perform_blobstore_benchmarks {
   echo "Performing blobstore benchmarks"
   pushd "${CC_PACKAGE_DIR}/cloud_controller_ng" > /dev/null
-    chpst -u vcap:vcap bundle exec rake benchmarks:perform_blobstore_benchmark
+    run_as_vcap bundle exec rake benchmarks:perform_blobstore_benchmark
   popd > /dev/null
 }
 

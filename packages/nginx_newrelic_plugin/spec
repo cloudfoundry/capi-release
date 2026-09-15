@@ -1,6 +1,6 @@
 ---
 name: nginx_newrelic_plugin
 dependencies:
-- ruby-3.3
+- ruby-4.0
 files:
 - nginx/newrelic_nginx_agent-1.2.1.tar.gz

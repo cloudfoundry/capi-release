@@ -43,7 +43,7 @@ packages:
   - libpq
   - jemalloc
   - mariadb_connector_c
-  - ruby-3.3
+  - ruby-4.0
 
 consumes:
 - name: database
@@ -147,6 +147,18 @@ properties:
 
   cc.service_operations_create_in_progress_cleanup.frequency_in_seconds:
     description: "How often operations stuck in state 'in progress' should be cleaned up."
+    default: 3600 # 1 hour
+
+  cc.service_operations_update_stuck_in_progress_failed.frequency_in_seconds:
+    description: "How often 'update' operations stuck in state 'in progress' should be marked as 'failed'."
+    default: 3600 # 1 hour
+
+  cc.service_operations_delete_stuck_in_progress_retry.frequency_in_seconds:
+    description: "How often 'delete' operations stuck in state 'in progress' should be retried by re-enqueuing the polling job."
+    default: 3600 # 1 hour
+
+  cc.service_operations_binding_delete_stuck_in_progress_retry.frequency_in_seconds:
+    description: "How often binding 'delete' operations stuck in state 'in progress' should be retried by re-enqueuing the polling job."
     default: 3600 # 1 hour
 
   # One-off backfill - to be removed in a future version.

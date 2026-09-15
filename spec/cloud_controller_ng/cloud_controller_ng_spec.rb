@@ -491,6 +491,29 @@ module Bosh
             end
           end
 
+          describe 'enable async recursive delete' do
+            it 'is by default false for apps and service instances' do
+              template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(template_hash['temporary_enable_async_recursive_delete']['apps']).to be(false)
+              expect(template_hash['temporary_enable_async_recursive_delete']['service_instances']).to be(false)
+            end
+
+            context 'when explicitly enabled for apps and service instances' do
+              before do
+                merged_manifest_properties['cc']['temporary_enable_async_recursive_delete'] = {
+                  'apps' => true,
+                  'service_instances' => true
+                }
+              end
+
+              it 'is true for apps and service instances' do
+                template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+                expect(template_hash['temporary_enable_async_recursive_delete']['apps']).to be(true)
+                expect(template_hash['temporary_enable_async_recursive_delete']['service_instances']).to be(true)
+              end
+            end
+          end
+
           context 'when db connection expiration configuration is present' do
             before do
               merged_manifest_properties['ccdb']['connection_expiration_timeout'] = 3600

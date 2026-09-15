@@ -9,3 +9,12 @@ processes:
     LANG: en_US.UTF-8
     LIBRARY_PATH: /var/vcap/packages/libpq/lib
     NEWRELIC_ENABLE: false
+<%
+  # Disable MySQL TLS peer verification when no ccdb.ca_cert is set. See the
+  # cloud_controller_ng job for the rationale.
+  ca_cert_configured = false
+  if_p("ccdb.ca_cert") { |ca_cert| ca_cert_configured = !ca_cert.to_s.strip.empty? }
+  if p("ccdb.db_scheme") == "mysql" && !ca_cert_configured
+%>
+    MARIADB_TLS_DISABLE_PEER_VERIFICATION: "1"
+<% end %>
