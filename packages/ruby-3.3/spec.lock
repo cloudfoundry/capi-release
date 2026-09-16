@@ -1,4 +1,0 @@
-name: ruby-3.3
-fingerprint: 25a461ce712b47ca8115da90a28a33fb30e5956c5498a076601154f256e56625
-dependencies:
-- rust-1-linux
