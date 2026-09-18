@@ -1114,6 +1114,16 @@ properties:
     description: "The interval in minutes after which a user's available API requests will be reset"
     default: 60
 
+  cc.concurrency_rate_limiter.enabled:
+    description: "Enable concurrency rate limiting for UAA-authenticated endpoints per user or client"
+    default: false
+  cc.concurrency_rate_limiter.blocking_limit:
+    description: "Maximum number of concurrent requests per user before blocking. Takes precedence over logging_limit when active. Use -1 to disable."
+    default: 10
+  cc.concurrency_rate_limiter.logging_limit:
+    description: "Number of concurrent requests per user at which to start logging warnings. Only applies when blocking_limit is disabled (-1). Use -1 to disable."
+    default: 10
+
   cc.max_concurrent_service_broker_requests:
     description: "Maximum number of concurrent requests to service brokers per user. Set to 0 to not limit concurrent requests"
     default: 0
