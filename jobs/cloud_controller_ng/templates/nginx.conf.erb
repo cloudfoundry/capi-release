@@ -85,7 +85,7 @@ limit_req_zone $http_authorization zone=<%= zone['name'] %>:10m rate=<%= zone['l
       proxy_pass http://cloud_controller;
     }
 
-    location ~ /internal/v3/staging/.*/(droplet_completed|build_completed) {
+    location ~ /internal/v3/staging/.*/build_completed {
       proxy_pass http://cloud_controller;
     }
 
