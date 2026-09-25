@@ -1,37 +1,3 @@
-function try_to_curl {
-    local url=$1
-    local max_attempts=$2
-    local interval_in_seconds=$3
-
-    curl -s -k "$url" >/dev/null
-
-    found=$?
-    blobstore_check_attempts=0
-
-    while [ $found -ne 0 ]
-    do
-        sleep $interval_in_seconds
-        blobstore_check_attempts=$((blobstore_check_attempts+1))
-
-        curl -s -k "$url" >/dev/null
-        found=$?
-
-        if [[ blobstore_check_attempts -eq $max_attempts ]]; then
-            echo "Blobstore is not available"
-            exit 1
-        fi
-    done
-}
-
 function wait_for_blobstore {
-    max_attempts=30
-    sleep_length=1
-
-    <% if p('cc.buildpacks.blobstore_type') == 'webdav' %>
-
-    echo "Checking for blobstore availability"
-    try_to_curl "<%= p('cc.buildpacks.webdav_config.private_endpoint') %>" $max_attempts $sleep_length
-    echo "Blobstore is available"
-
-    <% end %>
+    : # no-op: blobstore availability check is not required for storage-cli providers
 }

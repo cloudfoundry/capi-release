@@ -22,4 +22,4 @@ go get code.cloudfoundry.org/locket/cmd/...
 
 } > /tmp/packages
 
-cat /tmp/packages | xargs gosub sync -i src/cloud_controller_ng -i src/github.com/cloudfoundry/blobstore_url_signer
+cat /tmp/packages | xargs gosub sync -i src/cloud_controller_ng

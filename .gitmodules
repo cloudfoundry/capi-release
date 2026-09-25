@@ -1,6 +1,3 @@
-[submodule "src/github.com/cloudfoundry/blobstore_url_signer"]
-	path = src/github.com/cloudfoundry/blobstore_url_signer
-	url = https://github.com/cloudfoundry/blobstore_url_signer
 [submodule "src/cloud_controller_ng"]
 	path = src/cloud_controller_ng
 	url = https://github.com/cloudfoundry/cloud_controller_ng
