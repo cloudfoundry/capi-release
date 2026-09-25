@@ -1,0 +1,97 @@
+<%
+  require 'cgi'
+
+  def yaml_escape(input_string)
+    chars_to_escape = /[:\\"\x00-\x1f\x7f]/
+    chars_needing_quotes = /[ !#'&%*,:>@\[\]\\`{|}]/
+    delimiter = (chars_needing_quotes.match(input_string) ||
+              chars_to_escape.match(input_string)) ? '"' : ''
+    fixed_string = input_string.gsub(/(#{chars_to_escape})/) { |m| "\\x#{'%x' % m.ord}" }
+
+    "#{delimiter}#{fixed_string}#{delimiter}"
+  end
+
+  def validate_database_encryption(current_key_label, keys)
+    return if current_key_label.empty? && keys.empty?
+
+    if keys.none? { | label, _ | label == current_key_label }
+      raise "Error for database_encryption: 'current_key_label' set to '#{current_key_label}', but not present in 'keys' map."
+    end
+  end
+
+  def extract_active_encryption_key_label(keys)
+    return '' if keys.empty?
+    active_keys = keys.select { |key| key['active'] }
+    if active_keys.length == 1
+      return active_keys.first['label']
+    end
+    raise "Error for database_encryption: #{active_keys.length} were marked active. Only one key may be active"
+  end
+%>
+---
+pid_filename: /var/vcap/sys/run/check_cc_database_key/check_cc_database_key.pid
+
+index: <%= spec.index %>
+name: <%= name %>
+
+default_app_ssh_access: <%= link("cloud_controller_internal").p("cc.default_app_ssh_access") %>
+
+logging:
+  file: /var/vcap/sys/log/check_cc_database_key/check_cc_database_key.log
+  level: "<%= p("cc.logging_level", link("cloud_controller_internal").p("cc.logging_level")) %>"
+  max_retries: <%= link("cloud_controller_internal").p("cc.logging_max_retries") %>
+  format:
+    timestamp: <%= link("cloud_controller_internal").p("cc.logging.format.timestamp") %>
+  stdout_sink_enabled: <%= p("cc.stdout_logging_enabled") %>
+
+<% db = link("cloud_controller_db").p("ccdb.databases").find { |db| db["tag"] == "cc" } %>
+<% db_role = link("cloud_controller_db").p("ccdb.roles").find { |role| role["tag"] == "admin" } %>
+<%
+  database_address = nil
+  link('cloud_controller_db').if_p('ccdb.address') do |host|
+    database_address = host
+  end.else do
+    database_address = link('database').instances[0].address
+  end
+%>
+db: &db
+  database:
+    adapter: <%= link("cloud_controller_db").p("ccdb.db_scheme") == "mysql" ? "mysql2" : link("cloud_controller_db").p("ccdb.db_scheme") %>
+    host: <%= database_address %>
+    port: <%= link("cloud_controller_db").p("ccdb.port") %>
+    user: <%= db_role["name"] %>
+    password: <%= yaml_escape(db_role["password"]) %>
+    database: <%= db["name"] %>
+  max_connections: <%= p("ccdb.max_connections", link("cloud_controller_db").p("ccdb.max_connections")) %>
+  pool_timeout: <%= link("cloud_controller_db").p("ccdb.pool_timeout") %>
+  log_level: "<%= p("cc.db_logging_level", link("cloud_controller_internal").p("cc.db_logging_level")) %>"
+  log_db_queries: <%= p("cc.log_db_queries", link("cloud_controller_internal").p("cc.log_db_queries")) %>
+  ssl_verify_hostname: <%= link("cloud_controller_db").p("ccdb.ssl_verify_hostname") %>
+  read_timeout: <%= link("cloud_controller_db").p("ccdb.read_timeout") %>
+  connection_validation_timeout: <%= link("cloud_controller_db").p("ccdb.connection_validation_timeout") %>
+<% link("cloud_controller_db").if_p('ccdb.ca_cert') do %>
+  ca_cert_path: '/var/vcap/jobs/check_cc_database_key/config/certs/db_ca.crt'
+<% end %>
+
+
+db_encryption_key: <%= link("cloud_controller_internal").p("cc.db_encryption_key") %>
+
+<% link("cloud_controller_internal").if_p("cc.database_encryption") do | database_encryption |
+     keys = database_encryption['keys']
+     if keys.is_a?(Array)
+       current_key_label = extract_active_encryption_key_label(keys)
+       keys = keys.reduce({}) do |result, key_hash|
+        result[key_hash['label']] = key_hash['encryption_key']
+        result
+       end
+     elsif keys.is_a?(Hash)
+       current_key_label = database_encryption['current_key_label']
+     end
+
+     validate_database_encryption(current_key_label, keys) unless database_encryption['skip_validation']
+%>
+database_encryption:
+  pbkdf2_hmac_iterations: <%= link("cloud_controller_internal").p("cc.database_encryption.experimental_pbkdf2_hmac_iterations") %>
+  keys: <%= keys.to_json %>
+  current_key_label: <%= current_key_label.inspect %>
+<% end %>
