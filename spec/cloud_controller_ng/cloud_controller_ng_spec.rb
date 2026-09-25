@@ -23,14 +23,8 @@ module Bosh
                 '((diego_ssh_proxy_host_key.public_key_fingerprint))' },
             'cc' =>
               { 'buildpacks' =>
-                { 'blobstore_type' => 'webdav',
-                  'webdav_config' =>
-                    { 'blobstore_timeout' => 5,
-                      'ca_cert' => '((service_cf_internal_ca.certificate))',
-                      'password' => '((blobstore_admin_users_password))',
-                      'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
-                      'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
-                      'username' => 'blobstore-user' } },
+                { 'blobstore_type' => 'storage-cli',
+                  'blobstore_provider' => 'azurebs' },
                 'diego' =>
                 {
                   'file_server_url' => 'http://somewhere'
@@ -45,14 +39,8 @@ module Bosh
                   %w[public_networks dns load_balancer],
                 'default_staging_security_groups' => %w[public_networks dns],
                 'droplets' =>
-                  { 'blobstore_type' => 'webdav',
-                    'webdav_config' =>
-                      { 'blobstore_timeout' => 5,
-                        'ca_cert' => '((service_cf_internal_ca.certificate))',
-                        'password' => '((blobstore_admin_users_password))',
-                        'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
-                        'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
-                        'username' => 'blobstore-user' } },
+                  { 'blobstore_type' => 'storage-cli',
+                    'blobstore_provider' => 'azurebs' },
                 'experimental' => {},
                 'install_buildpacks' =>
                   [{ 'name' => 'staticfile_buildpack', 'package' => 'staticfile-buildpack' },
@@ -69,24 +57,12 @@ module Bosh
                     'private_key' => '((cc_tls.private_key))',
                     'public_cert' => '((cc_tls.certificate))' },
                 'packages' =>
-                  { 'blobstore_type' => 'webdav',
-                    'webdav_config' =>
-                      { 'blobstore_timeout' => 5,
-                        'ca_cert' => '((service_cf_internal_ca.certificate))',
-                        'password' => '((blobstore_admin_users_password))',
-                        'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
-                        'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
-                        'username' => 'blobstore-user' } },
+                  { 'blobstore_type' => 'storage-cli',
+                    'blobstore_provider' => 'azurebs' },
                 'rate_limiter' => {},
                 'resource_pool' =>
-                  { 'blobstore_type' => 'webdav',
-                    'webdav_config' =>
-                      { 'blobstore_timeout' => 5,
-                        'ca_cert' => '((service_cf_internal_ca.certificate))',
-                        'password' => '((blobstore_admin_users_password))',
-                        'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
-                        'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
-                        'username' => 'blobstore-user' } },
+                  { 'blobstore_type' => 'storage-cli',
+                    'blobstore_provider' => 'azurebs' },
                 'security_group_definitions' =>
                   [{ 'name' => 'public_networks',
                      'rules' =>

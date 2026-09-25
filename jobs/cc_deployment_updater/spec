@@ -23,10 +23,6 @@ templates:
   mutual_tls.crt.erb: config/certs/mutual_tls.crt
   mutual_tls.key.erb: config/certs/mutual_tls.key
   credhub_ca.crt.erb: config/certs/credhub_ca.crt
-  packages_ca_cert.pem.erb: config/certs/packages_ca_cert.pem
-  resource_pool_ca_cert.pem.erb: config/certs/resource_pool_ca_cert.pem
-  droplets_ca_cert.pem.erb: config/certs/droplets_ca_cert.pem
-  buildpacks_ca_cert.pem.erb: config/certs/buildpacks_ca_cert.pem
   prom_scraper_config.yml.erb: config/prom_scraper_config.yml
   scrape.crt.erb: config/certs/scrape.crt
   scrape.key.erb: config/certs/scrape.key

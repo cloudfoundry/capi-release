@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-source /var/vcap/packages/capi_utils/cpu_utils.sh
-
-cpu_count=$(( $(cpu_count) * <%= p('blobstore.nginx_workers_per_core') %> ))
-
-exec /var/vcap/packages/nginx_webdav/sbin/nginx \
--c /var/vcap/jobs/blobstore/config/nginx.conf \
--g "worker_processes ${cpu_count};"

@@ -16,12 +16,10 @@ templates:
 
   cloud_controller_ng.yml.erb: config/cloud_controller_ng.yml
   blobstore_waiter.sh.erb: bin/blobstore_waiter.sh
-  buildpacks_ca_cert.pem.erb: config/certs/buildpacks_ca_cert.pem
   cloud_controller_api_health_check.erb: bin/cloud_controller_ng_health_check
   ccng_monit_http_healthcheck.sh.erb: bin/ccng_monit_http_healthcheck
   console.erb: bin/console
   drain.sh.erb: bin/drain
-  droplets_ca_cert.pem.erb: config/certs/droplets_ca_cert.pem
   logcache_tls.crt.erb: config/certs/logcache_tls.crt
   logcache_tls.key.erb: config/certs/logcache_tls.key
   logcache_tls_ca.crt.erb: config/certs/logcache_tls_ca.crt
@@ -43,13 +41,11 @@ templates:
   newrelic_plugin.yml.erb: config/newrelic_plugin.yml
   nginx.conf.erb: config/nginx.conf
   nginx_maintenance.conf.erb: config/nginx_maintenance.conf
-  packages_ca_cert.pem.erb: config/certs/packages_ca_cert.pem
   perform_blobstore_benchmarks.erb: bin/perform_blobstore_benchmarks
   post-start.sh.erb: bin/post-start
   pre-start.sh.erb: bin/pre-start
   public_upload.conf.erb: config/public_upload.conf
   restart_drain.sh.erb: bin/restart_drain
-  resource_pool_ca_cert.pem.erb: config/certs/resource_pool_ca_cert.pem
   shutdown_drain.rb.erb: bin/shutdown_drain
   ruby_version.sh.erb: bin/ruby_version.sh
   seed_db.sh.erb: bin/seed_db
@@ -121,12 +117,6 @@ provides:
   - cc.buildpacks.blobstore_provider
   - cc.buildpacks.blobstore_type
   - cc.buildpacks.buildpack_directory_key
-  - cc.buildpacks.webdav_config.blobstore_timeout
-  - cc.buildpacks.webdav_config.ca_cert
-  - cc.buildpacks.webdav_config.password
-  - cc.buildpacks.webdav_config.private_endpoint
-  - cc.buildpacks.webdav_config.public_endpoint
-  - cc.buildpacks.webdav_config.username
   - cc.cpu_weight_min_memory
   - cc.cpu_weight_max_memory
   - cc.credential_references.interpolate_service_bindings
@@ -145,12 +135,6 @@ provides:
   - cc.droplets.blobstore_provider
   - cc.droplets.blobstore_type
   - cc.droplets.droplet_directory_key
-  - cc.droplets.webdav_config.blobstore_timeout
-  - cc.droplets.webdav_config.ca_cert
-  - cc.droplets.webdav_config.password
-  - cc.droplets.webdav_config.private_endpoint
-  - cc.droplets.webdav_config.public_endpoint
-  - cc.droplets.webdav_config.username
   - cc.external_host
   - cc.external_port
   - cc.external_protocol
@@ -170,23 +154,11 @@ provides:
   - cc.packages.blobstore_type
   - cc.packages.max_package_size
   - cc.packages.max_valid_packages_stored
-  - cc.packages.webdav_config.blobstore_timeout
-  - cc.packages.webdav_config.ca_cert
-  - cc.packages.webdav_config.password
-  - cc.packages.webdav_config.private_endpoint
-  - cc.packages.webdav_config.public_endpoint
-  - cc.packages.webdav_config.username
   - cc.resource_pool.blobstore_provider
   - cc.resource_pool.blobstore_type
   - cc.resource_pool.maximum_size
   - cc.resource_pool.minimum_size
   - cc.resource_pool.resource_directory_key
-  - cc.resource_pool.webdav_config.blobstore_timeout
-  - cc.resource_pool.webdav_config.ca_cert
-  - cc.resource_pool.webdav_config.password
-  - cc.resource_pool.webdav_config.private_endpoint
-  - cc.resource_pool.webdav_config.public_endpoint
-  - cc.resource_pool.webdav_config.username
   - cc.stacks
   - cc.staging_timeout_in_seconds
   - cc.staging_upload_password
@@ -516,26 +488,8 @@ properties:
   cc.resource_pool.connection_config:
     description: "Storage CLI connection configuration"
   cc.resource_pool.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
+    description: "The type of blobstore backing to use. Valid values: ['storage-cli']"
     default: "storage-cli"
-  cc.resource_pool.webdav_config.blobstore_timeout:
-    description: "The timeout in seconds for requests to the blobstore"
-    default: 5
-  cc.resource_pool.webdav_config.public_endpoint:
-    description: "The location of the webdav server eg: https://blobstore.com"
-    default: ""
-  cc.resource_pool.webdav_config.private_endpoint:
-    description: "The location of the webdav server eg: https://blobstore.internal"
-    default: "https://blobstore.service.cf.internal:4443"
-  cc.resource_pool.webdav_config.username:
-    description: "The basic auth user that CC uses to connect to the admin endpoint on webdav"
-    default: ""
-  cc.resource_pool.webdav_config.password:
-    description: "The basic auth password that CC uses to connect to the admin endpoint on webdav"
-    default: ""
-  cc.resource_pool.webdav_config.ca_cert:
-    description: "The ca cert to use when communicating with webdav"
-    default: ""
   cc.resource_pool.minimum_size:
     description: "Minimum size of a resource to add to the pool"
     default: 65536
@@ -552,26 +506,8 @@ properties:
   cc.packages.connection_config:
     description: "Storage CLI connection configuration"
   cc.packages.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
+    description: "The type of blobstore backing to use. Valid values: ['storage-cli']"
     default: "storage-cli"
-  cc.packages.webdav_config.blobstore_timeout:
-    description: "The timeout in seconds for requests to the blobstore"
-    default: 5
-  cc.packages.webdav_config.public_endpoint:
-    description: "The location of the webdav server eg: https://blobstore.com"
-    default: ""
-  cc.packages.webdav_config.private_endpoint:
-    description: "The location of the webdav server eg: https://blobstore.internal"
-    default: "https://blobstore.service.cf.internal:4443"
-  cc.packages.webdav_config.username:
-    description: "The basic auth user that CC uses to connect to the admin endpoint on webdav"
-    default: ""
-  cc.packages.webdav_config.password:
-    description: "The basic auth password that CC uses to connect to the admin endpoint on webdav"
-    default: ""
-  cc.packages.webdav_config.ca_cert:
-    description: "The ca cert to use when communicating with webdav"
-    default: ""
   cc.packages.app_package_directory_key:
     description: "Directory (bucket) used store app packages.  It does not have be pre-created.  Should contain only alphanumeric characters, '-', '_', and '.'"
     default: "cc-packages"
@@ -588,26 +524,8 @@ properties:
   cc.droplets.connection_config:
     description: "Storage CLI connection configuration"
   cc.droplets.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
+    description: "The type of blobstore backing to use. Valid values: ['storage-cli']"
     default: "storage-cli"
-  cc.droplets.webdav_config.blobstore_timeout:
-    description: "The timeout in seconds for requests to the blobstore"
-    default: 5
-  cc.droplets.webdav_config.public_endpoint:
-    description: "The location of the webdav server eg: https://blobstore.com"
-    default: ""
-  cc.droplets.webdav_config.private_endpoint:
-    description: "The location of the webdav server eg: https://blobstore.internal"
-    default: "https://blobstore.service.cf.internal:4443"
-  cc.droplets.webdav_config.username:
-    description: "The basic auth user that CC uses to connect to the admin endpoint on webdav"
-    default: ""
-  cc.droplets.webdav_config.password:
-    description: "The basic auth password that CC uses to connect to the admin endpoint on webdav"
-    default: ""
-  cc.droplets.webdav_config.ca_cert:
-    description: "The ca cert to use when communicating with webdav"
-    default: ""
   cc.droplets.droplet_directory_key:
     description: "Directory (bucket) used store droplets.  It does not have be pre-created.  Should contain only alphanumeric characters, '-', '_', and '.'"
     default: "cc-droplets"
@@ -621,26 +539,8 @@ properties:
   cc.buildpacks.connection_config:
     description: "Storage CLI connection configuration"
   cc.buildpacks.blobstore_type:
-    description: "The type of blobstore backing to use. Valid values: ['webdav', 'storage-cli']"
+    description: "The type of blobstore backing to use. Valid values: ['storage-cli']"
     default: "storage-cli"
-  cc.buildpacks.webdav_config.blobstore_timeout:
-    description: "The timeout in seconds for requests to the blobstore"
-    default: 5
-  cc.buildpacks.webdav_config.public_endpoint:
-    description: "The location of the webdav server eg: https://blobstore.com"
-    default: ""
-  cc.buildpacks.webdav_config.private_endpoint:
-    description: "The location of the webdav server eg: https://blobstore.internal"
-    default: "https://blobstore.service.cf.internal:4443"
-  cc.buildpacks.webdav_config.username:
-    description: "The basic auth user that CC uses to connect to the admin endpoint on webdav"
-    default: ""
-  cc.buildpacks.webdav_config.password:
-    description: "The basic auth password that CC uses to connect to the admin endpoint on webdav"
-    default: ""
-  cc.buildpacks.webdav_config.ca_cert:
-    description: "The ca cert to use when communicating with webdav"
-    default: ""
   cc.buildpacks.buildpack_directory_key:
     description: "Directory (bucket) used store buildpacks.  It does not have be pre-created.  Should contain only alphanumeric characters, '-', '_', and '.'"
     default: "cc-buildpacks"
