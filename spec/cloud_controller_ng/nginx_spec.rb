@@ -131,11 +131,116 @@ module Bosh
             it 'does not forbid access to staging endpoints' do
               expect(@rendered_file).not_to match(%r(location ~ /staging/\s*\{[^}]*return 403))
             end
+
+            it 'allows staging endpoints through to cloud controller' do
+              expect(@rendered_file).to match(%r(location ~ /staging/\s*\{[^}]*proxy_pass\s+http://cloud_controller;))
+            end
           end
 
           context 'when no local blobstore is configured' do
             it 'forbids access to staging endpoints' do
               expect(@rendered_file).to match(%r(location ~ /staging/\s*\{[^}]*return 403))
+            end
+          end
+
+          describe 'allowlist routing' do
+            it 'proxies the v3 API' do
+              expect(@rendered_file).to match(%r(location /v3\s*\{[^}]*proxy_pass\s+http://cloud_controller;))
+            end
+
+            it 'proxies the root document via an exact match' do
+              expect(@rendered_file).to match(%r(location = /\s*\{[^}]*proxy_pass\s+http://cloud_controller;))
+            end
+
+            it 'proxies /v2/info via an exact match' do
+              expect(@rendered_file).to match(%r(location = /v2/info\s*\{[^}]*proxy_pass\s+http://cloud_controller;))
+            end
+
+            it 'proxies /healthz via an exact match' do
+              expect(@rendered_file).to match(%r(location = /healthz\s*\{[^}]*proxy_pass\s+http://cloud_controller;))
+            end
+
+            it 'proxies the public ssh_access internal endpoint (cf ssh)' do
+              expect(@rendered_file).to match(%r(location ~ \^/internal/apps/\[\^/\]\+/ssh_access/\s*\{[^}]*proxy_pass\s+http://cloud_controller;))
+            end
+
+            it 'denies everything else with a 404 catch-all' do
+              expect(@rendered_file).to match(%r(location /\s*\{[^}]*return 404;))
+            end
+          end
+
+          describe 'preserved special cases' do
+            it 'forbids internal endpoints' do
+              expect(@rendered_file).to match(%r(location /internal/v\s*\{[^}]*return 403))
+            end
+
+            it 'keeps the upload locations' do
+              expect(@rendered_file).to include('location ~ /v3/packages/.*/upload')
+              expect(@rendered_file).to include('location ~ /v3/droplets/.*/upload')
+              expect(@rendered_file).to include('location ~ /v2/apps/[^/]+/bits')
+              expect(@rendered_file).to include('include public_upload.conf')
+            end
+
+            it 'keeps the @cc_uploads named location' do
+              expect(@rendered_file).to include('location @cc_uploads')
+            end
+
+            it 'keeps the internal_redirect location' do
+              expect(@rendered_file).to include('location ~ ^/internal_redirect/(.*)')
+            end
+
+            it 'keeps the nginx_status location' do
+              expect(@rendered_file).to match(%r(location /nginx_status\s*\{[^}]*stub_status on;))
+            end
+          end
+
+          describe 'v2 handling' do
+            context 'when temporary_enable_v2 is false (default)' do
+              it 'disables v2 endpoints except /v2/info' do
+                expect(@rendered_file).to match(%r(location ~ /v2\(\?!/info\)\s*\{[^}]*return 404))
+              end
+
+              it 'does not render a /v2 allow block' do
+                expect(@rendered_file).not_to match(%r(location /v2\s*\{[^}]*proxy_pass\s+http://cloud_controller;))
+              end
+            end
+
+            context 'when temporary_enable_v2 is true' do
+              let(:manifest_properties) { { 'cc' => { 'temporary_enable_v2' => true } } }
+
+              it 'does not disable v2 endpoints' do
+                expect(@rendered_file).not_to include('V2 endpoints disabled')
+              end
+
+              it 'allows the v2 API through to cloud controller' do
+                expect(@rendered_file).to match(%r(location /v2\s*\{[^}]*proxy_pass\s+http://cloud_controller;))
+              end
+            end
+          end
+
+          describe 'general rate limiting' do
+            context 'when nginx_rate_limit_general is configured' do
+              let(:manifest_properties) { { 'cc' => { 'nginx_rate_limit_general' => { 'limit' => '100r/s', 'burst' => '500' } } } }
+
+              it 'applies the general limit inside the v3 allow block' do
+                expect(@rendered_file).to match(%r(location /v3\s*\{[^}]*limit_req zone=all burst=500 nodelay;))
+              end
+            end
+
+            context 'when nginx_rate_limit_general is not configured' do
+              it 'does not apply a general limit' do
+                expect(@rendered_file).not_to include('limit_req zone=all')
+              end
+            end
+          end
+
+          describe 'custom rate-limit zones' do
+            let(:manifest_properties) do
+              { 'cc' => { 'nginx_rate_limit_zones' => [{ 'name' => 'apps', 'location' => '/v3/apps', 'burst' => '50' }] } }
+            end
+
+            it 'renders each zone as its own location' do
+              expect(@rendered_file).to match(%r(location /v3/apps\s*\{[^}]*limit_req zone=apps burst=50 nodelay;[^}]*proxy_pass\s+http://cloud_controller;))
             end
           end
         end
