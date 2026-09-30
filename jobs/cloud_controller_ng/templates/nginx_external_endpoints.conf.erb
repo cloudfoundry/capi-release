@@ -4,6 +4,7 @@
   # Allowlist: only the locations below proxy to CC; everything else 404s via the catch-all.
   # Allow blocks are plain-prefix / exact (never ^~) so the upload/ssh_access regex locations
   # keep precedence over them.
+  # Indentation: 2 spaces for all but the first line -> nginx config renders nicely
   proxy_body = +<<~PROXY
     access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-access.log main;
       proxy_buffering             off;
@@ -14,25 +15,44 @@
       proxy_connect_timeout       10;
       proxy_pass                  http://cloud_controller;
   PROXY
+  # base_proxy = proxy body without the general limit. Per-path zones below get their own limit only
+  base_proxy = proxy_body.dup
   if_p('cc.nginx_rate_limit_general') do |general|
     proxy_body << "  limit_req zone=all burst=#{general['burst']} nodelay;\n"
   end
 %>
-location /internal/v {
-  return 403 'Forbidden';
-}
 
-<% unless local_blobstore %>
-location ~ /staging/ {
-  return 403 'Forbidden';
+# Per-path rate-limit zones
+# Note: bad zone config can open access to unwanted paths
+<% if_p("cc.nginx_rate_limit_zones") do %>
+  <% p("cc.nginx_rate_limit_zones").each do |zone| %>
+location <%= zone['location'] %> {
+  <%= base_proxy -%>
+  limit_req zone=<%= zone['name'] %> burst=<%= zone['burst'] %> nodelay;
 }
+  <% end %>
 <% end %>
 
-<% if !p("cc.temporary_enable_v2") %>
-location ~ /v2(?!/info) {
-  return 404 "V2 endpoints disabled";
+location = / {
+  <%= proxy_body -%>
 }
-<% end %>
+
+location = /v3 {
+  <%= proxy_body -%>
+}
+
+location /v3/ {
+  <%= proxy_body -%>
+}
+
+<% if p("cc.temporary_enable_v2") %>
+location = /v2 {
+  <%= proxy_body -%>
+}
+
+location /v2/ {
+  <%= proxy_body -%>
+}
 
 location ~ /v2/apps/[^/]+/bits {
   if ($arg_application_path) { return 422; }
@@ -53,6 +73,11 @@ location ~ /v2/apps/[^/]+/droplet/upload {
   if ($arg_droplet_path) { return 422; }
 
   include public_upload.conf;
+}
+<% end %>
+
+location = /v2/info {
+  <%= proxy_body -%>
 }
 
 location ~ /v3/packages/.*/upload {
@@ -93,53 +118,19 @@ location ~ ^/internal_redirect/(.*){
   proxy_pass $download_url;
 }
 
-# Public /internal path (OAuth, in-app): ssh-proxy uses it for `cf ssh`. Not covered by
-# the /internal/v deny; regex so it outranks the catch-all.
+# Public /internal path (OAuth, in-app): ssh-proxy uses it for `cf ssh`.
 location ~ ^/internal/apps/[^/]+/ssh_access/ {
-  <%= proxy_body %>
+  <%= proxy_body -%>
 }
 
 <% if local_blobstore %>
-location ~ /staging/ {
-  <%= proxy_body %>
+location /staging/ {
+  <%= proxy_body -%>
 }
 <% end %>
-
-location /v3 {
-  <%= proxy_body %>
-}
-
-<% if p("cc.temporary_enable_v2") %>
-location /v2 {
-  <%= proxy_body %>
-}
-<% end %>
-
-location = / {
-  <%= proxy_body %>
-}
-
-location = /v2/info {
-  <%= proxy_body %>
-}
 
 location = /healthz {
-  <%= proxy_body %>
-}
-
-<% if_p("cc.nginx_rate_limit_zones") do %>
-  <% p("cc.nginx_rate_limit_zones").each do |zone| %>
-location <%= zone['location'] %> {
-  limit_req zone=<%= zone['name'] %> burst=<%= zone['burst'] %> nodelay;
-  proxy_pass                  http://cloud_controller;
-}
-  <% end %>
-<% end %>
-
-# Deny by default: anything not explicitly allowed above.
-location / {
-  access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-access.log main;
-  return 404;
+  <%= proxy_body -%>
 }
 
 location /nginx_status {
@@ -149,4 +140,10 @@ location /nginx_status {
 
   allow 127.0.0.1;
   deny all;
+}
+
+# Deny by default: anything not explicitly allowed above.
+location / {
+  access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-access.log main;
+  return 404;
 }
