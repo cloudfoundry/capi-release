@@ -1,46 +1,59 @@
-# Forbid access to internal endpoints
-location /internal/v {
-  return 403 'Forbidden';
-}
+<%
+  local_blobstore = %w[packages droplets buildpacks resource_pool].any? { |type| p("cc.#{type}.blobstore_type") == 'local' }
 
-<% local_blobstore = %w[packages droplets buildpacks resource_pool].any? { |type| p("cc.#{type}.blobstore_type") == 'local' } %>
-<% unless local_blobstore %>
-# Forbid staging endpoints when no local blobstore is configured
-location ~ /staging/ {
-  return 403 'Forbidden';
-}
-<% end %>
-
-# proxy and log all CC traffic
-location / {
-  access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-access.log main;
-  proxy_buffering             off;
-  proxy_set_header            Host $host;
-  proxy_set_header            X-Real_IP $remote_addr;
-  proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for;
-  proxy_redirect              off;
-  proxy_connect_timeout       10;
-  proxy_pass                  http://cloud_controller;
-
-  <% if_p("cc.nginx_rate_limit_general") do %>
-    limit_req zone=all burst=<%= p("cc.nginx_rate_limit_general")['burst'] %> nodelay;
-  <% end %>
-
-  <% if_p("cc.nginx_rate_limit_zones") do %>
-    <% p("cc.nginx_rate_limit_zones").each do |zone| %>
-    location <%= zone['location'] %> {
-      limit_req zone=<%= zone['name'] %> burst=<%= zone['burst'] %> nodelay;
+  # Allowlist: only the locations below proxy to CC; everything else 404s via the catch-all.
+  # Allow blocks are plain-prefix / exact (never ^~) so the upload/ssh_access regex locations
+  # keep precedence over them.
+  # Indentation: 2 spaces for all but the first line -> nginx config renders nicely
+  proxy_body = +<<~PROXY
+    access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-access.log main;
+      proxy_buffering             off;
+      proxy_set_header            Host $host;
+      proxy_set_header            X-Real_IP $remote_addr;
+      proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_redirect              off;
+      proxy_connect_timeout       10;
       proxy_pass                  http://cloud_controller;
-    }
-    <% end %>
+  PROXY
+  # base_proxy = proxy body without the general limit. Per-path zones below get their own limit only
+  base_proxy = proxy_body.dup
+  if_p('cc.nginx_rate_limit_general') do |general|
+    proxy_body << "  limit_req zone=all burst=#{general['burst']} nodelay;\n"
+  end
+%>
+
+<% if_p("cc.nginx_rate_limit_zones") do %>
+# Per-path rate-limit zones
+# Note: bad zone config can open access to unwanted paths and override required config (e.g. for uploads)
+  <% p("cc.nginx_rate_limit_zones").each do |zone| %>
+location <%= zone['location'] %> {
+  <%= base_proxy -%>
+  limit_req zone=<%= zone['name'] %> burst=<%= zone['burst'] %> nodelay;
+}
   <% end %>
+<% end %>
+
+# Standard CF API paths
+location = / {
+  <%= proxy_body -%>
 }
 
-<% if !p("cc.temporary_enable_v2") %>
-location ~ /v2(?!/info) {
-  return 404 "V2 endpoints disabled";
+location = /v3 {
+  <%= proxy_body -%>
 }
-<% end %>
+
+location /v3/ {
+  <%= proxy_body -%>
+}
+
+<% if p("cc.temporary_enable_v2") %>
+location = /v2 {
+  <%= proxy_body -%>
+}
+
+location /v2/ {
+  <%= proxy_body -%>
+}
 
 location ~ /v2/apps/[^/]+/bits {
   if ($arg_application_path) { return 422; }
@@ -61,6 +74,11 @@ location ~ /v2/apps/[^/]+/droplet/upload {
   if ($arg_droplet_path) { return 422; }
 
   include public_upload.conf;
+}
+<% end %>
+
+location = /v2/info {
+  <%= proxy_body -%>
 }
 
 location ~ /v3/packages/.*/upload {
@@ -87,18 +105,19 @@ location @cc_uploads {
   proxy_pass http://cloud_controller;
 }
 
-location ~ ^/internal_redirect/(.*){
-# only allow internal redirects
-  internal;
+# Public /internal path (OAuth, in-app): ssh-proxy uses it for `cf ssh`.
+location ~ ^/internal/apps/[^/]+/ssh_access/ {
+  <%= proxy_body -%>
+}
 
-  set $download_url $1;
+<% if local_blobstore %>
+location /staging/ {
+  <%= proxy_body -%>
+}
+<% end %>
 
-#have to manualy pass along auth header
-  set $auth_header $upstream_http_x_auth;
-  proxy_set_header Authorization $auth_header;
-
-# Download the file and send it to client
-  proxy_pass $download_url;
+location = /healthz {
+  <%= proxy_body -%>
 }
 
 location /nginx_status {
@@ -108,4 +127,11 @@ location /nginx_status {
 
   allow 127.0.0.1;
   deny all;
+}
+
+# Deny by default: anything not explicitly allowed above.
+location / {
+  access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-access.log main;
+  default_type application/json;
+  return 404 '{"errors":[{"detail":"Unknown request","title":"CF-NotFound","code":10000}]}';
 }
