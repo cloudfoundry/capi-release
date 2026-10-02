@@ -184,7 +184,7 @@ limit_req_zone $http_authorization zone=<%= zone['name'] %>:10m rate=<%= zone['l
   <% if p('cc.use_status_check') %>
   # This block handles the /internal/v4/status endpoint for health checks, which is called by ccng_monit_http_healthcheck.
   server {
-    listen 9021;
+    listen 127.0.0.1:9021;
     server_name _;
     server_name_in_redirect off;
 
