@@ -920,6 +920,17 @@ module Bosh
               expect(yaml['storage_cli_config_file_resource_pool']).to eq('/var/vcap/jobs/cloud_controller_ng/config/storage_cli_config_resource_pool.json')
             end
           end
+
+          describe 'webdav_config removal' do
+            let(:template) { job.template('config/cloud_controller_ng.yml') }
+
+            it 'does not render webdav_config for any blobstore scope' do
+              yaml = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              %w[packages droplets buildpacks resource_pool].each do |scope|
+                expect(yaml[scope]).not_to have_key('webdav_config')
+              end
+            end
+          end
         end
       end
     end

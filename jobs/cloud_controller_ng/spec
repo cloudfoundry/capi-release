@@ -15,7 +15,6 @@ templates:
   post-restore-unlock.sh.erb: bin/bbr/post-restore-unlock
 
   cloud_controller_ng.yml.erb: config/cloud_controller_ng.yml
-  blobstore_waiter.sh.erb: bin/blobstore_waiter.sh
   cloud_controller_api_health_check.erb: bin/cloud_controller_ng_health_check
   ccng_monit_http_healthcheck.sh.erb: bin/ccng_monit_http_healthcheck
   console.erb: bin/console
