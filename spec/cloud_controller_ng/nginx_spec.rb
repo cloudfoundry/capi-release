@@ -182,10 +182,6 @@ module Bosh
               expect(@rendered_file).to include('location @cc_uploads')
             end
 
-            it 'keeps the internal_redirect location' do
-              expect(@rendered_file).to include('location ~ ^/internal_redirect/(.*)')
-            end
-
             it 'keeps the nginx_status location' do
               expect(@rendered_file).to match(%r(location /nginx_status\s*\{[^}]*stub_status on;))
             end

@@ -105,20 +105,6 @@ location @cc_uploads {
   proxy_pass http://cloud_controller;
 }
 
-location ~ ^/internal_redirect/(.*){
-# only allow internal redirects
-  internal;
-
-  set $download_url $1;
-
-#have to manualy pass along auth header
-  set $auth_header $upstream_http_x_auth;
-  proxy_set_header Authorization $auth_header;
-
-# Download the file and send it to client
-  proxy_pass $download_url;
-}
-
 # Public /internal path (OAuth, in-app): ssh-proxy uses it for `cf ssh`.
 location ~ ^/internal/apps/[^/]+/ssh_access/ {
   <%= proxy_body -%>
