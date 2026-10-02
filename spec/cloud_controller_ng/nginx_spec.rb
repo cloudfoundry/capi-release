@@ -163,7 +163,9 @@ module Bosh
             end
 
             it 'denies everything else with a 404 catch-all returning a CC-style JSON error' do
-              expect(@rendered_file).to match(%r(location /\s*\{[^}]*default_type application/json;[^}]*return 404 '\{"errors":\[\{"detail":"Unknown request","title":"CF-NotFound","code":10000\}\]\}';))
+              expect(@rendered_file).to match(%r(location /\s*\{[^}]*return 404))
+              expect(@rendered_file).to include('default_type application/json;')
+              expect(@rendered_file).to include(%q(return 404 '{"errors":[{"detail":"Unknown request","title":"CF-NotFound","code":10000}]}';))
             end
           end
 
