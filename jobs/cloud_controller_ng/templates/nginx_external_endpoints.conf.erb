@@ -22,9 +22,9 @@
   end
 %>
 
-# Per-path rate-limit zones
-# Note: bad zone config can open access to unwanted paths
 <% if_p("cc.nginx_rate_limit_zones") do %>
+# Per-path rate-limit zones
+# Note: bad zone config can open access to unwanted paths and override required config (e.g. for uploads)
   <% p("cc.nginx_rate_limit_zones").each do |zone| %>
 location <%= zone['location'] %> {
   <%= base_proxy -%>
@@ -33,6 +33,7 @@ location <%= zone['location'] %> {
   <% end %>
 <% end %>
 
+# Standard CF API paths
 location = / {
   <%= proxy_body -%>
 }
