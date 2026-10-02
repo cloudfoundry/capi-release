@@ -85,6 +85,14 @@ limit_req_zone $http_authorization zone=<%= zone['name'] %>:10m rate=<%= zone['l
       proxy_pass http://cloud_controller;
     }
 
+    # SSH Proxy checks whether a user may ssh into an app container.
+    # Served here so the call can be authenticated via mutual TLS.
+    # The same path is also still served (OAuth-authenticated) via the public
+    # listeners for backwards compatibility during a rolling deploy.
+    location ~ /internal/apps/.*/ssh_access/.* {
+      proxy_pass http://cloud_controller;
+    }
+
     location ~ /internal/v3/staging/.*/(droplet_completed|build_completed) {
       proxy_pass http://cloud_controller;
     }
