@@ -49,15 +49,6 @@ module Bosh
           }
         end
 
-        let(:webdav_config) do
-          { 'blobstore_timeout' => 5,
-            'ca_cert' => '((service_cf_internal_ca.certificate))',
-            'password' => '((blobstore_admin_users_password))',
-            'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
-            'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
-            'username' => 'blobstore-user' }
-        end
-
         let(:properties) do
           {
             'router' => { 'route_services_secret' => '((router_route_services_secret))' },
@@ -81,25 +72,25 @@ module Bosh
                 'minimum_size' => 65_536,
                 'maximum_size' => 536_870_912,
                 'resource_directory_key' => 'cc-resources',
-                'blobstore_type' => 'webdav',
-                'webdav_config' => webdav_config
+                'blobstore_type' => 'storage-cli',
+                'blobstore_provider' => 'azurebs'
               },
               'packages' => {
                 'min_package_size' => 65_536,
                 'max_package_size' => 536_870_912,
                 'app_package_directory_key' => 'cc-packages',
-                'blobstore_type' => 'webdav',
-                'webdav_config' => webdav_config
+                'blobstore_type' => 'storage-cli',
+                'blobstore_provider' => 'azurebs'
               },
               'droplets' => {
                 'droplet_directory_key' => 'cc-droplets',
-                'blobstore_type' => 'webdav',
-                'webdav_config' => webdav_config
+                'blobstore_type' => 'storage-cli',
+                'blobstore_provider' => 'azurebs'
               },
               'buildpacks' => {
                 'buildpack_directory_key' => 'cc-buildpacks',
-                'blobstore_type' => 'webdav',
-                'webdav_config' => webdav_config
+                'blobstore_type' => 'storage-cli',
+                'blobstore_provider' => 'azurebs'
 
               },
               'credential_references' => {

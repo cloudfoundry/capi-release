@@ -23,14 +23,8 @@ module Bosh
                 '((diego_ssh_proxy_host_key.public_key_fingerprint))' },
             'cc' =>
               { 'buildpacks' =>
-                { 'blobstore_type' => 'webdav',
-                  'webdav_config' =>
-                    { 'blobstore_timeout' => 5,
-                      'ca_cert' => '((service_cf_internal_ca.certificate))',
-                      'password' => '((blobstore_admin_users_password))',
-                      'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
-                      'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
-                      'username' => 'blobstore-user' } },
+                { 'blobstore_type' => 'storage-cli',
+                  'blobstore_provider' => 'azurebs' },
                 'diego' =>
                 {
                   'file_server_url' => 'http://somewhere'
@@ -45,14 +39,8 @@ module Bosh
                   %w[public_networks dns load_balancer],
                 'default_staging_security_groups' => %w[public_networks dns],
                 'droplets' =>
-                  { 'blobstore_type' => 'webdav',
-                    'webdav_config' =>
-                      { 'blobstore_timeout' => 5,
-                        'ca_cert' => '((service_cf_internal_ca.certificate))',
-                        'password' => '((blobstore_admin_users_password))',
-                        'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
-                        'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
-                        'username' => 'blobstore-user' } },
+                  { 'blobstore_type' => 'storage-cli',
+                    'blobstore_provider' => 'azurebs' },
                 'experimental' => {},
                 'install_buildpacks' =>
                   [{ 'name' => 'staticfile_buildpack', 'package' => 'staticfile-buildpack' },
@@ -69,24 +57,12 @@ module Bosh
                     'private_key' => '((cc_tls.private_key))',
                     'public_cert' => '((cc_tls.certificate))' },
                 'packages' =>
-                  { 'blobstore_type' => 'webdav',
-                    'webdav_config' =>
-                      { 'blobstore_timeout' => 5,
-                        'ca_cert' => '((service_cf_internal_ca.certificate))',
-                        'password' => '((blobstore_admin_users_password))',
-                        'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
-                        'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
-                        'username' => 'blobstore-user' } },
+                  { 'blobstore_type' => 'storage-cli',
+                    'blobstore_provider' => 'azurebs' },
                 'rate_limiter' => {},
                 'resource_pool' =>
-                  { 'blobstore_type' => 'webdav',
-                    'webdav_config' =>
-                      { 'blobstore_timeout' => 5,
-                        'ca_cert' => '((service_cf_internal_ca.certificate))',
-                        'password' => '((blobstore_admin_users_password))',
-                        'private_endpoint' => 'https://blobstore.service.cf.internal:4443',
-                        'public_endpoint' => 'https://blobstore.brook-sentry.capi.land',
-                        'username' => 'blobstore-user' } },
+                  { 'blobstore_type' => 'storage-cli',
+                    'blobstore_provider' => 'azurebs' },
                 'security_group_definitions' =>
                   [{ 'name' => 'public_networks',
                      'rules' =>
@@ -942,6 +918,17 @@ module Bosh
               expect(yaml['storage_cli_config_file_packages']).to eq('/var/vcap/jobs/cloud_controller_ng/config/storage_cli_config_packages.json')
               expect(yaml['storage_cli_config_file_buildpacks']).to eq('/var/vcap/jobs/cloud_controller_ng/config/storage_cli_config_buildpacks.json')
               expect(yaml['storage_cli_config_file_resource_pool']).to eq('/var/vcap/jobs/cloud_controller_ng/config/storage_cli_config_resource_pool.json')
+            end
+          end
+
+          describe 'webdav_config removal' do
+            let(:template) { job.template('config/cloud_controller_ng.yml') }
+
+            it 'does not render webdav_config for any blobstore scope' do
+              yaml = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              %w[packages droplets buildpacks resource_pool].each do |scope|
+                expect(yaml[scope]).not_to have_key('webdav_config')
+              end
             end
           end
         end
