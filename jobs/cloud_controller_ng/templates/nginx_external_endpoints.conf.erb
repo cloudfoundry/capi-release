@@ -145,5 +145,6 @@ location /nginx_status {
 # Deny by default: anything not explicitly allowed above.
 location / {
   access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-access.log main;
-  return 404;
+  default_type application/json;
+  return 404 '{"errors":[{"detail":"Unknown request","title":"CF-NotFound","code":10000}]}';
 }

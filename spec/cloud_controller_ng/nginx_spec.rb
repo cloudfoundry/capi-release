@@ -162,8 +162,8 @@ module Bosh
               expect(@rendered_file).to match(%r(location ~ \^/internal/apps/\[\^/\]\+/ssh_access/\s*\{[^}]*proxy_pass\s+http://cloud_controller;))
             end
 
-            it 'denies everything else with a 404 catch-all' do
-              expect(@rendered_file).to match(%r(location /\s*\{[^}]*return 404;))
+            it 'denies everything else with a 404 catch-all returning a CC-style JSON error' do
+              expect(@rendered_file).to match(%r(location /\s*\{[^}]*default_type application/json;[^}]*return 404 '\{"errors":\[\{"detail":"Unknown request","title":"CF-NotFound","code":10000\}\]\}';))
             end
           end
 
