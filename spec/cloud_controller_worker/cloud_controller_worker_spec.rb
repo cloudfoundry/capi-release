@@ -128,6 +128,30 @@ module Bosh
 
         let(:template) { job.template('config/cloud_controller_ng.yml') }
 
+        it 'renders dedicated provisioning credentials and instance trust only when explicitly enabled' do
+          manifest_properties['cc']['service_accounts'] = {
+            'provisioning_enabled' => true,
+            'runtime_enabled' => false,
+            'management_client_id' => 'account-manager',
+            'management_client_secret' => 'manager-secret',
+            'identity_ca' => "-----BEGIN CERTIFICATE-----\nidentity-ca\n-----END CERTIFICATE-----",
+            'token_endpoint' => 'https://uaa.example.test/oauth/token/mtls'
+          }
+          result = YAML.safe_load(template.render(manifest_properties, consumes: links))
+          expect(result['service_account_provisioning']).to eq(
+            'client_id' => 'account-manager', 'client_secret' => 'manager-secret',
+            'identity_ca' => manifest_properties['cc']['service_accounts']['identity_ca']
+          )
+          expect(result['service_account_runtime_enabled']).to be(false)
+          expect(result['service_account_token_endpoint']).to eq('https://uaa.example.test/oauth/token/mtls')
+        end
+
+        it 'keeps service account runtime and provisioning disabled by default' do
+          result = YAML.safe_load(template.render(manifest_properties, consumes: links))
+          expect(result['service_account_runtime_enabled']).to be(false)
+          expect(result).not_to have_key('service_account_provisioning')
+        end
+
         it 'creates the cloud_controller_ng.yml config file' do
           expect do
             YAML.safe_load(template.render(manifest_properties, consumes: links))
