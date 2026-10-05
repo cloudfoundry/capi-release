@@ -314,6 +314,10 @@ credential_references:
   interpolate_service_bindings: <%= p("cc.credential_references.interpolate_service_bindings") %>
 
 # App staging parameters
+service_account_provisioning_enabled: <%= p('cc.service_accounts.provisioning_enabled') %>
+service_account_runtime_enabled: <%= p('cc.service_accounts.runtime_enabled') %>
+service_account_token_endpoint: <%= yaml_escape(p('cc.service_accounts.token_endpoint')) %>
+
 staging:
   legacy_md5_buildpack_paths_enabled: <%= p("cc.legacy_md5_buildpack_paths_enabled") %>
   timeout_in_seconds: <%= p("cc.staging_timeout_in_seconds") %>
