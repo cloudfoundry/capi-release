@@ -68,6 +68,24 @@ consumes:
   optional: true
 
 properties:
+  cc.service_accounts.provisioning_enabled:
+    description: Enable dedicated managed service account client reconciliation in workers.
+    default: false
+  cc.service_accounts.runtime_enabled:
+    description: Enable typed account runtime identity only after all BBS/rep/cells support it.
+    default: false
+  cc.service_accounts.token_endpoint:
+    description: HTTPS UAA certificate-authenticated token endpoint exposed to bound workloads.
+    default: ""
+  cc.service_accounts.management_client_id:
+    description: Dedicated UAA client with managed account namespace client-management permissions.
+    default: ""
+  cc.service_accounts.management_client_secret:
+    description: Secret of the dedicated UAA account-management client; never exposed to workloads.
+    default: ""
+  cc.service_accounts.identity_ca:
+    description: Instance identity CA PEM trusted for exact account DNS SAN authentication.
+    default: ""
   ssl.skip_cert_verify:
     description: "specifies that the job is allowed to skip ssl cert verification"
     default: false
@@ -599,4 +617,3 @@ properties:
                   when applying manifests.  If a service broker fails to complete a service binding request
                   before the specified duration, the manifest job will fail."
     default: 60
-

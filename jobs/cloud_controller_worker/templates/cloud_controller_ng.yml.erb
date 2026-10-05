@@ -167,6 +167,15 @@ uaa:
   client_timeout: <%= cc_internal.p("cc.uaa.client_timeout")%>
   <% end %>
 
+service_account_runtime_enabled: <%= p('cc.service_accounts.runtime_enabled') %>
+service_account_token_endpoint: <%= yaml_escape(p('cc.service_accounts.token_endpoint')) %>
+<% if p('cc.service_accounts.provisioning_enabled') %>
+service_account_provisioning:
+  client_id: <%= yaml_escape(p('cc.service_accounts.management_client_id')) %>
+  client_secret: <%= yaml_escape(p('cc.service_accounts.management_client_secret')) %>
+  identity_ca: <%= p('cc.service_accounts.identity_ca').to_json %>
+<% end %>
+
 # App staging parameters
 staging:
   timeout_in_seconds: <%= p("cc.staging_timeout_in_seconds") %>
