@@ -142,6 +142,18 @@ module Bosh
         describe 'config/cloud_controller_ng.yml' do
           let(:template) { job.template('config/cloud_controller_ng.yml') }
 
+          it 'renders explicit service account gates and discovery without exposing management credentials' do
+            merged_manifest_properties['cc']['service_accounts'] = {
+              'provisioning_enabled' => true, 'runtime_enabled' => true,
+              'token_endpoint' => 'https://uaa.example.test/oauth/token/mtls'
+            }
+            result = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+            expect(result['service_account_provisioning_enabled']).to be(true)
+            expect(result['service_account_runtime_enabled']).to be(true)
+            expect(result['service_account_token_endpoint']).to eq('https://uaa.example.test/oauth/token/mtls')
+            expect(result).not_to have_key('service_account_provisioning')
+          end
+
           it 'creates the cloud_controller_ng.yml config file' do
             expect do
               YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
