@@ -37,8 +37,8 @@ last_ok_response=$(date +%s)
 while true; do
   set +e
   readiness_code=$(curl --fail -sS -o /dev/null -w "%{http_code}" --max-time 2 -A "ccng_monit_http_healthcheck" "${READINESS_URL}")
-  set -e
   status=$?
+  set -e
 
   now=$(date +%s)
   elapsed=$((now - last_ok_response))
@@ -57,7 +57,7 @@ while true; do
 
   if [[ "$readiness_code" == "503" ]]; then
     echo "$(date --rfc-3339=ns) ccng_monit_http_healthcheck: readiness endpoint returned 503 (unhealthy), exiting to trigger restart"
-    exit $status
+    exit 1
   elif [[ "$readiness_code" == "429" ]]; then
     echo "$(date --rfc-3339=ns) ccng_monit_http_healthcheck: readiness endpoint returned 429 (busy), not restarting"
     # Do not exit, just log and continue
