@@ -19,10 +19,6 @@ templates:
   console.erb: bin/console
   post-start.sh.erb: bin/post-start
   pre-start.sh.erb: bin/pre-start
-  buildpacks_ca_cert.pem.erb: config/certs/buildpacks_ca_cert.pem
-  droplets_ca_cert.pem.erb: config/certs/droplets_ca_cert.pem
-  packages_ca_cert.pem.erb: config/certs/packages_ca_cert.pem
-  resource_pool_ca_cert.pem.erb: config/certs/resource_pool_ca_cert.pem
   shutdown_drain.rb.erb: bin/shutdown_drain
   mutual_tls_ca.crt.erb: config/certs/mutual_tls_ca.crt
   mutual_tls.crt.erb: config/certs/mutual_tls.crt

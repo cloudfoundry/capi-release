@@ -1,0 +1,9 @@
+---
+processes:
+- name: nginx
+  executable: /var/vcap/jobs/blobstore/bin/blobstore_nginx
+  additional_volumes:
+    - path: /var/vcap/store/shared
+      writable: true
+  ephemeral_disk: true
+  persistent_disk: true
