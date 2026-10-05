@@ -1,0 +1,41 @@
+---
+name: check_cc_database_key
+
+description: "Check if Cloud Controller database rows need re-encryption with the current key"
+
+templates:
+  bpm.yml.erb: config/bpm.yml
+  bin/run.erb: bin/run
+  cloud_controller_ng.yml.erb: config/cloud_controller_ng.yml
+  ruby_version.sh.erb: bin/ruby_version.sh
+  db_ca.crt.erb: config/certs/db_ca.crt
+
+packages:
+  - capi_utils
+  - cloud_controller_ng
+  - libpq
+  - jemalloc
+  - mariadb_connector_c
+  - ruby-4.0
+
+consumes:
+- name: cloud_controller_db
+  type: cloud_controller_db
+- name: database
+  type: database
+  optional: true
+- name: cloud_controller_internal
+  type: cloud_controller_internal
+
+properties:
+  cc.logging_level:
+    description: "If provided, overrides cc.logging_level from cloud_controller_internal link"
+  cc.log_db_queries:
+    description: "If provided, overrides cc.log_db_queries from cloud_controller_internal link"
+  cc.db_logging_level:
+    description: "If provided, overrides cc.db_logging_level from cloud_controller_internal link"
+  cc.stdout_logging_enabled:
+    default: true
+    description: "Enable logging to stdout"
+  ccdb.max_connections:
+    description: "If provided, overrides ccdb.max_connections from cloud_controller_db link"
