@@ -60,6 +60,12 @@ consumes:
   optional: true
 
 properties:
+  cc.service_accounts.runtime_enabled:
+    description: Enable typed account identity in clock reconciliation after runtime rollout.
+    default: false
+  cc.service_accounts.token_endpoint:
+    description: HTTPS UAA certificate-authenticated token endpoint for account discovery.
+    default: ""
   ssl.skip_cert_verify:
     description: "specifies that the job is allowed to skip ssl cert verification"
     default: false

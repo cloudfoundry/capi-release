@@ -223,6 +223,9 @@ uaa:
   <% end %>
 
 # App staging parameters
+service_account_runtime_enabled: <%= p('cc.service_accounts.runtime_enabled') %>
+service_account_token_endpoint: <%= yaml_escape(p('cc.service_accounts.token_endpoint')) %>
+
 staging:
   timeout_in_seconds: <%= p("cc.staging_timeout_in_seconds") %>
   auth:
