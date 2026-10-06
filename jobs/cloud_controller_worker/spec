@@ -4,6 +4,7 @@ name: cloud_controller_worker
 description: "Cloud Controller worker processes background tasks submitted via the."
 
 templates:
+  bin/blobstore_waiter.sh.erb: bin/blobstore_waiter.sh
   bpm.yml.erb: config/bpm.yml
   bin/cloud_controller_worker.erb: bin/cloud_controller_worker
   pre-backup-lock.sh.erb: bin/bbr/pre-backup-lock

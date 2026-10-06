@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 source /var/vcap/jobs/cloud_controller_worker/bin/ruby_version.sh
+source /var/vcap/jobs/cloud_controller_worker/bin/blobstore_waiter.sh
+
+wait_for_blobstore
 
 <% if link("cloud_controller_internal").p('cc.experimental.use_yjit_compiler') %>
 export RUBYOPT='--yjit'
