@@ -142,6 +142,17 @@ module Bosh
         describe 'config/cloud_controller_ng.yml' do
           let(:template) { job.template('config/cloud_controller_ng.yml') }
 
+          it 'renders an unlimited service account creation budget by default' do
+            result = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+            expect(result['service_account_creation_limit']).to eq(-1)
+          end
+
+          it 'renders the foundation-wide non-admin service account creation budget' do
+            merged_manifest_properties['cc']['service_accounts'] = { 'creation_limit' => 25 }
+            result = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+            expect(result['service_account_creation_limit']).to eq(25)
+          end
+
           it 'renders explicit service account gates and discovery without exposing management credentials' do
             merged_manifest_properties['cc']['service_accounts'] = {
               'provisioning_enabled' => true, 'runtime_enabled' => true,
