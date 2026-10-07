@@ -59,7 +59,7 @@ server {
 # Internal server
 server {
   listen      <%= p('blobstore.tls.port') %> ssl;
-  server_name blobstore.service.cf.internal;
+  server_name <%= p('blobstore.internal_hostname', 'blobstore.service.cf.internal') %>;
   ssl_certificate     /var/vcap/jobs/blobstore/ssl/blobstore.crt;
   ssl_certificate_key /var/vcap/jobs/blobstore/ssl/blobstore.key;
 

@@ -4,7 +4,7 @@ name: cloud_controller_ng
 description: "The Cloud Controller provides primary Cloud Foundry API that is by the CF CLI. The Cloud Controller uses a database to keep tables for organizations, spaces, apps, services, service instances, user roles, and more. Typically multiple instances of Cloud Controller are load balanced."
 
 templates:
-  bin/blobstore_waiter.sh.erb: bin/blobstore_waiter.sh
+  blobstore_waiter.sh.erb: bin/blobstore_waiter.sh
   bin/cloud_controller_ng.erb: bin/cloud_controller_ng
   bin/local_worker.erb: bin/local_worker
   bin/nginx_newrelic_plugin.erb: bin/nginx_newrelic_plugin
@@ -218,6 +218,10 @@ properties:
   ssl.skip_cert_verify:
     description: "specifies that the job is allowed to skip ssl cert verification"
     default: false
+
+  blobstore.internal_hostname:
+    description: "Internal hostname used by the singleton blobstore"
+    default: "blobstore.service.cf.internal"
 
   system_domain:
     description: "Domain reserved for CF operator, base URL where the login, uaa, and other non-user apps listen"

@@ -376,6 +376,56 @@ module Bosh
             expect(template_hash['default_app_lifecycle']).to eq('cnb')
           end
         end
+
+        describe 'bin/blobstore_waiter.sh' do
+          let(:template) { job.template('bin/blobstore_waiter.sh') }
+
+          it 'does not wait for non-DAV blobstores' do
+            rendered_template = template.render(manifest_properties, consumes: links)
+
+            expect(rendered_template).not_to include('Checking for blobstore availability')
+            expect(rendered_template).not_to include('blobstore.service.cf.internal')
+          end
+
+          it 'waits for the internal singleton DAV blobstore endpoint' do
+            manifest_properties['cc']['buildpacks']['blobstore_provider'] = 'dav'
+            manifest_properties['cc']['buildpacks']['connection_config'] = {
+              'private_endpoint' => 'https://blobstore.service.cf.internal:4443'
+            }
+
+            rendered_template = template.render(manifest_properties, consumes: links)
+
+            expect(rendered_template).to include('Checking for blobstore availability')
+            expect(rendered_template).to include('try_to_curl "https://blobstore.service.cf.internal:4443" $max_attempts $sleep_length')
+          end
+
+          it 'waits for the configured internal singleton DAV blobstore hostname' do
+            manifest_properties['blobstore'] = {
+              'internal_hostname' => 'blobstore.service.custom.internal'
+            }
+            manifest_properties['cc']['buildpacks']['blobstore_provider'] = 'dav'
+            manifest_properties['cc']['buildpacks']['connection_config'] = {
+              'private_endpoint' => 'https://blobstore.service.custom.internal:4443'
+            }
+
+            rendered_template = template.render(manifest_properties, consumes: links)
+
+            expect(rendered_template).to include('Checking for blobstore availability')
+            expect(rendered_template).to include('try_to_curl "https://blobstore.service.custom.internal:4443" $max_attempts $sleep_length')
+          end
+
+          it 'does not wait for an external DAV blobstore endpoint' do
+            manifest_properties['cc']['buildpacks']['blobstore_provider'] = 'dav'
+            manifest_properties['cc']['buildpacks']['connection_config'] = {
+              'private_endpoint' => 'https://external-blobstore.example.com:4443'
+            }
+
+            rendered_template = template.render(manifest_properties, consumes: links)
+
+            expect(rendered_template).not_to include('Checking for blobstore availability')
+            expect(rendered_template).not_to include('external-blobstore.example.com:4443')
+          end
+        end
       end
     end
   end
