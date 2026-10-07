@@ -243,6 +243,9 @@ consumes:
   optional: true
 
 properties:
+  cc.service_accounts.creation_limit:
+    description: Foundation-wide maximum successful service account creations per non-admin authenticated principal over a rolling seven-day window. Platform admins are exempt; -1 means unlimited and 0 prevents non-admin creation. Deletion does not refund budget.
+    default: -1
   cc.service_accounts.provisioning_enabled:
     description: Enable asynchronous service account client reconciliation requests.
     default: false
