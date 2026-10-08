@@ -27,10 +27,13 @@ function wait_for_blobstore {
     max_attempts=30
     sleep_length=1
 
-    <% if p('cc.buildpacks.blobstore_type') == 'webdav' %>
+    <% endpoint = (p('cc.buildpacks.connection_config', nil) || {}).fetch('private_endpoint', '').to_s %>
+    <% internal_hostname = p('blobstore.internal_hostname', 'blobstore.service.cf.internal').to_s %>
+    <% internal_singleton_blobstore = endpoint.match?(%r{\Ahttps?://#{Regexp.escape(internal_hostname)}(?::\d+)?(?:/.*|\z)}) %>
+    <% if p('cc.buildpacks.blobstore_provider', nil) == 'dav' && internal_singleton_blobstore %>
 
     echo "Checking for blobstore availability"
-    try_to_curl "<%= p('cc.buildpacks.webdav_config.private_endpoint') %>" $max_attempts $sleep_length
+    try_to_curl "<%= endpoint %>" $max_attempts $sleep_length
     echo "Blobstore is available"
 
     <% end %>

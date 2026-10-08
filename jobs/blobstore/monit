@@ -5,12 +5,6 @@ check process blobstore_nginx
   stop program "/var/vcap/jobs/bpm/bin/bpm stop blobstore -p nginx"
   group vcap
 
- check process blobstore_url_signer
-   with pidfile /var/vcap/sys/run/bpm/blobstore/url_signer.pid
-   start program "/var/vcap/jobs/bpm/bin/bpm start blobstore -p url_signer"
-   stop program "/var/vcap/jobs/bpm/bin/bpm stop blobstore -p url_signer"
-   group vcap
-
 <% else %>
 # This file intentionally left blank
 # Blobstore job is only run on the bootstrap instance

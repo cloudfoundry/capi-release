@@ -19,7 +19,6 @@ templates:
 
 packages:
 - nginx_webdav
-- blobstore_url_signer
 - capi_utils
 
 consumes:
@@ -59,6 +58,10 @@ properties:
   blobstore.tls.port:
     description: The TCP port on which the internal blobstore server listens
     default: 4443
+
+  blobstore.internal_hostname:
+    description: Internal hostname used by the singleton blobstore
+    default: "blobstore.service.cf.internal"
 
   blobstore.tls.cert:
     description: The PEM-encoded certificate (optionally as a certificate chain) for serving blobs over TLS/SSL

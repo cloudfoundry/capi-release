@@ -7,10 +7,3 @@ processes:
       writable: true
   ephemeral_disk: true
   persistent_disk: true
-- name: url_signer
-  executable: /var/vcap/packages/blobstore_url_signer/bin/blobstore_url_signer
-  ephemeral_disk: true
-  args:
-    - --secret=<%= p("blobstore.secure_link.secret") %>
-    - --network=unix
-    - --laddr=/var/vcap/data/blobstore/signer.sock
