@@ -245,6 +245,29 @@ module Bosh
             end
           end
         end
+
+        describe 'public_upload.conf' do
+          let(:template) { job.template('config/public_upload.conf') }
+          let(:manifest_properties) { {} }
+
+          before do
+            @rendered_file = template.render(manifest_properties, consumes: {})
+          end
+
+          context 'when nginx_client_body_timeout_for_uploads is not configured' do
+            it 'does not render a client_body_timeout directive' do
+              expect(@rendered_file).not_to match(/^\s*client_body_timeout/)
+            end
+          end
+
+          context 'when nginx_client_body_timeout_for_uploads is configured' do
+            let(:manifest_properties) { { 'cc' => { 'nginx_client_body_timeout_for_uploads' => 150 } } }
+
+            it 'renders client_body_timeout with the configured value in seconds' do
+              expect(@rendered_file).to match(/^client_body_timeout 150s;$/)
+            end
+          end
+        end
       end
     end
   end
