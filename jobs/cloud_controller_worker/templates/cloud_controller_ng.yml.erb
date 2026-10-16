@@ -171,20 +171,13 @@ service_account_runtime_enabled: <%= p('cc.service_accounts.runtime_enabled') %>
 service_account_token_endpoint: <%= yaml_escape(p('cc.service_accounts.token_endpoint')) %>
 <% if p('cc.service_accounts.provisioning_enabled') %>
 <%
-  identity_ca = p('cc.service_accounts.identity_ca')
   identity_ca_ref = p('cc.service_accounts.identity_ca_ref')
-  if identity_ca.to_s.strip.empty? == identity_ca_ref.to_s.strip.empty?
-    raise 'Set exactly one of cc.service_accounts.identity_ca or identity_ca_ref'
-  end
+  raise 'Set cc.service_accounts.identity_ca_ref to a UAA trust bundle name' if identity_ca_ref.to_s.strip.empty?
 %>
 service_account_provisioning:
   client_id: <%= yaml_escape(p('cc.service_accounts.management_client_id')) %>
   client_secret: <%= yaml_escape(p('cc.service_accounts.management_client_secret')) %>
-<% if identity_ca_ref.to_s.strip.empty? %>
-  identity_ca: <%= identity_ca.to_json %>
-<% else %>
   identity_ca_ref: <%= identity_ca_ref.to_json %>
-<% end %>
 <% end %>
 
 # App staging parameters

@@ -83,11 +83,8 @@ properties:
   cc.service_accounts.management_client_secret:
     description: Secret of the dedicated UAA account-management client; never exposed to workloads.
     default: ""
-  cc.service_accounts.identity_ca:
-    description: Instance identity CA PEM trusted for exact account DNS SAN authentication. Mutually exclusive with identity_ca_ref.
-    default: ""
   cc.service_accounts.identity_ca_ref:
-    description: Name of a UAA trust bundle (uaa.mtls.trust_bundles) containing the instance identity CA, registered on account clients instead of inline PEM so CA rotation is a UAA configuration change. Mutually exclusive with identity_ca.
+    description: Required with provisioning. Name of a UAA trust bundle (uaa.mtls.trust_bundles) containing the instance identity CA, referenced by every account client. Rotate the CA by changing the bundle's contents in UAA; clients never change.
     default: ""
   ssl.skip_cert_verify:
     description: "specifies that the job is allowed to skip ssl cert verification"
