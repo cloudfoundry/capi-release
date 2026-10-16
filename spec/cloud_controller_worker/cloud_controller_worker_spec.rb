@@ -134,39 +134,29 @@ module Bosh
             'runtime_enabled' => false,
             'management_client_id' => 'account-manager',
             'management_client_secret' => 'manager-secret',
-            'identity_ca' => "-----BEGIN CERTIFICATE-----\nidentity-ca\n-----END CERTIFICATE-----",
+            'identity_ca_ref' => 'diego-instance-identity',
             'token_endpoint' => 'https://uaa.example.test/oauth/token/mtls'
           }
           result = YAML.safe_load(template.render(manifest_properties, consumes: links))
           expect(result['service_account_provisioning']).to eq(
             'client_id' => 'account-manager', 'client_secret' => 'manager-secret',
-            'identity_ca' => manifest_properties['cc']['service_accounts']['identity_ca']
+            'identity_ca_ref' => 'diego-instance-identity'
           )
           expect(result['service_account_runtime_enabled']).to be(false)
           expect(result['service_account_token_endpoint']).to eq('https://uaa.example.test/oauth/token/mtls')
         end
 
-        it 'renders a UAA trust bundle reference instead of inline instance trust' do
+        it 'refuses to render provisioning without a UAA trust bundle reference' do
           manifest_properties['cc']['service_accounts'] = {
             'provisioning_enabled' => true,
             'management_client_id' => 'account-manager',
-            'management_client_secret' => 'manager-secret',
-            'identity_ca_ref' => 'diego-instance-identity'
+            'management_client_secret' => 'manager-secret'
           }
-          result = YAML.safe_load(template.render(manifest_properties, consumes: links))
-          expect(result['service_account_provisioning']).to eq(
-            'client_id' => 'account-manager', 'client_secret' => 'manager-secret',
-            'identity_ca_ref' => 'diego-instance-identity'
-          )
+          expect { template.render(manifest_properties, consumes: links) }.to raise_error(/Set cc.service_accounts.identity_ca_ref/)
         end
 
-        it 'refuses to render both inline instance trust and a trust bundle reference' do
-          manifest_properties['cc']['service_accounts'] = {
-            'provisioning_enabled' => true,
-            'identity_ca' => "-----BEGIN CERTIFICATE-----\nidentity-ca\n-----END CERTIFICATE-----",
-            'identity_ca_ref' => 'diego-instance-identity'
-          }
-          expect { template.render(manifest_properties, consumes: links) }.to raise_error(/exactly one of cc.service_accounts.identity_ca or identity_ca_ref/)
+        it 'no longer declares inline instance identity CA certificates' do
+          expect(YAML.safe_load(File.read(File.join(release_path, 'jobs/cloud_controller_worker/spec')))['properties']).not_to have_key('cc.service_accounts.identity_ca')
         end
 
         it 'keeps service account runtime and provisioning disabled by default' do
