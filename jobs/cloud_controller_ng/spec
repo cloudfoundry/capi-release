@@ -713,6 +713,8 @@ properties:
   cc.app_bits_max_body_size:
     default: "2048M"
     description: "Maximum body size for nginx bits uploads"
+  cc.nginx_client_body_timeout_for_uploads:
+    description: "nginx client_body_timeout in seconds for the public upload endpoints. When unset, nginx's built-in default applies."
 
   cc.additional_allowed_process_users:
     default: []

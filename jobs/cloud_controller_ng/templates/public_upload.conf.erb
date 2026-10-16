@@ -4,6 +4,10 @@ upload_pass   @cc_uploads;
 # Allow large uploads
 client_max_body_size <%= p("cc.app_bits_max_body_size") %>; #already enforced upstream/but doesn't hurt.
 
+<% if_p("cc.nginx_client_body_timeout_for_uploads") do |timeout| -%>
+client_body_timeout <%= timeout %>s;
+<% end -%>
+
 # Store files to this directory
 upload_store <%= p("cc.directories.tmpdir") %>/uploads;
 
