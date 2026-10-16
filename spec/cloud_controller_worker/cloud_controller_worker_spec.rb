@@ -146,6 +146,29 @@ module Bosh
           expect(result['service_account_token_endpoint']).to eq('https://uaa.example.test/oauth/token/mtls')
         end
 
+        it 'renders a UAA trust bundle reference instead of inline instance trust' do
+          manifest_properties['cc']['service_accounts'] = {
+            'provisioning_enabled' => true,
+            'management_client_id' => 'account-manager',
+            'management_client_secret' => 'manager-secret',
+            'identity_ca_ref' => 'diego-instance-identity'
+          }
+          result = YAML.safe_load(template.render(manifest_properties, consumes: links))
+          expect(result['service_account_provisioning']).to eq(
+            'client_id' => 'account-manager', 'client_secret' => 'manager-secret',
+            'identity_ca_ref' => 'diego-instance-identity'
+          )
+        end
+
+        it 'refuses to render both inline instance trust and a trust bundle reference' do
+          manifest_properties['cc']['service_accounts'] = {
+            'provisioning_enabled' => true,
+            'identity_ca' => "-----BEGIN CERTIFICATE-----\nidentity-ca\n-----END CERTIFICATE-----",
+            'identity_ca_ref' => 'diego-instance-identity'
+          }
+          expect { template.render(manifest_properties, consumes: links) }.to raise_error(/exactly one of cc.service_accounts.identity_ca or identity_ca_ref/)
+        end
+
         it 'keeps service account runtime and provisioning disabled by default' do
           result = YAML.safe_load(template.render(manifest_properties, consumes: links))
           expect(result['service_account_runtime_enabled']).to be(false)
