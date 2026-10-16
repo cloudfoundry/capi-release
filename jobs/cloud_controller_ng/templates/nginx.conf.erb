@@ -19,7 +19,8 @@ http {
 
   access_log  /var/vcap/sys/log/cloud_controller_ng/nginx-access.log main;
 
-  proxy_hide_header X-USER-GUID;  #user guid header should not be forwarded to client
+  proxy_hide_header X-USER-GUID;         #user guid header should not be forwarded to client
+  proxy_hide_header X-RATELIMIT-REASON;  #the ratelimit reason is internal and thus not be forwarded to client
 
   sendfile             on;  #enable use of sendfile()
   sendfile_max_chunk   1M;  #make sure not to block on fast clients reading large files
