@@ -21,6 +21,6 @@ source /var/vcap/packages/capi_utils/output_utils.sh
   wait_for_server_to_become_healthy_without_setminuse <%= "localhost:#{p("cc.external_port")}/healthz" %> <%= p("cc.post_bbr_healthcheck_timeout_in_seconds") %>
   set -e
   if [ $? -eq 0 ]; then
-    wait_for_server_to_become_healthy <%= "#{p("cc.external_protocol")}://#{p("cc.external_host")}.#{p("system_domain")}/info" %> <%= p("cc.post_bbr_healthcheck_timeout_in_seconds") %>
+    wait_for_server_to_become_healthy <%= "#{p("cc.external_protocol")}://#{p("cc.external_host")}.#{p("system_domain")}/healthz" %> <%= p("cc.post_bbr_healthcheck_timeout_in_seconds") %>
   fi
 <% end %>
