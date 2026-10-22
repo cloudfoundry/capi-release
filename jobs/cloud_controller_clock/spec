@@ -192,11 +192,6 @@ properties:
     default: 60
     description: "Default health check timeout (in seconds) that can be set for the app"
 
-  cc.staging_upload_user:
-    description: "User name used to access internal endpoints of Cloud Controller to upload files when staging"
-  cc.staging_upload_password:
-    description: "User's password used to access internal endpoints of Cloud Controller to upload files when staging"
-
   cc.storage_cli_optional_flags:
     description: "Storage Cli extra flags string"
 

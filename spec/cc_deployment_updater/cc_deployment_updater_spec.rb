@@ -20,8 +20,6 @@ module Bosh
             'cc' => {
 
               'db_logging_level' => 100,
-              'staging_upload_user' => 'staging_user',
-              'staging_upload_password' => 'hunter2',
               'database_encryption' => {
                 'experimental_pbkdf2_hmac_iterations' => 123,
                 'skip_validation' => false,
@@ -64,8 +62,6 @@ module Bosh
               'external_protocol' => 'https',
               'external_host' => 'api',
               'staging_timeout_in_seconds' => 900,
-              'staging_upload_user' => 'staging_user',
-              'staging_upload_password' => 'staging_user_password',
               'default_health_check_timeout' => 60,
               'maximum_health_check_timeout' => 180,
               'resource_pool' => {

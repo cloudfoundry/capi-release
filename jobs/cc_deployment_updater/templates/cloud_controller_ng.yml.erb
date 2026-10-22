@@ -181,9 +181,6 @@ deployment_updater:
 
 staging:
   timeout_in_seconds: <%= link("cloud_controller_internal").p("cc.staging_timeout_in_seconds") %>
-  auth:
-    user: <%= link("cloud_controller_internal").p("cc.staging_upload_user") %>
-    password: <%= yaml_escape(link("cloud_controller_internal").p("cc.staging_upload_password")) %>
 
 default_health_check_timeout: <%= link("cloud_controller_internal").p("cc.default_health_check_timeout") %>
 maximum_health_check_timeout: <%= link("cloud_controller_internal").p("cc.maximum_health_check_timeout") %>
