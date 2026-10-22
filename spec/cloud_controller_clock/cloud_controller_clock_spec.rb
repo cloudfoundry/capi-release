@@ -20,8 +20,6 @@ module Bosh
             'cc' => {
 
               'db_logging_level' => 100,
-              'staging_upload_user' => 'staging_user',
-              'staging_upload_password' => 'hunter2',
               'database_encryption' => {
                 'experimental_pbkdf2_hmac_iterations' => 123,
                 'skip_validation' => false,
