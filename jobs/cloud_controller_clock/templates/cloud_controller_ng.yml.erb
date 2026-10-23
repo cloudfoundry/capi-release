@@ -221,9 +221,6 @@ uaa:
 # App staging parameters
 staging:
   timeout_in_seconds: <%= p("cc.staging_timeout_in_seconds") %>
-  auth:
-    user: <%= p("cc.staging_upload_user") %>
-    password: <%= yaml_escape(p("cc.staging_upload_password")) %>
 
 default_health_check_timeout: <%= p("cc.default_health_check_timeout") %>
 
