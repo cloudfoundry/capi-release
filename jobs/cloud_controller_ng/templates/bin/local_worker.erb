@@ -11,5 +11,8 @@ export RUBYOPT='--yjit'
 
 export LD_PRELOAD=/var/vcap/packages/jemalloc/lib/libjemalloc.so
 
+<% num_threads = p("cc.jobs.local.number_of_worker_threads", nil) %>
+<% thread_grace_period = p("cc.jobs.local.worker_thread_grace_period_seconds") %>
+
 cd /var/vcap/packages/cloud_controller_ng/cloud_controller_ng
-exec bundle exec rake "jobs:local[cc_api_worker.<%= spec.job.name %>.<%= spec.index %>.${INDEX}]"
+exec bundle exec rake "jobs:local[cc_api_worker.<%= spec.job.name %>.<%= spec.index %>.${INDEX}<%= ",#{num_threads},#{thread_grace_period}" if num_threads %>]"
