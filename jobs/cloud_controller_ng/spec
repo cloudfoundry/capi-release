@@ -865,7 +865,7 @@ properties:
   cc.jobs.local.number_of_worker_threads:
     description: "Optional. Number of worker threads to start for each local cloud_controller_worker workers"
   cc.jobs.local.worker_thread_grace_period_seconds:
-    default: 15
+    default: 290
     description: "The number of seconds to wait for each local worker thread to finish processing its current job before forcefully killing it"
   cc.jobs.local.local_worker_grace_period_seconds:
     default: 300
