@@ -98,10 +98,10 @@ postgres/postgresql-18.1.tar.gz:
   size: 29294939
   object_id: 808e5f9e-83b4-4b0f-46dc-3ab4d5036365
   sha: sha256:b0f18c2d6973d2aa023cfc77feda787d7bbe9c31a3977d0f04ac29885fb98ec4
-storage-cli/storage-cli-1.0.11-linux-amd64:
-  size: 72215815
-  object_id: f913ec5c-095b-444f-5dff-7a57b303d841
-  sha: sha256:cfe3a89bd06f419c60741595403a0fd2b52418f62f339e27824334fd9504d1c3
+storage-cli/storage-cli-1.0.12-linux-amd64:
+  size: 73024226
+  object_id: 13a5d8fd-621d-4a13-52d9-153e6918d7f8
+  sha: sha256:b7b96a1d02eb5c98bc717e9a522e9e0a280f21aa36b654827dcfed2972078df3
 valkey/7.2.15.tar.gz:
   size: 3474712
   object_id: e51b9c82-519a-4dbe-482a-0e7b1ef86913
