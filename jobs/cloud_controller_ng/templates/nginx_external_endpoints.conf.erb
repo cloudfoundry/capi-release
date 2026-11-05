@@ -1,6 +1,4 @@
 <%
-  local_blobstore = %w[packages droplets buildpacks resource_pool].any? { |type| p("cc.#{type}.blobstore_type") == 'local' }
-
   # Allowlist: only the locations below proxy to CC; everything else 404s via the catch-all.
   # Allow blocks are plain-prefix / exact (never ^~) so the upload/ssh_access regex locations
   # keep precedence over them.
@@ -109,12 +107,6 @@ location @cc_uploads {
 location ~ ^/internal/apps/[^/]+/ssh_access/ {
   <%= proxy_body -%>
 }
-
-<% if local_blobstore %>
-location /staging/ {
-  <%= proxy_body -%>
-}
-<% end %>
 
 location = /healthz {
   <%= proxy_body -%>
