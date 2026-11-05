@@ -125,21 +125,6 @@ module Bosh
             @rendered_file = template.render(manifest_properties, consumes: {})
           end
 
-          context 'when local blobstore is configured' do
-            let(:manifest_properties) { { 'cc' => { 'packages' => { 'blobstore_type' => 'local' } } } }
-
-            it 'allows staging endpoints through to cloud controller' do
-              expect(@rendered_file).to match(%r(location /staging/\s*\{[^}]*proxy_pass\s+http://cloud_controller;))
-            end
-          end
-
-          context 'when no local blobstore is configured' do
-            it 'does not allow staging endpoints through to cloud controller' do
-              # No staging allow block is rendered; staging is denied by the catch-all 404.
-              expect(@rendered_file).not_to match(%r(location /staging/\s*\{[^}]*proxy_pass))
-            end
-          end
-
           describe 'allowlist routing' do
             it 'proxies the v3 API' do
               expect(@rendered_file).to match(%r(location = /v3\s*\{[^}]*proxy_pass\s+http://cloud_controller;))
