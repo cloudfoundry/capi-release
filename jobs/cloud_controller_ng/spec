@@ -1195,8 +1195,8 @@ properties:
     description: "Log audit events"
 
   cc.experimental.use_yjit_compiler:
-    description: "Use Ruby's YJIT compiler when running Cloud Controller API servers and workers. This feature is experimental and not recommended. Please review the drawbacks and benefits of YJIT before enabling."
-    default: false
+    description: "Use Ruby's YJIT compiler when running Cloud Controller API servers and workers. YJIT improves performance at the cost of additional memory usage per process. Set to false to disable."
+    default: true
 
   cc.puma.automatic_worker_count:
     description: "Sets the number of Puma workers to the number of detected cores.  See https://github.com/puma/puma?tab=readme-ov-file#clustered-mode for information on how cores are detected. If set to 'true', the value set for `cc.puma.workers` will be ignored."
