@@ -255,6 +255,12 @@ properties:
   cc.service_accounts.token_endpoint:
     description: HTTPS UAA certificate-authenticated token endpoint for account discovery.
     default: ""
+  cc.service_accounts.runtime_contract_version:
+    description: Set to 2 only after all cells support prefix-qualified service account identities.
+    default: 0
+  cc.service_accounts.router_contract_version:
+    description: Set to 2 only after all routers enforce prefix-qualified service account rules.
+    default: 0
   ssl.skip_cert_verify:
     description: "specifies that the job is allowed to skip ssl cert verification"
     default: false

@@ -168,6 +168,7 @@ uaa:
   <% end %>
 
 service_account_runtime_enabled: <%= p('cc.service_accounts.runtime_enabled') %>
+service_account_runtime_contract_version: <%= p('cc.service_accounts.runtime_contract_version') %>
 service_account_token_endpoint: <%= yaml_escape(p('cc.service_accounts.token_endpoint')) %>
 <% if p('cc.service_accounts.provisioning_enabled') %>
 <%

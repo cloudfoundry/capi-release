@@ -68,6 +68,9 @@ consumes:
   optional: true
 
 properties:
+  cc.service_accounts.runtime_contract_version:
+    description: Set to 2 only after all cells support prefix-qualified service account identities.
+    default: 0
   cc.service_accounts.provisioning_enabled:
     description: Enable dedicated managed service account client reconciliation in workers.
     default: false
