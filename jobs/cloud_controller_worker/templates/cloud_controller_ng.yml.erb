@@ -179,6 +179,9 @@ service_account_provisioning:
   client_id: <%= yaml_escape(p('cc.service_accounts.management_client_id')) %>
   client_secret: <%= yaml_escape(p('cc.service_accounts.management_client_secret')) %>
   identity_ca_ref: <%= identity_ca_ref.to_json %>
+<% unless p('cc.service_accounts.allowed_resources_ref').empty? %>
+  allowed_resources_ref: <%= p('cc.service_accounts.allowed_resources_ref').to_json %>
+<% end %>
 <% end %>
 
 # App staging parameters

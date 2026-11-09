@@ -68,6 +68,9 @@ consumes:
   optional: true
 
 properties:
+  cc.service_accounts.allowed_resources_ref:
+    description: Optional named UAA federation resource policy. Requires UAA named-resource-policy support; leave unset until available.
+    default: ""
   cc.service_accounts.runtime_contract_version:
     description: Set to 2 only after all cells support prefix-qualified service account identities.
     default: 0
