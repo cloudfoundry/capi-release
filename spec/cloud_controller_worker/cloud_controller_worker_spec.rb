@@ -155,6 +155,16 @@ module Bosh
           expect { template.render(manifest_properties, consumes: links) }.to raise_error(/Set cc.service_accounts.identity_ca_ref/)
         end
 
+        it 'renders an optional named federation resource policy for the worker only' do
+          manifest_properties['cc']['service_accounts'] = {
+            'provisioning_enabled' => true, 'identity_ca_ref' => 'diego-instance-identity',
+            'management_client_id' => 'account-manager', 'management_client_secret' => 'manager-secret',
+            'allowed_resources_ref' => 'cf-workload-federation'
+          }
+          result = YAML.safe_load(template.render(manifest_properties, consumes: links))
+          expect(result.dig('service_account_provisioning', 'allowed_resources_ref')).to eq('cf-workload-federation')
+        end
+
         it 'no longer declares inline instance identity CA certificates' do
           expect(YAML.safe_load(File.read(File.join(release_path, 'jobs/cloud_controller_worker/spec')))['properties']).not_to have_key('cc.service_accounts.identity_ca')
         end
