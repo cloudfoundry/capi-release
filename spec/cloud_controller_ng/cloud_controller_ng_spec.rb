@@ -147,6 +147,13 @@ module Bosh
             expect(result['service_account_creation_limit']).to eq(-1)
           end
 
+          it 'renders qualified runtime and router contract gates' do
+            merged_manifest_properties['cc']['service_accounts'] = { 'runtime_contract_version' => 2, 'router_contract_version' => 2 }
+            result = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+            expect(result['service_account_runtime_contract_version']).to eq(2)
+            expect(result['service_account_router_contract_version']).to eq(2)
+          end
+
           it 'renders the foundation-wide non-admin service account creation budget' do
             merged_manifest_properties['cc']['service_accounts'] = { 'creation_limit' => 25 }
             result = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
