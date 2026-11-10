@@ -166,26 +166,6 @@ limit_req_zone $http_authorization zone=<%= zone['name'] %>:10m rate=<%= zone['l
     include nginx_external_endpoints.conf;
   }
 
-  <% unless p('temporary_disable_non_tls_endpoints')  %>
-  # This block handles public endpoints over non-TLS secured HTTP
-  # This is required for backwards compatibility during a rolling-deploy
-  server {
-  <% if p("cc.nginx.ip").empty? -%>
-  listen    <%= p("cc.external_port") %>;
-  <% else -%>
-  listen    <%= p("cc.nginx.ip") %>:<%= p("cc.external_port") %>;
-  <% end -%>
-
-    server_name  _;
-    server_name_in_redirect off;
-    <% if p("request_timeout_in_seconds").to_i > 0 %>
-    proxy_send_timeout          <%= p("request_timeout_in_seconds") %>;
-    proxy_read_timeout          <%= p("request_timeout_in_seconds") %>;
-    <% end -%>
-
-    include nginx_external_endpoints.conf;
-  }
-  <% end %>
 
   <% if p('cc.use_status_check') %>
   # This block handles the /internal/v4/status endpoint for health checks, which is called by ccng_monit_http_healthcheck.

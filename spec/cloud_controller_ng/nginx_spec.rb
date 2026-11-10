@@ -48,14 +48,6 @@ module Bosh
             end
           end
 
-          context 'when nginx.ip is configured' do
-            let(:manifest_properties) { { 'cc' => { 'nginx' => { 'ip' => '192.168.200.1' } } } }
-
-            it 'renders nginx.ip' do
-              expect(@rendered_file).to include('listen    192.168.200.1:9022;')
-            end
-          end
-
           context 'when all properties of prom_scraper are set' do
             let(:manifest_properties) { { 'cc' => { 'prom_scraper_tls' => { 'public_cert' => 'a public cert', 'private_key' => 'a private key', 'ca_cert' => 'an authority' } } } }
 

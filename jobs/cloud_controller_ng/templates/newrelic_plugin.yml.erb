@@ -16,4 +16,4 @@ agents:
   nginx_status_agent:
     -
       instance_name: 'CC Nginx (<%= properties.cc.newrelic.environment_name %>)'
-      status_url: http://localhost:<%= p("cc.external_port") %>/nginx_status
+      status_url: https://localhost:<%= p("cc.public_tls.port") %>/nginx_status
