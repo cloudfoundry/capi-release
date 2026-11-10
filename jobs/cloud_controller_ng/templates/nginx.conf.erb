@@ -177,6 +177,13 @@ limit_req_zone $http_authorization zone=<%= zone['name'] %>:10m rate=<%= zone['l
     location /internal/v4/status {
       proxy_pass http://cloud_controller_metrics;
     }
+
+    location /nginx_status {
+      stub_status on;
+      access_log off;
+      allow 127.0.0.1;
+      deny all;
+    }
   }
   <% end %>
 }
