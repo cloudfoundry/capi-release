@@ -100,7 +100,7 @@ function wait_unmonitor_job() {
   local job_name="$1"
 
   while true; do
-    if [[ $(sudo /var/vcap/bosh/bin/monit summary | grep ${job_name} ) =~ not[[:space:]]monitored[[:space:]]*$ ]]; then
+    if [[ $(sudo /var/vcap/bosh/bin/monit summary | grep ${job_name} ) =~ .*${job_name}.*[[:space:]]not[[:space:]]monitored[[:space:]]; then
       echo "Unmonitored ${job_name}"
       return 0
     else
