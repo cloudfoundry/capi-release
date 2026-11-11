@@ -137,10 +137,6 @@ properties:
     description: "Maximum health check timeout (in seconds) that can be set for the app"
   cc.jobs.priorities:
     description: "List of hashes containing delayed jobs 'display_name' and its desired priority. This will overwrite the default priority of ccng"
-  cc.staging_upload_user:
-    description: "User name used to access internal endpoints of Cloud Controller to upload files when staging"
-  cc.staging_upload_password:
-    description: "User's password used to access internal endpoints of Cloud Controller to upload files when staging"
 
   cc.storage_cli_optional_flags:
     description: "Storage Cli extra flags string"

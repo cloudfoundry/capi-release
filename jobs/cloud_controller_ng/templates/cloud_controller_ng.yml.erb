@@ -320,9 +320,6 @@ staging:
   minimum_staging_memory_mb: <%= p("cc.minimum_staging_memory_mb") %>
   minimum_staging_disk_mb: <%= p("cc.minimum_staging_disk_mb") %>
   minimum_staging_file_descriptor_limit: <%= p("cc.staging_file_descriptor_limit") %>
-  auth:
-    user: <%= p("cc.staging_upload_user") %>
-    password: <%= yaml_escape(p("cc.staging_upload_password")) %>
 
 default_health_check_timeout: <%= p("cc.default_health_check_timeout") %>
 maximum_health_check_timeout: <%= p("cc.maximum_health_check_timeout") %>

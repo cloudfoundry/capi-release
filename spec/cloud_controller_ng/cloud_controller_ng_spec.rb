@@ -80,8 +80,6 @@ module Bosh
                 'stacks' =>
                   [{ 'description' => 'Cloud Foundry Linux-based filesystem',
                      'name' => 'cflinuxfs4' }],
-                'staging_upload_password' => '((cc_staging_upload_password))',
-                'staging_upload_user' => 'staging_user',
                 'temporary_enable_v2' => false },
             'ccdb' =>
               { 'databases' => [{ 'name' => 'cloud_controller', 'tag' => 'cc' }],
