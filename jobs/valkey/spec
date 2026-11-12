@@ -7,6 +7,7 @@ templates:
   bpm.yml.erb: config/bpm.yml
   pre-start.sh.erb: bin/pre-start.sh
   valkey-cli.sh.erb: bin/valkey-cli.sh
+  drain.sh.erb: bin/drain
 
 packages:
   - valkey
@@ -15,4 +16,7 @@ consumes:
   - name: cloud_controller_internal
     type: cloud_controller_internal
 
-properties: {}
+properties:
+  valkey.drain_timeout:
+    description: "Maximum seconds valkey's drain waits for co-located cloud_controller_ng to stop. If CC-NG has not exited within this time, valkey stops anyway so the deploy cannot hang indefinitely."
+    default: 60

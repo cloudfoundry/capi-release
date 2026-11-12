@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Valkey is co-located with cloud_controller_ng and is the StatsD/metrics
+# store it reaches over /var/vcap/data/valkey/valkey.sock. If valkey stops
+# while CC-NG is still serving, every in-flight request fails on the removed
+# socket. BOSH runs all drain scripts in the instance group and
+# waits for them before stopping any process, so block here until CC-NG's
+# process is gone, ensuring valkey is stopped only after CC-NG has drained.
+
+CCNG_PIDFILE="/var/vcap/sys/run/bpm/cloud_controller_ng/cloud_controller_ng.pid"
+TIMEOUT=<%= p("valkey.drain_timeout") %>
+WAITED=0
+
+ccng_running() {
+  [ -f "${CCNG_PIDFILE}" ] && kill -0 "$(cat "${CCNG_PIDFILE}" 2>/dev/null)" 2>/dev/null
+}
+
+while ccng_running && [ "${WAITED}" -lt "${TIMEOUT}" ]; do
+  sleep 1
+  WAITED=$((WAITED + 1))
+done
+
+echo 0 # drained; let bosh stop valkey
+exit 0
