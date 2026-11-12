@@ -160,6 +160,20 @@ module Bosh
 
         let(:template) { job.template('config/cloud_controller_ng.yml') }
 
+        it 'renders the shared service-account activation and discovery settings' do
+          manifest_properties['cc']['service_accounts'] = { 'enabled' => true, 'token_endpoint' => 'https://uaa.example.test/oauth/mtls/token' }
+          result = YAML.safe_load(template.render(manifest_properties, consumes: links))
+          expect(result['service_accounts_enabled']).to be(true)
+          expect(result['service_account_token_endpoint']).to eq('https://uaa.example.test/oauth/mtls/token')
+          expect(result).not_to have_key('service_account_provisioning')
+          expect(result).not_to have_key('service_account_runtime_contract_version')
+        end
+
+        it 'disables service accounts by default' do
+          result = YAML.safe_load(template.render(manifest_properties, consumes: links))
+          expect(result['service_accounts_enabled']).to be(false)
+        end
+
         it 'creates the cloud_controller_ng.yml config file' do
           expect do
             YAML.safe_load(template.render(manifest_properties, consumes: links))

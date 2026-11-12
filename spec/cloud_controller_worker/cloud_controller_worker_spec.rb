@@ -130,8 +130,7 @@ module Bosh
 
         it 'renders dedicated provisioning credentials and instance trust only when explicitly enabled' do
           manifest_properties['cc']['service_accounts'] = {
-            'provisioning_enabled' => true,
-            'runtime_enabled' => false,
+            'enabled' => true,
             'management_client_id' => 'account-manager',
             'management_client_secret' => 'manager-secret',
             'identity_ca_ref' => 'diego-instance-identity',
@@ -142,13 +141,13 @@ module Bosh
             'client_id' => 'account-manager', 'client_secret' => 'manager-secret',
             'identity_ca_ref' => 'diego-instance-identity'
           )
-          expect(result['service_account_runtime_enabled']).to be(false)
+          expect(result['service_accounts_enabled']).to be(true)
           expect(result['service_account_token_endpoint']).to eq('https://uaa.example.test/oauth/token/mtls')
         end
 
         it 'refuses to render provisioning without a UAA trust bundle reference' do
           manifest_properties['cc']['service_accounts'] = {
-            'provisioning_enabled' => true,
+            'enabled' => true,
             'management_client_id' => 'account-manager',
             'management_client_secret' => 'manager-secret'
           }
@@ -157,7 +156,7 @@ module Bosh
 
         it 'renders an optional named federation resource policy for the worker only' do
           manifest_properties['cc']['service_accounts'] = {
-            'provisioning_enabled' => true, 'identity_ca_ref' => 'diego-instance-identity',
+            'enabled' => true, 'identity_ca_ref' => 'diego-instance-identity',
             'management_client_id' => 'account-manager', 'management_client_secret' => 'manager-secret',
             'allowed_resources_ref' => 'cf-workload-federation'
           }
@@ -171,7 +170,7 @@ module Bosh
 
         it 'keeps service account runtime and provisioning disabled by default' do
           result = YAML.safe_load(template.render(manifest_properties, consumes: links))
-          expect(result['service_account_runtime_enabled']).to be(false)
+          expect(result['service_accounts_enabled']).to be(false)
           expect(result).not_to have_key('service_account_provisioning')
         end
 

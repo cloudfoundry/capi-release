@@ -147,10 +147,11 @@ module Bosh
             expect(result['service_account_creation_limit']).to eq(-1)
           end
 
-          it 'renders the runtime gate without introducing a router contract property' do
-            merged_manifest_properties['cc']['service_accounts'] = { 'runtime_contract_version' => 2 }
+          it 'renders a single activation flag without contract versions' do
+            merged_manifest_properties['cc']['service_accounts'] = { 'enabled' => true }
             result = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-            expect(result['service_account_runtime_contract_version']).to eq(2)
+            expect(result['service_accounts_enabled']).to be(true)
+            expect(result).not_to have_key('service_account_runtime_contract_version')
             expect(result).not_to have_key('service_account_router_contract_version')
             properties = YAML.safe_load(File.read(File.join(release_path, 'jobs/cloud_controller_ng/spec')))['properties']
             expect(properties).not_to have_key('cc.service_accounts.router_contract_version')
@@ -164,12 +165,11 @@ module Bosh
 
           it 'renders explicit service account gates and discovery without exposing management credentials' do
             merged_manifest_properties['cc']['service_accounts'] = {
-              'provisioning_enabled' => true, 'runtime_enabled' => true,
+              'enabled' => true,
               'token_endpoint' => 'https://uaa.example.test/oauth/token/mtls'
             }
             result = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
-            expect(result['service_account_provisioning_enabled']).to be(true)
-            expect(result['service_account_runtime_enabled']).to be(true)
+            expect(result['service_accounts_enabled']).to be(true)
             expect(result['service_account_token_endpoint']).to eq('https://uaa.example.test/oauth/token/mtls')
             expect(result).not_to have_key('service_account_provisioning')
           end

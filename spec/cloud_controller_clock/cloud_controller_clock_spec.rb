@@ -119,9 +119,9 @@ module Bosh
         let(:template) { job.template('config/cloud_controller_ng.yml') }
 
         it 'renders service account runtime discovery for clock-driven reconciliation' do
-          manifest_properties['cc']['service_accounts'] = { 'runtime_enabled' => true, 'token_endpoint' => 'https://uaa.example.test/oauth/token/mtls' }
+          manifest_properties['cc']['service_accounts'] = { 'enabled' => true, 'token_endpoint' => 'https://uaa.example.test/oauth/token/mtls' }
           result = YAML.safe_load(template.render(manifest_properties, consumes: links))
-          expect(result['service_account_runtime_enabled']).to be(true)
+          expect(result['service_accounts_enabled']).to be(true)
           expect(result['service_account_token_endpoint']).to eq('https://uaa.example.test/oauth/token/mtls')
         end
 
