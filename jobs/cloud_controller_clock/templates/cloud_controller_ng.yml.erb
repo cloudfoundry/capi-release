@@ -223,8 +223,7 @@ uaa:
   <% end %>
 
 # App staging parameters
-service_account_runtime_enabled: <%= p('cc.service_accounts.runtime_enabled') %>
-service_account_runtime_contract_version: <%= p('cc.service_accounts.runtime_contract_version') %>
+service_accounts_enabled: <%= p('cc.service_accounts.enabled') %>
 service_account_token_endpoint: <%= yaml_escape(p('cc.service_accounts.token_endpoint')) %>
 
 staging:

@@ -71,14 +71,8 @@ properties:
   cc.service_accounts.allowed_resources_ref:
     description: Optional named UAA federation resource policy. Requires UAA named-resource-policy support; leave unset until available.
     default: ""
-  cc.service_accounts.runtime_contract_version:
-    description: Set to 2 only after all cells support prefix-qualified service account identities.
-    default: 0
-  cc.service_accounts.provisioning_enabled:
-    description: Enable dedicated managed service account client reconciliation in workers.
-    default: false
-  cc.service_accounts.runtime_enabled:
-    description: Enable typed account runtime identity only after all BBS/rep/cells support it.
+  cc.service_accounts.enabled:
+    description: Enable service account provisioning and runtime identity after compatible UAA, BBS, Diego and routing components are deployed.
     default: false
   cc.service_accounts.token_endpoint:
     description: HTTPS UAA certificate-authenticated token endpoint exposed to bound workloads.

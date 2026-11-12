@@ -20,6 +20,8 @@
 %>
 
 ---
+service_accounts_enabled: <%= p('cc.service_accounts.enabled') %>
+service_account_token_endpoint: <%= p('cc.service_accounts.token_endpoint').to_json %>
 
 pid_filename: /var/vcap/sys/run/cc_deployment_updater/cc_deployment_updater.pid
 

@@ -58,6 +58,12 @@ consumes:
   optional: true
 
 properties:
+  cc.service_accounts.enabled:
+    description: Enable service account provisioning and runtime identity after compatible UAA, BBS, Diego and routing components are deployed.
+    default: false
+  cc.service_accounts.token_endpoint:
+    description: HTTPS UAA certificate-authenticated token endpoint exposed to bound workloads.
+    default: ""
   ccdb.databases:
     description: "Contains the name of the database on the database server"
   ccdb.roles:
@@ -267,4 +273,3 @@ properties:
     description: "PEM-encoded certificate for secure, mutually authenticated TLS communication with prom_scraper"
   cc.prom_scraper_tls.private_key:
     description: "PEM-encoded key for secure, mutually authenticated TLS communication with prom_scraper"
-

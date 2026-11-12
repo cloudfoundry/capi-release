@@ -167,10 +167,9 @@ uaa:
   client_timeout: <%= cc_internal.p("cc.uaa.client_timeout")%>
   <% end %>
 
-service_account_runtime_enabled: <%= p('cc.service_accounts.runtime_enabled') %>
-service_account_runtime_contract_version: <%= p('cc.service_accounts.runtime_contract_version') %>
+service_accounts_enabled: <%= p('cc.service_accounts.enabled') %>
 service_account_token_endpoint: <%= yaml_escape(p('cc.service_accounts.token_endpoint')) %>
-<% if p('cc.service_accounts.provisioning_enabled') %>
+<% if p('cc.service_accounts.enabled') %>
 <%
   identity_ca_ref = p('cc.service_accounts.identity_ca_ref')
   raise 'Set cc.service_accounts.identity_ca_ref to a UAA trust bundle name' if identity_ca_ref.to_s.strip.empty?
