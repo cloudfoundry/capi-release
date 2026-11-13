@@ -10,7 +10,7 @@ source /var/vcap/packages/capi_utils/output_utils.sh
   if /var/vcap/jobs/bpm/bin/bpm list |  grep nginx_maintenance | awk '{ print "nginx_maintenance is:", $3; if ($3=="stopped") {exit 1} }';
   then
     /var/vcap/jobs/bpm/bin/bpm stop cloud_controller_ng -p nginx_maintenance
-    wait_for_server_to_become_unavailable <%= "localhost:#{p("cc.external_port")}/healthz" %> 60
+    wait_for_server_to_become_unavailable <%= "https://localhost:#{p("cc.public_tls.port")}/healthz" %> 60
   fi
 
   monit_start_job cloud_controller_ng
@@ -18,7 +18,7 @@ source /var/vcap/packages/capi_utils/output_utils.sh
   monit_start_job cloud_controller_worker_local_<%= index %>
   <% end %>
   set +e
-  wait_for_server_to_become_healthy_without_setminuse <%= "localhost:#{p("cc.external_port")}/healthz" %> <%= p("cc.post_bbr_healthcheck_timeout_in_seconds") %>
+  wait_for_server_to_become_healthy_without_setminuse <%= "https://localhost:#{p("cc.public_tls.port")}/healthz" %> <%= p("cc.post_bbr_healthcheck_timeout_in_seconds") %>
   set -e
   if [ $? -eq 0 ]; then
     wait_for_server_to_become_healthy <%= "#{p("cc.external_protocol")}://#{p("cc.external_host")}.#{p("system_domain")}/healthz" %> <%= p("cc.post_bbr_healthcheck_timeout_in_seconds") %>

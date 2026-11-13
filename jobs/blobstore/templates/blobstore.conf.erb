@@ -35,14 +35,6 @@ NGINX
 # Default server
 #
 
-<% unless p('temporary_disable_non_tls_endpoints')  %>
-
-server {
-  listen      <%= p('blobstore.port') %>;
-  return 404;
-}
-<% end %>
-
 server {
   listen      <%= p('blobstore.public_tls_port') %> ssl;
 
@@ -136,67 +128,6 @@ server {
   }
 }
 
-# Public server
-#
-
-<% unless p('temporary_disable_non_tls_endpoints')  %>
-server {
-  server_name blobstore.<%= p('system_domain') %>;
-
-  listen      <%= p('blobstore.port') %>;
-
-  root        /var/vcap/store/shared/;
-
-  access_log /var/vcap/sys/log/blobstore/public_access.log;
-  error_log  /var/vcap/sys/log/blobstore/public_error.log;
-
-<%= signed_location %>
-
-  # ensure the contents of this location block always match the internal server /read/ location block
-  location /read/ {
-    if ( $request_method !~ ^(GET|HEAD)$ ) {
-      return 405;
-    }
-
-    secure_link $arg_md5,$arg_expires;
-    secure_link_md5 "$secure_link_expires$uri <%= p('blobstore.secure_link.secret') %>";
-
-    if ($secure_link = "") {
-      return 403;
-    }
-
-    if ($secure_link = "0") {
-      return 410;
-    }
-
-    alias /var/vcap/store/shared/;
-  }
-
-  # ensure the contents of this location block always match the internal server /write/ location block
-  location /write/ {
-    dav_methods PUT;
-    create_full_put_path on;
-
-    if ( $request_method !~ ^(PUT)$ ) {
-      return 405;
-    }
-
-    secure_link $arg_md5,$arg_expires;
-    secure_link_md5 "$secure_link_expires$uri <%= p('blobstore.secure_link.secret') %>";
-
-    if ($secure_link = "") {
-      return 403;
-    }
-
-    if ($secure_link = "0") {
-      return 410;
-    }
-
-    alias /var/vcap/store/shared/;
-  }
-}
-
-<% end %>
 
 server {
   listen      <%= p('blobstore.public_tls_port') %> ssl;
