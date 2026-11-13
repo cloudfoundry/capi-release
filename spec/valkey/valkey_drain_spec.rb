@@ -42,6 +42,12 @@ module Bosh
           rendered = template.render({})
           expect(rendered).to include('echo 0')
         end
+
+        it 'logs drain progress to the valkey drain log' do
+          rendered = template.render({})
+          expect(rendered).to include('LOG_FILE="/var/vcap/sys/log/valkey/drain.log"')
+          expect(rendered).to include('drain timeout reached')
+        end
       end
     end
   end

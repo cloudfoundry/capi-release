@@ -7,6 +7,7 @@
 # waits for them before stopping any process, so block here until CC-NG's
 # process is gone, ensuring valkey is stopped only after CC-NG has drained.
 
+LOG_FILE="/var/vcap/sys/log/valkey/drain.log"
 CCNG_PIDFILE="/var/vcap/sys/run/bpm/cloud_controller_ng/cloud_controller_ng.pid"
 TIMEOUT=<%= p("valkey.drain_timeout") %>
 WAITED=0
@@ -15,10 +16,20 @@ ccng_running() {
   [ -f "${CCNG_PIDFILE}" ] && kill -0 "$(cat "${CCNG_PIDFILE}" 2>/dev/null)" 2>/dev/null
 }
 
+echo "$(date): valkey drain starting, waiting up to ${TIMEOUT}s for cloud_controller_ng to stop" >> "$LOG_FILE"
+
 while ccng_running && [ "${WAITED}" -lt "${TIMEOUT}" ]; do
+  echo "$(date): waiting for cloud_controller_ng to stop (elapsed ${WAITED}s)" >> "$LOG_FILE"
   sleep 1
   WAITED=$((WAITED + 1))
 done
 
+if ccng_running; then
+  echo "$(date): drain timeout reached after ${TIMEOUT}s; stopping valkey while cloud_controller_ng is still running" >> "$LOG_FILE"
+else
+  echo "$(date): cloud_controller_ng stopped; safe to stop valkey" >> "$LOG_FILE"
+fi
+
+echo "$(date): drain complete, returning 0 to BOSH" >> "$LOG_FILE"
 echo 0 # drained; let bosh stop valkey
 exit 0
