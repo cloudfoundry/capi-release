@@ -68,6 +68,9 @@ consumes:
   optional: true
 
 properties:
+  cc.service_accounts.token_validity_in_seconds:
+    description: Positive managed service account access-token lifetime in seconds. Operators may select shorter or longer values; UAA must also cap issuance at the authenticating certificate expiry. Existing clients receive changes on their next provisioning or enable reconciliation; already issued tokens are unaffected.
+    default: 300
   cc.service_accounts.allowed_resources_ref:
     description: Optional named UAA federation resource policy. Requires UAA named-resource-policy support; leave unset until available.
     default: ""

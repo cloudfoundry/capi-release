@@ -173,8 +173,11 @@ service_account_token_endpoint: <%= yaml_escape(p('cc.service_accounts.token_end
 <%
   identity_ca_ref = p('cc.service_accounts.identity_ca_ref')
   raise 'Set cc.service_accounts.identity_ca_ref to a UAA trust bundle name' if identity_ca_ref.to_s.strip.empty?
+  token_validity = p('cc.service_accounts.token_validity_in_seconds')
+  raise 'cc.service_accounts.token_validity_in_seconds must be a positive integer' unless token_validity.is_a?(Integer) && token_validity.positive?
 %>
 service_account_provisioning:
+  token_validity_in_seconds: <%= token_validity %>
   client_id: <%= yaml_escape(p('cc.service_accounts.management_client_id')) %>
   client_secret: <%= yaml_escape(p('cc.service_accounts.management_client_secret')) %>
   identity_ca_ref: <%= identity_ca_ref.to_json %>
