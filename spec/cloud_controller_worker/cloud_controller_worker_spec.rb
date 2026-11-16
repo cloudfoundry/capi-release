@@ -139,10 +139,29 @@ module Bosh
           result = YAML.safe_load(template.render(manifest_properties, consumes: links))
           expect(result['service_account_provisioning']).to eq(
             'client_id' => 'account-manager', 'client_secret' => 'manager-secret',
-            'identity_ca_ref' => 'diego-instance-identity'
+            'identity_ca_ref' => 'diego-instance-identity', 'token_validity_in_seconds' => 300
           )
           expect(result['service_accounts_enabled']).to be(true)
           expect(result['service_account_token_endpoint']).to eq('https://uaa.example.test/oauth/token/mtls')
+        end
+
+        it 'renders operator token validity longer than the default' do
+          manifest_properties['cc']['service_accounts'] = {
+            'enabled' => true, 'identity_ca_ref' => 'diego-instance-identity',
+            'management_client_id' => 'account-manager', 'management_client_secret' => 'manager-secret',
+            'token_validity_in_seconds' => 900
+          }
+          result = YAML.safe_load(template.render(manifest_properties, consumes: links))
+          expect(result.dig('service_account_provisioning', 'token_validity_in_seconds')).to eq(900)
+        end
+
+        [0, -1, 1.5, '900'].each do |validity|
+          it "rejects invalid operator token validity #{validity.inspect}" do
+            manifest_properties['cc']['service_accounts'] = {
+              'enabled' => true, 'identity_ca_ref' => 'diego-instance-identity', 'token_validity_in_seconds' => validity
+            }
+            expect { template.render(manifest_properties, consumes: links) }.to raise_error(/positive integer/)
+          end
         end
 
         it 'refuses to render provisioning without a UAA trust bundle reference' do
