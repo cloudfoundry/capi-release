@@ -2,6 +2,7 @@ check process cloud_controller_ng
   with pidfile /var/vcap/sys/run/bpm/cloud_controller_ng/cloud_controller_ng.pid
   start program "/var/vcap/jobs/bpm/bin/bpm start cloud_controller_ng"
   stop program "/var/vcap/jobs/bpm/bin/bpm stop cloud_controller_ng"
+  depends on valkey
   group vcap
 
   <% if_p("cc.thresholds.api.alert_if_above_memory_percent") do %>
