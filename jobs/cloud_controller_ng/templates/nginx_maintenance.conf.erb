@@ -63,26 +63,4 @@ http {
       return 200 "API down for maintenance";
     }
   }
-
-  # This block handles public endpoints over non-TLS secured HTTP
-  # This is required for backwards compatibility during a rolling-deploy
-  server {
-    <% if p("cc.nginx.ip").empty? %>
-      listen    <%= p("cc.external_port") %>;
-    <% else %>
-      listen    <%= p("cc.nginx.ip") %>:<%= p("cc.external_port") %>;
-    <% end %>
-
-    server_name  _;
-    server_name_in_redirect off;
-
-    location / {
-      return 503 "API down for maintenance";
-    }
-
-    ## healthcheck bypass here
-    location /healthz {
-      return 200 "API down for maintenance";
-    }
-  }
 }

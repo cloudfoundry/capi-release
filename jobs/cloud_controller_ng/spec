@@ -275,10 +275,6 @@ properties:
     description: "'description' attribute in the /v2/info and /v3/info endpoints"
     default: ""
 
-  temporary_disable_non_tls_endpoints:
-    description: "nginx_cc and cc_uploader components disable non-TLS endpoints"
-    default: false
-
   cc.info.custom:
     description: "Custom attribute keys and values for the /v2/info and /v3/info endpoints"
 

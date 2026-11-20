@@ -45,10 +45,6 @@ properties:
       - "allow 172.16.0.0/12;"
       - "allow 192.168.0.0/16;"
 
-  temporary_disable_non_tls_endpoints:
-    description: "nginx_cc and cc_uploader components disable non-TLS endpoints"
-    default: false
-
   blobstore.port:
     description: TCP port on which the blobstore server (nginx) listens
     default: 8080

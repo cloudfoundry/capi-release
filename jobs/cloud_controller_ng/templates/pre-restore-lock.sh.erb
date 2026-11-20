@@ -23,9 +23,9 @@ source /var/vcap/packages/capi_utils/output_utils.sh
   monit_stop_job ccng_monit_http_healthcheck
   monit_stop_job cloud_controller_ng
 
-  wait_for_server_to_become_unavailable <%= "localhost:#{p("cc.external_port")}/" %> 60
+  wait_for_server_to_become_unavailable <%= "https://localhost:#{p("cc.public_tls.port")}/" %> 60
 
   /var/vcap/jobs/bpm/bin/bpm start cloud_controller_ng -p nginx_maintenance
-  wait_for_server_to_become_healthy <%= "localhost:#{p("cc.external_port")}/healthz" %> 60
+  wait_for_server_to_become_healthy <%= "https://localhost:#{p("cc.public_tls.port")}/healthz" %> 60
   wait_for_server_to_become_healthy <%= "#{p("cc.external_protocol")}://#{p("cc.external_host")}.#{p("system_domain")}/healthz" %> 60
 <% end %>
