@@ -275,6 +275,11 @@ migration_psql_concurrent_statement_timeout_in_seconds: <%= p("ccdb.migration_ps
 skip_bigint_id_migration: <%= p("ccdb.skip_bigint_id_migration") %>
 login:
   url: <%= p("login.enabled") ? login_url : uaa_url %>
+admin_token_network_policy:
+  enabled: <%= p('cc.admin_token_network_policy.enabled') %>
+  allowed_cidrs: <%= p('cc.admin_token_network_policy.allowed_cidrs').to_json %>
+  trusted_proxies: <%= p('cc.admin_token_network_policy.trusted_proxies').to_json %>
+  additional_protected_scopes: <%= p('cc.admin_token_network_policy.additional_protected_scopes').to_json %>
 uaa:
   url: <%= uaa_url %>
   internal_url: <%= "https://#{p("cc.uaa.internal_url")}:#{p("uaa.ssl.port")}" %>
