@@ -23,6 +23,11 @@ module Bosh
             expect(@rendered_file).to include('log_format main escape=default')
           end
 
+          it 'overwrites the canonical source header and removes its Rack-normalized alias on internal ingress' do
+            expect(@rendered_file).to include('X-Real-IP $remote_addr;', 'X-Real_IP "";')
+            expect(@rendered_file).not_to include('X-Real_IP $remote_addr;')
+          end
+
           context 'when json escaping for access log is configured' do
             let(:manifest_properties) { { 'cc' => { 'nginx_access_log_escaping' => 'json' } } }
 
@@ -111,6 +116,16 @@ module Bosh
 
         describe 'nginx_external_endpoints.conf' do
           let(:template) { job.template('config/nginx_external_endpoints.conf') }
+
+          it 'sanitizes the source headers in every public proxy location including uploads' do
+            rendered = template.render({}, consumes: {})
+            proxy_locations = rendered.scan(/location[^\{]+\{[^}]*proxy_pass\s+http:\/\/cloud_controller;[^}]*\}/)
+            expect(proxy_locations).not_to be_empty
+            proxy_locations.each do |location|
+              expect(location).to include('X-Real-IP $remote_addr;', 'X-Real_IP "";', 'X-Forwarded-For $proxy_add_x_forwarded_for;')
+            end
+            expect(rendered).not_to include('X-Real_IP $remote_addr;')
+          end
           let(:manifest_properties) { {} }
 
           before do

@@ -122,6 +122,27 @@ module Bosh
             end.not_to raise_error
           end
 
+          describe 'administrative token network policy' do
+            it 'defaults to disabled with no allowed networks or trusted proxies' do
+              rendered = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(rendered['admin_token_network_policy']).to eq(
+                'enabled' => false, 'allowed_cidrs' => [], 'trusted_proxies' => [], 'additional_protected_scopes' => []
+              )
+            end
+
+            it 'renders explicit policy networks, trusted proxies, and additional protected scopes' do
+              configured = {
+                'enabled' => true,
+                'allowed_cidrs' => ['192.0.2.0/24', '2001:db8::/32'],
+                'trusted_proxies' => ['10.0.0.1/32'],
+                'additional_protected_scopes' => ['clients.write']
+              }
+              merged_manifest_properties['cc']['admin_token_network_policy'] = configured
+              rendered = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+              expect(rendered['admin_token_network_policy']).to eq(configured)
+            end
+          end
+
           describe 'app_domains' do
             it 'accepts a list of domain hashes and domain strings' do
               template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
