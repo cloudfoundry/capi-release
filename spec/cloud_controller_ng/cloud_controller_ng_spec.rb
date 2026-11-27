@@ -122,6 +122,28 @@ module Bosh
             end.not_to raise_error
           end
 
+          it 'renders a dedicated storage-cli logging level when configured' do
+            merged_manifest_properties['cc']['storage_cli_logging_level'] = 'warn'
+
+            config = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+
+            expect(config['storage_cli_logging_level']).to eq('warn')
+          end
+
+          it 'omits the dedicated storage-cli logging level by default' do
+            config = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+
+            expect(config).not_to have_key('storage_cli_logging_level')
+          end
+
+          it 'renders the off logging level as a string rather than a YAML boolean' do
+            merged_manifest_properties['cc']['storage_cli_logging_level'] = 'off'
+
+            config = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))
+
+            expect(config['storage_cli_logging_level']).to eq('off')
+          end
+
           describe 'app_domains' do
             it 'accepts a list of domain hashes and domain strings' do
               template_hash = YAML.safe_load(template.render(merged_manifest_properties, consumes: links))

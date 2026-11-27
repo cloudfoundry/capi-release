@@ -153,6 +153,14 @@ module Bosh
           end.not_to raise_error
         end
 
+        it 'renders the storage-cli logging level from the internal link' do
+          properties['cc']['storage_cli_logging_level'] = 'warn'
+
+          config = YAML.safe_load(template.render(manifest_properties, consumes: links))
+
+          expect(config['storage_cli_logging_level']).to eq('warn')
+        end
+
         describe 'statsd' do
           it 'renders statsd_host and statsd_port from cloud_controller_internal link' do
             template_hash = YAML.safe_load(template.render(manifest_properties, consumes: links))

@@ -333,6 +333,9 @@ storage_cli_config_file_resource_pool: /var/vcap/jobs/cloud_controller_ng/config
 <% if_p('cc.storage_cli_optional_flags') do %>
 storage_cli_optional_flags: <%= p("cc.storage_cli_optional_flags") %>
 <% end %>
+<% if_p('cc.storage_cli_logging_level') do %>
+storage_cli_logging_level: <%= p("cc.storage_cli_logging_level").to_json %>
+<% end %>
 
 shared_isolation_segment_name: <%= p("cc.shared_isolation_segment_name") %>
 

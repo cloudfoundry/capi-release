@@ -70,6 +70,9 @@ function setup_api_directories {
   mkdir -p "/var/vcap/data/cloud_controller_ng/tmp"
   chown vcap:vcap "/var/vcap/data/cloud_controller_ng/tmp"
 
+  # BOSH runs pre-start before Monit starts API or local metric writers.
+  rm -f "<%= p("cc.directories.tmpdir") %>/prometheus/"*.bin
+
   mkdir -p "/var/vcap/sys/cores"
   chown vcap:vcap "/var/vcap/sys/cores"
 
