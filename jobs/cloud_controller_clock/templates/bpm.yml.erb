@@ -3,6 +3,9 @@ processes:
 - name: cloud_controller_clock
   executable: /var/vcap/jobs/cloud_controller_clock/bin/cloud_controller_clock
   env:
+    # Keep Bootsnap's cache out of the shared cloud_controller_ng package dir
+    # (its $PWD/tmp/cache default). See ruby_version.sh.erb for the rationale.
+    BOOTSNAP_CACHE_DIR: /var/vcap/data/cloud_controller_clock/tmp/bootsnap
     BUNDLE_GEMFILE: /var/vcap/packages/cloud_controller_ng/cloud_controller_ng/Gemfile
     CLOUD_CONTROLLER_NG_CONFIG: /var/vcap/jobs/cloud_controller_clock/config/cloud_controller_ng.yml
     C_INCLUDE_PATH: /var/vcap/packages/libpq/include
