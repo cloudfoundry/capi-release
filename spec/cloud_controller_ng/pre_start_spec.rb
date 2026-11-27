@@ -2,6 +2,8 @@
 
 require 'rspec'
 require 'bosh/template/test'
+require 'tmpdir'
+require 'fileutils'
 
 module Bosh
   module Template
@@ -13,6 +15,24 @@ module Bosh
 
         describe 'bin/pre-start' do
           let(:template) { job.template('bin/pre-start') }
+
+          it 'resets shared metric files in pre-start before metric writers start' do
+            Dir.mktmpdir('pre-start-metrics') do |tmpdir|
+              metrics_dir = File.join(tmpdir, 'prometheus')
+              FileUtils.mkdir_p(metrics_dir)
+              File.write(File.join(metrics_dir, 'metric_old___1.bin'), 'old metric')
+              File.write(File.join(metrics_dir, 'metric_worker___index-1.bin'), 'worker metric')
+              File.write(File.join(metrics_dir, 'keep.txt'), 'not a metric')
+              properties = { 'cc' => { 'directories' => { 'tmpdir' => tmpdir } } }
+              rendered = template.render(properties, consumes: {})
+              reset_command = rendered.lines.find { |line| line.strip.start_with?('rm -f ') }.strip
+
+              expect(reset_command).to eq("rm -f \"#{metrics_dir}/\"*.bin")
+              system('bash', '-c', reset_command, exception: true)
+
+              expect(Dir.children(metrics_dir)).to eq(['keep.txt'])
+            end
+          end
 
           def disables_peer_verification?(properties)
             rendered = template.render(properties, consumes: {})

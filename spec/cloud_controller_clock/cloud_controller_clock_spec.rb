@@ -122,6 +122,14 @@ module Bosh
           end.not_to raise_error
         end
 
+        it 'renders a dedicated storage-cli logging level when configured' do
+          manifest_properties['cc']['storage_cli_logging_level'] = 'warn'
+
+          config = YAML.safe_load(template.render(manifest_properties, consumes: links))
+
+          expect(config['storage_cli_logging_level']).to eq('warn')
+        end
+
         describe 'max_number_of_failed_delayed_jobs' do
           context "when 'cc.failed_jobs.max_number_of_failed_delayed_jobs' is set" do
             it 'renders max_number_of_failed_delayed_jobs into the ccng config' do

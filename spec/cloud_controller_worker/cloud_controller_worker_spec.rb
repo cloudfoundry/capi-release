@@ -132,6 +132,14 @@ module Bosh
           end.not_to raise_error
         end
 
+        it 'renders a dedicated storage-cli logging level when configured' do
+          manifest_properties['cc']['storage_cli_logging_level'] = 'warn'
+
+          config = YAML.safe_load(template.render(manifest_properties, consumes: links))
+
+          expect(config['storage_cli_logging_level']).to eq('warn')
+        end
+
         describe 'router.route_services_secret' do
           context 'when router.route_services_secret is set to null' do
             before do

@@ -36,6 +36,14 @@ module Bosh
         describe 'config/bpm.yml' do
           let(:template) { job.template('config/bpm.yml') }
 
+          it 'assigns distinct indexes to local workers sharing the metrics directory' do
+            properties = { 'cc' => { 'jobs' => { 'local' => { 'number_of_workers' => 2 } } } }
+            config = YAML.safe_load(template.render(properties, consumes: {}))
+            local_workers = config['processes'].select { |process| process['name'].start_with?('local_worker_') }
+
+            expect(local_workers.map { |process| process['env']['INDEX'] }).to eq([1, 2])
+          end
+
           describe 'valkey config' do
             it 'mounts the valkey volume into the ccng job container' do
               template_hash = YAML.safe_load(template.render({}, consumes: {}))
