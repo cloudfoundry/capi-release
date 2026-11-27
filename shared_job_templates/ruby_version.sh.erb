@@ -1,6 +1,21 @@
 # shellcheck disable=1090
 source "${BOSH_PACKAGES_DIR:-/var/vcap/packages}/ruby-4.0/bosh/runtime.env"
 
+# Point Bootsnap's on-disk cache at this job's vcap-owned data dir instead of
+# its default ($PWD/tmp/cache, which resolves inside the shared, read-only
+# cloud_controller_ng package dir). All CC rake/boot entry points cd into that
+# package dir, so the default made every process share one cache file there.
+# Scripts that source this run as both root (pre-start, drain) and vcap (via
+# run_as_vcap); a cache created by root would then be unreadable by vcap and
+# break boot with EACCES. Keep the dir vcap-owned so whichever user boots
+# first, the next process can still read it. Long-running bpm processes get
+# the same value from their bpm.yml env map, not from this script.
+export BOOTSNAP_CACHE_DIR="/var/vcap/data/<%= spec.job.name %>/tmp/bootsnap"
+mkdir -p "${BOOTSNAP_CACHE_DIR}"
+if [ "$(id -u)" = "0" ]; then
+  chown -R vcap:vcap "/var/vcap/data/<%= spec.job.name %>/tmp"
+fi
+
 CC_PACKAGE_DIR="${BOSH_PACKAGES_DIR:-/var/vcap/packages}/cloud_controller_ng"
 BUNDLER_VERSION=$(grep "BUNDLED WITH" ${CC_PACKAGE_DIR}/cloud_controller_ng/Gemfile.lock -A 1 | grep -v "BUNDLED" | awk '{print $1}')
 
