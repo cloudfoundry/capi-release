@@ -213,6 +213,18 @@ consumes:
   optional: true
 
 properties:
+  cc.admin_token_network_policy.enabled:
+    description: Restrict validated administrative bearer tokens to allowed source networks before user creation and API authorization. Requires a Cloud Controller version supporting this policy. Empty allowed_cidrs denies all administrative tokens when enabled.
+    default: false
+  cc.admin_token_network_policy.allowed_cidrs:
+    description: Numeric IPv4/IPv6 addresses or CIDRs allowed to use administrative tokens after trusted proxy resolution and NAT. Use the same allowlist in UAA to restrict issuance and UAA usage.
+    default: []
+  cc.admin_token_network_policy.trusted_proxies:
+    description: Numeric addresses or CIDRs of actual ingress proxies (including Gorouters). Only these peers may supply forwarded source addresses. No proxies are trusted by default. Do not list client networks here; secure the Nginx-to-Puma Unix socket against untrusted local access.
+    default: []
+  cc.admin_token_network_policy.additional_protected_scopes:
+    description: Additional exact scope/authority names to protect beyond uaa.admin, cloud_controller.admin, cloud_controller.admin_read_only, cloud_controller.global_auditor, and zones.<id>.admin. Cannot remove built-in protected scopes.
+    default: []
   ssl.skip_cert_verify:
     description: "specifies that the job is allowed to skip ssl cert verification"
     default: false
